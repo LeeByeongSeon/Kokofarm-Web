@@ -2,10 +2,10 @@
 include_once("../inc/top.php");
 ?>
 <!--농장정보 & 이슈사항-->
-<div class="col-xl-10 float-right">
+<article class="col-xl-10 float-right">
 	<div class="row">
 		<div class="col-xl-5">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;박승민농장 - 1동</h2>	
@@ -49,7 +49,7 @@ include_once("../inc/top.php");
 		</div>
 
 		<div class="col-xl-7">
-			<div class="jarviswidget jarviswidget-color-red no-padding" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-red no-padding" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-warning"></i>&nbsp;&nbsp;&nbsp;이슈사항</h2>	
@@ -103,7 +103,7 @@ include_once("../inc/top.php");
 	<!--평균중량(표) & 오류이력-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량 (표)</h2>	
@@ -191,10 +191,10 @@ include_once("../inc/top.php");
 		</div>
 
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-orange no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-orange no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;오류이력</h2>	
+						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;오류 이력</h2>	
 					</div>
 				</header>
 					
@@ -274,7 +274,7 @@ include_once("../inc/top.php");
 	<!--장치현황-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 현황</h2>	
@@ -422,7 +422,7 @@ include_once("../inc/top.php");
 	<!--IoT 저울 & GW 관리-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;GW 관리 (농장ID-동ID)</h2>	
@@ -480,7 +480,7 @@ include_once("../inc/top.php");
 		</div>
 
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;IoT 저울 관리 (농장ID-동ID)</h2>	
@@ -534,7 +534,7 @@ include_once("../inc/top.php");
 	<!--로우데이터 확인-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;로우데이터 확인</h2>	
@@ -682,7 +682,7 @@ include_once("../inc/top.php");
 	<!--재산출-->
 	<div class="row">
 		<div class="col-xl-3">
-			<div class="jarviswidget jarviswidget-color-info" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-info" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;재산출 요청</h2>	
@@ -708,6 +708,8 @@ include_once("../inc/top.php");
 							<div class="col-xl-9">
 								<select class="form-control">
 									<option>육계</option>
+									<option>삼계</option>
+									<option>토종닭</option>
 								</select>
 							</div>
 						</div>
@@ -737,7 +739,7 @@ include_once("../inc/top.php");
 		</div>
 
 		<div class="col-xl-9">
-			<div class="jarviswidget jarviswidget-color-info no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget jarviswidget-color-info no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;&nbsp;재산출 기록</h2>	
@@ -796,7 +798,7 @@ include_once("../inc/top.php");
 			</div>
 		</div>
 	</div>
-</div>
+</article>
 <?
 include_once("../inc/bottom.php");
 ?>

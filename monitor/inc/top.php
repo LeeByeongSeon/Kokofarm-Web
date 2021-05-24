@@ -112,25 +112,25 @@
   <!-- jQuery Grid -->
   <!--<script src="../library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     JQGrid-->
   <!--<script src="../library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  JQGrid:Language-->
-  <link href="../library/jqgrid/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css">  <!--JQGrid:CSS--->
+  <link href="../../library/jqgrid/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css">  <!--JQGrid:CSS--->
 
   <!--amChart-->
-  <script src="../library/amchart/amcharts.js" type="text/javascript"></script>
-  <script src="../library/amchart/serial.js" type="text/javascript"></script>
-  <script src="../library/amchart/lang/ko.js" type="text/javascript"></script>
+  <script src="../../library/amchart/amcharts.js" type="text/javascript"></script>
+  <script src="../../library/amchart/serial.js" type="text/javascript"></script>
+  <script src="../../library/amchart/lang/ko.js" type="text/javascript"></script>
 
   <!-- myDefined JS
   <script src="../library/my_define/my_define.js"></script> -->
 
-  <link rel="stylesheet" media="screen, print" href="../assets/vendors/vendors.bundle.css">
-  <link rel="stylesheet" media="screen, print" href="../assets/app/app.bundle.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/homepage.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/forms.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/buttons.css">
+  <link rel="stylesheet" media="screen, print" href="../../library/vendors/vendors.bundle.css">
+  <link rel="stylesheet" media="screen, print" href="../../library/app/app.bundle.css">
+  <link rel="stylesheet" type="text/css" href="../../library/pages/homepage.css">
+  <link rel="stylesheet" type="text/css" href="../../library/pages/forms.css">
+  <link rel="stylesheet" type="text/css" href="../../library/pages/buttons.css">
 
 
 </head>
-<body class="   smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
+<body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
   
   <!-- BEGIN .sa-wrapper -->
   <div class="sa-wrapper">
@@ -141,7 +141,7 @@
 
               <div class="sa-logo-space d-table-cell h-100">
                 <div class="flex-row d-flex align-items-center h-100">
-                  <a class="sa-logo-link" href="../01_summary/0101.php" title="KOKOFARM"><img alt="KOKOFARM" src="../images/logo.png" class="sa-logo"></a>
+                  <a class="sa-logo-link" href="javascript:void(0)" title="KOKOFARM"><img alt="KOKOFARM" src="../images/logo.png" class="sa-logo"></a>
                 </div>  
               </div>
 
@@ -196,10 +196,10 @@
 
         <!--농장 트리뷰-->
         
-      <div class="col-xl-2 no-padding" style="position:fixed">
+      <article class="col-xl-2 no-padding" style="position:fixed">
           <div id="treeView" class="col-xl-12 float-left no-padding">
             
-            <div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+            <div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
               <header>
                 <div class="widget-header">
                   <span class="widget-icon"> <i class="fa fa-list"></i> </span>
@@ -220,7 +220,7 @@
                   </div>	
 
 									
-									<div class="custom-scroll table-responsive" style="height:600px; overflow-y: scroll;">
+									<div class="custom-scroll table-responsive" style="height:550px; overflow-y: scroll;">
 
                   <!--농장 트리뷰 body 부분-->
                   <div class="tree smart-form" style="margin-left:20px;">
@@ -313,4 +313,4 @@
             </div>
 
           </div>  <!--농장 트리뷰 end-->
-       </div>
+       </article>

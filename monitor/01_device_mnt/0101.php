@@ -2,8 +2,8 @@
 include_once("../inc/top.php");
 ?>
 <!--농가별 현황-->
-<div class="col-xl-12 no-padding">
-	<div class="jarviswidget jarviswidget-color-grey-dark fullSc no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+<article class="col-xl-12 no-padding">
+	<div class="jarviswidget jarviswidget-color-grey-dark fullSc no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 		<header>
 			<div class="widget-header">	
 				<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;농가별 현황</h2>	
@@ -164,7 +164,7 @@ include_once("../inc/top.php");
 		</div>
 				
 	</div>
-</div>
+</article>
 	
 <?
 include_once("../inc/bottom.php");
