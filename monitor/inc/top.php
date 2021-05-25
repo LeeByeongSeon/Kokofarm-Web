@@ -102,6 +102,12 @@
   	<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,500,700">-->
   	<link rel="stylesheet" href="../../common/library/fonts/font.css"> <!--Google fonts-->
 	
+	<script src="../../common/library/jquery/jquery.min.js"></script>						<!-- jQuery -->
+	<script src="../../common/library/jquery/jquery-ui-1.10.3.min.js"></script>				<!-- jQuery UI-->
+	<script src="../../common/library/bootstrap/bootstrap.min.js"></script>					<!-- BOOTSTRAP JS -->
+	<script src="../../common/library/smartwidgets/jarvis.widget.min.js"></script>			<!-- JARVIS WIDGETS -->
+	<script src="../../common/library/plugin/sparkline/jquery.sparkline.min.js"></script>	<!-- SPARKLINES -->
+	
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
 	<link rel="icon" href="../images/icon.png" type="image/x-icon">
@@ -116,8 +122,8 @@
 	<script src="../../common/library/editable_table/external/adamwdraper/numeral.min.js"></script>
 	
 	<!-- jQuery Grid -->
-	<!--<script src="../library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     JQGrid-->
-	<!--<script src="../library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  JQGrid:Language-->
+	<script src="../../common/library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     <!--JQGrid-->
+	<script src="../../common/library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  	<!--JQGrid:Language-->
 	<link href="../../common/library/jqgrid/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css">  <!--JQGrid:CSS--->
 
 	<!--amChart-->
