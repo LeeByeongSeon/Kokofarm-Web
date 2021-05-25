@@ -1,14 +1,14 @@
 <?
 include_once("../inc/top.php");
 ?>
-<!--급이 / 급수 관리-->
+<!--급이 / 급수 / 외기 관리-->
 <article class="col-xl-10 float-right">
 	<div class="row">
 		<div class="col-xl-12">
 			<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;급이 / 급수 관리</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;급이 / 급수 / 외기 관리</h2>	
 					</div>
 				</header>
 					
