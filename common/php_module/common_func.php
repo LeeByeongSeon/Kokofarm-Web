@@ -49,8 +49,6 @@ function run_sql_delete($table, $where){
     sql_conn::get_inst()->delete($table, $where);
 }
 
-
-
 //Mysql 종료*********************************************************//
 
 ?>
