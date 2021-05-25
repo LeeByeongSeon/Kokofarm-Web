@@ -105,6 +105,15 @@
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
 	<link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+	<!--Bootsteap Table-->
+	<link rel="stylesheet" href="../../common/library//bootstrap_table/bootstrap-table.css"/>
+	<script src="../../common/library//bootstrap_table/bootstrap-table.js"></script>
+
+	<!--editable Table-->
+	<script src='../../common/library/editable_table/mindmup-editabletable.js'></script>
+	<script src='../../common/library/editable_table/numeric-input-example.js'></script>
+	<script src="../../common/library/editable_table/external/adamwdraper/numeral.min.js"></script>
 	
 	<!-- jQuery Grid -->
 	<!--<script src="../library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     JQGrid-->
