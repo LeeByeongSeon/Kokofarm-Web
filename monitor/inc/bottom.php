@@ -1,9 +1,9 @@
 
-				</section>
+						</section>
 
-			</div> <!-- END .d-flex w-100 -->
+					</div> <!-- END .d-flex w-100 -->
 
-			</div> <!-- END .sa-content -->
+				</div> <!-- END .sa-content -->
     
 				<footer class="sa-page-footer"> <!-- BEGIN .sa-page-footer -->
 					<div class="d-flex align-items-center w-100 h-100">

@@ -99,8 +99,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,500,700">-->
-  <link rel="stylesheet" href="../../library/fonts/font.css"> <!--Google fonts-->
+  	<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,500,700">-->
+  	<link rel="stylesheet" href="../../common/library/fonts/font.css"> <!--Google fonts-->
 	
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
@@ -157,6 +157,7 @@
 			</div>
         </header> <!-- END .sa-page-header -->
 
+		<!-- BEGIN .sa-page-body -->
 		<div class="sa-page-body">
 		
 			<!-- 메뉴바 -->
@@ -171,135 +172,130 @@
       		<!-- BEGIN .sa-content-wrapper -->
       		<div class="sa-content-wrapper">
         
-    		<div class="sa-content">
-				<div class="d-flex w-100 home-header">
+				<div class="sa-content">
+					<div class="d-flex w-100 home-header">
 
-					<!--화면 Title-->
-					<div>
-						<?=$title_html?>       
-					</div>
-
-				</div><!--END .d-flex w-100 home-header-->
-
-			<div class="d-flex w-100">
-				<section id="widget-grid" class="w-100">
-
-        		<!--농장 트리뷰-->
-				<article class="col-xl-2 no-padding" style="position:fixed">
-					<div id="treeView" class="col-xl-12 float-left no-padding">
-						
-						<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-							<header>
-								<div class="widget-header">
-									<span class="widget-icon"> <i class="fa fa-list"></i> </span>
-									<h2>농가 목록 </h2>
-								</div>		
-							</header>
-				
-							<div class="widget-body">
-
-							<!--농장 트리뷰 검색필드-->
-							<div class="widget-body-toolbar bg-white" style="margin-bottom:10px; padding-top:20px; padding-left:20px;">
-								<form class="form-inline" role="form" style="padding-bottom:10px;">
-								<div class="input-group">
-								<input type="text" class="form-control" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;
-								<button type="button" class="btn btn-warning">검색</button>
-								</div>
-								</form>
-							</div>	
-
-												
-												<div class="custom-scroll table-responsive" style="height:550px; overflow-y: scroll;">
-
-							<!--농장 트리뷰 body 부분-->
-							<div class="tree smart-form" style="margin-left:20px;">
-								<ul>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span>01 동</span>
-									</li>
-									<li>
-										<span>02 동</span>
-									</li>
-									<li>
-										<span>03 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								<li>
-									<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-									<ul>
-									<li>
-										<span><i class="icon-leaf"></i> 동</span>
-									</li>
-									</ul>
-								</li>
-								</ul>
-							</div>  <!--농장 트리뷰 body 부분-->
-
-							</div>
-
-							</div>
-				
+						<!--화면 Title-->
+						<div>
+							<?=$title_html?>       
 						</div>
 
-					</div>  <!--농장 트리뷰 end-->
-				</article>
+					</div><!--END .d-flex w-100 home-header-->
+
+					<div class="d-flex w-100">
+						<section id="widget-grid" class="w-100">
+
+							<!--농장 트리뷰-->
+							<article class="col-xl-2 no-padding" style="position:fixed">
+								<div id="treeView" class="col-xl-12 float-left no-padding">
+									
+									<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+										<header>
+											<div class="widget-header">
+												<span class="widget-icon"> <i class="fa fa-list"></i> </span>
+												<h2>농가 목록 </h2>
+											</div>		
+										</header>
+							
+										<div class="widget-body">
+
+											<!--농장 트리뷰 검색필드-->
+											<div class="widget-body-toolbar bg-white" style="margin-bottom:10px; padding-top:20px; padding-left:20px;">
+												<form class="form-inline" role="form" style="padding-bottom:10px;">
+													<div class="input-group">
+														<input type="text" class="form-control" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;
+														<button type="button" class="btn btn-warning">검색</button>
+													</div>
+												</form>
+											</div>
+
+											<div class="custom-scroll table-responsive" style="height:550px; overflow-y: scroll;">
+
+												<!--농장 트리뷰 body 부분-->
+												<div class="tree smart-form" style="margin-left:20px;">
+													<ul>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span>01 동</span>
+																</li>
+																<li>
+																	<span>02 동</span>
+																</li>
+																<li>
+																	<span>03 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+														<li>
+															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<ul>
+																<li>
+																	<span><i class="icon-leaf"></i> 동</span>
+																</li>
+															</ul>
+														</li>
+													</ul>
+												</div>  <!-- END #tree smart-form -->
+											</div> <!-- END .custom-scroll table-responsive -->
+										</div> <!-- END .widget-body -->
+									</div> <!-- END .jarviswidget -->
+								</div> <!--농장 트리뷰 end-->
+							</article>
