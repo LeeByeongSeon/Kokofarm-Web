@@ -5,7 +5,7 @@ include_once("../inc/top.php");
 <article class="col-xl-10 float-right">
 	<div class="row">
 		<div class="col-xl-5">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-green-dark" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;박승민농장 - 1동</h2>	
@@ -14,9 +14,9 @@ include_once("../inc/top.php");
 
 				<div class="widget-body">
 
-					<table style="width:350px; height:150px; text-align:center; margin-top:10px; float:left">
+					<table style="width:350px; height:150px; text-align:center; float:left">
 						<thead>
-							<th colspan="3"><button class="btn btn-primary" style="width:200px">23일령</button></th>
+							<th colspan="3"><button class="btn btn-success" style="width:200px;" disabled>23일령</button></th>
 						</thead>
 						<tbody>
 							<tr>
@@ -39,7 +39,7 @@ include_once("../inc/top.php");
 						</tbody>
 					</table>
 
-					<div style="float:right; width:200px; height:140px; margin:10px 50px 10px 0">
+					<div style="float:right; width:200px; height:140px;">
 						<img src="../images/img1.png" style="width:200px; height:150px">
 					</div>			
 					
@@ -103,7 +103,7 @@ include_once("../inc/top.php");
 	<!--평균중량(표) & 오류이력-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량 (표)</h2>	
@@ -274,7 +274,7 @@ include_once("../inc/top.php");
 	<!--장치현황-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 현황</h2>	
@@ -308,7 +308,6 @@ include_once("../inc/top.php");
 							</tr>
 						</tbody>
 					</table>
-					<hr style="border: 1px solid silver">
 					<table class="table table-bordered table-hover" style="text-align: center; margin-bottom:10px;">
 						<thead>
 							<th>장치</th>
@@ -349,7 +348,6 @@ include_once("../inc/top.php");
 							</tr>
 						</tbody>
 					</table>
-					<hr style="border: 1px solid silver">
 					<table class="table table-bordered table-hover" style="text-align: center; margin-bottom:10px;">
 						<thead>
 							<th>장치</th>
@@ -382,7 +380,6 @@ include_once("../inc/top.php");
 							</tr>
 						</tbody>
 					</table>
-					<hr style="border: 1px solid silver">
 					<table class="table table-bordered table-hover" style="text-align: center;">
 						<thead>
 							<th>장치</th>
@@ -422,7 +419,7 @@ include_once("../inc/top.php");
 	<!--IoT 저울 & GW 관리-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;GW 관리 (농장ID-동ID)</h2>	
@@ -430,7 +427,7 @@ include_once("../inc/top.php");
 				</header>
 
 				<div class="widget-body">
-					<table class="table table-bordered table-hover" style="width:300px; height:170px; text-align:center; float:left; margin-left:20px">
+					<table class="table table-bordered table-hover" style="width:300px; height:170px; text-align:center; float:left;">
 						<thead>
 							<td colspan="4"><button class="btn btn-primary" style="width:200px">GW 냉각팬 조회</button></td>
 						</thead>
@@ -457,7 +454,7 @@ include_once("../inc/top.php");
 					</table>
 					<table style="width:350px; text-align:center; float:right">
 						<thead>
-							<td><button class="btn btn-default" style="width:300px;">V 3.5.1</button></td>
+							<td><button class="btn btn-default" style="width:300px;" disabled>V 3.5.1</button></td>
 						</thead>
 						<tbody>
 							<tr>
@@ -480,10 +477,10 @@ include_once("../inc/top.php");
 		</div>
 
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;IoT 저울 관리 (농장ID-동ID)</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;IoT 저울 관리 (농장ID-동ID)</h2>	
 					</div>
 				</header>
 				
@@ -534,10 +531,10 @@ include_once("../inc/top.php");
 	<!--로우데이터 확인-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;로우데이터 확인</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;로우데이터 확인</h2>	
 					</div>
 				</header>
 
@@ -545,13 +542,14 @@ include_once("../inc/top.php");
 
 					<div class="widget-body-toolbar">
 						<form id="searchFORM" class="form-inline" onsubmit="return false;">
-							<select class="form-control">
-								<option>시간구분</option>
-							</select>
-							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="시작시간" size="15" >&nbsp;&nbsp;-
+							<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="시작시간" size="15" >&nbsp;&nbsp;-
 							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="종료시간" size="15" >&nbsp;&nbsp;
+							<select class="form-control">
+								<option>저울번호</option>
+							</select>
+							&nbsp;&nbsp;LIMIT&nbsp;&nbsp;<input class="form-control" type="text" maxlength="4" placeholder="1000" size="15">&nbsp;&nbsp;
 							<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-							<button type="button" class="btn btn-success  btn-sm" onClick="actionBtn('Reset')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
+							<button type="button" class="btn btn-success  btn-sm" onClick="actionBtn('Reset')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
 						</form>
 					</div>
 

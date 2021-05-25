@@ -5,7 +5,7 @@ include_once("../inc/top.php");
 <article class="col-xl-10 float-right">
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;출하이력</h2>	
@@ -84,7 +84,7 @@ include_once("../inc/top.php");
 	<!--실측중량 기록 & 재산출 기록-->
 	<div class="row">
 		<div class="col-xl-4">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;실측중량 기록</h2>	
@@ -188,7 +188,7 @@ include_once("../inc/top.php");
 	<!--환경센서 현황-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-green-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량 (표)</h2>	
@@ -307,7 +307,7 @@ include_once("../inc/top.php");
 	<!--장치 현황-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 현황</h2>	
@@ -352,7 +352,7 @@ include_once("../inc/top.php");
 	<!--로우데이터 확인-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-green-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;로우데이터 확인</h2>	

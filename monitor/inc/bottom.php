@@ -22,8 +22,8 @@
 </body>
 </html>
 
-<script src="../../common/library/vendors/vendors.bundle.js"></script>
-<script src="../../common/library/app/app.bundle.js"></script>
+<script src="../../library/vendors/vendors.bundle.js"></script>
+<script src="../../library/app/app.bundle.js"></script>
 
 <script>
   $(document).ready(function()

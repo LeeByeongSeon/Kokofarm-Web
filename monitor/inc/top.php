@@ -99,7 +99,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,500,700">
+  <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,500,700">-->
+  <link rel="stylesheet" href="../../library/fonts/font.css"> <!--Google fonts-->
 	
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">

@@ -5,7 +5,7 @@ include_once("../inc/top.php");
 <article class="col-xl-10 float-right">
 	<div class="row">
 		<article class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;전국 농장 현황</h2>	

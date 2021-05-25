@@ -4,7 +4,7 @@ include_once("../inc/top.php");
 <!--입출하 농장 수 & 호수별 입추 수-->
 <div class="row fullSc">
 	<article class="col-xl-4">
-		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;입출하 농장 수</h2>	
@@ -41,7 +41,7 @@ include_once("../inc/top.php");
 	</article>
 
 	<article class="col-xl-8">
-		<div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-grey-dark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;호수별 입추 수 (단위 : 1000마리)</h2>	
@@ -128,14 +128,14 @@ include_once("../inc/top.php");
 	</article>
 
 	<article class="col-xl-5">
-		<div class="jarviswidget jarviswidget-color-green-dark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-green-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;농가 지도</h2>	
 				</div>
 			</header>
 				
-			<div class="widget-body no-padding">
+			<div class="widget-body">
 
 				
 				
