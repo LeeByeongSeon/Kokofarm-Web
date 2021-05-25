@@ -1,2 +1,0 @@
-# Kokofarm-Web
-# RENEWAL
