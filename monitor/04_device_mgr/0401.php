@@ -1,6 +1,7 @@
 <?
 include_once("../inc/top.php");
 ?>
+
 <!--IoT 저울 관리-->
 <article class="col-xl-10 float-right">
 	<div class="row">
@@ -10,102 +11,18 @@ include_once("../inc/top.php");
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;IoT 저울 관리</h2>	
 					</div>
-				</header>
+				</header> <!--end--widget-header-->
 					
 				<div class="widget-body">
 
-					<table class="table table-bordered table-hover" style="text-align: center;">
-						<thead>
-							<th></th>
-							<th>농장ID</th>
-							<th>동ID</th>
-							<th>저울ID</th>
-							<th>저울 버전</th>
-							<th>저울 펌웨어</th>
-							<th>온도센서 유/무</th>
-							<th>슴도센서 유/무</th>
-							<th>CO2센서 유/무</th>
-							<th>NH3센서 유/무</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>KF0023</td>
-								<td>01</td>
-								<td>01</td>
-								<td>V3.0</td>
-								<td>V3.2</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>N</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>KF0023</td>
-								<td>01</td>
-								<td>02</td>
-								<td>V3.0</td>
-								<td>V3.2</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>N</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>KF0023</td>
-								<td>01</td>
-								<td>03</td>
-								<td>V3.0</td>
-								<td>V3.2</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>KF0023</td>
-								<td>01</td>
-								<td>02</td>
-								<td>V3.0</td>
-								<td>V3.2</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>N</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>KF0023</td>
-								<td>01</td>
-								<td>02</td>
-								<td>V3.0</td>
-								<td>V3.2</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>N</td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>KF0023</td>
-								<td>01</td>
-								<td>02</td>
-								<td>V3.0</td>
-								<td>V3.2</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-								<td>Y</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="jqgrid_zone">
+						<table id="jqgrid" class="jqgrid_table"></table>
+						<div id="jqgrid_pager"></div>
+					</div>
 					
-				</div>
+				</div> <!--end--widget-body-->
 						
-			</div>
+			</div> <!--end--jarviswidget-->
 		</div>
 	</div>
 </article>
@@ -113,3 +30,65 @@ include_once("../inc/top.php");
 <?
 include_once("../inc/bottom.php");
 ?>
+
+<script language="javascript">
+	$(document).ready(function(){
+		get_grid_data();
+	});
+
+	function get_grid_data(){
+		$("#jqgrid").jqGrid({
+			url:"0401_action.php", 
+			editurl:"0401_action.php",
+			styleUI:"Bootstrap",
+			autowidth:true,
+			shrinkToFit:false,
+			mtype:'post',
+			sortorder:"desc",
+			datatype:"json",
+			rowNum:15,
+			pager:"#jqgrid_pager",
+			viewrecords:true,
+			sortname:"pk",
+			rownumbers:true,
+			height:520,
+			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
+			colModel: [
+				{label: "농장ID", 			name: "siFarmid",	align:'center'},
+				{label: "동ID",				name: "siDongid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "저울ID",			name: "siCellid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "저울 버전",		name: "siVersion",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "펌웨어 버전", 		name: "siFirmware",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "설치 일자", 		name: "siDate",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "온도 센서 유무", 	name: "siHaveTemp",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "습도 센서 유무", 	name: "siHaveHumi",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "CO2 센서 유무", 	name: "siHaveCo2",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "NH3 센서 유무", 	name: "siHaveNh3",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "pk", 	name: "pk",	hidden:true },
+			],
+			onSelectRow: function(id){		},
+			loadComplete:function(data){		}
+		});
+
+		$('#jqgrid').navGrid('#jqgrid_pager',
+			{ 
+				edit:true, add:true, del:true, search:false, refresh: true, view: false, position:"left", cloneToTop:false 
+			},
+			{ 
+				beforeInitData:function(){
+					$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true}} );
+				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
+			},
+			{	
+				beforeInitData:function(){
+					$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:false}} );
+				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
+			},
+			{	
+				beforeInitData:function(){
+				},delcaption:"자료삭제", width:500, errorTextFormat:function (data) {return 'Error: ' + data.responseText}
+			}
+		);
+	};
+
+</script>

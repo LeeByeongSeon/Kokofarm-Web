@@ -1,5 +1,5 @@
 <?
 
-include_once("../../common/php_common/pages");
+include_once("../../common/php_module/common_func.php");
 
 ?>

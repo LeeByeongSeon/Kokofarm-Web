@@ -73,7 +73,7 @@ class sql_conn{
     private function get_config(){
         $config_arr = array();
 
-        $fp = fopen("../../common/dbconn.cfg","r");
+        $fp = fopen("../../common/php_module/mysql_info.cfg", "r");
         $tmp = fgets($fp); $posi = strpos($tmp,";"); $config_arr["mysql_host"] = trim(substr($tmp,0,$posi));
         $tmp = fgets($fp); $posi = strpos($tmp,";"); $config_arr["mysql_user"] = trim(substr($tmp,0,$posi));
         $tmp = fgets($fp); $posi = strpos($tmp,";"); $config_arr["mysql_pass"] = trim(substr($tmp,0,$posi));

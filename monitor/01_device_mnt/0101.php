@@ -63,7 +63,7 @@ include_once("../inc/bottom.php");
 				get_data(); 
 			}
 			else{ 
-				var updatePer = parseInt(timer_count/60*100); $("#stateBar").css('width', updatePer + "%"); 
+				var updatePer = parseInt(timer_count / 60 * 100); $("#stateBar").css('width', updatePer + "%"); 
 				$("#stateBar").html(updatePer + "%"); $("#stateBar").parent().attr("data-original-title",updatePer + "%"); }
 		},1000);
 	});

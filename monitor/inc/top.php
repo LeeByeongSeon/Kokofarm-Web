@@ -113,7 +113,7 @@
 	<link rel="icon" href="../images/icon.png" type="image/x-icon">
 
 	<!--Bootsteap Table-->
-	<link rel="stylesheet" href="../../common/library//bootstrap_table/bootstrap-table.css"/>
+	<link rel="stylesheet" href="../../common/library/bootstrap_table/bootstrap-table.css"/>
 	<script src="../../common/library//bootstrap_table/bootstrap-table.js"></script>
 
 	<!--editable Table-->
@@ -139,6 +139,7 @@
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/homepage.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/forms.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/buttons.css">
+
 
 </head>
 
