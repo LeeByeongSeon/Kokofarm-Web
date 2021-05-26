@@ -922,10 +922,10 @@ caption {
   margin: 0 0 20px; }
 
 .glyphicon {
-  font-family: FontAwesome;
+  /*font-family: FontAwesome;*/
   font-style: normal; }
-  .glyphicon:before {
-    display: inline-block; }
+  /*.glyphicon:before {
+    display: inline-block; }*/
 
 .glyphicon-arrow-right:before {
   content: "\f061"; }
@@ -5368,11 +5368,12 @@ table.dataTable {
   .ui-jqgrid .ui-jqgrid-btable tbody tr.jqgrow td,
   .ui-jqgrid .jqgfirstrow td:first-child {
     padding-right: 4px;
-    width: 21px !important; }
+    /*width: 21px !important;*/ }
   .ui-jqgrid .ui-jqgrid-pager .navtable td,
   .ui-jqgrid .ui-jqgrid-toppager .navtable td,
   .ui-jqgrid .ui-pg-table td {
-    padding: 1px;
+    /*padding: 1px;*/
+    padding: 0 5px;
     border: 0; }
   .ui-jqgrid .ui-jqgrid-pager {
     padding: 4px !important; }
@@ -5380,7 +5381,8 @@ table.dataTable {
     font-size: inherit;
     border-radius: 0;
     padding: 1px 3px;
-    border: 2px inset; }
+    /*border: 2px inset;*/
+    border: 0; }
   .ui-jqgrid .ui-pg-selbox, .ui-jqgrid .ui-jqgrid-toppager .ui-pg-selbox {
     border: 1px solid #a8a8a8;
     border-radius: 0; }
