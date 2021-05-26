@@ -93,25 +93,28 @@
 
 <!DOCTYPE html>
 
-<html lang="en" class="smart-style-0">
+<html lang="en-us" class="smart-style-0">
 <head>
 	<title>KOKOFARM RENEWAL</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
   	<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,500,700">-->
   	<link rel="stylesheet" href="../../common/library/fonts/font.css"> <!--Google fonts-->
-
-	<!-- FAVICONS -->
-	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
-	<link rel="icon" href="../images/icon.png" type="image/x-icon">
 	
 	<script src="../../common/library/jquery/jquery.min.js"></script>						<!-- jQuery -->
 	<script src="../../common/library/jquery/jquery-ui-1.10.3.min.js"></script>				<!-- jQuery UI-->
 	<script src="../../common/library/bootstrap/bootstrap.min.js"></script>					<!-- BOOTSTRAP JS -->
 	<script src="../../common/library/smartwidgets/jarvis.widget.min.js"></script>			<!-- JARVIS WIDGETS -->
 	<script src="../../common/library/plugin/sparkline/jquery.sparkline.min.js"></script>	<!-- SPARKLINES -->
+	
+	<!-- FAVICONS -->
+	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
+	<link rel="icon" href="../images/icon.png" type="image/x-icon">
+	
+	<!-- BOOTSTRAP CSS -->
+	<link rel="stylesheet" type="text/css" media="screen" href="../../common/library/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../../common/library/fonts/font-awesome.min.css"> 
 
 	<!--Bootsteap Table-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_table/bootstrap-table.css"/>
@@ -123,28 +126,29 @@
 	<script src="../../common/library/editable_table/external/adamwdraper/numeral.min.js"></script>
 	
 	<!-- jQuery Grid -->
-	<script src="../../common/library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     <!--JQGrid-->
-	<script src="../../common/library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  	<!--JQGrid:Language-->
-	<link href="../../common/library/jqgrid/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css">  <!--JQGrid:CSS--->
+	<script src="../../common/library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     	<!--JQGrid-->
+	<script src="../../common/library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  		<!--JQGrid:Language-->
+	<link rel="stylesheet" type="text/css" href="../../common/library/jqgrid/ui.jqgrid-bootstrap.css">  	<!--JQGrid:CSS--->
 
 	<!--amChart-->
 	<script src="../../common/library/amchart/amcharts.js" type="text/javascript"></script>
 	<script src="../../common/library/amchart/serial.js" type="text/javascript"></script>
 	<script src="../../common/library/amchart/lang/ko.js" type="text/javascript"></script>
 
-	<!-- myDefined JS
-	<script src="../library/my_define/my_define.js"></script> -->
+	<!-- myDefined JS-->
+	<script src="../../common/library/my_define/my_define.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../common/library/my_define/my_define.css">
 
+	<!--Template CSS-->
 	<link rel="stylesheet" media="screen, print" href="../../common/library/vendors/vendors.bundle.css">
 	<link rel="stylesheet" media="screen, print" href="../../common/library/app/app.bundle.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/homepage.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/forms.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/buttons.css">
 
-
 </head>
 
-<body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
+<body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigationf">
   	<!-- BEGIN .sa-wrapper -->
   	<div class="sa-wrapper">
         
