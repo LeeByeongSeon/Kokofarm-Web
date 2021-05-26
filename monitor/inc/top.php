@@ -145,18 +145,20 @@
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/homepage.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/forms.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/buttons.css">
-<style>
-	.tree_view
-	{
-		position: fixed;
-	}
-	@media screen and (max-width : 768px){
+
+	<style>
 		.tree_view
 		{
-			position: relative;
+			position: fixed;
 		}
-	}
-</style>
+		@media screen and (max-width : 768px){
+			.tree_view
+			{
+				position: relative;
+			}
+		}
+	</style>
+
 </head>
 
 <body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
