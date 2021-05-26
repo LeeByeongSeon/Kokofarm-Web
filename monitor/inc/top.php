@@ -148,7 +148,7 @@
 
 </head>
 
-<body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigationf">
+<body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
   	<!-- BEGIN .sa-wrapper -->
   	<div class="sa-wrapper">
         
@@ -207,10 +207,10 @@
 						<section id="widget-grid" class="w-100">
 
 							<!--농장 트리뷰-->
-							<article class="col-xl-2 no-padding" style="position:fixed">
+							<article class="col-xl-2" style="position:fixed">
 								<div id="treeView" class="col-xl-12 float-left no-padding">
 									
-									<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+									<div class="jarviswidget jarviswidget-color-grey-dark no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 										<header>
 											<div class="widget-header">
 												<span class="widget-icon"> <i class="fa fa-list"></i> </span>
@@ -230,7 +230,7 @@
 												</form>
 											</div>
 
-											<div class="custom-scroll table-responsive" style="height:550px; overflow-y: scroll;">
+											<div class="custom-scroll table-responsive" style="height:550px;">
 
 												<!--농장 트리뷰 body 부분-->
 												<div class="tree smart-form" style="margin-left:20px;">
