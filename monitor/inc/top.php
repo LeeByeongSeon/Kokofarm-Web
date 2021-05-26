@@ -145,7 +145,18 @@
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/homepage.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/forms.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/buttons.css">
-
+<style>
+	.tree_view
+	{
+		position: fixed;
+	}
+	@media screen and (max-width : 768px){
+		.tree_view
+		{
+			position: relative;
+		}
+	}
+</style>
 </head>
 
 <body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
@@ -207,7 +218,7 @@
 						<section id="widget-grid" class="w-100">
 
 							<!--농장 트리뷰-->
-							<article class="col-xl-2" style="position:fixed">
+							<article class="col-xl-2 tree_view">
 								<div id="treeView" class="col-xl-12 float-left no-padding">
 									
 									<div class="jarviswidget jarviswidget-color-grey-dark no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
