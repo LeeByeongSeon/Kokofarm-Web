@@ -93,7 +93,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en-us" class="smart-style-0">
+<html lang="en-us" class="smart-style-6">
 <head>
 	<title>KOKOFARM RENEWAL</title>
 	<meta charset="utf-8">
@@ -161,7 +161,7 @@
 
 </head>
 
-<body class="smart-style-0 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
+<body class="smart-style-6 sa-menu-on-top sa-fixed-header sa-fixed-navigation">
   	<!-- BEGIN .sa-wrapper -->
   	<div class="sa-wrapper">
         
@@ -180,7 +180,7 @@
 							<div class="d-flex align-items-center w-100">
 								<div class="ml-auto sa-header-right-area">
 									<div class="form-inline">
-										<a class="btn btn-dark" href="../index.php" title="logout" role="button"><i class="fa fa-sign-out fa-lg"> Logout</i></a>
+										<a class="btn btn-warning" href="../index.php" title="logout" role="button"><i class="fa fa-sign-out fa-lg"> Logout</i></a>
 									</div>
 								</div>
 							</div>          
@@ -189,7 +189,7 @@
 
 				</div>
 			</div>
-        </header> <!-- END .sa-page-header -->
+        </header>	<!-- END .sa-page-header -->
 
 		<!-- BEGIN .sa-page-body -->
 		<div class="sa-page-body">
@@ -223,7 +223,7 @@
 							<article class="col-xl-2 tree_view">
 								<div id="treeView" class="col-xl-12 float-left no-padding">
 									
-									<div class="jarviswidget jarviswidget-color-grey-dark no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+									<div class="jarviswidget jarviswidget-color-custom no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 										<header>
 											<div class="widget-header">
 												<span class="widget-icon"> <i class="fa fa-list"></i> </span>
