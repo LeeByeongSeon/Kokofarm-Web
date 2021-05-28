@@ -14,11 +14,12 @@ function call_tree_view(search){
     $.ajax({url:'../../common/php_module/common_action.php', data:data_map, cache:false, type:'post', dataType:'json',
         success: function(data) {
 
-            tree_html += "<ul><li>\n";
+            tree_html += "<ul>\n";
 
             for(var key in data){       // {KF0006|농장명 : {"KF0006|01":동명}, ...}
 
                 var infos = key.split("|");
+                tree_html += "<li>\n";
                 tree_html += "<span class='tree-content' id='" + infos[0] + "'><i class='fa fa-lg fa-folder-open'></i>";
                 tree_html += infos[1] + "</span>\n";
                 tree_html += "<ul>\n";
@@ -26,11 +27,11 @@ function call_tree_view(search){
                 for(var dong in data[key]){
                     tree_html += "<li> <span class='tree-content' id='" + dong + "'>" + data[key][dong] + "</li>\n";
                 }
-
                 tree_html += "</ul>\n";
+                tree_html += "</li>\n";
             }
 
-            tree_html += "</li></ul>\n";
+            tree_html += "</ul>\n";
 
             $("#tree-body").html(tree_html);
         },
