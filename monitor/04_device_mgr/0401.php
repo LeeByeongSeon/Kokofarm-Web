@@ -51,7 +51,7 @@ include_once("../inc/bottom.php");
 			viewrecords:true,
 			sortname:"pk",
 			rownumbers:true,
-			height:520,
+			height:560,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "농장ID", 			name: "siFarmid",	align:'center'},
