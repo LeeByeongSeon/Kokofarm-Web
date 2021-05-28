@@ -2767,6 +2767,12 @@ body.nooverflow {
 .jarviswidget-color-white > header {
   color: #838383; }
 
+/* custom */
+.jarviswidget-color-custom > header {
+  background: #455a64;
+  color: white;
+}
+
 /*
  * WIDGET COLOR DROPDOWN
  */
@@ -7732,7 +7738,8 @@ hr.simple {
 
 @media (min-width: 979px) {
   .sa-fixed-navigation.sa-menu-on-top {
-    padding-top: 9.23077rem; }
+    padding-top: 9.23077rem;
+   }
     .sa-fixed-navigation.sa-menu-on-top .sa-aside-left {
       position: fixed !important;
       height: 71px !important; }
@@ -10292,22 +10299,23 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .sa-page-body {
     background: none; }
   .smart-style-6 .sa-content {
-    padding-left: 44px;
-    padding-right: 44px;
-    padding-top: 30px; }
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px; }
   .smart-style-6 .sa-page-header {
-    background: #2196F3; }
+    /*background: #2196F3;*/
+    background: #455a64; }
   .smart-style-6 .sa-ribbon-btn {
     display: none; }
   .smart-style-6 .sa-logo-link {
     color: #fff;
     font-weight: 300; }
-    .smart-style-6 .sa-logo-link:before {
+    /*.smart-style-6 .sa-logo-link:before {
       content: "SmartAdmin";
       font-size: 17px;
       display: inline-block; }
     .smart-style-6 .sa-logo-link img {
-      display: none; }
+      display: none; }*/
   .smart-style-6 .sa-header-right-area .sa-btn-icon,
   .smart-style-6 .sa-activity-dropdown-toggle {
     background: none;
@@ -10488,15 +10496,15 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .sa-sparks {
     display: none; }
   .smart-style-6 .home-header .page-header {
-    color: #1565C0;
+    color: #404040;
     text-transform: uppercase;
     font-size: 1.46154rem;
     letter-spacing: normal;
     margin-bottom: 20px; }
     .smart-style-6 .home-header .page-header span {
       color: #333; }
-    .smart-style-6 .home-header .page-header .fa {
-      display: none; }
+    /*.smart-style-6 .home-header .page-header .fa {
+      display: none; }*/
   .smart-style-6 .text-blue-dark {
     color: #1565C0 !important; }
   .smart-style-6 .jarviswidget > header {
