@@ -17,10 +17,13 @@ switch($oper){
 		//검색필드
 		$append_query = "";
 
-		if(isset($_REQUEST["search_data"])){
-			$search_data = $_REQUEST["search_data"];	
-            $search_data = stripslashes($search_data);	
-            $search_json = json_decode($search_data, true);
+		if(isset($_REQUEST["select"])){
+			$search_data = $_REQUEST["select"];
+			$searchs = explode("|", $search_data);
+			
+			$append_query = "AND siFarmid = " . $searchs[0];
+
+			$append_query = isset($searchs[1]) ? $append_query . " AND siDongid = " . $searchs[1] : $append_query;
 		}
 
 		//jqgrid 출력

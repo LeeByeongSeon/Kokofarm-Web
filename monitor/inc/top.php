@@ -146,6 +146,9 @@
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/forms.css">
 	<link rel="stylesheet" type="text/css" href="../../common/library/pages/buttons.css">
 
+	<!--common-->
+	<script src="../../common/js_module/common_func.js"></script>
+
 	<style>
 		.tree_view
 		{

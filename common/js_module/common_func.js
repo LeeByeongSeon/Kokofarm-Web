@@ -3,7 +3,7 @@
 var sel_tree_content = "";
 
 // 트리뷰 호출
-function call_tree_view(search){
+function call_tree_view(search){ 
 
     var tree_html = "";
     
@@ -17,6 +17,7 @@ function call_tree_view(search){
             tree_html += "<ul><li>\n";
 
             for(var key in data){       // {KF0006|농장명 : {"KF0006|01":동명}, ...}
+
                 var infos = key.split("|");
                 tree_html += "<span class='tree-content' id='" + infos[0] + "'><i class='fa fa-lg fa-folder-open'></i>";
                 tree_html += infos[1] + "</span>\n";
@@ -30,10 +31,13 @@ function call_tree_view(search){
             }
 
             tree_html += "</li></ul>\n";
+
+            $("#tree-body").html(tree_html);
+        },
+        error: function(){
+            $("#tree-body").html("");
         }
     });
-
-	$("#tree-body").html(tree_html);
 };
 
 // 트리뷰 클릭 이벤트 세팅

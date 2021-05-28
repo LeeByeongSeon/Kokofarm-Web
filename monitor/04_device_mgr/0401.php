@@ -33,7 +33,12 @@ include_once("../inc/bottom.php");
 
 <script language="javascript">
 	$(document).ready(function(){
+
 		get_grid_data();
+
+		call_tree_view();
+
+		set_tree_action(act_grid_data);
 	});
 
 	function get_grid_data(){
@@ -90,5 +95,14 @@ include_once("../inc/bottom.php");
 			}
 		);
 	};
+
+	function act_grid_data(action){
+
+		switch(action){
+			default:
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+		}
+	}
 
 </script>
