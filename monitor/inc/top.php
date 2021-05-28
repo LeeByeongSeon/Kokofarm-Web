@@ -233,83 +233,19 @@
 											<div class="custom-scroll table-responsive" style="height:550px; overflow-y: scroll;">
 
 												<!--농장 트리뷰 body 부분-->
-												<div class="tree smart-form" style="margin-left:20px;">
+												<div class="tree smart-form" id="tree-body" style="margin-left:20px;">
 													<ul>
 														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
+															<span class="tree-content" id="KF0006"><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
 															<ul>
 																<li>
-																	<span>01 동</span>
+																	<span class="tree-content" id="KF0006|01">01 동</span>
 																</li>
 																<li>
-																	<span>02 동</span>
+																	<span class="tree-content" id="KF0006|02">02 동</span>
 																</li>
 																<li>
-																	<span>03 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<span><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
-															<ul>
-																<li>
-																	<span><i class="icon-leaf"></i> 동</span>
+																	<span class="tree-content" id="KF0006|03">03 동</span>
 																</li>
 															</ul>
 														</li>
