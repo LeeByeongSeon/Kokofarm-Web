@@ -18,12 +18,12 @@ switch($oper){
 		$append_query = "";
 
 		if(isset($_REQUEST["select"])){
-			$search_data = $_REQUEST["select"];
-			$searchs = explode("|", $search_data);
+			$select = $_REQUEST["select"];
+			$select_ids = explode("|", $select);
 			
-			$append_query = "AND siFarmid = " . $searchs[0];
+			$append_query = "AND siFarmid = \"" . $select_ids[0] . "\"";
 
-			$append_query = isset($searchs[1]) ? $append_query . " AND siDongid = " . $searchs[1] : $append_query;
+			$append_query = isset($select_ids[1]) ? $append_query . " AND siDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
 		//jqgrid 출력
@@ -40,7 +40,7 @@ switch($oper){
 		$dongID = check_str($_REQUEST["siDongid"]);
 		$cellID = check_str($_REQUEST["siCellid"]);
 
-		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = " .$farmID. " AND fdDongid = " .$dongID. ";";
+		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\";";
 
 		$insert_map = array();
 
@@ -74,7 +74,7 @@ switch($oper){
 		$update_map["siHaveCo2"] = check_str($_REQUEST["siDongid"]);
 		$update_map["siHaveNh3"] = check_str($_REQUEST["siDongid"]);
 
-		$where_query = "siFarmid = " .$farmID. " AND siDongid = " .$dongID. " AND siCellid = " .$cellID;
+		$where_query = "siFarmid = " .$farmID. " AND siDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
 
 		run_sql_update("set_iot_cell", $update_map, $where_query);
 
@@ -88,7 +88,7 @@ switch($oper){
 		$dongID = $keys[1];
 		$cellID = $keys[2];
 
-		$where_query = "siFarmid = " .$farmID. " AND siDongid = " .$dongID. " AND siCellid = " .$cellID;
+		$where_query = "siFarmid = \"" .$farmID. "\" AND siDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
 
 		//저울 삭제
 		run_sql_delete("set_iot_cell", $where_query);

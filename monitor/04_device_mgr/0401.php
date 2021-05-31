@@ -36,9 +36,9 @@ include_once("../inc/bottom.php");
 
 		get_grid_data();
 
-		call_tree_view();
+		call_tree_view("", act_grid_data);
 
-		set_tree_action(act_grid_data);
+		//set_tree_action(act_grid_data);
 	});
 
 	function get_grid_data(){
@@ -47,7 +47,7 @@ include_once("../inc/bottom.php");
 			editurl:"0401_action.php",
 			styleUI:"Bootstrap",
 			autowidth:true,
-			shrinkToFit:false,
+			shrinkToFit:true,
 			mtype:'post',
 			sortorder:"desc",
 			datatype:"json",
@@ -56,10 +56,10 @@ include_once("../inc/bottom.php");
 			viewrecords:true,
 			sortname:"pk",
 			rownumbers:true,
-			height:560,
+			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 			name: "siFarmid",	align:'center'},
+				{label: "농장ID", 			name: "siFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
 				{label: "동ID",				name: "siDongid",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "저울ID",			name: "siCellid",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "저울 버전",		name: "siVersion",	align:'center',		editable:true, editrules:{ required: true} },
@@ -71,7 +71,7 @@ include_once("../inc/bottom.php");
 				{label: "NH3 센서 유무", 	name: "siHaveNh3",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "pk", 	name: "pk",	hidden:true },
 			],
-			onSelectRow: function(id){		},
+			onSelectRow: function(id){		  },
 			loadComplete:function(data){		}
 		});
 

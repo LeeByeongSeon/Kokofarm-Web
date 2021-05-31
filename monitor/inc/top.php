@@ -160,6 +160,14 @@
 				position: relative;
 			}
 		}
+
+		.ui-jqgrid .ui-jqgrid-bdiv {
+			position: relative; 
+			margin: 0em; 
+			padding:0; 
+			overflow-x:hidden; 
+			overflow-y:auto; 
+		}
 	</style>
 
 </head>
@@ -183,7 +191,7 @@
 							<div class="d-flex align-items-center w-100">
 								<div class="ml-auto sa-header-right-area">
 									<div class="form-inline">
-										<a class="btn btn-warning" href="../index.php" title="logout" role="button"><i class="fa fa-sign-out fa-lg"> Logout</i></a>
+										<a class="btn" href="../index.php" title="logout" role="button" style="color:white; background-color:#568a89;"><i class="fa fa-sign-out fa-lg"> Logout</i></a>
 									</div>
 								</div>
 							</div>          
@@ -240,8 +248,8 @@
 											<div class="widget-body-toolbar bg-white" style="margin-bottom:10px; padding-top:20px; padding-left:20px;">
 												<form class="form-inline" role="form" style="padding-bottom:10px;">
 													<div class="input-group">
-														<input type="text" class="form-control" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;
-														<button type="button" class="btn btn-warning">검색</button>
+														<input type="text" class="form-control" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;&nbsp;&nbsp;
+														<button type="button" class="btn" style="color:white; background-color:#568a89;">검색</button>
 													</div>
 												</form>
 											</div>
@@ -249,8 +257,8 @@
 											<div class="custom-scroll table-responsive" style="height:550px;">
 
 												<!--농장 트리뷰 body 부분-->
-												<div class="tree smart-form" id="tree-body" style="margin-left:20px;">
-													<ul>
+												<div class="tree smart-form" id="tree-body" style="margin-left:20px; color:#000000;">
+													<!-- <ul>
 														<li>
 															<span class="tree-content" id="KF0006"><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>
 															<ul>
@@ -265,7 +273,7 @@
 																</li>
 															</ul>
 														</li>
-													</ul>
+													</ul> -->
 												</div>  <!-- END #tree smart-form -->
 											</div> <!-- END .custom-scroll table-responsive -->
 										</div> <!-- END .widget-body -->
