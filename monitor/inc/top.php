@@ -231,7 +231,7 @@
 						<section id="widget-grid" class="w-100">
 
 							<!--농장 트리뷰-->
-							<article class="col-xl-2 tree_view">
+							<article class="col-xl-2 tree_view no-padding">
 								<div id="treeView" class="col-xl-12 float-left no-padding">
 									
 									<div class="jarviswidget jarviswidget-color-custom no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
