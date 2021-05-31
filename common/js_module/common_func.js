@@ -1,6 +1,6 @@
 
 // 트리뷰 선택 농장 저장
-var sel_tree_content = "";
+var selected_id = "";
 
 // jqgrid resize
 $(document).ready(function(){
@@ -15,7 +15,11 @@ $(document).ready(function(){
 	});
 });
 
-// 트리뷰 호출
+/* 트리뷰 호출
+param
+- search : 농장 검색 입력 string
+- work : 농장 버튼 클릭 시 실행할 함수
+*/
 function call_tree_view(search, work){ 
 
     var tree_html = "";
@@ -29,17 +33,17 @@ function call_tree_view(search, work){
 
             tree_html += "<ul role='tree'>\n";
 
-            for(var key in data){       // {KF0006|농장명 : {"KF0006|01":동명}, ...}
+            for(var farm_key in data){       // {KF0006|농장명 : {"KF0006|01":동명}, ...}
 
-                var infos = key.split("|");
+                var infos = farm_key.split("|");
                 //tree_html += "<li class='parent_li' role='treeitem'>\n";
                 tree_html += "<li role='treeitem' style='cursor:pointer;'>\n";
-                tree_html += "<span class='tree-content tree-parent' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
+                tree_html += "<span class='tree-content' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
                 tree_html += infos[1] + "</span>\n";
                 tree_html += "<ul class='tree-group' style='display:none;'>\n";
 
-                for(var dong in data[key]){
-                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong + "'>" + data[key][dong] + "</li>\n";
+                for(var dong_key in data[farm_key]){
+                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "'>" + data[farm_key][dong_key] + "</li>\n";
                 }
                 tree_html += "</ul>\n";
                 tree_html += "</li>\n";
@@ -57,19 +61,30 @@ function call_tree_view(search, work){
     });
 };
 
-// 트리뷰 클릭 이벤트 세팅
+/* 트리뷰 클릭 이벤트 세팅
+param
+- work : 농장 버튼 클릭 시 실행할 함수
+*/
 function set_tree_action(work){
 
     // 가장 첫 농장을 연다
-    $(".tree-parent").first().parent("li").children("ul.tree-group").toggle();
-    $(".tree-parent").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+    $(".tree-content").first().parent("li").children("ul.tree-group").toggle();
+    $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
 
-    sel_tree_content = $(".tree-content").first().attr('id');
-    work(sel_tree_content);
+    selected_id = $(".tree-content").first().attr('id');
+    work(selected_id);
 
     $(".tree-content").off("click").on("click", function(){		// 클릭 이벤트 
-		sel_tree_content = $(this).attr('id');
-        work(sel_tree_content);
+
+        selected_id = $(this).attr('id');
+        var keys = selected_id.split("|");
+
+        if(keys.length == 1){
+            $(this).parent("li").children("ul.tree-group").toggle();
+            $(this).children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+        }
+
+        work(selected_id);
 	});
 
     $(".tree-content").off("mouseenter").on("mouseenter", function(){		// 마우스 오버
@@ -80,11 +95,45 @@ function set_tree_action(work){
 		$(this).css("background-color", "#FFFFFF").css("border", "1px solid #000000").css("color", "#000000");
 	});
 
-    $(".tree-parent").off("click").on("click", function(){		// 농장 버튼 선택 이벤트 - 아이콘 변경 및 동 버튼 hide
-        $(this).parent("li").children("ul.tree-group").toggle();
-        $(this).children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
-	});
-
 }
+
+/* 모달 팝업 - 기본형
+param
+- title : 모달 상단 제목 string
+- msg : 모달에 표시될 내용
+*/
+function popup_alert(title, msg){
+	$("#modal_alert_title").html(title);					//modal title
+	$("#modal_alert_body").html("<p>" + msg + "</p>");		//modal 내용
+	$("#modal_alert").modal('show');					//modal open
+};
+
+/* 모달 팝업 - 확인
+param
+- title : 모달 상단 제목 string
+- msg : 모달에 표시될 내용
+- wokr : 확인/취소 버튼 클릭 시 실행될 함수
+*/
+function popup_confirm(title, msg, work){
+	$("#modal_confirm_title").html(title);					//modal title
+	$("#modal_confirm_body").html("<p>" + msg + "</p>");		//modal 내용
+	$("#modal_confirm").modal('show');						//modal open
+
+	confirm_event(work);
+};
+
+// 확인 및 취소 버튼 클릭 시 실행 할 작업을 바인딩 함
+var confirm_event = function (work){
+	$("#modal_confirm_ok").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
+		work(true);
+		$("#modal_confirm").modal('hide');
+	});
+	
+	$("#modal_confirm_cancle").off("click").on("click", function(){
+		work(false);
+		$("#modal_confirm").modal('hide');
+	});
+};
+
 
 

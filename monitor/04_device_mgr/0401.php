@@ -1,5 +1,11 @@
 <?
 include_once("../inc/top.php");
+include_once("../../common/php_module/common_func.php");
+
+// 동 선택 콤보박스
+$dong_combo_json = make_jqgrid_combo_num(32);
+$cell_combo_json = make_jqgrid_combo_num(10);
+
 ?>
 
 <!--IoT 저울 관리-->
@@ -37,8 +43,6 @@ include_once("../inc/bottom.php");
 		get_grid_data();
 
 		call_tree_view("", act_grid_data);
-
-		//set_tree_action(act_grid_data);
 	});
 
 	function get_grid_data(){
@@ -49,7 +53,7 @@ include_once("../inc/bottom.php");
 			autowidth:true,
 			shrinkToFit:true,
 			mtype:'post',
-			sortorder:"desc",
+			sortorder:"asc",
 			datatype:"json",
 			rowNum:15,
 			pager:"#jqgrid_pager",
@@ -60,8 +64,12 @@ include_once("../inc/bottom.php");
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "농장ID", 			name: "siFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
-				{label: "동ID",				name: "siDongid",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "저울ID",			name: "siCellid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "동ID",				name: "siDongid",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
+				},
+				{label: "저울ID",			name: "siCellid",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:<?=$cell_combo_json?>}
+				},
 				{label: "저울 버전",		name: "siVersion",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "펌웨어 버전", 		name: "siFirmware",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "설치 일자", 		name: "siDate",		align:'center',		editable:true, editrules:{ required: true} },
@@ -81,12 +89,48 @@ include_once("../inc/bottom.php");
 			},
 			{ 
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true}} );
+					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+					var keys = selected_id.split("|");
+					
+					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
+						case 0:		//아무것도 선택 x
+							popup_alert("농장을 먼저 선택해주세요");
+							return false;
+							break;
+
+						case 1:		//농장만 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							break;
+
+						case 2:		//동까지 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							break;
+					}
+
 				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
 			},
 			{	
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+					var keys = selected_id.split("|");
+					
+					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
+						case 0:		//아무것도 선택 x
+							popup_alert("농장을 먼저 선택해주세요");
+							return false;
+							break;
+
+						case 1:		//농장만 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							break;
+
+						case 2:		//동까지 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							break;
+					}
+
 				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
 			},
 			{	

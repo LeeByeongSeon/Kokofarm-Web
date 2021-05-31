@@ -97,4 +97,95 @@ function get_jqgrid_data($query, $page, $limit, $sidx, $sord){
 
 //Mysql 종료*********************************************************//
 
+//UI 관련************************************************************//
+
+/* query로 데이터를 불러온 후 콤보박스로 만들어 리턴
+param
+- query : 콤보박스에 출력할 데이터의 select query
+- form_name : 콤보박스의 name
+- default_name : 콤보박스에 처음 출력될 값
+- field : 쿼리에서 콤보박스로 출력될 필드
+return
+- ret : 콤보박스 html
+*/
+function make_combo_by_query($query, $form_name, $default_name, $field){
+	$ret = "<select class=\"form-control\" name=\"$form_name\">";
+
+	if($default_name == ""){
+		$ret .= "<option value=\"\">전체</option>";
+	}
+	else{
+		$ret .= "<option value=\"\">$defaultName</option>";
+	}
+
+	$result = get_select_data($query);
+
+	foreach($result as $row){
+		$ret .="<option value=\"" . $row[$field] . "\">" . $row[$field] . "</option>";
+	}
+
+	$ret .="</select>";
+
+	return $ret;
+};
+
+/* query로 데이터를 불러온 후 jqgrid edit 형식의 콤보박스 json을 생성
+param
+- query : 콤보박스에 출력할 데이터의 select query
+- field : 쿼리에서 콤보박스로 출력될 필드
+return
+- ret : 콤보박스 json
+*/
+function make_jqgrid_combo($query, $field){
+	$ret = array();
+	$result = get_select_data($query);
+
+	foreach($result as $row){
+		$ret[$row[$field]] = $row[$field];
+	}
+	return json_encode($ret);
+};
+
+/* 01부터 입력받은 숫자까지 반복하여 jqgrid edit 형식의 콤보박스 json을 생성
+param
+- max : 반복할 숫자
+return
+- ret : 콤보박스 json
+*/
+function make_jqgrid_combo_num($max){
+	$ret = "";
+	for($i=1; $i<=$max; $i++){
+		$temp = sprintf('%02d', $i);
+		$ret .= $i . ":'" . $temp . "', ";
+	}
+	$ret = "{" . substr($ret, 0, -2) . "}";
+
+	return $ret;
+};
+
+// function test(){
+// 	$query = "SELECT * FROM farm_detail";
+// 	$result = get_select_data($query);
+
+// 	foreach($result as $row){
+// 		$insert_map = array();
+		
+// 		for($i=1; $i<=3; $i++){
+// 			$insert_map["siFarmid"] = $row["fdFarmid"];
+// 			$insert_map["siDongid"] = $row["fdDongid"];
+// 			$insert_map["siCellid"] = "0" . $i;
+// 			$insert_map["siVersion"] = "3.0";
+// 			$insert_map["siFirmware"] = "3.2";
+// 			$insert_map["siDate"] = date('Y-m-d H:i:s');
+// 			$insert_map["siHaveTemp"] = "y";
+// 			$insert_map["siHaveHumi"] = "y";
+// 			$insert_map["siHaveCo2"] = "y";
+// 			$insert_map["siHaveNh3"] = "n";
+
+// 			run_sql_insert("set_iot_cell", $insert_map);
+// 		}
+		
+// 	}
+// }
+
 ?>
