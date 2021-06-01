@@ -4733,7 +4733,7 @@ table.dataTable {
   right: auto; }
 
 .tree li:before {
-  border-left: 1px solid #000000;
+  border-left: 1px solid #c1c3cc;
   bottom: 50px;
   height: 100%;
   top: -11px;
@@ -4741,13 +4741,13 @@ table.dataTable {
   transition: "border-color 0.1s ease 0.1s"; }
 
 .tree li:after {
-  border-top: 1px solid #000000;
+  border-top: 1px solid #c1c3cc;
   height: 20px;
   top: 18px;
   width: 25px; }
 
 .tree li span {
-  border: 1px solid #000000;
+  border: 1px dotted #455a64;;
   border-radius: 5px;
   display: inline-block;
   padding: 3px 8px;

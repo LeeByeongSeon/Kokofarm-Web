@@ -38,12 +38,12 @@ function call_tree_view(search, work){
                 var infos = farm_key.split("|");
                 //tree_html += "<li class='parent_li' role='treeitem'>\n";
                 tree_html += "<li role='treeitem' style='cursor:pointer;'>\n";
-                tree_html += "<span class='tree-content' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
+                tree_html += "<span class='tree-content' style='padding: 7px;' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
                 tree_html += infos[1] + "</span>\n";
                 tree_html += "<ul class='tree-group' style='display:none;'>\n";
 
                 for(var dong_key in data[farm_key]){
-                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "'>" + data[farm_key][dong_key] + "</li>\n";
+                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' style='padding: 7px;' id='" + dong_key + "'>" + data[farm_key][dong_key] + "</li>\n";
                 }
                 tree_html += "</ul>\n";
                 tree_html += "</li>\n";
@@ -88,11 +88,11 @@ function set_tree_action(work){
 	});
 
     $(".tree-content").off("mouseenter").on("mouseenter", function(){		// 마우스 오버
-        $(this).css("background-color", "#FF8505").css("border", "1px solid #C67605").css("color", "#FFFFFF");
+        $(this).css("background-color", "#455a64").css("border", " 1px dotted #455a64").css("color", "#FFFFFF");
     });
 
     $(".tree-content").off("mouseleave").on("mouseleave", function(){		// 마우스 리브
-		$(this).css("background-color", "#FFFFFF").css("border", "1px solid #000000").css("color", "#000000");
+		$(this).css("background-color", "#FFFFFF").css("border", "1px dotted #455a64").css("color", "#000000");
 	});
 
 }
