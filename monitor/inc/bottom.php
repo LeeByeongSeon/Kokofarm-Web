@@ -20,12 +20,12 @@
 	</div> <!-- END .sa-wrapper -->
 
 	<!--Modal Alert-->
-	<div id="modal_alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+	<div id="modal_alert" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 id="modal_alert_title" class="modal-title">Modal title</h4>
+					<h4 id="modal_alert_title" class="modal-title float-right">Modal title</h4>
+					<button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div id="modal_alert_body" class="modal-body">
 					<p>One fine body…</p>
@@ -38,12 +38,12 @@
 	</div><!--modal -->
 
 	<!--Modal Confirm-->
-	<div id="modal_confirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+	<div id="modal_confirm" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 id="modal_confirm_title" class="modal-title">Modal title</h4>
+					<h4 id="modal_confirm_title" class="modal-title float-right">Modal title</h4>
+					<button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div id="modal_confirm_body" class="modal-body">
 					<p>One fine body…</p>
