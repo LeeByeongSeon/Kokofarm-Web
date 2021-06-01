@@ -17,6 +17,11 @@ $cell_combo_json = make_jqgrid_combo_num(10);
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;IoT 저울 관리</h2>	
 					</div>
+					<div class="widget-toolbar ml-auto">
+						<div class="form-inline">
+							<button class="btn btn-default"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;&nbsp;엑셀</button>
+						</div>
+					</div>
 				</header> <!--end--widget-header-->
 					
 				<div class="widget-body">
