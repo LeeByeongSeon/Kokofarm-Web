@@ -1,6 +1,13 @@
 <?
 include_once("../inc/top.php");
+
+include_once("../../common/php_module/common_func.php");
+
+// 동 선택 콤보박스
+$dong_combo_json = make_jqgrid_combo_num(32);
+
 ?>
+
 <!--PLC 관리-->
 <article class="col-xl-10 float-right">
 	<div class="row">
@@ -9,6 +16,11 @@ include_once("../inc/top.php");
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;PLC 관리</h2>	
+					</div>
+					<div class="widget-toolbar ml-auto">
+						<div class="form-inline">
+							<button class="btn btn-default" style="padding:0.2rem 0.4rem; margin-top:3px" id="btn_excel"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;&nbsp;엑셀</button>
+						</div>
 					</div>
 				</header>
 					
@@ -57,18 +69,16 @@ include_once("../inc/bottom.php");
 			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 			name: "",	align:'center', 	editable:true, editrules:{ required: true} },
-				{label: "동ID",				name: "",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
+				{label: "농장ID", 			name: "spFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
+				{label: "동ID",				name: "spDongid",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:<?=$dong_combo_json?>},
 				},
-				{label: "계열회사",			name: "bpGroupName",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:<?=$cell_combo_json?>}
-				},
-				{label: "IP Addr",			name: "",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "URL(IP, DDNS)", 	name: "",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "Port", 			name: "",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "PW", 				name: "",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "pk", 				name: "pk",	hidden:true },
+				{label: "계열회사",			name: "bpGroupName",align:'center'},
+				{label: "IP Addr",			name: "bpIPaddr",	align:'center'},
+				{label: "URL(IP, DDNS)", 	name: "spURL",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "Port", 			name: "spPORT",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "PW", 				name: "spPW",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "pk", 				name: "pk",			hidden:true },
 			],
 			onSelectRow: function(id){		  },
 			loadComplete:function(data){		}
@@ -80,7 +90,7 @@ include_once("../inc/bottom.php");
 			},
 			{ 
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('spDongid', {editoptions:{readonly:false}} );
 					var keys = selected_id.split("|");
 					
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
@@ -90,12 +100,12 @@ include_once("../inc/bottom.php");
 							break;
 
 						case 1:		//농장만 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('spFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
 							break;
 
 						case 2:		//동까지 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							$("#jqgrid").setColProp('spFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('spDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
 							break;
 					}
 
@@ -103,7 +113,7 @@ include_once("../inc/bottom.php");
 			},
 			{	
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('spDongid', {editoptions:{readonly:false}} );
 					var keys = selected_id.split("|");
 					
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
@@ -113,12 +123,12 @@ include_once("../inc/bottom.php");
 							break;
 
 						case 1:		//농장만 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('spFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
 							break;
 
 						case 2:		//동까지 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							$("#jqgrid").setColProp('spFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('spDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
 							break;
 					}
 
@@ -144,7 +154,7 @@ include_once("../inc/bottom.php");
 	// 엑셀버튼 클릭 이벤트
 	$("#btn_excel").on("click", function(){
         $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
-		$("#jqgrid").jqGrid('excelExport', {url:'0401_action.php'});
+		$("#jqgrid").jqGrid('excelExport', {url:'0403_action.php'});
     });
 
 </script>
