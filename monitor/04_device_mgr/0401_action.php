@@ -103,12 +103,12 @@ switch($oper){
 
 
 	case "excel":
-		$title="IoT저울 현황";
+		$title = "IoT저울 현황";
 
 		header("Content-Type: application/vnd.ms-excel");
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("content-disposition: attachment;filename=" . date('Ymd') . "_" . $title . ".xls");
+		header("content-disposition: attachment;filename=" . date('Ymd_His') . "_" . $title . ".xls");
 
 		$sidx = check_str($_REQUEST['sidx']); // jqGrid의 sortname 속성의 값
 		$sord = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
@@ -126,26 +126,24 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk FROM set_iot_cell WHERE siFarmid = siFarmid " .$append_query;
+		$select_query = "SELECT *, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk FROM set_iot_cell WHERE siFarmid = siFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
-		$fieldData=array(
+		$field_data = array(
 			/*농가 정보*/
-			array("번호","No","INT","center"),
-			array("등록일자","fDate","STR","center"),
-			array("관리그룹","fGroup","STR","center"),
-			array("농가구분","fType","STR","center"),
-			array("농장ID","fID","STR","left"),
-			array("농장PW","fPW","STR","center"),
-			array("농장명","fName","STR","left"),
-			array("농장주","fCEO","STR","left"),
-			array("전화번호","fTel","STR","center"),
-			array("주소","fAddr","STR","left"),
-			array("축산업등록번호","fRegistNo","STR","left"),
-			array("농장등록코드","fCode","STR","left"),
+			array("번호", "No", "INT", "center"),
+			array("농장ID", "siFarmid", "STR", "center"),
+			array("동ID", "siDongid", "STR", "center"),
+			array("저울ID", "siCellid", "STR", "center"),
+			array("저울버전", "siVersion", "STR", "center"),
+			array("펌웨어버전", "siFirmware", "STR", "center"),
+			array("설치일자", "siDate", "STR", "center"),
+			array("온도센서 유무", "siHaveTemp", "STR", "center"),
+			array("습도센서 유무", "siHaveHumi", "STR", "center"),
+			array("CO2센서 유무", "siHaveCo2", "STR", "center"),
+			array("NH3센서 유무", "siHaveNh3", "STR", "center"),
 		);
-		
-		$strSql="SELECT * FROM farm WHERE fID = fID " . $append_sql . " ORDER BY  $sidx  $sord ";
-		convertExcel($strSql, $fieldData, $title, $append_sql);
+
+		convert_excel($select_query, $field_data, $title, $append_query);
 		break;
 }
 

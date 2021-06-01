@@ -87,7 +87,7 @@
 	$title_html = "";
 	foreach ($menu_struct as $value){
 		if($depth_1_url == $value[0] && $depth_2_url == $value[1]){
-			$title_html .= "<h4 class='page-header'><i class='fa-fw fa fa-th-list'></i> " .$value[2]. "<span> <i class='fa-fw fa fa-angle-right'></i> <b>" .$value[3]. "</b></span></h4>";
+			$title_html .= "<h4 class='page-header'><i class='fa-fw fa fa-th-list'></i> " .$value[2]. "<span style='color:#455a64'> <i class='fa-fw fa fa-angle-right'></i> <b>" .$value[3]. "</b></span></h4>";
 		}
 	}
 ?>

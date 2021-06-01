@@ -73,11 +73,11 @@ function set_tree_action(search, work){
         $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
 
         selected_id = $(".tree-content").first().attr('id');
-        work(selected_id);
     }
     else{
-        work("");
+        selected_id = "";
     }
+    work(selected_id);
 
     $(".tree-content").off("click").on("click", function(){		// 클릭 이벤트 
 

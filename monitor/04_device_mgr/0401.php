@@ -19,7 +19,7 @@ $cell_combo_json = make_jqgrid_combo_num(10);
 					</div>
 					<div class="widget-toolbar ml-auto">
 						<div class="form-inline">
-							<button class="btn btn-default"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;&nbsp;엑셀</button>
+							<button class="btn btn-default" style="padding:0.2rem 0.4rem; margin-top:3px" id="btn_excel"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;&nbsp;엑셀</button>
 						</div>
 					</div>
 				</header> <!--end--widget-header-->
@@ -146,6 +146,7 @@ include_once("../inc/bottom.php");
 		);
 	};
 
+	// 트리뷰 버튼 클릭시 리로드 이벤트
 	function act_grid_data(action){
 
 		switch(action){
@@ -153,6 +154,12 @@ include_once("../inc/bottom.php");
 				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
 				break;
 		}
-	}
+	};
+
+	// 엑셀버튼 클릭 이벤트
+	$("#btn_excel").on("click", function(){
+        $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
+		$("#jqgrid").jqGrid('excelExport', {url:'0401_action.php'});
+    });
 
 </script>

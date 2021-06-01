@@ -163,29 +163,91 @@ function make_jqgrid_combo_num($max){
 	return $ret;
 };
 
-// function test(){
-// 	$query = "SELECT * FROM farm_detail";
-// 	$result = get_select_data($query);
+//UI 종료************************************************************//
 
-// 	foreach($result as $row){
-// 		$insert_map = array();
-		
-// 		for($i=1; $i<=3; $i++){
-// 			$insert_map["siFarmid"] = $row["fdFarmid"];
-// 			$insert_map["siDongid"] = $row["fdDongid"];
-// 			$insert_map["siCellid"] = "0" . $i;
-// 			$insert_map["siVersion"] = "3.0";
-// 			$insert_map["siFirmware"] = "3.2";
-// 			$insert_map["siDate"] = date('Y-m-d H:i:s');
-// 			$insert_map["siHaveTemp"] = "y";
-// 			$insert_map["siHaveHumi"] = "y";
-// 			$insert_map["siHaveCo2"] = "y";
-// 			$insert_map["siHaveNh3"] = "n";
+/* 데이터를 엑셀로 변환하여 출력
+param
+- query : 엑셀로 변환할 데이터의 select 쿼리
+- field_data : 필드별 엑셀 변환 정보
+- title : 엑셀 파일 제목
+- option : 검색 조건
+*/
+function convert_excel($query, $field_data, $title, $option){
+	$result = get_select_data($query);
+	$row_len = count($result);
+	$colspan = count($field_data) - 1;
+	
+	$html="<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
+			<html>
+				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><head>
+					<style> table th {background:#A0B3B3;font-weight:normal; text-align:center;color:white} </style>
+				<body style='border:solid 0.1pt #CCCCCC;font-size:14px'>
+					<table table border='1' style='width:100%;font-size:14px'>
+						<tr><th>출력일시</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . date('Y-m-d H:i:s') . "</td></tr>
+						<tr><th>메 뉴 명</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . $title . "</td></tr>
+						<tr><th>검색조건</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . $option . "</td></tr>
+					</table>
+					<br><br>";
 
-// 			run_sql_insert("set_iot_cell", $insert_map);
-// 		}
-		
-// 	}
-// }
+	if($row_len > 0){
+		//헤더출력
+		$html .="<table table border='1' style='width:100%;font-size:14px'>";
+		$html .="<tr>";
+			foreach($field_data as $key => $val){
+				$html .="<th>" . $val[0] . "</th>";
+			}
+		$html .="</tr>";
+
+		//내용출력
+		$num = 0;
+		foreach($result as $row){
+			$num++;
+			$html .="<tr><th>" . $num . "</th>";
+
+			$contents = "";
+			for($i=1; $i<=$colspan; $i++){
+				$field_name		= $field_data[$i][1];	
+				$field_val   	= $row[$field_name];
+				$field_type		= $field_data[$i][2];
+				$field_align	= $field_data[$i][3];	
+
+				if(empty($field_val)){ 
+					$contents .= "<td></td>"; 
+				}
+				else{
+					switch($field_type){
+						case "INT":
+							$contents .= "<td style=\"text-align:" . $field_align . "\">" . number_format($field_val) .  "</td>";
+							break;
+						case "STR":
+							$contents .= "<td style=\"text-align:" . $field_align . ";mso-number-format:'\@'\">" . $field_val .  "</td>";
+							break;
+						case "DATE":
+							$contents .= "<td style=\"text-align:" . $field_align . ";mso-number-format:'\@'\">" . conv_str_to_date($field_val) .  "</td>";
+							break;
+					}
+				}
+			}
+			$html .= $contents . "</tr>";
+		}
+
+		$html .="</table></body></html>";
+	}
+	echo $html;
+}
+
+/* 문자열을 날짜로 변환
+param
+- str : 변환할 문자열
+return
+- ret : 변환된 날짜
+*/
+function conv_str_to_date($str) {
+	$ret = "";
+	if ($str != "") {
+		$ret = substr($str, 0, 4) ."-". substr($str, 4, 2) ."-". substr($str, 6, 2) ." ". substr($str, 8, 2) .":". substr($str, 10, 2) .":". substr($str, 12, 2);
+	}
+	return $ret;
+};
 
 ?>
