@@ -1,5 +1,11 @@
 <?
 include_once("../inc/top.php");
+
+include_once("../../common/php_module/common_func.php");
+
+// 동 선택 콤보박스
+$dong_combo_json = make_jqgrid_combo_num(32);
+
 ?>
 
 <!--IoT 저울 관리-->
@@ -10,6 +16,11 @@ include_once("../inc/top.php");
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;IP 카메라 관리</h2>	
+					</div>
+					<div class="widget-toolbar ml-auto">
+						<div class="form-inline">
+							<button class="btn btn-default" style="padding:0.2rem 0.4rem; margin-top:3px" id="btn_excel"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;&nbsp;엑셀</button>
+						</div>
 					</div>
 				</header> <!--end--widget-header-->
 					
@@ -33,7 +44,11 @@ include_once("../inc/bottom.php");
 
 <script language="javascript">
 	$(document).ready(function(){
+
 		get_grid_data();
+
+		call_tree_view("", act_grid_data);
+		set_tree_search(act_grid_data);
 	});
 
 	function get_grid_data(){
@@ -42,16 +57,16 @@ include_once("../inc/bottom.php");
 			editurl:"0402_action.php",
 			styleUI:"Bootstrap",
 			autowidth:true,
-			shrinkToFit:false,
+			shrinkToFit:true,
 			mtype:'post',
-			sortorder:"desc",
+			sortorder:"asc",
 			datatype:"json",
-			rowNum:15,
+			rowNum:17,
 			pager:"#jqgrid_pager",
 			viewrecords:true,
 			sortname:"pk",
 			rownumbers:true,
-			height:560,
+			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "농장ID", 			name: "scFarmid",	align:'center'},
@@ -63,7 +78,7 @@ include_once("../inc/bottom.php");
 				{label: "접속 PW", 			name: "scPw",		align:'center',		editable:true, editrules:{ required: true} },
 				{label: "pk", 	name: "pk",	hidden:true },
 			],
-			onSelectRow: function(id){		},
+			onSelectRow: function(id){		  },
 			loadComplete:function(data){		}
 		});
 
@@ -73,12 +88,49 @@ include_once("../inc/bottom.php");
 			},
 			{ 
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('scFarmid', {editoptions:{readonly:true}} );
+					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+
+					var keys = empty(selected_id) ? array() : selected_id.split("|");
+					
+					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
+						case 0:		//아무것도 선택 x
+							popup_alert("농장을 먼저 선택해주세요");
+							return false;
+							break;
+
+						case 1:		//농장만 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							break;
+
+						case 2:		//동까지 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							break;
+					}
+
 				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
 			},
 			{	
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('scFarmid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+					var keys = selected_id.split("|");
+					
+					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
+						case 0:		//아무것도 선택 x
+							popup_alert("농장을 먼저 선택해주세요");
+							return false;
+							break;
+
+						case 1:		//농장만 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							break;
+
+						case 2:		//동까지 선택
+							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							break;
+					}
+
 				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
 			},
 			{	
@@ -88,4 +140,22 @@ include_once("../inc/bottom.php");
 		);
 	};
 
+	// 트리뷰 버튼 클릭시 리로드 이벤트
+	function act_grid_data(action){
+
+		switch(action){
+			default:
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+		}
+	};
+
+	// 엑셀버튼 클릭 이벤트
+	$("#btn_excel").on("click", function(){
+		$("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
+		$("#jqgrid").jqGrid('excelExport', {url:'0401_action.php'});
+	});
+
 </script>
+
+

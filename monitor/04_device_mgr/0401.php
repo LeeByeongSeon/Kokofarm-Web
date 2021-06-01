@@ -96,13 +96,15 @@ include_once("../inc/bottom.php");
 			{ 
 				beforeInitData:function(){
 					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+
+					if(selected_id == ""){
+						popup_alert("농장을 먼저 선택해주세요");
+						return false;
+					}
+					
 					var keys = selected_id.split("|");
 					
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-						case 0:		//아무것도 선택 x
-							popup_alert("농장을 먼저 선택해주세요");
-							return false;
-							break;
 
 						case 1:		//농장만 선택
 							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
@@ -119,13 +121,15 @@ include_once("../inc/bottom.php");
 			{	
 				beforeInitData:function(){
 					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+
+					if(selected_id == ""){
+						popup_alert("농장을 먼저 선택해주세요");
+						return false;
+					}
+
 					var keys = selected_id.split("|");
 					
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-						case 0:		//아무것도 선택 x
-							popup_alert("농장을 먼저 선택해주세요");
-							return false;
-							break;
 
 						case 1:		//농장만 선택
 							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
