@@ -23,7 +23,8 @@
 		array("04_device_mgr", "0401.php", "장치 관리", "IoT 저울 관리", "Y", "fa fa-lg fa-fw fa-video-camera"),
 		array("04_device_mgr", "0402.php", "장치 관리", "IP 카메라 관리", "", ""),
 		array("04_device_mgr", "0403.php", "장치 관리", "PLC 관리", "", ""),
-		array("04_device_mgr", "0404.php", "장치 관리", "급이/급수/외기 관리", "", ""),
+		array("04_device_mgr", "0404.php", "장치 관리", "급이/급수 관리", "", ""),
+		array("04_device_mgr", "0405.php", "장치 관리", "외기 관리", "", ""),
 
 		//옵션 관리
 		array("05_option_mgr", "0501.php", "옵션 관리", "상세 옵션 관리", "Y", "fa fa-lg fa-fw fa-cog"),
