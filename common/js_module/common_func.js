@@ -95,7 +95,19 @@ function set_tree_action(work){
 		$(this).css("background-color", "#FFFFFF").css("border", "1px solid #000000").css("color", "#000000");
 	});
 
-}
+};
+
+/* 트리뷰 검색 이벤트 세팅
+param
+- work : 농장 버튼 클릭 시 실행할 함수
+*/
+function set_tree_search(work){
+    $("#btn_tree_search").off("click").on("click", function(){
+        var search_text = $("#form_tree_search [name=text_tree_search]").val();
+
+        call_tree_view(search_text, work);
+    });
+};
 
 /* 모달 팝업 - 기본형
 param

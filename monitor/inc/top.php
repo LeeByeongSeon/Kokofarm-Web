@@ -191,7 +191,7 @@
 							<div class="d-flex align-items-center w-100">
 								<div class="ml-auto sa-header-right-area">
 									<div class="form-inline">
-										<a class="btn" href="../index.php" title="logout" role="button" style="color:white; background-color:#568a89;"><i class="fa fa-sign-out fa-lg"> Logout</i></a>
+										<a class="btn-sm" href="../index.php" title="logout" role="button" style="color:white; background-color:#568a89;"><i class="fa fa-sign-out fa-lg"> Logout</i></a>
 									</div>
 								</div>
 							</div>          
@@ -245,16 +245,16 @@
 										<div class="widget-body">
 
 											<!--농장 트리뷰 검색필드-->
-											<div class="widget-body-toolbar bg-white" style="margin-bottom:10px; padding-top:20px; padding-left:20px;">
-												<form class="form-inline" role="form" style="padding-bottom:10px;">
+											<div class="widget-body-toolbar bg-white" style="padding-top:10px; padding-left:20px;">
+												<form class="form-inline" id="form_tree_search" role="form">
 													<div class="input-group">
-														<input type="text" class="form-control" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;&nbsp;&nbsp;
-														<button type="button" class="btn" style="color:white; background-color:#568a89;">검색</button>
+														<input type="text" class="form-control" name="text_tree_search" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;&nbsp;&nbsp;
+														<button type="button" class="btn" id="btn_tree_search" style="color:white; background-color:#568a89;">검색</button>
 													</div>
 												</form>
 											</div>
 
-											<div class="custom-scroll table-responsive" style="height:550px;">
+											<div class="custom-scroll table-responsive" style="height: 580px; padding-top: 10px;">
 
 												<!--농장 트리뷰 body 부분-->
 												<div class="tree smart-form" id="tree-body" style="margin-left:20px; color:#000000;">

@@ -17,7 +17,7 @@ switch($oper){
 
         $append_query = "";
         if($search != ""){
-            $append_query = "WHERE fdName LIKE '%" .$search. "%'";
+            $append_query = " WHERE fdName LIKE '%" .$search. "%'";
         }
 
 		//jqgrid 출력

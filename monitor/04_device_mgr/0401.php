@@ -43,6 +43,7 @@ include_once("../inc/bottom.php");
 		get_grid_data();
 
 		call_tree_view("", act_grid_data);
+		set_tree_search(act_grid_data);
 	});
 
 	function get_grid_data(){
@@ -55,7 +56,7 @@ include_once("../inc/bottom.php");
 			mtype:'post',
 			sortorder:"asc",
 			datatype:"json",
-			rowNum:15,
+			rowNum:17,
 			pager:"#jqgrid_pager",
 			viewrecords:true,
 			sortname:"pk",
