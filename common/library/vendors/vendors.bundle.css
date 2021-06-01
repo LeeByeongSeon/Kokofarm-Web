@@ -14831,7 +14831,7 @@ be a descendant of the grid when it is being dragged.
 /* toolbar */
 .ui-jqgrid .ui-userdata {border-left: 0 none;    border-right: 0 none;	height : 27px;overflow: hidden;	}
 /*Modal Window */
-.ui-jqdialog { font-size:11px !important; }
+.ui-jqdialog { font-size:14px !important; }
 .ui-jqdialog { display: none; width: 300px; position: absolute; padding: .2em; /*font-size:11px;*/ overflow:visible;}
 .ui-jqdialog .ui-jqdialog-titlebar { padding: .3em .2em; position: relative; height:20px;}
 .ui-jqdialog .ui-jqdialog-title { margin: .3em .2em .2em .2em;} 
@@ -15518,7 +15518,7 @@ div.tablediv > .table-bordered {
 	overflow:visible;
 }
 .ui-jqdialog .ui-jqdialog-titlebar {
-	padding: .1em .1em; 
+	padding: .3em .1em; 
 	min-height: 35px; 
 }
 .ui-jqdialog .ui-jqdialog-title { 
