@@ -80,7 +80,7 @@ switch($oper){
 		$update_map["siHaveCo2"] = check_str($_REQUEST["siHaveCo2"]);
 		$update_map["siHaveNh3"] = check_str($_REQUEST["siHaveNh3"]);
 
-		$where_query = "siFarmid = " .$farmID. " AND siDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
+		$where_query = "siFarmid = \"" .$farmID. "\" AND siDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
 
 		run_sql_update("set_iot_cell", $update_map, $where_query);
 

@@ -17,14 +17,19 @@ switch($oper){
 		//검색필드
 		$append_query = "";
 
-		if(isset($_REQUEST["search_data"])){
-			$search_data = $_REQUEST["search_data"];	
-            $search_data = stripslashes($search_data);	
-            $search_json = json_decode($search_data, true);
+		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
+			$select = $_REQUEST["select"];
+			$select_ids = explode("|", $select);
+			
+			$append_query = "AND scFarmid = \"" . $select_ids[0] . "\"";
+
+			$append_query = isset($select_ids[1]) ? $append_query . " AND scDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk FROM set_iot_cell WHERE siFarmid = siFarmid " .$append_query;
+		$select_query = "SELECT sc.*, fdName, beIPaddr, CONCAT(scFarmid, '|', scDongid) AS pk FROM set_camera AS sc 
+						JOIN farm_detail AS fd ON fd.fdFarmid = sc.scFarmid AND fd.fdDongid = sc.scDongid 
+						JOIN buffer_sensor_status AS be ON be.beFarmid = sc.scFarmid AND be.beDongid = sc.scDongid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);
@@ -33,22 +38,27 @@ switch($oper){
 
 	case "add":
 		//farm_detail을 확인 후 존재하면 insert
-		$farmID = check_str($_REQUEST["siFarmid"]);
-		$dongID = check_str($_REQUEST["siDongid"]);
-		$cellID = check_str($_REQUEST["siCellid"]);
+		$farmID = check_str($_REQUEST["scFarmid"]);
+		$dongID = sprintf('%02d', check_str($_REQUEST["scDongid"]));
+		$cellID = sprintf('%02d', check_str($_REQUEST["siCellid"]));
 
-		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = " .$farmID. " AND fdDongid = " .$dongID. ";";
+		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\";";
 
 		$insert_map = array();
 
-		if(get_select_count($check_query) > 1){
-			foreach($REQUEST as $key => $val){
-				if(substr($key, 0, 2) == "si"){
-					$insert_map[$key] = check_str($val);
-				}
-			}
+		if(get_select_count($check_query) > 0){
+			$insert_map["scFarmid"] = $farmID;
+			$insert_map["scDongid"] = $dongID;
+			$insert_map["siCellid"] = $cellID;
+			$insert_map["siVersion"] = check_str($_REQUEST["siVersion"]);
+			$insert_map["siFirmware"] = check_str($_REQUEST["siFirmware"]);
+			$insert_map["siDate"] = check_str($_REQUEST["siDate"]);
+			$insert_map["siHaveTemp"] = check_str($_REQUEST["siHaveTemp"]);
+			$insert_map["siHaveHumi"] = check_str($_REQUEST["siHaveHumi"]);
+			$insert_map["siHaveCo2"] = check_str($_REQUEST["siHaveCo2"]);
+			$insert_map["siHaveNh3"] = check_str($_REQUEST["siHaveNh3"]);
 
-			run_sql_insert("set_iot_cell", $insert_map);
+			run_sql_insert("set_camera", $insert_map);
 		}
 		break;
 
@@ -63,17 +73,17 @@ switch($oper){
 
 		$update_map = array();
 
-		$update_map["siVersion"] = check_str($_REQUEST["siDongid"]);
-		$update_map["siFirmware"] = check_str($_REQUEST["siDongid"]);
-		$update_map["siDate"] = check_str($_REQUEST["siDongid"]);
-		$update_map["siHaveTemp"] = check_str($_REQUEST["siDongid"]);
-		$update_map["siHaveHumi"] = check_str($_REQUEST["siDongid"]);
-		$update_map["siHaveCo2"] = check_str($_REQUEST["siDongid"]);
-		$update_map["siHaveNh3"] = check_str($_REQUEST["siDongid"]);
+		$update_map["siVersion"] = check_str($_REQUEST["siVersion"]);
+		$update_map["siFirmware"] = check_str($_REQUEST["siFirmware"]);
+		$update_map["siDate"] = check_str($_REQUEST["siDate"]);
+		$update_map["siHaveTemp"] = check_str($_REQUEST["siHaveTemp"]);
+		$update_map["siHaveHumi"] = check_str($_REQUEST["siHaveHumi"]);
+		$update_map["siHaveCo2"] = check_str($_REQUEST["siHaveCo2"]);
+		$update_map["siHaveNh3"] = check_str($_REQUEST["siHaveNh3"]);
 
-		$where_query = "siFarmid = " .$farmID. " AND siDongid = " .$dongID. " AND siCellid = " .$cellID;
+		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
 
-		run_sql_update("set_iot_cell", $update_map, $where_query);
+		run_sql_update("set_camera", $update_map, $where_query);
 
 		break;
 
@@ -85,55 +95,56 @@ switch($oper){
 		$dongID = $keys[1];
 		$cellID = $keys[2];
 
-		$where_query = "siFarmid = " .$farmID. " AND siDongid = " .$dongID. " AND siCellid = " .$cellID;
+		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
 
 		//저울 삭제
-		run_sql_delete("set_iot_cell", $where_query);
+		run_sql_delete("set_camera", $where_query);
 
 		break;
 
 
 	case "excel":
-		$title="IoT저울 현황";
+		$title = "IoT저울 현황";
 
 		header("Content-Type: application/vnd.ms-excel");
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("content-disposition: attachment;filename=" . date('Ymd') . "_" . $title . ".xls");
+		header("content-disposition: attachment;filename=" . date('Ymd_His') . "_" . $title . ".xls");
 
 		$sidx = check_str($_REQUEST['sidx']); // jqGrid의 sortname 속성의 값
 		$sord = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
 
 		//검색필드
-		$append_sql="";
+		$append_sql = "";
 
-		if(isset($_REQUEST["search_data"])){
-			$search_data=$_REQUEST["search_data"];	$search_data=stripslashes($search_data);	$search_json=json_decode($search_data,true);
+		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
+			$select = $_REQUEST["select"];
+			$select_ids = explode("|", $select);
+			
+			$append_query = "AND scFarmid = \"" . $select_ids[0] . "\"";
 
-			$src = $search_json["searchName"];
-			if ($search_json["searchName"]!="") $append_sql .= " AND (fName LIKE '%" . $src . "%'  OR fID LIKE'%" . $src . "%' OR fTel LIKE'%" . $src . "%' OR fAddr LIKE '%" . $src . "%' OR fCEO LIKE '%" . $src . "%') ";
-			if ($search_json["searchGroup"]!="") $append_sql .= " AND fGroup='" . $search_json["searchGroup"] . "' ";
-			if ($search_json["searchAccount"]!="") $append_sql .= " AND fType='" . $search_json["searchAccount"] . "' ";
+			$append_query = isset($select_ids[1]) ? $append_query . " AND scDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
-		$fieldData=array(
+		//jqgrid 출력
+		$select_query = "SELECT *, CONCAT(scFarmid, '|', scDongid, '|', siCellid) AS pk FROM set_camera WHERE scFarmid = scFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+
+		$field_data = array(
 			/*농가 정보*/
-			array("번호","No","INT","center"),
-			array("등록일자","fDate","STR","center"),
-			array("관리그룹","fGroup","STR","center"),
-			array("농가구분","fType","STR","center"),
-			array("농장ID","fID","STR","left"),
-			array("농장PW","fPW","STR","center"),
-			array("농장명","fName","STR","left"),
-			array("농장주","fCEO","STR","left"),
-			array("전화번호","fTel","STR","center"),
-			array("주소","fAddr","STR","left"),
-			array("축산업등록번호","fRegistNo","STR","left"),
-			array("농장등록코드","fCode","STR","left"),
+			array("번호", "No", "INT", "center"),
+			array("농장ID", "scFarmid", "STR", "center"),
+			array("동ID", "scDongid", "STR", "center"),
+			array("저울ID", "siCellid", "STR", "center"),
+			array("저울버전", "siVersion", "STR", "center"),
+			array("펌웨어버전", "siFirmware", "STR", "center"),
+			array("설치일자", "siDate", "STR", "center"),
+			array("온도센서 유무", "siHaveTemp", "STR", "center"),
+			array("습도센서 유무", "siHaveHumi", "STR", "center"),
+			array("CO2센서 유무", "siHaveCo2", "STR", "center"),
+			array("NH3센서 유무", "siHaveNh3", "STR", "center"),
 		);
-		
-		$strSql="SELECT * FROM farm WHERE fID = fID " . $append_sql . " ORDER BY  $sidx  $sord ";
-		convertExcel($strSql, $fieldData, $title, $append_sql);
+
+		convert_excel($select_query, $field_data, $title, $append_query);
 		break;
 }
 

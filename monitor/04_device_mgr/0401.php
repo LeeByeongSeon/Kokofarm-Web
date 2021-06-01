@@ -6,6 +6,8 @@ include_once("../../common/php_module/common_func.php");
 $dong_combo_json = make_jqgrid_combo_num(32);
 $cell_combo_json = make_jqgrid_combo_num(10);
 
+
+
 ?>
 
 <!--IoT 저울 관리-->
@@ -79,10 +81,18 @@ include_once("../inc/bottom.php");
 				{label: "저울 버전",		name: "siVersion",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "펌웨어 버전", 		name: "siFirmware",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "설치 일자", 		name: "siDate",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "온도 센서 유무", 	name: "siHaveTemp",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "습도 센서 유무", 	name: "siHaveHumi",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "CO2 센서 유무", 	name: "siHaveCo2",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "NH3 센서 유무", 	name: "siHaveNh3",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "온도 센서 유무", 	name: "siHaveTemp",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'y'}, 
+				},
+				{label: "습도 센서 유무", 	name: "siHaveHumi",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'y'}, 
+				},
+				{label: "CO2 센서 유무", 	name: "siHaveCo2",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'y'}, 
+				},
+				{label: "NH3 센서 유무", 	name: "siHaveNh3",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'n'}, 
+				},
 				{label: "pk", 	name: "pk",	hidden:true },
 			],
 			onSelectRow: function(id){		  },

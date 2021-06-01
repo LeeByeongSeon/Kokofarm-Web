@@ -71,7 +71,8 @@ include_once("../inc/bottom.php");
 			colModel: [
 				{label: "농장ID", 			name: "scFarmid",	align:'center'},
 				{label: "동ID",				name: "scDongid",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "동 이름",			name: "scName",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "동 이름",			name: "fdName",		align:'center'},
+				{label: "접속 IP",			name: "beIPaddr",	align:'center'},
 				{label: "접속 포트",		name: "scPort",		align:'center',		editable:true, editrules:{ required: true} },
 				{label: "접속 URL", 		name: "scUrl",		align:'center',		editable:true, editrules:{ required: true} },
 				{label: "접속 ID", 			name: "scId",		align:'center',		editable:true, editrules:{ required: true} },
@@ -90,13 +91,14 @@ include_once("../inc/bottom.php");
 				beforeInitData:function(){
 					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
 
-					var keys = empty(selected_id) ? array() : selected_id.split("|");
+					if(selected_id == ""){
+						popup_alert("농장을 먼저 선택해주세요");
+						return false;
+					}
+					
+					var keys = selected_id.split("|");
 					
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-						case 0:		//아무것도 선택 x
-							popup_alert("농장을 먼저 선택해주세요");
-							return false;
-							break;
 
 						case 1:		//농장만 선택
 							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
@@ -113,13 +115,15 @@ include_once("../inc/bottom.php");
 			{	
 				beforeInitData:function(){
 					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+
+					if(selected_id == ""){
+						popup_alert("농장을 먼저 선택해주세요");
+						return false;
+					}
+					
 					var keys = selected_id.split("|");
 					
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-						case 0:		//아무것도 선택 x
-							popup_alert("농장을 먼저 선택해주세요");
-							return false;
-							break;
 
 						case 1:		//농장만 선택
 							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
