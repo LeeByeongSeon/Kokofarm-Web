@@ -40,7 +40,6 @@ switch($oper){
 		//farm_detail을 확인 후 존재하면 insert
 		$farmID = check_str($_REQUEST["scFarmid"]);
 		$dongID = sprintf('%02d', check_str($_REQUEST["scDongid"]));
-		$cellID = sprintf('%02d', check_str($_REQUEST["siCellid"]));
 
 		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\";";
 
@@ -49,14 +48,10 @@ switch($oper){
 		if(get_select_count($check_query) > 0){
 			$insert_map["scFarmid"] = $farmID;
 			$insert_map["scDongid"] = $dongID;
-			$insert_map["siCellid"] = $cellID;
-			$insert_map["siVersion"] = check_str($_REQUEST["siVersion"]);
-			$insert_map["siFirmware"] = check_str($_REQUEST["siFirmware"]);
-			$insert_map["siDate"] = check_str($_REQUEST["siDate"]);
-			$insert_map["siHaveTemp"] = check_str($_REQUEST["siHaveTemp"]);
-			$insert_map["siHaveHumi"] = check_str($_REQUEST["siHaveHumi"]);
-			$insert_map["siHaveCo2"] = check_str($_REQUEST["siHaveCo2"]);
-			$insert_map["siHaveNh3"] = check_str($_REQUEST["siHaveNh3"]);
+			$insert_map["scPort"] = check_str($_REQUEST["scPort"]);
+			$insert_map["scUrl"] = check_str($_REQUEST["scUrl"]);
+			$insert_map["scId"] = check_str($_REQUEST["scId"]);
+			$insert_map["scPw"] = check_str($_REQUEST["scPw"]);
 
 			run_sql_insert("set_camera", $insert_map);
 		}
@@ -69,19 +64,15 @@ switch($oper){
 
 		$farmID = $keys[0];
 		$dongID = $keys[1];
-		$cellID = $keys[2];
 
 		$update_map = array();
 
-		$update_map["siVersion"] = check_str($_REQUEST["siVersion"]);
-		$update_map["siFirmware"] = check_str($_REQUEST["siFirmware"]);
-		$update_map["siDate"] = check_str($_REQUEST["siDate"]);
-		$update_map["siHaveTemp"] = check_str($_REQUEST["siHaveTemp"]);
-		$update_map["siHaveHumi"] = check_str($_REQUEST["siHaveHumi"]);
-		$update_map["siHaveCo2"] = check_str($_REQUEST["siHaveCo2"]);
-		$update_map["siHaveNh3"] = check_str($_REQUEST["siHaveNh3"]);
+		$insert_map["scPort"] = check_str($_REQUEST["scPort"]);
+		$insert_map["scUrl"] = check_str($_REQUEST["scUrl"]);
+		$insert_map["scId"] = check_str($_REQUEST["scId"]);
+		$insert_map["scPw"] = check_str($_REQUEST["scPw"]);
 
-		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
+		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\"";
 
 		run_sql_update("set_camera", $update_map, $where_query);
 
@@ -93,9 +84,8 @@ switch($oper){
 
 		$farmID = $keys[0];
 		$dongID = $keys[1];
-		$cellID = $keys[2];
 
-		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
+		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\"";
 
 		//저울 삭제
 		run_sql_delete("set_camera", $where_query);
@@ -127,21 +117,21 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(scFarmid, '|', scDongid, '|', siCellid) AS pk FROM set_camera WHERE scFarmid = scFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+		$select_query = "SELECT sc.*, fdName, beIPaddr, CONCAT(scFarmid, '|', scDongid) AS pk FROM set_camera AS sc 
+						JOIN farm_detail AS fd ON fd.fdFarmid = sc.scFarmid AND fd.fdDongid = sc.scDongid 
+						JOIN buffer_sensor_status AS be ON be.beFarmid = sc.scFarmid AND be.beDongid = sc.scDongid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/
 			array("번호", "No", "INT", "center"),
 			array("농장ID", "scFarmid", "STR", "center"),
 			array("동ID", "scDongid", "STR", "center"),
-			array("저울ID", "siCellid", "STR", "center"),
-			array("저울버전", "siVersion", "STR", "center"),
-			array("펌웨어버전", "siFirmware", "STR", "center"),
-			array("설치일자", "siDate", "STR", "center"),
-			array("온도센서 유무", "siHaveTemp", "STR", "center"),
-			array("습도센서 유무", "siHaveHumi", "STR", "center"),
-			array("CO2센서 유무", "siHaveCo2", "STR", "center"),
-			array("NH3센서 유무", "siHaveNh3", "STR", "center"),
+			array("동 이름", "fdName", "STR", "center"),
+			array("접속 IP", "beIPaddr", "STR", "center"),
+			array("접속 Port", "scPort", "STR", "center"),
+			array("접속 URL", "scUrl", "STR", "center"),
+			array("접속 ID", "scId", "STR", "center"),
+			array("접속 PW", "scPw", "STR", "center"),
 		);
 
 		convert_excel($select_query, $field_data, $title, $append_query);

@@ -108,7 +108,7 @@ include_once("../inc/bottom.php");
 					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
 
 					if(selected_id == ""){
-						popup_alert("농장을 먼저 선택해주세요");
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
 						return false;
 					}
 					
@@ -133,7 +133,7 @@ include_once("../inc/bottom.php");
 					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
 
 					if(selected_id == ""){
-						popup_alert("농장을 먼저 선택해주세요");
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
 						return false;
 					}
 

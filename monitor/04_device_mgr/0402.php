@@ -69,14 +69,19 @@ include_once("../inc/bottom.php");
 			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 			name: "scFarmid",	align:'center'},
-				{label: "동ID",				name: "scDongid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "농장ID", 			name: "scFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
+				{label: "동ID",				name: "scDongid",	align:'center',		editable:true, editrules:{ required: true}, 
+					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
+				},
 				{label: "동 이름",			name: "fdName",		align:'center'},
 				{label: "접속 IP",			name: "beIPaddr",	align:'center'},
 				{label: "접속 포트",		name: "scPort",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "접속 URL", 		name: "scUrl",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "접속 ID", 			name: "scId",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "접속 PW", 			name: "scPw",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "접속 URL", 		name: "scUrl",		align:'center',		editable:true, editrules:{ required: true}, 
+					editoptions:{defaultValue:"/stw-cgi/video.cgi?msubmenu=snapshot&action=view&Resolution=640x480"} },
+				{label: "접속 ID", 			name: "scId",		align:'center',		editable:true, editrules:{ required: true}, 
+					editoptions:{defaultValue:"admin"} },
+				{label: "접속 PW", 			name: "scPw",		align:'center',		editable:true, editrules:{ required: true}, 
+					editoptions:{defaultValue:"kokofarm5561"} },
 				{label: "pk", 	name: "pk",	hidden:true },
 			],
 			onSelectRow: function(id){		  },
@@ -89,10 +94,10 @@ include_once("../inc/bottom.php");
 			},
 			{ 
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('scDongid', {editoptions:{readonly:false}} );
 
 					if(selected_id == ""){
-						popup_alert("농장을 먼저 선택해주세요");
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
 						return false;
 					}
 					
@@ -101,12 +106,12 @@ include_once("../inc/bottom.php");
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
 
 						case 1:		//농장만 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('scFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
 							break;
 
 						case 2:		//동까지 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							$("#jqgrid").setColProp('scFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('scDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
 							break;
 					}
 
@@ -114,10 +119,10 @@ include_once("../inc/bottom.php");
 			},
 			{	
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('scDongid', {editoptions:{readonly:false}} );
 
 					if(selected_id == ""){
-						popup_alert("농장을 먼저 선택해주세요");
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
 						return false;
 					}
 					
@@ -126,12 +131,12 @@ include_once("../inc/bottom.php");
 					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
 
 						case 1:		//농장만 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('scFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
 							break;
 
 						case 2:		//동까지 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							$("#jqgrid").setColProp('scFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('scDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
 							break;
 					}
 
@@ -157,7 +162,7 @@ include_once("../inc/bottom.php");
 	// 엑셀버튼 클릭 이벤트
 	$("#btn_excel").on("click", function(){
 		$("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
-		$("#jqgrid").jqGrid('excelExport', {url:'0401_action.php'});
+		$("#jqgrid").jqGrid('excelExport', {url:'0402_action.php'});
 	});
 
 </script>
