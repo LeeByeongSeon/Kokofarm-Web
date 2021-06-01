@@ -53,7 +53,7 @@ function call_tree_view(search, work){
 
             $("#tree-body").html(tree_html);
 
-            set_tree_action(work);
+            set_tree_action(search, work);
         },
         error: function(){
             $("#tree-body").html("");
@@ -65,14 +65,19 @@ function call_tree_view(search, work){
 param
 - work : 농장 버튼 클릭 시 실행할 함수
 */
-function set_tree_action(work){
+function set_tree_action(search, work){
 
-    // 가장 첫 농장을 연다
-    $(".tree-content").first().parent("li").children("ul.tree-group").toggle();
-    $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+    if(search != ""){
+        // 가장 첫 농장을 연다
+        $(".tree-content").first().parent("li").children("ul.tree-group").toggle();
+        $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
 
-    selected_id = $(".tree-content").first().attr('id');
-    work(selected_id);
+        selected_id = $(".tree-content").first().attr('id');
+        work(selected_id);
+    }
+    else{
+        work("");
+    }
 
     $(".tree-content").off("click").on("click", function(){		// 클릭 이벤트 
 

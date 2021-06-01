@@ -18,7 +18,7 @@ switch($oper){
 		//검색필드
 		$append_query = "";
 
-		if(isset($_REQUEST["select"])){
+		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
 			$select = $_REQUEST["select"];
 			$select_ids = explode("|", $select);
 			
@@ -114,16 +114,19 @@ switch($oper){
 		$sord = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
 
 		//검색필드
-		$append_sql="";
+		$append_sql = "";
 
-		if(isset($_REQUEST["search_data"])){
-			$search_data=$_REQUEST["search_data"];	$search_data=stripslashes($search_data);	$search_json=json_decode($search_data,true);
+		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
+			$select = $_REQUEST["select"];
+			$select_ids = explode("|", $select);
+			
+			$append_query = "AND siFarmid = \"" . $select_ids[0] . "\"";
 
-			$src = $search_json["searchName"];
-			if ($search_json["searchName"]!="") $append_sql .= " AND (fName LIKE '%" . $src . "%'  OR fID LIKE'%" . $src . "%' OR fTel LIKE'%" . $src . "%' OR fAddr LIKE '%" . $src . "%' OR fCEO LIKE '%" . $src . "%') ";
-			if ($search_json["searchGroup"]!="") $append_sql .= " AND fGroup='" . $search_json["searchGroup"] . "' ";
-			if ($search_json["searchAccount"]!="") $append_sql .= " AND fType='" . $search_json["searchAccount"] . "' ";
+			$append_query = isset($select_ids[1]) ? $append_query . " AND siDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
+
+		//jqgrid 출력
+		$select_query = "SELECT *, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk FROM set_iot_cell WHERE siFarmid = siFarmid " .$append_query;
 
 		$fieldData=array(
 			/*농가 정보*/
