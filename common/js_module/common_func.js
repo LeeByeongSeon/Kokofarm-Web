@@ -7,11 +7,19 @@ $(document).ready(function(){
 	$(".jqgrid_zone").bind("resize", function(){
 		$(".jqgrid_table").setGridWidth($(".jqgrid_zone").width());
 		$(".jqgrid_slave_table").setGridWidth($(".jqgrid_slave_zone").width());
+        $(".jqgrid_sub_table").setGridWidth($(".jqgrid_sub_zone").width());
 	});
 
 	$(".jqgrid_slave_zone").bind("resize", function(){
 		$(".jqgrid_table").setGridWidth($(".jqgrid_zone").width());
 		$(".jqgrid_slave_table").setGridWidth($(".jqgrid_slave_zone").width());
+        $(".jqgrid_sub_table").setGridWidth($(".jqgrid_sub_zone").width());
+	});
+
+    $(".jqgrid_sub_zone").bind("resize", function(){
+		$(".jqgrid_table").setGridWidth($(".jqgrid_zone").width());
+		$(".jqgrid_slave_table").setGridWidth($(".jqgrid_slave_zone").width());
+        $(".jqgrid_sub_table").setGridWidth($(".jqgrid_sub_zone").width());
 	});
 });
 

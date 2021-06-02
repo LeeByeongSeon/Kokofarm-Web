@@ -22,14 +22,14 @@ switch($oper){
 			$select = $_REQUEST["select"];
 			$select_ids = explode("|", $select);
 			
-			$append_query = "AND sfFarmid = \"" . $select_ids[0] . "\"";
+			$append_query = "AND soFarmid = \"" . $select_ids[0] . "\"";
 
-			$append_query = isset($select_ids[1]) ? $append_query . " AND sfDongid = \"" . $select_ids[1] . "\"" : $append_query;
+			$append_query = isset($select_ids[1]) ? $append_query . " AND soDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT sf.*, CONCAT(sfFarmid, '|', sfDongid) AS pk, fd.fdName FROM set_feeder AS sf 
-                        JOIN farm_detail AS fd ON fd.fdFarmid = sf.sfFarmid AND fd.fdDongid = sf.sfDongid " .$append_query;
+		$select_query = "SELECT so.*, CONCAT(soFarmid, '|', soDongid) AS pk, fd.fdName FROM set_outsensor AS so 
+                        JOIN farm_detail AS fd ON fd.fdFarmid = so.soFarmid AND fd.fdDongid = so.soDongid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);
@@ -38,16 +38,16 @@ switch($oper){
 
 	case "add":
 		//farm_detail을 확인 후 존재하면 insert
-		$farmID = check_str($_REQUEST["sfFarmid"]);
-		$dongID = sprintf('%02d', check_str($_REQUEST["sfDongid"]));
+		$farmID = check_str($_REQUEST["soFarmid"]);
+		$dongID = sprintf('%02d', check_str($_REQUEST["soDongid"]));
 
 		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\";";
 
 		$insert_map = array();
 
 		if(get_select_count($check_query) > 0){
-			$insert_map["sfFarmid"]     = $farmID;
-			$insert_map["sfDongid"]     = $dongID;
+			$insert_map["soFarmid"]     = $farmID;
+			$insert_map["soDongid"]     = $dongID;
 			$insert_map["sfFeedMax"]    = check_str($_REQUEST["sfFeedMax"]);
 			$insert_map["sfWaterMax"]   = check_str($_REQUEST["sfWaterMax"]);
 			
@@ -80,7 +80,7 @@ switch($oper){
         $update_map["sfWaterMax"]   = check_str($_REQUEST["sfWaterMax"]);
         $update_map["sfoutsensor"]  = check_str($_REQUEST["sfoutsensor"]);
 
-		$where_query = "sfFarmid = \"" .$farmID. "\" AND sfDongid = \"" .$dongID. "\"";
+		$where_query = "soFarmid = \"" .$farmID. "\" AND soDongid = \"" .$dongID. "\"";
 
 		run_sql_update("set_feeder", $update_map, $where_query);
 
@@ -103,7 +103,7 @@ switch($oper){
 		$farmID = $keys[0];
 		$dongID = $keys[1];
 
-		$where_query = "sfFarmid = \"" .$farmID. "\" AND sfDongid = \"" .$dongID. "\"";
+		$where_query = "soFarmid = \"" .$farmID. "\" AND soDongid = \"" .$dongID. "\"";
 		//plc 삭제
 		run_sql_delete("set_feeder", $where_query);
 
@@ -128,19 +128,19 @@ switch($oper){
 			$select = $_REQUEST["select"];
 			$select_ids = explode("|", $select);
 			
-			$append_query = "AND sfFarmid = \"" . $select_ids[0] . "\"";
+			$append_query = "AND soFarmid = \"" . $select_ids[0] . "\"";
 
-			$append_query = isset($select_ids[1]) ? $append_query . " AND sfDongid = \"" . $select_ids[1] . "\"" : $append_query;
+			$append_query = isset($select_ids[1]) ? $append_query . " AND soDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(sfFarmid, '|', sfDongid) AS pk FROM set_feeder WHERE sfFarmid = sfFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+		$select_query = "SELECT *, CONCAT(soFarmid, '|', soDongid) AS pk FROM set_feeder WHERE soFarmid = soFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/
 			array("번호", "No", "INT", "center"),
-			array("농장ID", "sfFarmid", "STR", "center"),
-			array("동ID", "sfDongid", "STR", "center"),
+			array("농장ID", "soFarmid", "STR", "center"),
+			array("동ID", "soDongid", "STR", "center"),
             array("사료빈 총 용량", "sfFeedMax", "STR", "center"),
             array("유량 센서 최대 펄스 값", "sfWaterMax", "STR", "center")
 		);
