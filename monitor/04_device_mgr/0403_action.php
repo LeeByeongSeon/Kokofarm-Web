@@ -52,7 +52,7 @@ switch($oper){
 			$insert_map["spPORT"]   = check_str($_REQUEST["spPORT"]);
 			$insert_map["spPW"]     = check_str($_REQUEST["spPW"]);
 
-			run_sql_insert("set_iot_cell", $insert_map);
+			run_sql_insert("set_plc", $insert_map);
 		}
 		break;
 
@@ -91,7 +91,7 @@ switch($oper){
 
 
 	case "excel":
-		$title = "IoT저울 현황";
+		$title = "PLC 현황";
 
 		header("Content-Type: application/vnd.ms-excel");
 		header("Expires: 0");
