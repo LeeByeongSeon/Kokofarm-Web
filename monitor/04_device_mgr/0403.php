@@ -73,7 +73,6 @@ include_once("../inc/bottom.php");
 				{label: "동ID",				name: "spDongid",	align:'center',		editable:true, editrules:{ required: true}, 
 					edittype:'select', editoptions:{value:<?=$dong_combo_json?>},
 				},
-				{label: "계열회사",			name: "bpGroupName",align:'center'},
 				{label: "IP Addr",			name: "bpIPaddr",	align:'center'},
 				{label: "URL(IP, DDNS)", 	name: "spURL",		align:'center',		editable:true, editrules:{ required: true} },
 				{label: "Port", 			name: "spPORT",		align:'center',		editable:true, editrules:{ required: true} },

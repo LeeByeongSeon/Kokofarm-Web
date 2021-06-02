@@ -28,7 +28,7 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, bpGroupName, bpIPaddr, CONCAT(spFarmid, '|', spDongid) AS pk FROM set_plc AS sp
+		$select_query = "SELECT sp.*, bpIPaddr, CONCAT(spFarmid, '|', spDongid) AS pk FROM set_plc AS sp
                         JOIN buffer_plc_status AS bp ON bp.bpFarmid = sp.spFarmid AND bp.bpDongid = sp.spDongid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
@@ -51,9 +51,17 @@ switch($oper){
 			$insert_map["spURL"]    = check_str($_REQUEST["spURL"]);
 			$insert_map["spPORT"]   = check_str($_REQUEST["spPORT"]);
 			$insert_map["spPW"]     = check_str($_REQUEST["spPW"]);
-
+			
 			run_sql_insert("set_plc", $insert_map);
+
+			$insert_map = array();
+
+			$insert_map["bpFarmid"] = $farmID;
+			$insert_map["bpDongid"] = $dongID;
+
+			run_sql_insert("buffer_plc_status", $insert_map);
 		}
+	
 		break;
 
 
@@ -87,6 +95,10 @@ switch($oper){
 		//plc 삭제
 		run_sql_delete("set_plc", $where_query);
 
+		$where_query = "bpFarmid = \"" .$farmID. "\" AND bpDongid = \"" .$dongID. "\"";
+
+		run_sql_delete("buffer_plc_status", $where_query);
+
 		break;
 
 
@@ -114,7 +126,8 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(spFarmid, '|', spDongid) AS pk FROM set_plc WHERE spFarmid = spFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+		$select_query = "SELECT sp.*, bpGroupName, bpIPaddr, CONCAT(spFarmid, '|', spDongid) AS pk FROM set_plc AS sp
+						JOIN buffer_plc_status AS bp ON bp.bpFarmid = sp.spFarmid AND bp.bpDongid = sp.spDongid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/

@@ -1,6 +1,8 @@
 <?
 include_once("../inc/top.php");
 
+include_once("../../common/php_module/common_func.php");
+
 // 계열회사 콤보박스
 $query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"계열회사명\"";
 $group_combo = make_combo_by_query($query, "search_group", "계열회사명", "cName1");
@@ -50,9 +52,6 @@ include_once("../inc/bottom.php");
 	$(document).ready(function(){
 
 		get_grid_data();
-
-		call_tree_view("", act_grid_data);
-		set_tree_search(act_grid_data);
 	});
 
 	function get_grid_data(){
@@ -73,28 +72,20 @@ include_once("../inc/bottom.php");
 			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 			name: "siFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
-				{label: "동ID",				name: "siDongid",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
-				},
-				{label: "저울ID",			name: "siCellid",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:<?=$cell_combo_json?>}
-				},
-				{label: "저울 버전",		name: "siVersion",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "펌웨어 버전", 		name: "siFirmware",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "설치 일자", 		name: "siDate",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "온도 센서 유무", 	name: "siHaveTemp",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'y'}, 
-				},
-				{label: "습도 센서 유무", 	name: "siHaveHumi",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'y'}, 
-				},
-				{label: "CO2 센서 유무", 	name: "siHaveCo2",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'y'}, 
-				},
-				{label: "NH3 센서 유무", 	name: "siHaveNh3",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'y':'설치', 'n':'없음'}, defaultValue:'n'}, 
-				},
+				{label: "농장주ID", 		name: "fID",		align:'center', 	editable:true, editrules:{ required: true} },
+				{label: "농장주PW",			name: "fPW",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "계열회사",			name: "fGroupName",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "농장명",			name: "fName",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "농장주명", 		name: "fCeo",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "농장ID",	 		name: "fFarmid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "계열화회사ID",		name: "fGroupid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "IP",		 		name: "beIPaddr",	align:'center',		},
+				{label: "IoT 저울",	 		name: "cnt_si",		align:'center',		},
+				{label: "IP 카메라", 		name: "cnt_sc",		align:'center',		},
+				{label: "PLC",		 		name: "cnt_sp",		align:'center',		},
+				{label: "급이",		 		name: "cnt_sf",		align:'center',		},
+				{label: "급수",		 		name: "cnt_sf",		align:'center',		},
+				{label: "외기",		 		name: "cnt_so",		align:'center',		},
 				{label: "pk", 	name: "pk",	hidden:true },
 			],
 			onSelectRow: function(id){		  },
@@ -163,14 +154,14 @@ include_once("../inc/bottom.php");
 	};
 
 	// 트리뷰 버튼 클릭시 리로드 이벤트
-	function act_grid_data(action){
+	// function act_grid_data(action){
 
-		switch(action){
-			default:
-				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
-				break;
-		}
-	};
+	// 	switch(action){
+	// 		default:
+	// 			jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+	// 			break;
+	// 	}
+	// };
 
 	// 엑셀버튼 클릭 이벤트
 	$("#btn_excel").on("click", function(){
