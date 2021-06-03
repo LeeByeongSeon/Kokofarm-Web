@@ -67,26 +67,27 @@ include_once("../inc/bottom.php");
 			rowNum:17,
 			pager:"#jqgrid_pager",
 			viewrecords:true,
-			sortname:"pk",
+			sortname:"fID",
 			rownumbers:true,
 			height:570,
-			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
+			jsonReader:{repeatitems:false, id:'fID', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "농장주ID", 		name: "fID",		align:'center', 	editable:true, editrules:{ required: true} },
 				{label: "농장주PW",			name: "fPW",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "계열회사",			name: "fGroupName",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "농장명",			name: "fName",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "농장주명", 		name: "fCeo",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "농장ID",	 		name: "fFarmid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "계열회사",			name: "fGroupName",	align:'center',		editable:true, editrules:{ required: true},
+					edittype:'select', editoptions:{value:<?=$group_combo_json?>}
+				},
 				{label: "계열화회사ID",		name: "fGroupid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "농장ID",	 		name: "fFarmid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "농장주명", 		name: "fCeo",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "농장명",			name: "fName",		align:'center',		editable:true, editrules:{ required: true} },
 				{label: "IP",		 		name: "beIPaddr",	align:'center',		},
 				{label: "IoT 저울",	 		name: "cnt_si",		align:'center',		},
 				{label: "IP 카메라", 		name: "cnt_sc",		align:'center',		},
 				{label: "PLC",		 		name: "cnt_sp",		align:'center',		},
-				{label: "급이",		 		name: "cnt_sf",		align:'center',		},
-				{label: "급수",		 		name: "cnt_sf",		align:'center',		},
+				{label: "급이",				name: "cnt_sf",		align:'center',		},
+				{label: "급수",				name: "cnt_sf",		align:'center',		},
 				{label: "외기",		 		name: "cnt_so",		align:'center',		},
-				{label: "pk", 	name: "pk",	hidden:true },
 			],
 			onSelectRow: function(id){		  },
 			loadComplete:function(data){		}
@@ -98,52 +99,13 @@ include_once("../inc/bottom.php");
 			},
 			{ 
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
-
-					if(selected_id == ""){
-						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
-						return false;
-					}
-					
-					var keys = selected_id.split("|");
-					
-					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-
-						case 1:		//농장만 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							break;
-
-						case 2:		//동까지 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
-							break;
-					}
+					$("#jqgrid").setColProp('fID', {editoptions:{readonly:true}} );
 
 				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
 			},
 			{	
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:false}} );
-
-					if(selected_id == ""){
-						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
-						return false;
-					}
-
-					var keys = selected_id.split("|");
-					
-					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-
-						case 1:		//농장만 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							break;
-
-						case 2:		//동까지 선택
-							$("#jqgrid").setColProp('siFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							$("#jqgrid").setColProp('siDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
-							break;
-					}
-
+					$("#jqgrid").setColProp('fID', {editoptions:{readonly:false}} );
 				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
 			},
 			{	
@@ -152,16 +114,6 @@ include_once("../inc/bottom.php");
 			}
 		);
 	};
-
-	// 트리뷰 버튼 클릭시 리로드 이벤트
-	// function act_grid_data(action){
-
-	// 	switch(action){
-	// 		default:
-	// 			jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
-	// 			break;
-	// 	}
-	// };
 
 	// 엑셀버튼 클릭 이벤트
 	$("#btn_excel").on("click", function(){

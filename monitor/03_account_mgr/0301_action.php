@@ -27,13 +27,13 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT f.*, beIPaddr,
+		$select_query = "SELECT DISTINCT f.*, beIPaddr,
                             (SELECT COUNT(*) FROM set_iot_cell WHERE siFarmid = fFarmid) AS cnt_si,
                             (SELECT COUNT(*) FROM set_camera WHERE scFarmid = fFarmid) AS cnt_sc,
                             (SELECT COUNT(*) FROM set_plc WHERE spFarmid = fFarmid) AS cnt_sp,
                             (SELECT COUNT(*) FROM set_feeder WHERE sfFarmid = fFarmid) AS cnt_sf,
                             (SELECT COUNT(*) FROM set_outsensor WHERE soFarmid = fFarmid) AS cnt_so
-                        FROM farm AS f
+						FROM farm AS f
                         JOIN buffer_sensor_status AS be ON be.beFarmid = f.fFarmid ". $append_query;
         
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
@@ -43,20 +43,20 @@ switch($oper){
 
 	case "add":
 		//farm_detail을 확인 후 존재하면 insert
-		$farmID = check_str($_REQUEST["scFarmid"]);
-		$dongID = sprintf('%02d', check_str($_REQUEST["scDongid"]));
+		$farmID = check_str($_REQUEST["fID"]);
 
-		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\";";
+		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\"";
 
 		$insert_map = array();
 
 		if(get_select_count($check_query) > 0){
-			$insert_map["scFarmid"] = $farmID;
-			$insert_map["scDongid"] = $dongID;
-			$insert_map["scPort"] = check_str($_REQUEST["scPort"]);
-			$insert_map["scUrl"] = check_str($_REQUEST["scUrl"]);
-			$insert_map["scId"] = check_str($_REQUEST["scId"]);
-			$insert_map["scPw"] = check_str($_REQUEST["scPw"]);
+			$insert_map["fID"] 		  = $farmID;
+			$insert_map["fPW"] 		  = check_str($_REQUEST["fPW"]);
+			$insert_map["fGroupName"] = check_str($_REQUEST["fGroupName"]);
+			$insert_map["fGroupid"]   = check_str($_REQUEST["fGroupid"]);
+			$insert_map["fFarmid"] 	  = check_str($_REQUEST["fFarmid"]);
+			$insert_map["fCeo"] 	  = check_str($_REQUEST["fCeo"]);
+			$insert_map["fName"] 	  = check_str($_REQUEST["fName"]);
 
 			run_sql_insert("set_camera", $insert_map);
 		}
@@ -65,41 +65,35 @@ switch($oper){
 
 	case "edit":
 		$pk = check_str($_REQUEST["id"]);
-		$keys = explode("|", $pk);
-
-		$farmID = $keys[0];
-		$dongID = $keys[1];
 
 		$update_map = array();
 
-		$insert_map["scPort"] = check_str($_REQUEST["scPort"]);
-		$insert_map["scUrl"] = check_str($_REQUEST["scUrl"]);
-		$insert_map["scId"] = check_str($_REQUEST["scId"]);
-		$insert_map["scPw"] = check_str($_REQUEST["scPw"]);
+		$update_map["fPW"] 		  = check_str($_REQUEST["fPW"]);
+		$update_map["fGroupName"] = check_str($_REQUEST["fGroupName"]);
+		$update_map["fGroupid"]   = check_str($_REQUEST["fGroupid"]);
+		$update_map["fFarmid"] 	  = check_str($_REQUEST["fFarmid"]);
+		$update_map["fCeo"] 	  = check_str($_REQUEST["fCeo"]);
+		$update_map["fName"] 	  = check_str($_REQUEST["fName"]);
 
-		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\"";
+		$where_query = "fID = \"" .$pk. "\" ";
 
-		run_sql_update("set_camera", $update_map, $where_query);
+		run_sql_update("farm", $update_map, $where_query);
 
 		break;
 
 	case "del":
 		$pk = check_str($_REQUEST["id"]);
-		$keys = explode("|", $pk);
 
-		$farmID = $keys[0];
-		$dongID = $keys[1];
+		$where_query = "fID = \"" .$pk. "\" ";
 
-		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\"";
-
-		//저울 삭제
-		run_sql_delete("set_camera", $where_query);
+		//농장 계정 삭제
+		run_sql_delete("farm", $where_query);
 
 		break;
 
 
 	case "excel":
-		$title = "IoT저울 현황";
+		$title = "농장 계정 관리";
 
 		header("Content-Type: application/vnd.ms-excel");
 		header("Expires: 0");
@@ -122,21 +116,32 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT sc.*, fdName, beIPaddr, CONCAT(scFarmid, '|', scDongid) AS pk FROM set_camera AS sc 
-						JOIN farm_detail AS fd ON fd.fdFarmid = sc.scFarmid AND fd.fdDongid = sc.scDongid 
-						JOIN buffer_sensor_status AS be ON be.beFarmid = sc.scFarmid AND be.beDongid = sc.scDongid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+		$select_query = "SELECT f.*, beIPaddr,
+							(SELECT COUNT(*) FROM set_iot_cell WHERE siFarmid = fFarmid) AS cnt_si,
+							(SELECT COUNT(*) FROM set_camera WHERE scFarmid = fFarmid) AS cnt_sc,
+							(SELECT COUNT(*) FROM set_plc WHERE spFarmid = fFarmid) AS cnt_sp,
+							(SELECT COUNT(*) FROM set_feeder WHERE sfFarmid = fFarmid) AS cnt_sf,
+							(SELECT COUNT(*) FROM set_outsensor WHERE soFarmid = fFarmid) AS cnt_so
+						FROM farm AS f
+						JOIN buffer_sensor_status AS be ON be.beFarmid = f.fFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/
 			array("번호", "No", "INT", "center"),
-			array("농장ID", "scFarmid", "STR", "center"),
-			array("동ID", "scDongid", "STR", "center"),
-			array("동 이름", "fdName", "STR", "center"),
-			array("접속 IP", "beIPaddr", "STR", "center"),
-			array("접속 Port", "scPort", "STR", "center"),
-			array("접속 URL", "scUrl", "STR", "center"),
-			array("접속 ID", "scId", "STR", "center"),
-			array("접속 PW", "scPw", "STR", "center"),
+			array("농장주ID", "fID", "STR", "center"),
+			array("농장주pw", "fPW", "STR", "center"),
+			array("계열회사", "fGroupName", "STR", "center"),
+			array("계열화회사ID", "fGroupid", "STR", "center"),
+			array("농장ID", "fFarmid", "STR", "center"),
+			array("농장주명", "fCeo", "STR", "center"),
+			array("농장명", "fName", "STR", "center"),
+			array("IP", "beIPaddr", "STR", "center"),
+			array("IoT 저울", "cnt_si", "STR", "center"),
+			array("IP 카메라", "cnt_sc", "STR", "center"),
+			array("PLC", "cnt_sp", "STR", "center"),
+			array("급이", "cnt_sf", "STR", "center"),
+			array("급수", "cnt_sf", "STR", "center"),
+			array("외기", "cnt_so", "STR", "center"),
 		);
 
 		convert_excel($select_query, $field_data, $title, $append_query);
