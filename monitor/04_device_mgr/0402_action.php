@@ -67,10 +67,10 @@ switch($oper){
 
 		$update_map = array();
 
-		$insert_map["scPort"] = check_str($_REQUEST["scPort"]);
-		$insert_map["scUrl"] = check_str($_REQUEST["scUrl"]);
-		$insert_map["scId"] = check_str($_REQUEST["scId"]);
-		$insert_map["scPw"] = check_str($_REQUEST["scPw"]);
+		$update_map["scPort"] = check_str($_REQUEST["scPort"]);
+		$update_map["scUrl"] = check_str($_REQUEST["scUrl"]);
+		$update_map["scId"] = check_str($_REQUEST["scId"]);
+		$update_map["scPw"] = check_str($_REQUEST["scPw"]);
 
 		$where_query = "scFarmid = \"" .$farmID. "\" AND scDongid = \"" .$dongID. "\"";
 
