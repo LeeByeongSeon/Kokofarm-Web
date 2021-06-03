@@ -115,7 +115,7 @@ function make_combo_by_query($query, $form_name, $default_name, $field){
 		$ret .= "<option value=\"\">전체</option>";
 	}
 	else{
-		$ret .= "<option value=\"\">$defaultName</option>";
+		$ret .= "<option value=\"\">$default_name</option>";
 	}
 
 	$result = get_select_data($query);
