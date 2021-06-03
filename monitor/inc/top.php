@@ -246,7 +246,7 @@
 
 											<!--농장 트리뷰 검색필드-->
 											<div class="widget-body-toolbar bg-white" style="padding-top:10px; padding-left:20px;">
-												<form class="form-inline" id="form_tree_search" role="form">
+												<form class="form-inline" id="form_tree_search" role="form" onsubmit="return false;">
 													<div class="input-group">
 														<input type="text" class="form-control" name="text_tree_search" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;&nbsp;&nbsp;
 														<button type="button" class="btn" id="btn_tree_search" style="color:white; background-color:#568a89;">검색</button>

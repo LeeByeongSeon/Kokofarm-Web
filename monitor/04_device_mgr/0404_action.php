@@ -50,19 +50,9 @@ switch($oper){
 			$insert_map["sfDongid"]     = $dongID;
 			$insert_map["sfFeedMax"]    = check_str($_REQUEST["sfFeedMax"]);
 			$insert_map["sfWaterMax"]   = check_str($_REQUEST["sfWaterMax"]);
+			$insert_map["sfDate"]		= date("Y-m-d H:i:s");
 			
             run_sql_insert("set_feeder", $insert_map);
-
-            $is_out = check_str($_REQUEST["sfoutsensor"]);
-
-            if($is_out == "y"){
-                $out_map = array();
-                $out_map["soFarmid"] = $farmID;
-                $out_map["soDongid"] = $dongID;
-
-                run_sql_insert("set_outsensor", $out_map);
-            }
-
 		}
 		break;
 
@@ -78,21 +68,11 @@ switch($oper){
 
         $update_map["sfFeedMax"]    = check_str($_REQUEST["sfFeedMax"]);
         $update_map["sfWaterMax"]   = check_str($_REQUEST["sfWaterMax"]);
-        $update_map["sfoutsensor"]  = check_str($_REQUEST["sfoutsensor"]);
+        $update_map["sfDate"]  = check_str($_REQUEST["sfDate"]);
 
 		$where_query = "sfFarmid = \"" .$farmID. "\" AND sfDongid = \"" .$dongID. "\"";
 
 		run_sql_update("set_feeder", $update_map, $where_query);
-
-        $is_out = check_str($_REQUEST["sfoutsensor"]);
-
-        if($is_out == "n"){
-            $out_map = array();
-            $out_map["soFarmid"] = $farmID;
-            $out_map["soDongid"] = $dongID;
-
-            run_sql_update("set_feeder", $update_map, $where_query);
-        }
 
 		break;
 
@@ -104,48 +84,9 @@ switch($oper){
 		$dongID = $keys[1];
 
 		$where_query = "sfFarmid = \"" .$farmID. "\" AND sfDongid = \"" .$dongID. "\"";
-		//plc 삭제
+
 		run_sql_delete("set_feeder", $where_query);
 
-		break;
-
-
-	case "excel":
-		$title = "급이 / 급수 현황";
-
-		header("Content-Type: application/vnd.ms-excel");
-		header("Expires: 0");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("content-disposition: attachment;filename=" . date('Ymd_His') . "_" . $title . ".xls");
-
-		$sidx = check_str($_REQUEST['sidx']); // jqGrid의 sortname 속성의 값
-		$sord = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
-
-		//검색필드
-		$append_sql = "";
-
-		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
-			$select = $_REQUEST["select"];
-			$select_ids = explode("|", $select);
-			
-			$append_query = "AND sfFarmid = \"" . $select_ids[0] . "\"";
-
-			$append_query = isset($select_ids[1]) ? $append_query . " AND sfDongid = \"" . $select_ids[1] . "\"" : $append_query;
-		}
-
-		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(sfFarmid, '|', sfDongid) AS pk FROM set_feeder WHERE sfFarmid = sfFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
-
-		$field_data = array(
-			/*농가 정보*/
-			array("번호", "No", "INT", "center"),
-			array("농장ID", "sfFarmid", "STR", "center"),
-			array("동ID", "sfDongid", "STR", "center"),
-            array("사료빈 총 용량", "sfFeedMax", "STR", "center"),
-            array("유량 센서 최대 펄스 값", "sfWaterMax", "STR", "center")
-		);
-
-		convert_excel($select_query, $field_data, $title, $append_query);
 		break;
 }
 

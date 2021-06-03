@@ -48,20 +48,9 @@ switch($oper){
 		if(get_select_count($check_query) > 0){
 			$insert_map["soFarmid"]     = $farmID;
 			$insert_map["soDongid"]     = $dongID;
-			$insert_map["sfFeedMax"]    = check_str($_REQUEST["sfFeedMax"]);
-			$insert_map["sfWaterMax"]   = check_str($_REQUEST["sfWaterMax"]);
+			$insert_map["soDate"]    	= date("Y-m-d H:i:s");
 			
-            run_sql_insert("set_feeder", $insert_map);
-
-            $is_out = check_str($_REQUEST["sfoutsensor"]);
-
-            if($is_out == "y"){
-                $out_map = array();
-                $out_map["soFarmid"] = $farmID;
-                $out_map["soDongid"] = $dongID;
-
-                run_sql_insert("set_outsensor", $out_map);
-            }
+            run_sql_insert("set_outsensor", $insert_map);
 
 		}
 		break;
@@ -76,23 +65,11 @@ switch($oper){
 
 		$update_map = array();
 
-        $update_map["sfFeedMax"]    = check_str($_REQUEST["sfFeedMax"]);
-        $update_map["sfWaterMax"]   = check_str($_REQUEST["sfWaterMax"]);
-        $update_map["sfoutsensor"]  = check_str($_REQUEST["sfoutsensor"]);
+		$update_map["soDate"]    	= check_str($_REQUEST["soDate"]);
 
 		$where_query = "soFarmid = \"" .$farmID. "\" AND soDongid = \"" .$dongID. "\"";
 
-		run_sql_update("set_feeder", $update_map, $where_query);
-
-        $is_out = check_str($_REQUEST["sfoutsensor"]);
-
-        if($is_out == "n"){
-            $out_map = array();
-            $out_map["soFarmid"] = $farmID;
-            $out_map["soDongid"] = $dongID;
-
-            run_sql_update("set_feeder", $update_map, $where_query);
-        }
+		run_sql_update("set_outsensor", $update_map, $where_query);
 
 		break;
 
@@ -105,13 +82,13 @@ switch($oper){
 
 		$where_query = "soFarmid = \"" .$farmID. "\" AND soDongid = \"" .$dongID. "\"";
 		//plc 삭제
-		run_sql_delete("set_feeder", $where_query);
+		run_sql_delete("set_outsensor", $where_query);
 
 		break;
 
 
 	case "excel":
-		$title = "급이 / 급수 현황";
+		$title = "급이/급수/외기 현황";
 
 		header("Content-Type: application/vnd.ms-excel");
 		header("Expires: 0");
@@ -128,21 +105,27 @@ switch($oper){
 			$select = $_REQUEST["select"];
 			$select_ids = explode("|", $select);
 			
-			$append_query = "AND soFarmid = \"" . $select_ids[0] . "\"";
+			$append_query = "AND sfFarmid = \"" . $select_ids[0] . "\"";
 
-			$append_query = isset($select_ids[1]) ? $append_query . " AND soDongid = \"" . $select_ids[1] . "\"" : $append_query;
+			$append_query = isset($select_ids[1]) ? $append_query . " AND sfDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(soFarmid, '|', soDongid) AS pk FROM set_feeder WHERE soFarmid = soFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+		$select_query = "SELECT sf.sfFarmid, sf.sfDongid, fd.fdName, sf.sfFeedMax, sf.sfWaterMax, sf.sfDate, so.soDate, CONCAT(sf.sfFarmid, '|', sf.sfDongid) AS pk FROM set_feeder AS sf 
+						LEFT JOIN set_outsensor AS so ON so.soFarmid = sf.sfFarmid AND so.soDongid = sf.sfDongid 
+						JOIN farm_detail AS fd ON fd.fdFarmid = sf.sfFarmid AND fd.fdDongid = sf.sfDongid 
+						WHERE sfFarmid = sfFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/
 			array("번호", "No", "INT", "center"),
-			array("농장ID", "soFarmid", "STR", "center"),
-			array("동ID", "soDongid", "STR", "center"),
+			array("농장ID", "sfFarmid", "STR", "center"),
+			array("동ID", "sfDongid", "STR", "center"),
+			array("동ID", "fdName", "STR", "center"),
             array("사료빈 총 용량", "sfFeedMax", "STR", "center"),
-            array("유량 센서 최대 펄스 값", "sfWaterMax", "STR", "center")
+            array("유량 센서 최대 펄스 값", "sfWaterMax", "STR", "center"),
+			array("급이/급수 설치일", "sfDate", "STR", "center"),
+			array("외기환경 설치일", "soDate", "STR", "center"),
 		);
 
 		convert_excel($select_query, $field_data, $title, $append_query);

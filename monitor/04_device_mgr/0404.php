@@ -89,14 +89,14 @@ include_once("../inc/bottom.php");
 			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 					name: "sfFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
+				{label: "농장ID", 					name: "sfFarmid",	align:'center', 	editable:true, editrules:{ required: true}, width:"70%" },
 				{label: "동ID",						name: "sfDongid",	align:'center',		editable:true, editrules:{ required: true}, width:"50%", 
 					edittype:'select', editoptions:{value:<?=$dong_combo_json?>},
 				},
 				{label: "동 이름", 					name: "fdName",		align:'center' },
-				{label: "사료빈 총 용량",			name: "sfFeedMax",	align:'center',		editable:true,},
-				{label: "유량센서 최대 펄스",	name: "sfWaterMax",	align:'center',		editable:true,},
-				{label: "급이/급수 설치일",	name: "sfDate",		align:'center',		editable:true,},
+				{label: "사료빈 총 용량",			name: "sfFeedMax",	align:'center',		editable:true, formatter:'currency', formatoptions:{decimalPlaces:1}},
+				{label: "유량센서 최대 펄스",		name: "sfWaterMax",	align:'center',		editable:true, formatter:'currency', formatoptions:{decimalPlaces:1}},
+				{label: "급이/급수 설치일",			name: "sfDate",		align:'center',		editable:true,},
 				{label: "pk", 						name: "pk",			hidden:true },
 			],
 			onSelectRow: function(id){		  },
@@ -182,12 +182,12 @@ include_once("../inc/bottom.php");
 			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 					name: "soFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
+				{label: "농장ID", 					name: "soFarmid",	align:'center', 	editable:true, editrules:{ required: true}, width:"70%"},
 				{label: "동ID",						name: "soDongid",	align:'center',		editable:true, editrules:{ required: true}, width:"50%", 
 					edittype:'select', editoptions:{value:<?=$dong_combo_json?>},
 				},
 				{label: "동 이름", 					name: "fdName",		align:'center' },
-				{label: "외기환경센서 설치일",	name: "soDate",		align:'center',		editable:true,},
+				{label: "외기환경센서 설치일",		name: "soDate",		align:'center',		editable:true,},
 				{label: "pk", 						name: "pk",			hidden:true },
 			],
 			onSelectRow: function(id){		  },
@@ -261,6 +261,7 @@ include_once("../inc/bottom.php");
 		switch(action){
 			default:
 				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				jQuery("#jqgrid_sub").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
 				break;
 		}
 	};
@@ -268,7 +269,7 @@ include_once("../inc/bottom.php");
 	// 엑셀버튼 클릭 이벤트
 	$("#btn_excel").on("click", function(){
         $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
-		$("#jqgrid").jqGrid('excelExport', {url:'0404_action.php'});
+		$("#jqgrid").jqGrid('excelExport', {url:'0404_sub_action.php'});
     });
 
 </script>

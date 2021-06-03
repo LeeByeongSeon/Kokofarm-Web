@@ -2,6 +2,19 @@
 // 트리뷰 선택 농장 저장
 var selected_id = "";
 
+// css 속성 정의
+const color_over = "#FFFFFF";
+const color_leave = "#455a64";
+const color_select = "#FFFFFF";
+
+const background_over = "#568a89";
+const background_leave = "#FFFFFF";
+const background_select = "#455a64";
+
+const border_over = "1px dotted #568a89";
+const border_leave = "1px dotted #455a64";
+const border_select = "1px dotted #568a89";
+
 // jqgrid resize
 $(document).ready(function(){
 	$(".jqgrid_zone").bind("resize", function(){
@@ -81,31 +94,43 @@ function set_tree_action(search, work){
         $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
 
         selected_id = $(".tree-content").first().attr('id');
+
+        set_selected_highlight("", selected_id);
     }
     else{
         selected_id = "";
     }
+
     work(selected_id);
 
     $(".tree-content").off("click").on("click", function(){		// 클릭 이벤트 
 
+        let prev_id = selected_id;
         selected_id = $(this).attr('id');
-        var keys = selected_id.split("|");
 
+        var keys = selected_id.split("|");
         if(keys.length == 1){
-            $(this).parent("li").children("ul.tree-group").toggle();
+            $(this).parent("li").children("ul.tree-group").toggle(400);
             $(this).children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
         }
 
         work(selected_id);
+
+        set_selected_highlight(prev_id, selected_id);
 	});
 
     $(".tree-content").off("mouseenter").on("mouseenter", function(){		// 마우스 오버
-        $(this).css("background-color", "#568a89").css("border", " 1px dotted #568a89").css("color", "#FFFFFF");
+        let is_selected = $(this).attr("is_selected");
+        if(!is_selected){
+            $(this).css("background-color", background_over).css("border", border_over).css("color", color_over);
+        }
     });
 
     $(".tree-content").off("mouseleave").on("mouseleave", function(){		// 마우스 리브
-		$(this).css("background-color", "#FFFFFF").css("border", "1px dotted #455a64").css("color", "#455a64");
+        let is_selected = $(this).attr("is_selected");
+        if(!is_selected){
+            $(this).css("background-color", background_leave).css("border", border_leave).css("color", color_leave);
+        }
 	});
 
 };
@@ -120,6 +145,33 @@ function set_tree_search(work){
 
         call_tree_view(search_text, work);
     });
+
+    $("#form_tree_search [name=text_tree_search]").keyup(function(e){
+        if(e.keyCode == 13){
+            var search_text = $(this).val();
+            call_tree_view(search_text, work);
+        }
+    });
+};
+
+/* 트리뷰 선택 시 하이라이트 처리
+param
+- prev : 이전 선택된 버튼의 id
+- curr : 현재 선택된 버튼의 id
+*/
+function set_selected_highlight(prev, curr){
+    if(prev != curr){
+
+        // 이전 선택 지우기
+        if(prev != ""){
+            $("#" + prev).removeAttr("is_selected");
+            $("#" + prev).css("background-color", background_leave).css("border", border_leave).css("color", color_leave);
+        }
+
+        // 현재 선택
+        $("#" + curr).attr("is_selected", true);
+        $("#" + curr).css("background-color", background_select).css("border", border_select).css("color", color_select);
+    }
 };
 
 /* 모달 팝업 - 기본형

@@ -21,7 +21,7 @@ switch($oper){
         }
 
 		//jqgrid 출력
-		$select_query .= $append_query;
+		$select_query .= $append_query . " ORDER BY fName ASC";
 
         $result = get_select_data($select_query);
 
