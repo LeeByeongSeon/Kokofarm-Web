@@ -64,7 +64,7 @@ function call_tree_view(search, work){
                 tree_html += "<ul class='tree-group' style='display:none;'>\n";
 
                 for(var dong_key in data[farm_key]){
-                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' style='padding: 7px; color: #455a64;' id='" + dong_key + "'>" + data[farm_key][dong_key] + "</li>\n";
+                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' style='padding: 7px; color: #455a64;'>" + data[farm_key][dong_key] + "</li>\n";
                 }
                 tree_html += "</ul>\n";
                 tree_html += "</li>\n";
@@ -161,6 +161,8 @@ param
 */
 function set_selected_highlight(prev, curr){
     if(prev != curr){
+        prev = prev.replace("|", "\\|");
+        curr = curr.replace("|", "\\|");
 
         // 이전 선택 지우기
         if(prev != ""){
