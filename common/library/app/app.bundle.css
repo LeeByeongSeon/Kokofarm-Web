@@ -5344,8 +5344,8 @@ table.dataTable {
       font-weight: bold; }
   .ui-jqgrid .ui-jqgrid-title {
     font-size: 1.15385rem; }
-  .ui-jqgrid .ui-jqgrid-htable {
-    border-bottom: 3px solid #ddd; }
+  /*.ui-jqgrid .ui-jqgrid-htable {
+    border-bottom: 3px solid #ddd; }*/
     .ui-jqgrid .ui-jqgrid-htable .ui-th-div {
       display: block;
       margin: 0; }
@@ -8565,7 +8565,7 @@ body.smart-style-0:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu .sa-sub-nav
     background: #fff;
     border-color: #c7c7c7;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    border-bottom-color: #BD2A2A; }
+    border-bottom-color: #d89419; }
     .sa-menu-on-top .sa-left-menu .sa-sub-nav li a {
       color: #4c4f53; }
       .sa-menu-on-top .sa-left-menu .sa-sub-nav li a:hover {
@@ -10380,7 +10380,7 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .sa-aside-left .text-blue {
     color: #2196F3 !important; }
   .smart-style-6 .sa-aside-left .sa-left-menu a {
-    color: #4C4C4C;
+    color: #868686;
     font-size: 1rem; }
   .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a {
     color: #568a89; }
