@@ -29,7 +29,8 @@ switch($oper){
 
 		//jqgrid 출력
 		$select_query = "SELECT sf.*, CONCAT(sfFarmid, '|', sfDongid) AS pk, fd.fdName FROM set_feeder AS sf 
-                        JOIN farm_detail AS fd ON fd.fdFarmid = sf.sfFarmid AND fd.fdDongid = sf.sfDongid " .$append_query;
+                        JOIN farm_detail AS fd ON fd.fdFarmid = sf.sfFarmid AND fd.fdDongid = sf.sfDongid 
+						WHERE sf.sfFarmid = sf.sfFarmid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);

@@ -30,7 +30,8 @@ switch($oper){
 		//jqgrid 출력
 		$select_query = "SELECT sp.*, bp.bpIPaddr, fd.fdName, CONCAT(spFarmid, '|', spDongid) AS pk FROM set_plc AS sp
 						JOIN farm_detail AS fd ON fd.fdFarmid = sp.spFarmid AND fd.fdDongid = sp.spDongid 
-                        JOIN buffer_plc_status AS bp ON bp.bpFarmid = sp.spFarmid AND bp.bpDongid = sp.spDongid " .$append_query;
+                        JOIN buffer_plc_status AS bp ON bp.bpFarmid = sp.spFarmid AND bp.bpDongid = sp.spDongid 
+						WHERE sp.spFarmid = sp.spFarmid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);
@@ -127,7 +128,8 @@ switch($oper){
 		//jqgrid 출력
 		$select_query = "SELECT sp.*, bp.bpIPaddr, fd.fdName, CONCAT(spFarmid, '|', spDongid) AS pk FROM set_plc AS sp
 						JOIN farm_detail AS fd ON fd.fdFarmid = sp.spFarmid AND fd.fdDongid = sp.spDongid 
-						JOIN buffer_plc_status AS bp ON bp.bpFarmid = sp.spFarmid AND bp.bpDongid = sp.spDongid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+						JOIN buffer_plc_status AS bp ON bp.bpFarmid = sp.spFarmid AND bp.bpDongid = sp.spDongid 
+						WHERE sp.spFarmid = sp.spFarmid  " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/

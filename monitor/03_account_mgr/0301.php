@@ -26,10 +26,10 @@ $dong_combo_json = make_jqgrid_combo_num(32);
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
 						<?=$group_combo?>&nbsp;&nbsp;
-						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder="농장명, 농장ID" size="15" >&nbsp;&nbsp;
-						<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-						<button type="button" class="btn btn-danger btn-sm" onClick="actionBtn('Search')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;
-						<button type="button" class="btn btn-success btn-sm" onClick="actionBtn('Search')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;
+						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
+						<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-success btn-sm" onClick="search_action('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
 					</form>
 				</div>
 
@@ -77,17 +77,16 @@ include_once("../inc/bottom.php");
 				{label: "계열회사",			name: "fGroupName",	align:'center',		editable:true, editrules:{ required: true},
 					edittype:'select', editoptions:{value:<?=$group_combo_json?>}
 				},
-				{label: "계열화회사ID",		name: "fGroupid",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "계열화회사ID",		name: "fGroupid",	align:'center',		editable:true },
 				{label: "농장ID",	 		name: "fFarmid",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "농장주명", 		name: "fCeo",		align:'center',		editable:true, editrules:{ required: true} },
 				{label: "농장명",			name: "fName",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "IP",		 		name: "beIPaddr",	align:'center',		},
 				{label: "IoT 저울",	 		name: "cnt_si",		align:'center',		},
 				{label: "IP 카메라", 		name: "cnt_sc",		align:'center',		},
 				{label: "PLC",		 		name: "cnt_sp",		align:'center',		},
-				{label: "급이",				name: "cnt_sf",		align:'center',		},
-				{label: "급수",				name: "cnt_sf",		align:'center',		},
-				{label: "외기",		 		name: "cnt_so",		align:'center',		},
+				{label: "사료빈 저울",		name: "cnt_sf",		align:'center',		},
+				{label: "유량센서",			name: "cnt_sf",		align:'center',		},
+				{label: "외기환경센서",		 name: "cnt_so",	align:'center',		},
 			],
 			onSelectRow: function(id){		  },
 			loadComplete:function(data){		}
@@ -115,10 +114,43 @@ include_once("../inc/bottom.php");
 		);
 	};
 
-	// 엑셀버튼 클릭 이벤트
-	$("#btn_excel").on("click", function(){
-        $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
-		$("#jqgrid").jqGrid('excelExport', {url:'0301_action.php'});
+	// 검색, 취소, 엑셀 버튼 이벤트
+	function search_action(action){
+
+		var search_map = {};
+		$.each($("#search_form").serializeArray(), function(){ 
+			search_map[this.name] = this.value;
+		});
+
+		var search_data = JSON.stringify(search_map);	//form Data 전체를 받아 name과 value값을 JSON으로 변환(이때,"name" 과 "value"를 전송하지 않음
+		switch(action){
+			case "search":
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "cancle":
+				//초기화
+				$("#search_form").each(function() {	this.reset();  });
+
+				//리로드
+				$.each($("#search_form").serializeArray(), function(){ 
+					search_map[this.name] = this.value; 
+				});
+				search_data = JSON.stringify(search_map);
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "excel":
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}); //POST 형식의 parameter 추가
+				$("#jqgrid").jqGrid('excelExport', {url:'0301_action.php'});
+				break;
+		}
+	};
+
+	$("#search_form [name=search_name]").keyup(function(e){
+        if(e.keyCode == 13){
+            search_action("search");
+        }
     });
 
 </script>

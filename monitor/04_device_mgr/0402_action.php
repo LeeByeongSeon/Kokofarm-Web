@@ -29,7 +29,8 @@ switch($oper){
 		//jqgrid 출력
 		$select_query = "SELECT sc.*, fdName, beIPaddr, CONCAT(scFarmid, '|', scDongid) AS pk FROM set_camera AS sc 
 						JOIN farm_detail AS fd ON fd.fdFarmid = sc.scFarmid AND fd.fdDongid = sc.scDongid 
-						JOIN buffer_sensor_status AS be ON be.beFarmid = sc.scFarmid AND be.beDongid = sc.scDongid " .$append_query;
+						JOIN buffer_sensor_status AS be ON be.beFarmid = sc.scFarmid AND be.beDongid = sc.scDongid 
+						WHERE sc.scFarmid = sc.scFarmid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);
@@ -119,7 +120,8 @@ switch($oper){
 		//jqgrid 출력
 		$select_query = "SELECT sc.*, fdName, beIPaddr, CONCAT(scFarmid, '|', scDongid) AS pk FROM set_camera AS sc 
 						JOIN farm_detail AS fd ON fd.fdFarmid = sc.scFarmid AND fd.fdDongid = sc.scDongid 
-						JOIN buffer_sensor_status AS be ON be.beFarmid = sc.scFarmid AND be.beDongid = sc.scDongid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+						JOIN buffer_sensor_status AS be ON be.beFarmid = sc.scFarmid AND be.beDongid = sc.scDongid 
+						WHERE sc.scFarmid = sc.scFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/

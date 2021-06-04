@@ -206,9 +206,8 @@ class sql_conn{
     public function delete($table_name, $where_str){
 
         $excute_sql = "DELETE FROM " . $table_name . " WHERE " . $where_str . ";";
-        $this->local_db_conn->query($excute_sql);
 
-        $this->local_db_conn->close();
+        $this->local_db_conn->query($excute_sql);
     }
 
     public function check_str($chk_str){

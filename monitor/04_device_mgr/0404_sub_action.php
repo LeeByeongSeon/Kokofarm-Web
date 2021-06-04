@@ -29,7 +29,8 @@ switch($oper){
 
 		//jqgrid 출력
 		$select_query = "SELECT so.*, CONCAT(soFarmid, '|', soDongid) AS pk, fd.fdName FROM set_outsensor AS so 
-                        JOIN farm_detail AS fd ON fd.fdFarmid = so.soFarmid AND fd.fdDongid = so.soDongid " .$append_query;
+                        JOIN farm_detail AS fd ON fd.fdFarmid = so.soFarmid AND fd.fdDongid = so.soDongid 
+						WHERE so.soFarmid = so.soFarmid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);

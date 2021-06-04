@@ -17,25 +17,23 @@ switch($oper){
 		//검색필드
 		$append_query = "";
 
-		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
-			$select = $_REQUEST["select"];
-			$select_ids = explode("|", $select);
-			
-			$append_query = "AND scFarmid = \"" . $select_ids[0] . "\"";
+		if(isset($_REQUEST["search_data"])){
+			$search_data = $_REQUEST["search_data"];
+			$search_json = json_decode(stripslashes($search_data), true);
 
-			$append_query = isset($select_ids[1]) ? $append_query . " AND scDongid = \"" . $select_ids[1] . "\"" : $append_query;
+			$append_query = ($search_json["search_name"] == "") ? $append_query : $append_query . " AND (fName LIKE \"%" .$search_json["search_name"]. "%\" OR fID LIKE \"%" .$search_json["search_name"]. "%\") ";
+			$append_query = ($search_json["search_group"] == "") ? $append_query : $append_query . " AND fGroupName = \"" .$search_json["search_group"]. "\" ";
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT DISTINCT f.*, beIPaddr,
+		$select_query = "SELECT *, 
                             (SELECT COUNT(*) FROM set_iot_cell WHERE siFarmid = fFarmid) AS cnt_si,
                             (SELECT COUNT(*) FROM set_camera WHERE scFarmid = fFarmid) AS cnt_sc,
                             (SELECT COUNT(*) FROM set_plc WHERE spFarmid = fFarmid) AS cnt_sp,
                             (SELECT COUNT(*) FROM set_feeder WHERE sfFarmid = fFarmid) AS cnt_sf,
                             (SELECT COUNT(*) FROM set_outsensor WHERE soFarmid = fFarmid) AS cnt_so
-						FROM farm AS f
-                        JOIN buffer_sensor_status AS be ON be.beFarmid = f.fFarmid ". $append_query;
-        
+						FROM farm WHERE fID = fID ". $append_query;
+
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);
 
@@ -43,23 +41,20 @@ switch($oper){
 
 	case "add":
 		//farm_detail을 확인 후 존재하면 insert
-		$farmID = check_str($_REQUEST["fID"]);
-
-		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\"";
+		$pk = check_str($_REQUEST["fID"]);
 
 		$insert_map = array();
 
-		if(get_select_count($check_query) > 0){
-			$insert_map["fID"] 		  = $farmID;
-			$insert_map["fPW"] 		  = check_str($_REQUEST["fPW"]);
-			$insert_map["fGroupName"] = check_str($_REQUEST["fGroupName"]);
-			$insert_map["fGroupid"]   = check_str($_REQUEST["fGroupid"]);
-			$insert_map["fFarmid"] 	  = check_str($_REQUEST["fFarmid"]);
-			$insert_map["fCeo"] 	  = check_str($_REQUEST["fCeo"]);
-			$insert_map["fName"] 	  = check_str($_REQUEST["fName"]);
+		$insert_map["fID"] 		  = $pk;
+		$insert_map["fPW"] 		  = check_str($_REQUEST["fPW"]);
+		$insert_map["fGroupName"] = check_str($_REQUEST["fGroupName"]);
+		$insert_map["fGroupid"]   = check_str($_REQUEST["fGroupid"]);
+		$insert_map["fFarmid"] 	  = check_str($_REQUEST["fFarmid"]);
+		$insert_map["fCeo"] 	  = check_str($_REQUEST["fCeo"]);
+		$insert_map["fName"] 	  = check_str($_REQUEST["fName"]);
 
-			run_sql_insert("set_camera", $insert_map);
-		}
+		run_sql_insert("farm", $insert_map);
+
 		break;
 
 
@@ -84,10 +79,23 @@ switch($oper){
 	case "del":
 		$pk = check_str($_REQUEST["id"]);
 
+		//하위 데이터 삭제를 위해 fFarmid를 가져온 후 농장 계정 삭제
 		$where_query = "fID = \"" .$pk. "\" ";
+		$farmID = get_select_data("SELECT fFarmid FROM farm WHERE " . $where_query)[0]["fFarmid"];
 
-		//농장 계정 삭제
 		run_sql_delete("farm", $where_query);
+
+		$where_query = "Farmid = \"" .$farmID. "\" ";
+
+		//동 계정 삭제
+		run_sql_delete("farm_detail", "fd" . $where_query);
+
+		//장치 계정 삭제
+		run_sql_delete("set_iot_cell", 		"si" . $where_query);
+		run_sql_delete("set_camera", 		"sc" . $where_query);
+		run_sql_delete("set_plc", 			"sp" . $where_query);
+		run_sql_delete("set_feeder", 		"sf" . $where_query);
+		run_sql_delete("set_outsensor", 	"so" . $where_query);
 
 		break;
 
@@ -104,26 +112,24 @@ switch($oper){
 		$sord = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
 
 		//검색필드
-		$append_sql = "";
+		$append_query = "";
 
-		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
-			$select = $_REQUEST["select"];
-			$select_ids = explode("|", $select);
-			
-			$append_query = "AND scFarmid = \"" . $select_ids[0] . "\"";
+		if(isset($_REQUEST["search_data"])){
+			$search_data = check_str($_REQUEST["search_data"]);
+			$search_json = json_decode(stripslashes($search_data), true);
 
-			$append_query = isset($select_ids[1]) ? $append_query . " AND scDongid = \"" . $select_ids[1] . "\"" : $append_query;
+			$append_query = ($search_json["search_name"] == "") ? $append_query : $append_query . " AND (fName LIKE \"%" .$search_json["search_name"]. "%\" OR fID LIKE \"%" .$search_json["search_name"]. "%\") ";
+			$append_query = ($search_json["search_group"] == "") ? $append_query : $append_query . " AND fGroupName = \"%" .$search_json["search_group"]. "%\" ";
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT f.*, beIPaddr,
+		$select_query = "SELECT *, 
 							(SELECT COUNT(*) FROM set_iot_cell WHERE siFarmid = fFarmid) AS cnt_si,
 							(SELECT COUNT(*) FROM set_camera WHERE scFarmid = fFarmid) AS cnt_sc,
 							(SELECT COUNT(*) FROM set_plc WHERE spFarmid = fFarmid) AS cnt_sp,
 							(SELECT COUNT(*) FROM set_feeder WHERE sfFarmid = fFarmid) AS cnt_sf,
 							(SELECT COUNT(*) FROM set_outsensor WHERE soFarmid = fFarmid) AS cnt_so
-						FROM farm AS f
-						JOIN buffer_sensor_status AS be ON be.beFarmid = f.fFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+						FROM farm " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/
@@ -135,7 +141,6 @@ switch($oper){
 			array("농장ID", "fFarmid", "STR", "center"),
 			array("농장주명", "fCeo", "STR", "center"),
 			array("농장명", "fName", "STR", "center"),
-			array("IP", "beIPaddr", "STR", "center"),
 			array("IoT 저울", "cnt_si", "STR", "center"),
 			array("IP 카메라", "cnt_sc", "STR", "center"),
 			array("PLC", "cnt_sp", "STR", "center"),
