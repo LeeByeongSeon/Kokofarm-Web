@@ -70,9 +70,10 @@ include_once("../inc/bottom.php");
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "농장ID", 			name: "spFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
-				{label: "동ID",				name: "spDongid",	align:'center',		editable:true, editrules:{ required: true}, 
+				{label: "동ID",				name: "spDongid",	align:'center',		editable:true, editrules:{ required: true}, width:"50%",
 					edittype:'select', editoptions:{value:<?=$dong_combo_json?>},
 				},
+				{label: "동 이름",			name: "fdName",		align:'center'},
 				{label: "IP Addr",			name: "bpIPaddr",	align:'center'},
 				{label: "URL(IP, DDNS)", 	name: "spURL",		align:'center',		editable:true, editrules:{ required: true} },
 				{label: "Port", 			name: "spPORT",		align:'center',		editable:true, editrules:{ required: true} },

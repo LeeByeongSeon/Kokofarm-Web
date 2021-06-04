@@ -28,7 +28,9 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk FROM set_iot_cell WHERE siFarmid = siFarmid " .$append_query;
+		$select_query = "SELECT si.*, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk, fd.fdName FROM set_iot_cell AS si
+						JOIN farm_detail AS fd ON fd.fdFarmid = si.siFarmid AND fd.fdDongid = si.siDongid 
+						WHERE siFarmid = siFarmid " .$append_query;
 
 		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($reponse);
@@ -126,13 +128,16 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk FROM set_iot_cell WHERE siFarmid = siFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+		$select_query = "SELECT si.*, CONCAT(siFarmid, '|', siDongid, '|', siCellid) AS pk, fd.fdName FROM set_iot_cell AS si
+						JOIN farm_detail AS fd ON fd.fdFarmid = si.siFarmid AND fd.fdDongid = si.siDongid 
+						WHERE siFarmid = siFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/
 			array("번호", "No", "INT", "center"),
 			array("농장ID", "siFarmid", "STR", "center"),
 			array("동ID", "siDongid", "STR", "center"),
+			array("동 이름", "fdName", "STR", "center"),
 			array("저울ID", "siCellid", "STR", "center"),
 			array("저울버전", "siVersion", "STR", "center"),
 			array("펌웨어버전", "siFirmware", "STR", "center"),

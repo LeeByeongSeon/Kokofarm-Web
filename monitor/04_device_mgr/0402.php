@@ -69,14 +69,14 @@ include_once("../inc/bottom.php");
 			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 			name: "scFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
-				{label: "동ID",				name: "scDongid",	align:'center',		editable:true, editrules:{ required: true}, 
+				{label: "농장ID", 			name: "scFarmid",	align:'center', 	editable:true, editrules:{ required: true}, width:"80%"},
+				{label: "동ID",				name: "scDongid",	align:'center',		editable:true, editrules:{ required: true}, width:"50%",
 					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
 				},
 				{label: "동 이름",			name: "fdName",		align:'center'},
 				{label: "접속 IP",			name: "beIPaddr",	align:'center'},
-				{label: "접속 포트",		name: "scPort",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "접속 URL", 		name: "scUrl",		align:'center',		editable:true, editrules:{ required: true}, 
+				{label: "접속 포트",		name: "scPort",		align:'center',		editable:true, editrules:{ required: true}, width:"80%"},
+				{label: "접속 URL", 		name: "scUrl",		align:'center',		editable:true, editrules:{ required: true}, width:"300%",
 					editoptions:{defaultValue:"/stw-cgi/video.cgi?msubmenu=snapshot&action=view&Resolution=640x480"} },
 				{label: "접속 ID", 			name: "scId",		align:'center',		editable:true, editrules:{ required: true}, 
 					editoptions:{defaultValue:"admin"} },

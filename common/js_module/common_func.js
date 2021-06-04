@@ -142,7 +142,6 @@ param
 function set_tree_search(work){
     $("#btn_tree_search").off("click").on("click", function(){
         var search_text = $("#form_tree_search [name=text_tree_search]").val();
-
         call_tree_view(search_text, work);
     });
 
