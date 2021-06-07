@@ -44,6 +44,8 @@ param
 */
 function call_tree_view(search, work){ 
 
+    $("#treeView").show();
+
     var tree_html = "";
     
     var data_map = {}; 

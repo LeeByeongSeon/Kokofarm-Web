@@ -64,10 +64,7 @@
 
 <script>
 	$(document).ready(function(){
-		//농장 목록 트리뷰 (임시 제한)
-		if($('div').hasClass('fullSc')){
-			$("#treeView").css("display","none");
-		}
+		
 
 	});
 </script>
