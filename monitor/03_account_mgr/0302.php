@@ -5,7 +5,6 @@ include_once("../../common/php_module/common_func.php");
 
 // 생계구분 콤보박스
 $type_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"생계구분\"";
-$type_combo = make_combo_by_query($type_query,"search_type", "생계구분", "cName1");
 $type_combo_json = make_jqgrid_combo($type_query, "cName1");
 
 // 동 선택 콤보박스
@@ -47,6 +46,8 @@ include_once("../inc/bottom.php");
 
 <script language="javascript">
 	$(document).ready(function(){
+
+		hide_dong = true;
 
 		get_grid_data();
 
@@ -95,51 +96,26 @@ include_once("../inc/bottom.php");
 			},
 			{ 
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('fdDongid', {editoptions:{readonly:false}} );
 
-					// if(selected_id == ""){
-					// 	popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
-					// 	return false;
-					// }
+					if(selected_id == ""){
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
+						return false;
+					}
 					
-					// var keys = selected_id.split("|");
-					
-					// switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-
-					// 	case 1:		//농장만 선택
-					// 		$("#jqgrid").setColProp('fdFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-					// 		break;
-
-					// 	case 2:		//동까지 선택
-					// 		$("#jqgrid").setColProp('fdFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-					// 		$("#jqgrid").setColProp('fdDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
-					// 		break;
-					// }
+					var key = selected_id;
+					$("#jqgrid").setColProp('fdFarmid', {editoptions:{readonly:true, defaultValue:key}} );
 
 				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
 			},
 			{	
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('fdDongid', {editoptions:{readonly:false}} );
-
-					// if(selected_id == ""){
-					// 	popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
-					// 	return false;
-					// }
-
-					// var keys = selected_id.split("|");
+					if(selected_id == ""){
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
+						return false;
+					}
 					
-					// switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
-
-					// 	case 1:		//농장만 선택
-					// 		$("#jqgrid").setColProp('fdFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-					// 		break;
-
-					// 	case 2:		//동까지 선택
-					// 		$("#jqgrid").setColProp('fdFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-					// 		$("#jqgrid").setColProp('fdDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
-					// 		break;
-					// }
+					var key = selected_id;
+					$("#jqgrid").setColProp('fdFarmid', {editoptions:{readonly:true, defaultValue:key}} );
 
 				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
 			},

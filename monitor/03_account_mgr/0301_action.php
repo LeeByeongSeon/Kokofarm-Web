@@ -90,12 +90,16 @@ switch($oper){
 		//동 계정 삭제
 		run_sql_delete("farm_detail", "fd" . $where_query);
 
+		//버퍼테이블 삭제
+		run_sql_delete("buffer_sensor_status", 		"be" . $where_query);
+		run_sql_delete("buffer_plc_status", 		"bp" . $where_query);
+
 		//장치 계정 삭제
-		run_sql_delete("set_iot_cell", 		"si" . $where_query);
-		run_sql_delete("set_camera", 		"sc" . $where_query);
-		run_sql_delete("set_plc", 			"sp" . $where_query);
-		run_sql_delete("set_feeder", 		"sf" . $where_query);
-		run_sql_delete("set_outsensor", 	"so" . $where_query);
+		run_sql_delete("set_iot_cell", 				"si" . $where_query);
+		run_sql_delete("set_camera", 				"sc" . $where_query);
+		run_sql_delete("set_plc", 					"sp" . $where_query);
+		run_sql_delete("set_feeder", 				"sf" . $where_query);
+		run_sql_delete("set_outsensor", 			"so" . $where_query);
 
 		break;
 

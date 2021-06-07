@@ -1,6 +1,7 @@
 
 // 트리뷰 선택 농장 저장
 var selected_id = "";
+var hide_dong = false;
 
 // css 속성 정의
 const color_over = "#FFFFFF";
@@ -90,8 +91,10 @@ function set_tree_action(search, work){
 
     if(search != ""){
         // 가장 첫 농장을 연다
-        $(".tree-content").first().parent("li").children("ul.tree-group").toggle();
-        $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+        if(!hide_dong){
+            $(".tree-content").first().parent("li").children("ul.tree-group").toggle(400);
+            $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+        }
 
         selected_id = $(".tree-content").first().attr('id');
 
@@ -109,7 +112,7 @@ function set_tree_action(search, work){
         selected_id = $(this).attr('id');
 
         var keys = selected_id.split("|");
-        if(keys.length == 1){
+        if(keys.length == 1 && !hide_dong){
             $(this).parent("li").children("ul.tree-group").toggle(400);
             $(this).children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
         }

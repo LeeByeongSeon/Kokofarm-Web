@@ -42,7 +42,6 @@ switch($oper){
 		$check_query = "SELECT fFarmid FROM farm WHERE fFarmid = \"" .$farmID. "\"";
 
 		$insert_map = array();
-		$insert_map2 = array();
 
 		if(get_select_count($check_query) > 0){
 			$insert_map["fdFarmid"] = $farmID;
@@ -55,10 +54,11 @@ switch($oper){
 
 			run_sql_insert("farm_detail", $insert_map);
 
-			$insert_map2["beFarmid"] = $farmID;
-			$insert_map2["beDongid"] = $dongID;
+			$insert_map = array();
+			$insert_map["beFarmid"] = $farmID;
+			$insert_map["beDongid"] = $dongID;
 
-			run_sql_insert("buffer_sensor_status", $insert_map2);
+			run_sql_insert("buffer_sensor_status", $insert_map);
 			
 		}
 		break;
@@ -92,10 +92,23 @@ switch($oper){
 		$farmID = $keys[0];
 		$dongID = $keys[1];
 
-		$where_query = "fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\"";
+		$temp_1 = "Farmid = \"" .$farmID. "\" AND ";
+		$temp_2 = "Dongid = \"" .$dongID. "\"";
 
-		//저울 삭제
-		run_sql_delete("farm_detail", $where_query);
+		//$where_query = "fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\"";
+		// 동 계정 삭제
+		run_sql_delete("farm_detail", 			"fd" . $temp_1 . "fd" . $temp_2);
+
+		//버퍼 테이블 삭제
+		run_sql_delete("buffer_sensor_status", 	"be" . $temp_1 . "be" . $temp_2);
+		run_sql_delete("buffer_plc_status", 	"bp" . $temp_1 . "bp" . $temp_2);
+
+		// 장치 계정 삭제
+		run_sql_delete("set_iot_cell", 		"si" . $temp_1 . "si" . $temp_2);
+		run_sql_delete("set_camera", 		"sc" . $temp_1 . "sc" . $temp_2);
+		run_sql_delete("set_plc", 			"sp" . $temp_1 . "sp" . $temp_2);
+		run_sql_delete("set_feeder", 		"sf" . $temp_1 . "sf" . $temp_2);
+		run_sql_delete("set_outsensor", 	"so" . $temp_1 . "so" . $temp_2);
 
 		break;
 
