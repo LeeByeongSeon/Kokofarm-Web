@@ -13,7 +13,7 @@ $dong_combo_json = make_jqgrid_combo_num(32);
 
 ?>
 <!--농장 계정 관리-->
-	<article class="col-xl-12" style="padding-left: 0rem; padding-right: 0rem;">
+	<article class="col-xl-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	

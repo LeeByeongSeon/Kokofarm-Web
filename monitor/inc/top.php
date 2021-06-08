@@ -116,9 +116,9 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="../../common/library/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="../../common/library/fonts/font-awesome.min.css"> 
 
-	<!--Bootsteap Table-->
+	<!--BOOTSTRAP Table-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_table/bootstrap-table.css"/>
-	<script src="../../common/library//bootstrap_table/bootstrap-table.js"></script>
+	<script src="../../common/library/bootstrap_table/bootstrap-table.js"></script>
 
 	<!--editable Table-->
 	<script src='../../common/library/editable_table/mindmup-editabletable.js'></script>
