@@ -1,6 +1,13 @@
 <?
 include_once("../inc/top.php");
+
+include_once("../../common/php_module/common_func.php");
+
+// 동 선택 콤보박스
+$dong_combo_json = make_jqgrid_combo_num(32);
+
 ?>
+
 <!--결함 및 A/S 관리-->
 <div class="row fullSc">
 	<article class="col-xl-12">
@@ -13,130 +20,24 @@ include_once("../inc/top.php");
 				
 			<div class="widget-body">
 
-				<table class="table table-bordered table-hover" style="text-align: center;">
-					<thead>
-						<th></th>
-						<th>작성일</th>
-						<th>조치상태</th>
-						<th>농장</th>
-						<th>동</th>
-						<th>작성 구분</th>
-						<th>결함 구분</th>
-						<th>발생일</th>
-						<th>발생장치<br>(존재 시 작성)</th>
-						<th>버전<br>(제품)</th>
-						<th>문제점(현상)</th>
-						<th>원인(추정)</th>
-						<th>조치내용</th>
-						<th>기타</th>
-						<th>담당자</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>2020-03-16 17:54:00</td>
-							<td><span class="label label-warning">필요</span></td>
-							<td>KF0013(망성)</td>
-							<td>01</td>
-							<td>일일 모니터링</td>
-							<td>입추 이상</td>
-							<td>2020-03-16 17:54:00</td>
-							<td>-</td>
-							<td>-</td>
-							<td>제품 운용 (저울 미연결)</td>
-							<td>...</td>
-							<td>농장주에 연락</td>
-							<td>무상조치</td>
-							<td>김한결</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>2020-03-16 17:54:00</td>
-							<td><span class="label label-warning">필요</span></td>
-							<td>KF0013(망성)</td>
-							<td>02</td>
-							<td>농가 요청</td>
-							<td>로우데이터 이상</td>
-							<td>2020-03-16 17:54:00</td>
-							<td>통합 G/W</td>
-							<td>3.0.0</td>
-							<td>네트워크 차단됨</td>
-							<td>...</td>
-							<td>...</td>
-							<td>무상조치</td>
-							<td>김대철</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2020-03-16 17:54:00</td>
-							<td><span class="label label-warning">필요</span></td>
-							<td>KF0013(망성)</td>
-							<td>03</td>
-							<td>일일 모니터링</td>
-							<td>카메라 이상</td>
-							<td>2020-03-16 17:54:00</td>
-							<td>PoE 허브</td>
-							<td>-</td>
-							<td>네트워크 차단됨</td>
-							<td>...</td>
-							<td>...</td>
-							<td>무상조치</td>
-							<td>김한결</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>2020-03-16 17:54:00</td>
-							<td><span class="label label-success">완료</span></td>
-							<td>KF0013(망성)</td>
-							<td>01</td>
-							<td>농가 요청</td>
-							<td>태블릿 이상</td>
-							<td>2020-03-16 17:54:00</td>
-							<td>태블릿 PC</td>
-							<td>Athena The X</td>
-							<td>태블릿이 종료됨</td>
-							<td>...</td>
-							<td>...</td>
-							<td>태블릿 유상 교체</td>
-							<td>이병선</td>
-						</tr>
-						<tr>
-							<td>5</td>
-							<td>2020-03-16 17:54:00</td>
-							<td><span class="label label-success">완료</span></td>
-							<td>KF0013(망성)</td>
-							<td>02</td>
-							<td>일일 모니터링</td>
-							<td>통합 G/W (펌웨어)</td>
-							<td>2020-03-16 17:54:00</td>
-							<td>평균중량 이상</td>
-							<td>3.5.1</td>
-							<td>평균중량이 3일 동안 변하지 않음</td>
-							<td>...</td>
-							<td>...</td>
-							<td>유상조치</td>
-							<td>김한결</td>
-						</tr>
-						<tr>
-							<td>6</td>
-							<td>2020-03-16 17:54:00</td>
-							<td><span class="label label-success">완료</span></td>
-							<td>KF0013(망성)</td>
-							<td>03</td>
-							<td>농가 요청</td>
-							<td>기타</td>
-							<td>2020-03-16 17:54:00</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>...</td>
-							<td>...</td>
-							<td>유상조치</td>
-							<td>김진호</td>
-						</tr>
-					</tbody>
-				</table>
-				
+				<div class="widget-body-toolbar">
+					<form id="searchFORM" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
+						<?=$group_combo?>&nbsp;&nbsp;
+						<?=$group_combo?>&nbsp;&nbsp;
+						<input type="text" id="sDate" name="sDate" class="form-control" maxlength='10' size="8" placeholder="시작일자">
+						&nbsp;-&nbsp;
+						<input type="text" id="eDate" name="eDate" class="form-control" maxlength='10' size="8" placeholder="종료일자">&nbsp;&nbsp;
+						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
+						<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
+						<button type="button" class="btn btn-danger btn-sm"  onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-success btn-sm" onClick="search_action('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+					</form>
+				</div>
+
+				<div class="jqgrid_zone">
+					<table id="jqgrid" class="jqgrid_table"></table>
+					<div id="jqgrid_pager"></div>
+				</div>
 				
 			</div>
 					
@@ -147,3 +48,84 @@ include_once("../inc/top.php");
 <?
 include_once("../inc/bottom.php");
 ?>
+
+<script language="javascript">
+	$(document).ready(function(){
+		//Date Picker 선언
+		$('#sDate').datepicker({ format: "yyyy-mm-dd",language: "kr",autoclose: true,});
+		$('#eDate').datepicker({ format: "yyyy-mm-dd",language: "kr",autoclose: true,});
+
+		get_grid_data();
+
+	});
+
+	function get_grid_data(){
+		$("#jqgrid").jqGrid({
+			url:"0206_action.php", 
+			editurl:"0206_action.php",
+			styleUI:"Bootstrap",
+			autowidth:true,
+			shrinkToFit:true,
+			mtype:'post',
+			sortorder:"asc",
+			datatype:"json",
+			rowNum:17,
+			pager:"#jqgrid_pager",
+			viewrecords:true,
+			sortname:"pk",
+			rownumbers:true,
+			height:570,
+			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
+			colModel: [
+				{label: "작성일",						name: "dmDate",			align:'center', 	},
+				{label: "조치상태",						name: "dmStatus",		align:'center',		editable:true, editrules:{ required: true}},
+				{label: "농장ID",						name: "dmFarmid",		align:'center',		editable:true, editrules:{ required: true}},
+				{label: "동ID",							name: "dmDongid",		align:'center',		editable:true, editrules:{ required: true},  width:"40%", 
+					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
+				},
+				{label: "작성 구분",					name: "dmWrite",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "결함 구분",					name: "dmDefect",		align:'center',		editable:true, editrules:{ required: false}},
+				{label: "발생일",						name: "dmStartDate",	align:'center',		editable:true, editrules:{ required: false} },
+				{label: "발생 장치<br>(존재 시 작성)",	name: "dmDevice",		align:'center',		editable:true, editrules:{ required: false} },
+				{label: "버전(제품)",					name: "dmDeviceVer",	align:'center',		editable:true, editrules:{ required: false} },
+				{label: "문제점(현상)",					name: "dmProblem",		align:'center',		editable:true, editrules:{ required: false} },
+				{label: "원인(추정)",					name: "dmCause",		align:'center',		editable:true, editrules:{ required: false} },
+				{label: "조치내용",						name: "dmAction",		align:'center',		editable:true, editrules:{ required: false} },
+				{label: "기타",							name: "dmOthers",		align:'center',		editable:true, editrules:{ required: false} },
+				{label: "담당자",						name: "dmActor",		align:'center',		editable:true, editrules:{ required: false} },
+				{label: "pk", 							name: "pk",				hidden:true },
+			],
+			onSelectRow: function(id){		  },
+			loadComplete:function(data){		}
+		});
+
+		$('#jqgrid').navGrid('#jqgrid_pager',
+			{ 
+				edit:true, add:true, del:true, search:false, refresh: true, view: false, position:"left", cloneToTop:false 
+			},
+			{ 
+				beforeInitData:function(){
+					$("#jqgrid").setColProp('dmDongid', {editoptions:{readonly:false}} );
+
+				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
+			},
+			{	
+				beforeInitData:function(){
+					$("#jqgrid").setColProp('dmDongid', {editoptions:{readonly:false}} );
+
+				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
+			},
+			{	
+				beforeInitData:function(){
+				},delcaption:"자료삭제", width:500, errorTextFormat:function (data) {return 'Error: ' + data.responseText}
+			}
+		);
+	};
+
+	// 엑셀버튼 클릭 이벤트
+	$("#btn_excel").on("click", function(){
+        $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
+		$("#jqgrid").jqGrid('excelExport', {url:'0502_action.php'});
+    });
+
+</script>
