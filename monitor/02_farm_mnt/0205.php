@@ -130,7 +130,7 @@ include_once("../inc/bottom.php");
 			},
 			{	
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('dmDongid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:false}} );
 
 				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
 			},
