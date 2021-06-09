@@ -6,11 +6,20 @@ include_once("../../common/php_module/common_func.php");
 // 동 선택 콤보박스
 $dong_combo_json = make_jqgrid_combo_num(32);
 
+// 작성구분 콤보박스
+$write_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"작성구분\"";
+$write_combo = make_combo_by_query($write_query, "search_write", "작성구분", "cName1");
+$write_combo_json = make_jqgrid_combo($write_query, "cName1");
+
+// 결함구분 콤보박스
+$defect_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"결함구분\"";
+$defect_combo = make_combo_by_query($defect_query, "search_defect", "결함구분", "cName1");
+$defect_combo_json = make_jqgrid_combo($defect_query, "cName1");
 ?>
 
 <!--결함 및 A/S 관리-->
 <div class="row fullSc">
-	<article class="col-xl-12">
+	<article class="col-xl-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-orange-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
@@ -22,8 +31,8 @@ $dong_combo_json = make_jqgrid_combo_num(32);
 
 				<div class="widget-body-toolbar">
 					<form id="searchFORM" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
-						<?=$group_combo?>&nbsp;&nbsp;
-						<?=$group_combo?>&nbsp;&nbsp;
+						<?=$write_combo?>&nbsp;&nbsp;
+						<?=$defect_combo?>&nbsp;&nbsp;
 						<input type="text" id="sDate" name="sDate" class="form-control" maxlength='10' size="8" placeholder="시작일자">
 						&nbsp;-&nbsp;
 						<input type="text" id="eDate" name="eDate" class="form-control" maxlength='10' size="8" placeholder="종료일자">&nbsp;&nbsp;

@@ -7,13 +7,13 @@ include_once("../../common/php_module/common_func.php");
 $dong_combo_json = make_jqgrid_combo_num(32);
 
 // 진행상태 콤보박스
-$stat_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"계열회사명\"";
-$stat_combo = make_combo_by_query($stat_query, "search_group", "계열회사명", "cName1");
+$stat_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"진행상태\"";
+$stat_combo = make_combo_by_query($stat_query, "search_stat", "진행상태", "cName1");
 $stat_combo_json = make_jqgrid_combo($stat_query, "cName1");
 
 // 요청시간 콤보박스
-$time_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"계열회사명\"";
-$time_combo = make_combo_by_query($time_query, "search_group", "계열회사명", "cName1");
+$time_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"요청시간\"";
+$time_combo = make_combo_by_query($time_query, "search_time", "요청시간", "cName1");
 $time_combo_json = make_jqgrid_combo($time_query, "cName1");
 
 // 축종 콤보박스
@@ -25,7 +25,7 @@ $Lst_combo_json = make_jqgrid_combo($Lst_query, "cName1");
 
 <!--재산출 요청 관리-->
 <div class="row fullSc">
-	<article class="col-xl-12">
+	<article class="col-xl-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
@@ -37,8 +37,8 @@ $Lst_combo_json = make_jqgrid_combo($Lst_query, "cName1");
 
 				<div class="widget-body-toolbar">
 					<form id="searchFORM" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
-						<?=$group_combo?>&nbsp;&nbsp;
-						<?=$group_combo?>&nbsp;&nbsp;
+						<?=$stat_combo?>&nbsp;&nbsp;
+						<?=$time_combo?>&nbsp;&nbsp;
 						<input type="text" id="sDate" name="sDate" class="form-control" maxlength='10' size="8" placeholder="시작일자">
 						&nbsp;-&nbsp;
 						<input type="text" id="eDate" name="eDate" class="form-control" maxlength='10' size="8" placeholder="종료일자">&nbsp;&nbsp;
