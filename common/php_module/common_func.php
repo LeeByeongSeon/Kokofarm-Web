@@ -236,12 +236,7 @@ function convert_excel($query, $field_data, $title, $option){
 	echo $html;
 }
 
-/* 문자열을 날짜로 변환
-param
-- str : 변환할 문자열
-return
-- ret : 변환된 날짜
-*/
+// 일단 사용안되지만 유지
 function conv_str_to_date($str) {
 	$ret = "";
 	if ($str != "") {
@@ -249,5 +244,52 @@ function conv_str_to_date($str) {
 	}
 	return $ret;
 };
+
+/* 날짜 차이를 초로 환산
+param
+- start : 시작시간
+- end : 종료시간
+return
+- ret : 시작시간 ~ 종료시간 차이 (초)
+*/
+function get_date_diff($start, $end){
+	$ret = (strtotime($end) - strtotime($start));
+    $ret = (int) $ret;
+	return $ret;
+}
+
+/* 초를 받아서 일-시-분-초로 변환
+param
+- second : 시간(초)
+return
+- ret : 일-시-분-초
+*/
+function conv_second_to_read($second){
+	$day = 24 * 60 * 60; 			// 시 * 분 * 초
+	$hour = 60 * 60;				// 분 * 초
+
+	$ret = "";
+	if($second > $day){		//1일 이상인 경우
+		$temp = ($second - ($second % $day)) / $day ;
+		$ret .= $temp . "일 ";
+		$second = $second % $day;
+	}
+
+	if($second > $hour){	//1시간 이상인 경우
+		$temp = ($second - ($second % $hour)) / $hour ;
+		$ret .= $temp . "시 ";
+		$second = $second % $hour;
+	}
+
+	if($second > 60){	//1분 이상인 경우
+		$temp = ($second - ($second % 60)) / 60 ;
+		$ret .= $temp . "분 ";
+		$second = $second % 60;
+	}
+
+	$ret .= $second . "초";
+
+	return $ret;
+}
 
 ?>

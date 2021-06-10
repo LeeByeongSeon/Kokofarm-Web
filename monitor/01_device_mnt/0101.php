@@ -1,94 +1,128 @@
 <?
 include_once("../inc/top.php");
+
 ?>
-
-<!--농가별 현황-->
-<article class="col-xl-12 no-padding">
-	<div class="jarviswidget jarviswidget-color-teal no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-		<header>
-			<div class="widget-header">	
-				<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;농가별 현황</h2>	
-			</div>
-		</header>
-
-		<div class="widget-body">
-			
-			<table id="summary_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="20" data-toggle="table" style="font-size:14px">
-				<thead>
-					<tr>
-						<th data-sortable="true" data-field='f1' data-visible="false">입출하코드</th>
-						<th data-sortable="true" data-field='f2' data-visible="true">농장명</th>
-						<th data-sortable="true" data-field='f3' data-visible="true">일령</th>
-						<th data-sortable="true" data-field='f4' data-visible="true">축종</th>
-
-						<th data-sortable="false" data-field='f5' data-align="center">저울 연결</th>
-						<th data-sortable="false" data-field='f6' data-align="center">온도(℃)</th>
-						<th data-sortable="false" data-field='f7' data-align="center">습도(%)</th>
-						<th data-sortable="false" data-field='f8' data-align="center">CO2(ppm)</th>
-						<th data-sortable="false" data-field='f9' data-align="center">NH3(ppm)</th>
-
-						<th data-sortable="true" data-field='f10' data-align="center">환경경보</th>
-						<th data-sortable="true" data-field='f11' data-align="center">평균중량(권고대비)</th>
-						<th data-sortable="true" data-field='f12' data-align="center">네트워크</th>
-
-						<th data-sortable="true" data-field='f13' data-align="center">PLC 제어</th>
-						<th data-sortable="true" data-field='f14' data-align="center">PLC 환경</th>
-						<th data-sortable="true" data-field='f15' data-align="center">급이/급수</th>
-						<th data-sortable="true" data-field='f16' data-align="center">외기환경</th>
-					</tr>
-				</thead>
-			</table>
-			
-		</div>
+<!--농장 계정 관리-->
+	<article class="col-xl-12 no-padding">
+		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<header>
+				<div class="widget-header">	
+					<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;장치 요약 현황</h2>	
+				</div>
+			</header>
 				
-	</div>
-</article>
-	
+			<div class="widget-body">
+				<div class="widget-body-toolbar">
+					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
+						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
+						<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
+					</form>
+				</div>
+
+				<div class="jqgrid_zone">
+					<table id="jqgrid" class="jqgrid_table"></table>
+					<div id="jqgrid_pager"></div>
+				</div>
+				
+			</div>
+					
+		</div>
+	</article>
+
 <?
 include_once("../inc/bottom.php");
 ?>
 
 <script language="javascript">
-	var timer_interval;	
-	var timer_count;
-
 	$(document).ready(function(){
-		get_table_data();
 
-		//Timer
-		// timer_count=0; clearInterval(timer_interval);
-		// timer_interval= setInterval(function(){
-		// 	timer_count++;
-		// 	if(timer_count >= 60) { 
-		// 		timer_count=0; 
-		// 		get_table_data(); 
-		// 	}
-		// 	else{ 
-		// 		var updatePer = parseInt(timer_count / 60 * 100); $("#stateBar").css('width', updatePer + "%"); 
-		// 		$("#stateBar").html(updatePer + "%"); $("#stateBar").parent().attr("data-original-title",updatePer + "%"); }
-		// },1000);
+		get_grid_data();
 	});
 
-	function get_table_data(){
-		var data_arr = {}; 
-		data_arr['oper'] = "get_table_data";
-
-		$.ajax({url:'0101_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
-			success: function(data) {
-				alert("1");
-				$('#summary_table').bootstrapTable('load', data.table_data); //data-toggle="table" 하지않으면 Update 불가
-				alert("2");
-			}
+	function get_grid_data(){
+		$("#jqgrid").jqGrid({
+			url:"0101_action.php", 
+			editurl:"0101_action.php",
+			styleUI:"Bootstrap",
+			autowidth:true,
+			shrinkToFit:true,
+			mtype:'post',
+			sortorder:"desc",
+			datatype:"json",
+			rowNum:100,
+			pager:"#jqgrid_pager",
+			viewrecords:true,
+			sortname:"warning",
+			rownumbers:true,
+			height:"auto",
+			jsonReader:{repeatitems:false, id:'cmCode', root:'print_data', page:'page', total:'total', records:'records'},
+			colModel: [
+				{label: "입출하코드", 		name: "cmCode",				hidden:true 	},
+				{label: "농장명",			name: "fdName",				align:'left',		},
+				{label: "일령",				name: "days",				align:'center',		width:"50%"},
+				{label: "축종",				name: "cmIntype",			align:'center',		width:"50%"},
+				{label: "저울연결",	 		name: "siSensorDate",		align:'center',		},
+				{label: "온도", 			name: "siTemp",				align:'center',		sortable:false},
+				{label: "습도",				name: "siHumi",				align:'center',		sortable:false},
+				{label: "CO2",	 			name: "siCo2",				align:'center',		sortable:false},
+				{label: "NH3", 				name: "siNh3",				align:'center',		sortable:false},
+				{label: "환경경보",		 	name: "warning",			align:'center',		},
+				{label: "평균중량(권고대비)",name: "beAvgWeight",		align:'center',		},
+				{label: "네트워크",			name: "beNetwork",			align:'center',		},
+				{label: "PLC 제어",		 	name: "bpDeviceDate",		align:'center',		},
+				{label: "PLC 환경",		 	name: "bpSensorDate",		align:'center',		},
+				{label: "급이/급수",		 name: "sfFeedDate",		align:'center',		},
+				{label: "외기환경",		 	name: "soSensorDate",		align:'center',		},
+			],
+			onSelectRow: function(id){		  },
+			loadComplete:function(data){		}
 		});
+
+		$('#jqgrid').navGrid('#jqgrid_pager',
+			{ 
+				edit:false, add:false, del:false, search:false, refresh: true, view: false, position:"left", cloneToTop:false 
+			}
+		);
 	};
 
-	//sparkline binding 처리
-	// $('#summary_table').on('post-body.bs.table', function (e, rowData, $element) {
-	// 	$(".sparkLine").each(function(index,element) {
-	// 		var data1=$(this).attr("data-bar-val").split(",");
-	// 		var data2=$(this).attr("data-line-val").split(",");
-	// 		$(this).sparkline(data1,{type:'bar',barColor:'#496949',width:100,height:20});
-	// 		$(this).sparkline(data2,{type:'line',composite:'true',fillColor:false,lineColor:'red',lineWidth:1});
-	// 	});
-	// });
+	// 검색, 취소, 엑셀 버튼 이벤트
+	function search_action(action){
+
+		var search_map = {};
+		$.each($("#search_form").serializeArray(), function(){ 
+			search_map[this.name] = this.value;
+		});
+
+		var search_data = JSON.stringify(search_map);	//form Data 전체를 받아 name과 value값을 JSON으로 변환(이때,"name" 과 "value"를 전송하지 않음
+		switch(action){
+			case "search":
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "cancle":
+				//초기화
+				$("#search_form").each(function() {	this.reset();  });
+
+				//리로드
+				$.each($("#search_form").serializeArray(), function(){ 
+					search_map[this.name] = this.value; 
+				});
+				search_data = JSON.stringify(search_map);
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "excel":
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}); //POST 형식의 parameter 추가
+				$("#jqgrid").jqGrid('excelExport', {url:'0101_action.php'});
+				break;
+		}
+	};
+
+	$("#search_form [name=search_name]").keyup(function(e){
+        if(e.keyCode == 13){
+            search_action("search");
+        }
+    });
+
 </script>
