@@ -1,5 +1,11 @@
 <?
 include_once("../inc/top.php");
+
+//======================================
+//Google Map API Key
+//=====================================
+$mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
+
 ?>
 <!--입출하 농장 수 & 호수별 입추 수-->
 <div class="row fullSc">
@@ -85,6 +91,30 @@ include_once("../inc/top.php");
 	</article>
 </div>
 
+<div class="row">
+	<article class="col-xl-12">
+		<div class="well well-sm" id="event-container">
+			<form>
+				<fieldset>
+					<legend>
+						Draggable Events
+					</legend>
+					<ul id='external-events' class="list-unstyled">
+						<!--<li>
+							<span class="bg-darken text-white" data-description="Currently busy" data-icon="fa-time">Office Meeting</span>
+						</li>-->
+					</ul>
+					<div class="checkbox vcheck">
+						<label>
+							<input type="checkbox" id="drop-remove" class="checkbox style-0" checked="checked">
+							<span>remove after drop</span>
+						</label>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</article>
+</div>
 
 <!--입출하 일정 & 농가 지도-->
 <div class="row">
@@ -101,7 +131,7 @@ include_once("../inc/top.php");
 						<a class="btn btn-default" href="javascript:void(0);" id="mt">Month</a>&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-default" href="javascript:void(0);" id="ag">Agenda</a>&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-default" href="javascript:void(0);" id="td">Today</a>&nbsp;&nbsp;&nbsp;
-						<button class="btn btn-default" id="openModalBtn"><i class="fa fa-plus"></i></button>
+						<button class="btn bg-blue" id="openModalBtn"><i class="fa fa-plus"></i></button>
 					</div>
 				</div>
 			</header>
@@ -137,7 +167,7 @@ include_once("../inc/top.php");
 				
 			<div class="widget-body">
 
-				
+				<div id="mapDIV" style="height:750px;"></div>
 				
 			</div>
 					
@@ -146,7 +176,7 @@ include_once("../inc/top.php");
 
 	
 
-
+	<!--ModalBox-->
 	<div id="modalBox" class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -156,9 +186,7 @@ include_once("../inc/top.php");
 				</div>
 				
 				<div class="modal-body">
-					
 					<div class="col-xl-12">
-
 						<div>
 
 							<div class="widget-body">
@@ -227,15 +255,6 @@ include_once("../inc/top.php");
 										</div>
 
 									</fieldset>
-									<!--<div class="form-actions">
-										<div class="row">
-											<div class="col-md-12">
-												<button class="btn btn-default" type="button" id="add-event" >
-													Add Event
-												</button>
-											</div>
-										</div>
-									</div>-->
 								</form>
 
 								<!-- end content -->
@@ -246,20 +265,34 @@ include_once("../inc/top.php");
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">확인</button>
+					<button type="button" class="btn btn-primary" id="add-event">확인</button>
 					<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
 				</div>
+
 			</div>
 		</div>
-	</div>
+	</div><!--ModalBox end-->
+
 </div>
 
 <?
 include_once("../inc/bottom.php");
 ?>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=<?=$mapKey?>&callback=initMap" async defer></script>
+
 <script type="text/javascript">
 	
+	$("#mapDIV").bind('resize',function(){ initMap(); });
+	
+	//구글맵 출력
+	function initMap() {
+		map["mapDIV"]=new google.maps.Map(document.getElementById("mapDIV"), {
+			zoom:8,center:{lat:35.8391582,lng:127.0998321}
+		});
+		//delMarkers("mapDIV"); addMarkers("mapDIV",jQuery.makeArray(mapData));
+	};
+
 	// 입출하 달력
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	
@@ -274,10 +307,10 @@ include_once("../inc/bottom.php");
 		});
 
 		//pageSetUp();
-		
+			
 
-			"use strict";
-		
+		"use strict";
+			
 			var date = new Date();
 			var d = date.getDate();
 			var m = date.getMonth();
@@ -325,7 +358,7 @@ include_once("../inc/bottom.php");
 			};
 		
 			/* initialize the external events
-				-----------------------------------------------------------------*/
+			 -----------------------------------------------------------------*/
 		
 			$('#external-events > li').each(function () {
 				initDrag($(this));
@@ -338,10 +371,12 @@ include_once("../inc/bottom.php");
 					icon = $('input:radio[name=iconselect]:checked').val();
 		
 				addEvent(title, priority, description, icon);
+				
+				$('#modalBox').modal('hide');
 			});
 		
 			/* initialize the calendar
-				-----------------------------------------------------------------*/
+			 -----------------------------------------------------------------*/
 		
 			$('#calendar').fullCalendar({
 		
@@ -387,7 +422,8 @@ include_once("../inc/bottom.php");
 					calendar.fullCalendar('unselect');
 				},
 				
-				//달력에 표시되는 일정 들어가는 부분
+
+				// 추가한 event
 				events: [],
 		
 				eventRender: function (event, element, icon) {
@@ -423,8 +459,8 @@ include_once("../inc/bottom.php");
 			$('#calendar-buttons #btn-today').click(function () {
 				$('.fc-today-button').click();
 				return false;
-			});	
-				
+			});
+			
 			$('#mt').click(function () {
 				$('#calendar').fullCalendar('changeView', 'month');
 			});
@@ -435,7 +471,7 @@ include_once("../inc/bottom.php");
 			
 			$('#td').click(function () {
 				$('#calendar').fullCalendar('changeView', 'agendaDay');
-			});			
+			});	
 	
 	})
 

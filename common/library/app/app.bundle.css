@@ -76,7 +76,9 @@ h6 {
   line-height: normal; }
 
 label {
-  margin-bottom: 0.38462rem; }
+  margin-bottom: 0.38462rem;
+  padding-top:20px;
+}
 
 select.form-control:not([size]):not([multiple]), .editable-input select:not([size]):not([multiple]) {
   height: 2.46154rem; }

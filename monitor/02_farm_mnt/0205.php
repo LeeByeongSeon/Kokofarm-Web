@@ -39,9 +39,9 @@ $Lst_combo_json = make_jqgrid_combo($Lst_query, "cName1");
 					<form id="searchFORM" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
 						<?=$stat_combo?>&nbsp;&nbsp;
 						<?=$time_combo?>&nbsp;&nbsp;
-						<input type="text" id="sDate" name="sDate" class="form-control" maxlength='10' size="8" placeholder="시작일자">
+						<input type="text" id="sDate" name="sDate" class="form-control" maxlength='10' size="10" placeholder="시작일자">
 						&nbsp;-&nbsp;
-						<input type="text" id="eDate" name="eDate" class="form-control" maxlength='10' size="8" placeholder="종료일자">&nbsp;&nbsp;
+						<input type="text" id="eDate" name="eDate" class="form-control" maxlength='10' size="10" placeholder="종료일자">&nbsp;&nbsp;
 						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
 						<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
 						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;

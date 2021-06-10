@@ -15582,11 +15582,11 @@ div.tablediv > .table-bordered {
 .EditTable td input, 
 .EditTable td select, 
 .EditTable td textarea { 
-	width: 98%; 
+	width: 100%; 
 	display: inline-block;
 }
 .EditTable td textarea { 
-	width:auto; 
+	/*width:auto;*/ 
 	height:auto;
 }
 .EditTable .FormData td { 
@@ -15609,6 +15609,7 @@ div.tablediv > .table-bordered {
 	margin-bottom: 5px
 }
 .ui-jqdialog-content select.FormElement {
+  height:32px;
 	padding:.3em; 
 	margin-bottom: 3px;
 }
