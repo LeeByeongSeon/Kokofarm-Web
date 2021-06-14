@@ -8,40 +8,52 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-green-dark" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;박승민농장 - 1동</h2>	
+						<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;요약 정보</h2>	
 					</div>
 				</header>
 
 				<div class="widget-body">
 
-					<table style="width:350px; height:150px; text-align:center; float:left">
-						<thead>
-							<th colspan="3"><button class="btn btn-success" style="width:200px;" disabled>23일령</button></th>
-						</thead>
-						<tbody>
-							<tr>
-								<th style="font-size:15px">평균중량</th>
-								<td style="font-size:15px; color:red" colspan="2">1020.0</td>
-							</tr>
-							<tr>
-								<th>표준편차</th>
-								<td colspan="2">15.7</td>
-							</tr>
-							<tr>
-								<th>변이계수</th>
-								<td colspan="2">1.4</td>
-							</tr>
-							<tr>
-								<th>입추</th>
-								<td>2021-04-03</td>
-								<td>10:30:00</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="col-md-6 no-padding">
+						<div style="padding-top:0.2rem; padding-bottom:0.8rem; font-size: 15px">
+							<b id="summary_name">망성농장-01동 (KF0013-01) </b>
+						</div>
 
-					<div style="float:right; width:200px; height:140px;">
-						<img src="../images/img1.png" style="width:200px; height:150px">
-					</div>			
+						<div>
+							<div class="well" style="padding:15px;">
+								<div class="col-md-12 no-padding">
+									<div class="col-md-4 no-padding">
+										<img id="hen_img" src="../images/hen-scale1.png" width="100%" height="100px">
+										<div style="position:absolute; top:34px; font-size:16px; color:white; width:100%; text-align:center;">
+											<span id="summary_days">30</span>일령
+										</div>
+									</div>
+									<div class="col-md-8 no-padding">
+										<div style="text-align:center; font-weight:bold; font-size:15px">평균중량</div>
+										<div id="summary_avg" style="text-align:center; font-weight:bold; font-size:24px; color:#455a64">1020</div>
+
+										<div id="summary_devi" class="col-md-6 no-padding" style="text-align:center; font-weight:bold;">표준편차<br>13.1</div>
+										<div id="summary_inc" class="col-md-6 no-padding" style="text-align:center; font-weight:bold;">일일증체량<br>40</div>
+									</div>
+								</div>
+
+								<div class="col-md-12 no-padding">
+									<div class="col-md-4 no-padding">
+										<div id="summary_type" style="text-align:center;">육계 20000수 </div>
+									</div>
+									<div class="col-md-8 no-padding">
+										<div id="summary_comein" style="text-align:center;">입추일자 : 2021-06-10 </div>
+									</div>
+								</div>
+
+								<div style="clear:both"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						
+					</div>
 					
 				</div>
 						
@@ -99,11 +111,81 @@ include_once("../inc/top.php");
 		</div>
 	</div>
 
+	<!--장치현황-->
+	<div class="row">
+		<div class="col-xl-3">
+			<div class="jarviswidget jarviswidget-color-custom no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+				<header>
+					<div class="widget-header">	
+						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 현황</h2>	
+					</div>
+				</header>
+			
+				<div class="widget-body">
+					<table class="table table-bordered table-hover" style="text-align: center; margin-bottom:10px;">
+						<thead>
+							<th>장치명</th>
+							<th>설치수</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>IoT 저울</td>
+								<td id="device_cnt_cell">3</td>
+							</tr>
+							<tr>
+								<td>IP 카메라</td>
+								<td id="device_cnt_camera">1</td>
+							</tr>
+							<tr>
+								<td>자동환경제어장치</td>
+								<td id="device_cnt_plc">1</td>
+							</tr>
+							<tr>
+								<td>사료빈 로드셀</td>
+								<td id="device_cnt_feeder">1</td>
+							</tr>
+							<tr>
+								<td>유량센서</td>
+								<td id="device_cnt_water">1</td>
+							</tr>
+							<tr>
+								<td>외기환경센서</td>
+								<td id="device_cnt_out">1</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xl-9">
+			<div class="jarviswidget jarviswidget-color-custom no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+				<header>
+					<div class="widget-header">	
+						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 데이터</h2>	
+					</div>
+				</header>
+				<div class="widget-body">
+					<table id="device_buffer_table"  data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+						<thead>
+							<tr>
+								<th data-field='f1' data-visible="true" data-align="center">장치</th>
+								<th data-field='f2' data-visible="true" data-align="center">수집시간</th>
+								<th data-field='f3' data-visible="true">데이터</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+						
+			</div>
+		</div>
+	</div>
+
 
 	<!--평균중량(표) & 오류이력-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량 (표)</h2>	
@@ -114,9 +196,6 @@ include_once("../inc/top.php");
 
 					<div class="widget-body-toolbar">
 						<form id="searchFORM" class="form-inline" onsubmit="return false;">
-							<select class="form-control">
-								<option>시간구분</option>
-							</select>
 							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="시작시간" size="15" >&nbsp;&nbsp;-
 							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="종료시간" size="15" >&nbsp;&nbsp;
 							<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
@@ -124,66 +203,29 @@ include_once("../inc/top.php");
 						</form>
 					</div>
 
-					<table class="table table-bordered table-hover" style="text-align: center;">
-						<thead>
-							<th></th>
-							<th>산출 시간</th>
-							<th>일령</th>
-							<th>평채</th>
-							<th>권고</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>31</td>
-								<td>1470</td>
-								<td>1585</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>31</td>
-								<td>1470</td>
-								<td>1585</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>31</td>
-								<td>1470</td>
-								<td>1585</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>31</td>
-								<td>1470</td>
-								<td>1585</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>31</td>
-								<td>1470</td>
-								<td>1585</td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>31</td>
-								<td>1470</td>
-								<td>1585</td>
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>31</td>
-								<td>1470</td>
-								<td>1585</td>
-							</tr>
-						</tbody>
-					</table>
+					<!-- widget div-->
+					<div>
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							<input class="form-control" type="text">	
+						</div>
+						<!-- end widget edit box -->
+						
+						<!-- widget content -->
+						<div class="widget-body">
+							<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+								<thead>
+									<tr>
+										<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
+										<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
+										<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
+										<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
 					
 				</div>
 						
@@ -260,151 +302,6 @@ include_once("../inc/top.php");
 								<td>2021-05-03 15:00:00</td>
 								<td>1</td>
 								<td>-</td>
-							</tr>
-						</tbody>
-					</table>
-					
-				</div>
-						
-			</div>
-		</div>
-	</div>
-
-
-	<!--장치현황-->
-	<div class="row">
-		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-				<header>
-					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 현황</h2>	
-					</div>
-					<div class="widget-toolbar ml-auto">
-						<div class="form-inline">
-							<button class="btn btn-primary"><i class="fa fa-gear"></i>&nbsp;&nbsp;&nbsp;장치관리로 이동</button>
-						</div>
-					</div>
-				</header>
-			
-				<div class="widget-body">
-
-					<table class="table table-bordered table-hover" style="text-align: center; margin-bottom:10px; margin-top:10px;">
-						<thead>
-							<th>IoT 저울</th>
-							<th>IP 카메라</th>
-							<th>PLC</th>
-							<th>급이기</th>
-							<th>급수기</th>
-							<th>외기환경</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>3</td>
-								<td>1</td>
-								<td>0</td>
-								<td>1</td>
-								<td>1</td>
-								<td>0</td>
-							</tr>
-						</tbody>
-					</table>
-					<table class="table table-bordered table-hover" style="text-align: center; margin-bottom:10px;">
-						<thead>
-							<th>장치</th>
-							<th>최종수집시간</th>
-							<th>온도 (℃)</th>
-							<th>습도 (%)</th>
-							<th>이산화탄소 (ppm)</th>
-							<th>암모니아 (ppm)</th>
-							<th>중량</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>IoT 저울-01</td>
-								<td><span style="color:red">2021-05-10 14:30:00</span></td>
-								<td>23.2</td>
-								<td>55.9</td>
-								<td>1431</td>
-								<td>0</td>
-								<td>1554</td>
-							</tr>
-							<tr>
-								<td>IoT 저울-02</td>
-								<td>2021-05-10 16:00:00</td>
-								<td>24.1</td>
-								<td>61.2</td>
-								<td>1521</td>
-								<td>0</td>
-								<td>1122</td>
-							</tr>
-							<tr>
-								<td>IoT 저울-03</td>
-								<td>2021-05-10 16:00:00</td>
-								<td><span style="color:red">27.9</span></td>
-								<td><span style="color:red">78.8</span></td>
-								<td><span style="color:red">2780</span></td>
-								<td>1</td>
-								<td>1788</td>
-							</tr>
-						</tbody>
-					</table>
-					<table class="table table-bordered table-hover" style="text-align: center; margin-bottom:10px;">
-						<thead>
-							<th>장치</th>
-							<th>최종수집시간</th>
-							<th>사료빈셀</th>
-							<th>유량센서</th>
-							<th>온도</th>
-							<th>습도</th>
-							<th>암모니아</th>
-							<th>황화수소</th>
-							<th>미세먼지</th>
-							<th>초미세먼지</th>
-							<th>풍향</th>
-							<th>풍속</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>급이/급수/외기</td>
-								<td><span style="color:red">2021-05-10 14:30:00</span></td>
-								<td>4500</td>
-								<td>32511</td>
-								<td>12.7</td>
-								<td>66.8</td>
-								<td>1</td>
-								<td>0.1</td>
-								<td>19.1</td>
-								<td>20.6</td>
-								<td>90</td>
-								<td>2.3</td>
-							</tr>
-						</tbody>
-					</table>
-					<table class="table table-bordered table-hover" style="text-align: center;">
-						<thead>
-							<th>장치</th>
-							<th>최종수집시간</th>
-							<th>내부온도</th>
-							<th>내부습도</th>
-							<th>내부 CO2</th>
-							<th>내부 음압</th>
-							<th>외기온도</th>
-							<th>외기습도</th>
-							<th>외기 NH3</th>
-							<th>외기 H2S</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>PLC 센서</td>
-								<td>2021-05-10 16:00:00</td>
-								<td>31.9|34.0|32.0|30.1</td>
-								<td>45.1|45.0|40.9|56.4</td>
-								<td>2073</td>
-								<td>0.0</td>
-								<td>16.1</td>
-								<td>61.4</td>
-								<td>N</td>
-								<td>N</td>
 							</tr>
 						</tbody>
 					</table>
@@ -800,3 +697,78 @@ include_once("../inc/top.php");
 <?
 include_once("../inc/bottom.php");
 ?>
+
+<script language="javascript">
+	$(document).ready(function(){
+		call_tree_view("", act_grid_data);
+		set_tree_search(act_grid_data);
+	});
+
+	// 데이터 불러오기
+	function load_data(select){
+
+		let code = "";
+
+		var data_arr = {}; 
+		data_arr['oper'] = "get_code";
+		data_arr['select'] = select;
+		// 입출하코드 가져오기
+		$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
+			success: function(data) {
+				code = data.code;
+				get_buffer_data(code);
+				get_avg_data(code);
+			}
+		});
+	};
+
+	// 트리뷰 버튼 클릭시 리로드 이벤트
+	function act_grid_data(action){
+		switch(action){
+			default:
+				load_data(action);
+				break;
+		}
+	};
+
+	// 버퍼테이블 불러오기
+	function get_buffer_data(code){
+
+		if(code != null && code != ""){			// "" or null 체크
+			var data_arr = {}; 
+			data_arr['oper'] = "get_buffer";
+			data_arr['code'] = code;
+			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
+				success: function(data) {
+
+					let summary = data.summary_data;
+					$("#summary_name").html(summary.summary_name);
+					$("#summary_days").html(summary.summary_days);
+					$("#summary_avg").html(summary.summary_avg);
+					$("#summary_devi").html(summary.summary_devi);
+					$("#summary_inc").html(summary.summary_inc);
+					$("#summary_type").html(summary.summary_type);
+					$("#summary_comein").html(summary.summary_comein);
+
+					$('#device_buffer_table').bootstrapTable('load', data.buffer_data); //data-toggle="table" 하지않으면 Update 불가
+				}
+			});
+		}
+	};
+
+	// 평균중량 불러오기
+	function get_avg_data(code){
+
+		if(code != null && code != ""){			// "" or null 체크
+			var data_arr = {}; 
+			data_arr['oper'] = "get_avg_weight";
+			data_arr['code'] = code;
+			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
+				success: function(data) {
+					$('#avg_weight_table').bootstrapTable('load', data.avg_weight_data); //data-toggle="table" 하지않으면 Update 불가
+				}
+			});
+		}
+	};
+
+</script>
