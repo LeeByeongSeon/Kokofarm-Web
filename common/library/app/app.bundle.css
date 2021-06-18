@@ -10543,8 +10543,9 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
     color: #01579B;
     border-color: #03A9F4; }
   .smart-style-6 .alert-danger {
-    background-color: #F44336;
-    border-color: #B71C1C; }
+    background-color: #953b39;
+    color : #fff;
+    border-color: #c26565; }
   .smart-style-6 .bg-green {
     background-color: #4CAF50 !important; }
   .smart-style-6 .text-green {

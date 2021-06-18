@@ -1,5 +1,11 @@
 <?
 include_once("../inc/top.php");
+include_once("../../common/php_module/common_func.php");
+
+// 축종선택 콤보박스
+$query = "SELECT cName1 FROM codeinfo WHERE cGroup = \"생계구분\"";
+$type_combo = make_combo_by_query($query, "request_type", "", "cName1");
+
 ?>
 <!--농장정보 & 이슈사항-->
 <article class="col-xl-10 float-right">
@@ -43,6 +49,9 @@ include_once("../inc/top.php");
 									</div>
 									<div class="col-md-8 no-padding">
 										<div id="summary_comein" style="text-align:center;">입추일자 : 2021-06-10 </div>
+
+										<div id="summary_indate" style="display:none;"></div>
+										<div id="summary_outdate" style="display:none;"></div>
 									</div>
 								</div>
 
@@ -122,33 +131,35 @@ include_once("../inc/top.php");
 				</header>
 			
 				<div class="widget-body">
-					<table class="table table-bordered table-hover" style="text-align: center; margin-bottom:10px;">
+					<table class="table table-bordered table-hover" style="text-align: center;">
 						<thead>
-							<th>장치명</th>
-							<th>설치수</th>
+							<tr style="height:38px">
+								<th>장치명</th>
+								<th>설치수</th>
+							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<tr style="height:45px">
 								<td>IoT 저울</td>
 								<td id="device_cnt_cell">3</td>
 							</tr>
-							<tr>
+							<tr style="height:45px">
 								<td>IP 카메라</td>
 								<td id="device_cnt_camera">1</td>
 							</tr>
-							<tr>
+							<tr style="height:45px">
 								<td>자동환경제어장치</td>
 								<td id="device_cnt_plc">1</td>
 							</tr>
-							<tr>
+							<tr style="height:45px">
 								<td>사료빈 로드셀</td>
 								<td id="device_cnt_feeder">1</td>
 							</tr>
-							<tr>
+							<tr style="height:45px">
 								<td>유량센서</td>
 								<td id="device_cnt_water">1</td>
 							</tr>
-							<tr>
+							<tr style="height:45px">
 								<td>외기환경센서</td>
 								<td id="device_cnt_out">1</td>
 							</tr>
@@ -169,9 +180,9 @@ include_once("../inc/top.php");
 					<table id="device_buffer_table"  data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true" data-align="center">장치</th>
-								<th data-field='f2' data-visible="true" data-align="center">수집시간</th>
-								<th data-field='f3' data-visible="true">데이터</th>
+								<th data-field='f1' data-visible="true" data-align="center" data-cell-style="del_padding">장치</th>
+								<th data-field='f2' data-visible="true" data-align="center" data-cell-style="del_padding">수집시간</th>
+								<th data-field='f3' data-visible="true" data-cell-style="del_padding">데이터</th>
 							</tr>
 						</thead>
 					</table>
@@ -190,42 +201,32 @@ include_once("../inc/top.php");
 					<div class="widget-header">	
 						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량 (표)</h2>	
 					</div>
+
+					<div class="widget-toolbar ml-auto">
+						<div class="form-inline">
+							<div class="btn-group">
+									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('day')">일령별</button>
+									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('time')">시간별</button>
+							</div>&nbsp;&nbsp;
+							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg">
+								<span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀
+							</button>
+						</div>
+					</div>
 				</header>
 
 				<div class="widget-body">
 
-					<div class="widget-body-toolbar">
-						<form id="searchFORM" class="form-inline" onsubmit="return false;">
-							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="시작시간" size="15" >&nbsp;&nbsp;-
-							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="종료시간" size="15" >&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-							<button type="button" class="btn btn-success  btn-sm" onClick="actionBtn('Reset')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
-						</form>
-					</div>
-
-					<!-- widget div-->
-					<div>
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-							<input class="form-control" type="text">	
-						</div>
-						<!-- end widget edit box -->
-						
-						<!-- widget content -->
-						<div class="widget-body">
-							<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
-								<thead>
-									<tr>
-										<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
-										<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
-										<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
-										<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-					</div>
+					<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+						<thead>
+							<tr>
+								<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
+								<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
+								<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
+								<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
+							</tr>
+						</thead>
+					</table>
 					
 				</div>
 						
@@ -238,72 +239,25 @@ include_once("../inc/top.php");
 					<div class="widget-header">	
 						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;오류 이력</h2>	
 					</div>
+
+					<div class="widget-toolbar ml-auto">
+						<div class="form-inline">
+							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="avg_search('excel')"><span class="fa fa-search"></span>&nbsp;&nbsp;조회</button>&nbsp;&nbsp;
+							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="avg_search('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
+						</div>
+					</div>
 				</header>
 					
 				<div class="widget-body">
 
-					<div class="widget-body-toolbar">
-						<form id="searchFORM" class="form-inline" onsubmit="return false;">
-							<select class="form-control">
-								<option>시간구분</option>
-							</select>
-							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="시작시간" size="15" >&nbsp;&nbsp;-
-							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="종료시간" size="15" >&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-						</form>
-					</div>
-
-					<table class="table table-bordered table-hover" style="text-align: center;">
+					<table id="error_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
-							<th></th>
-							<th>오류 시간</th>
-							<th>저울 번호</th>
-							<th>오류 상태</th>
+							<tr>
+								<th data-field='f1' data-visible="true" data-sortable="true">오류시간</th>
+								<th data-field='f2' data-visible="true" data-sortable="true">오류상태</th>
+								<th data-field='f3' data-visible="true" data-sortable="true">저울번호</th>
+							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>1</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>1</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>2</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>2</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>2</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>3</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>1</td>
-								<td>-</td>
-							</tr>
-						</tbody>
 					</table>
 					
 				</div>
@@ -437,134 +391,102 @@ include_once("../inc/top.php");
 
 				<div class="widget-body">
 
-					<div class="widget-body-toolbar">
-						<form id="searchFORM" class="form-inline" onsubmit="return false;">
-							<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="시작시간" size="15" >&nbsp;&nbsp;-
-							&nbsp;&nbsp;<input class="form-control" type="text" name="searchName" maxlength="20" placeholder="종료시간" size="15" >&nbsp;&nbsp;
-							<select class="form-control">
-								<option>저울번호</option>
-							</select>
-							&nbsp;&nbsp;LIMIT&nbsp;&nbsp;<input class="form-control" type="text" maxlength="4" placeholder="1000" size="15">&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-							<button type="button" class="btn btn-success  btn-sm" onClick="actionBtn('Reset')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+					<ul class="nav nav-tabs nav-tabs-right bordered" id="nav_raw_data" style="padding:5px;">&nbsp;&nbsp;
+						<form id="raw_data_search_form" class="form-inline" onsubmit="return false;">
+							<span class="fa fa-clock-o"></span>&nbsp;조회범위&nbsp;&nbsp;<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;
+							<input class="form-control" type="text" name="search_stime" maxlength="5" placeholder="시작시간" size="7"/>
+							&nbsp;&nbsp; ~ &nbsp;&nbsp;
+							<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
+							<input class="form-control" type="text" name="search_etime" maxlength="5" placeholder="종료시간" size="7" />&nbsp;&nbsp;
+							LIMIT&nbsp;&nbsp;<input class="form-control" type="text" name="search_limit" placeholder="1~9999" size="7" />&nbsp;&nbsp;
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="search_order" id="order_1" value="1">오름차순&nbsp;
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="search_order" id="order_2" value="-1" checked>내림차순&nbsp;&nbsp;
+							</div>
+							<button type="button" class="btn btn-primary btn-sm" onClick="search_raw_data('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;조회</button>&nbsp;
+							<button type="button" class="btn btn-success btn-sm" onClick="search_raw_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
 						</form>
-					</div>
+						
+						<li class="nav-item ml-auto">
+							<a data-toggle="tab" class="nav-link tab-raw" id="ext">급이/급수/외기</a>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="tab" class="nav-link tab-raw" id="dev">PLC 제어</a>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="tab" class="nav-link tab-raw" id="plc">PLC 환경</a>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="tab" class="nav-link active tab-raw" id="cell">IoT저울</a>
+						</li>
+					</ul>
 
-					<table class="table table-bordered table-hover" style="text-align: center;">
+					<table id="cell_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 						<thead>
-							<th></th>
-							<th>산출시간</th>
-							<th>저울</th>
-							<th>온도</th>
-							<th>습도</th>
-							<th>CO2</th>
-							<th>NH3</th>
-							<th>w01</th>
-							<th>w10</th>
-							<th>w20</th>
-							<th>w30</th>
-							<th>w40</th>
-							<th>w50</th>
-							<th>w60</th>
+							<tr>
+								<th data-field='f1' data-visible="true" data-sortable="true">획득시간</th>
+								<th data-field='f2' data-visible="true" data-sortable="true">저울ID</th>
+								<th data-field='f3' data-visible="true" data-sortable="true">온도(℃)</th>
+								<th data-field='f4' data-visible="true" data-sortable="true">습도(%)</th>
+								<th data-field='f5' data-visible="true" data-sortable="true">CO2(ppm)</th>
+								<th data-field='f6' data-visible="true" data-sortable="true">NH3(ppm)</th>
+								<th data-field='f7' data-visible="true" data-sortable="false">w01</th>
+								<th data-field='f8' data-visible="true" data-sortable="false">w02</th>
+								<th data-field='f9' data-visible="true" data-sortable="false">w03</th>
+								<th data-field='f10' data-visible="true" data-sortable="false">w04</th>
+								<th data-field='f11' data-visible="true" data-sortable="false">w05</th>
+							</tr>
 						</thead>
-						<tbody>
+					</table>
+
+					<table id="plc_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
+						<thead>
 							<tr>
-								<td>1</td>
-								<td>2021-05-03 13:26:49</td>
-								<td>1</td>
-								<td>23.7</td>
-								<td>64.2</td>
-								<td>1572</td>
-								<td>0</td>
-								<td>517</td>
-								<td>779</td>
-								<td>655</td>
-								<td>445</td>
-								<td>331</td>
-								<td>555</td>
-								<td>124</td>
+								<th data-field='f1' data-sortable='true'>획득시간</th>
+								<th data-field='f2' data-sortable='true'>내부온도(℃)</th>
+								<th data-field='f3' data-sortable='true'>내부습도(%)</th>
+								<th data-field='f4' data-sortable='true'>내부CO2(ppm)</th>
+								<th data-field='f5' data-sortable='true'>내부음압</th>
+								<th data-field='f6' data-sortable='true'>외부온도(℃)</th>
+								<th data-field='f7' data-sortable='true'>외부습도(%)</th>
+								<th data-field='f8' data-sortable='true'>외부NH3(ppm)</th>
+								<th data-field='f9' data-sortable='true'>외부H2S(ppm)</th>
 							</tr>
+						</thead>
+					</table>
+
+					<table id="dev_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
+						<thead>
 							<tr>
-								<td>2</td>
-								<td>2021-05-03 13:26:49</td>
-								<td>2</td>
-								<td>23.9</td>
-								<td>64.2</td>
-								<td>1572</td>
-								<td>0</td>
-								<td>517</td>
-								<td>779</td>
-								<td>655</td>
-								<td>445</td>
-								<td>331</td>
-								<td>555</td>
-								<td>124</td>
+								<th data-field='f1' data-sortable='true'>획득시간</th>
+								<th data-field='f2' data-sortable='true'>유닛ID</th>
+								<th data-field='f3' data-sortable='true'>장치속성</th>
+								<th data-field='f4' data-sortable='true'>장치구분</th>
+								<th data-field='f5' data-sortable='true'>장치명</th>
+								<th data-field='f6' data-sortable='true'>상태</th>
 							</tr>
+						</thead>
+					</table>
+
+					<table id="ext_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
+						<thead>
 							<tr>
-								<td>3</td>
-								<td>2021-05-03 13:26:49</td>
-								<td>3</td>
-								<td>24.2</td>
-								<td>64.2</td>
-								<td>1572</td>
-								<td>0</td>
-								<td>517</td>
-								<td>779</td>
-								<td>655</td>
-								<td>445</td>
-								<td>331</td>
-								<td>555</td>
-								<td>124</td>
+								<th data-field='f1' data-sortable='true'>획득시간</th>
+								<th data-field='f2' data-sortable='true'>사료빈무게</th>
+								<th data-field='f3' data-sortable='true'>현재값-직전값</th>
+								<th data-field='f4' data-sortable='true'>유량센서값</th>
+								<th data-field='f5' data-sortable='true'>온도(℃)</th>
+								<th data-field='f6' data-sortable='true'>습도(%)</th>
+								<th data-field='f7' data-sortable='true'>NH3(ppm)</th>
+								<th data-field='f8' data-sortable='true'>H2S(ppm)</th>
+								<th data-field='f9' data-sortable='true'>미세먼지(ppm)</th>
+								<th data-field='f10' data-sortable='true'>초미세먼지(ppm)</th>
+								<th data-field='f11' data-sortable='true'>풍향</th>
+								<th data-field='f12' data-sortable='true'>풍속(m/s)</th>
 							</tr>
-							<tr>
-								<td>4</td>
-								<td>2021-05-03 13:26:49</td>
-								<td>1</td>
-								<td>23.7</td>
-								<td>64.2</td>
-								<td>1572</td>
-								<td>0</td>
-								<td>517</td>
-								<td>779</td>
-								<td>655</td>
-								<td>445</td>
-								<td>331</td>
-								<td>555</td>
-								<td>124</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>2021-05-03 13:26:49</td>
-								<td>2</td>
-								<td>23.7</td>
-								<td>64.2</td>
-								<td>1572</td>
-								<td>0</td>
-								<td>517</td>
-								<td>779</td>
-								<td>655</td>
-								<td>445</td>
-								<td>331</td>
-								<td>555</td>
-								<td>124</td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>2021-05-03 13:26:49</td>
-								<td>3</td>
-								<td>23.7</td>
-								<td>64.2</td>
-								<td>1572</td>
-								<td>0</td>
-								<td>517</td>
-								<td>779</td>
-								<td>655</td>
-								<td>445</td>
-								<td>331</td>
-								<td>555</td>
-								<td>124</td>
-							</tr>
-						</tbody>
+						</thead>
 					</table>
 					
 				</div>
@@ -585,48 +507,26 @@ include_once("../inc/top.php");
 				</header>
 
 				<div class="widget-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" id="request_form" onsubmit="return false;">
 						<div class="form-group row">
-							<label class="control-label col-xl-3">입추일자</label>
-							<div class="col-xl-9">
-								<input class="form-control" type="text">
-							</div>
+							<label class="control-label col-xl-3" style="padding-left:5px;">입추일자</label>
+							<div class="col-xl-5"><input class="form-control" type="text" name="request_indate" maxlength="10" placeholder="입추일"/></div>
+							<div class="col-xl-4"><input class="form-control" type="text" name="request_intime" maxlength="10" placeholder="입추시간"/></div>
 						</div>
 						<div class="form-group row">
-							<label class="control-label col-xl-3">입추시간</label>
-							<div class="col-xl-9">
-								<input class="form-control" type="text">
-							</div>
+							<label class="control-label col-xl-3" style="padding-left:5px;">축종</label>
+							<div class="col-xl-9"><?=$type_combo?></div>
 						</div>
 						<div class="form-group row">
-							<label class="control-label col-xl-3">축종</label>
-							<div class="col-xl-9">
-								<select class="form-control">
-									<option>육계</option>
-									<option>삼계</option>
-									<option>토종닭</option>
-								</select>
-							</div>
+							<label class="control-label col-xl-3" style="padding-left:5px;">실측일자</label>
+							<div class="col-xl-5"><input class="form-control" type="text" name="request_m_date" maxlength="10" placeholder="실측일"/></div>
+							<div class="col-xl-4"><input class="form-control" type="text" name="request_m_time" maxlength="10" placeholder="실측시간"/></div>
 						</div>
 						<div class="form-group row">
-							<label class="control-label col-xl-3">실측일자</label>
-							<div class="col-xl-9">
-								<input class="form-control" type="text">
-							</div>
+							<label class="control-label col-xl-3" style="padding-left:5px;">실측값</label>
+							<div class="col-xl-9"><input class="form-control" name="search_limit" placeholder="500~2500"></div>
 						</div>
-						<div class="form-group row">
-							<label class="control-label col-xl-3">실측시간</label>
-							<div class="col-xl-9">
-								<input class="form-control" type="text">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="control-label col-xl-3">실측값</label>
-							<div class="col-xl-9">
-								<input class="form-control" type="text">
-							</div>
-						</div>
-							<button class="btn btn-primary" style="width:-webkit-fill-available">재산출</button>
+						<button class="btn btn-primary" style="width:-webkit-fill-available" id="btn_request">재산출</button>
 					</form>
 				</div>
 						
@@ -643,49 +543,17 @@ include_once("../inc/top.php");
 
 				<div class="widget-body">	
 				
-					<table class="table table-bordered table-hover" style="text-align: center;">
+					<table id="request_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
 						<thead>
-							<th></th>
-							<th>완료시간</th>
-							<th>요청사항</th>
-							<th>변경사항</th>
-							<th>실측시간</th>
-							<th>실측값</th>
+							<tr>
+								<th data-field='f1' data-visible="true">완료시간</th>
+								<th data-field='f2' data-visible="true">요청사항</th>
+								<th data-field='f3' data-visible="true">변경사항</th>
+								<th data-field='f4' data-visible="true">실측시간</th>
+								<th data-field='f5' data-visible="true">실측값</th>
+								<th data-field='f6' data-visible="true">재산출 전 예측</th>
+							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>2021-05-03 15:00:00</td>
-								<td>Day(일령)</td>
-								<td>2021-05-05 12:40:00 → 2021-05-06 13:00:00</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>2021-05-03 14:00:00</td>
-								<td>Lst(축종)</td>
-								<td>육계 → 삼계</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>2021-05-03 13:00:00</td>
-								<td>Opt(재산출)</td>
-								<td>0.65 → 0.62</td>
-								<td>2021-05-05 12:40:00</td>
-								<td>14:00</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>2021-05-03 12:00:00</td>
-								<td>Opt(재산출)</td>
-								<td>0.7 → 0.65</td>
-								<td>2021-05-05 12:40:00</td>
-								<td>14:00</td>
-							</tr>
-						</tbody>
 					</table>
 					
 				</div>
@@ -699,15 +567,41 @@ include_once("../inc/bottom.php");
 ?>
 
 <script language="javascript">
+
+	var code = "";
+	var indate = "";
+	var outdate = "";
+
+	// 로우데이터가 로드된적이 있는지 확인
+	var is_load = {};
+	is_load["cell"] = false;
+	is_load["plc"] = false;
+	is_load["dev"] = false;
+	is_load["ext"] = false;
+
 	$(document).ready(function(){
-		call_tree_view("", act_grid_data);
-		set_tree_search(act_grid_data);
+
+		call_tree_view("", act_grid_data, "all");
+		set_tree_search(act_grid_data, "all");
+
+		$("#plc_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#dev_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#ext_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+
+		$("#raw_data_search_form [name=search_sdate]").datepicker({format:"yyyy-mm-dd", language: "kr", autoclose: true});		//로우데이터 검색 시작일
+		$("#raw_data_search_form [name=search_edate]").datepicker({format:"yyyy-mm-dd", language: "kr", autoclose: true});		//로우데이터 검색 종료일
+
+		$("#raw_data_search_form [name=search_stime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});			//로우데이터 검색 시작시간
+		$("#raw_data_search_form [name=search_etime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});			//로우데이터 검색 종료시간
 	});
 
 	// 데이터 불러오기
 	function load_data(select){
-
-		let code = "";
+		
+		if(select == ""){
+			click_tree_first(act_grid_data);
+			return;
+		}
 
 		var data_arr = {}; 
 		data_arr['oper'] = "get_code";
@@ -716,23 +610,62 @@ include_once("../inc/bottom.php");
 		$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 			success: function(data) {
 				code = data.code;
-				get_buffer_data(code);
-				get_avg_data(code);
+				indate = data.cmIndate;
+				outdate = data.cmOutdate;
+
+				if(code == "" || code == null){
+					popup_alert("입출하 데이터 없음", "선택된 농장의 입출하 데이터가 없습니다.");
+				}
+
+				get_buffer_data();
+				get_avg_data("day");
+				get_error_data();
+				get_request_data();
+
+				// let search_map = {};
+				// $.each($("#raw_data_search_form").serializeArray(), function(){ 
+				// 	search_map[this.name] = this.value;
+				// });
+				// get_raw_data("search", "cell", search_map);
 			}
 		});
 	};
+
+	// 동 선택 변경 시 검색 초기화
+	function clear_search(){
+
+		is_load["cell"] = false;
+		is_load["plc"] = false;
+		is_load["dev"] = false;
+		is_load["ext"] = false;
+		
+		$("#raw_data_search_form").each(function() {this.reset();});
+		$("#nav_raw_data li").removeClass("active").children("a").removeClass("active").removeClass("show");
+		$("#nav_raw_data li a#cell").addClass("active").addClass("show").parent("li").addClass("active");
+
+		$("#cell_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#plc_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#dev_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#ext_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+
+		$("#cell_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").show();
+
+		$("#cell_raw_data_table").bootstrapTable('removeAll');
+		//raw_tab_click("cell");
+	}
 
 	// 트리뷰 버튼 클릭시 리로드 이벤트
 	function act_grid_data(action){
 		switch(action){
 			default:
+				clear_search();
 				load_data(action);
 				break;
 		}
 	};
 
 	// 버퍼테이블 불러오기
-	function get_buffer_data(code){
+	function get_buffer_data(){
 
 		if(code != null && code != ""){			// "" or null 체크
 			var data_arr = {}; 
@@ -741,14 +674,21 @@ include_once("../inc/bottom.php");
 			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
 
-					let summary = data.summary_data;
-					$("#summary_name").html(summary.summary_name);
-					$("#summary_days").html(summary.summary_days);
-					$("#summary_avg").html(summary.summary_avg);
-					$("#summary_devi").html(summary.summary_devi);
-					$("#summary_inc").html(summary.summary_inc);
-					$("#summary_type").html(summary.summary_type);
-					$("#summary_comein").html(summary.summary_comein);
+					// 요약 정보
+					$.each(data.summary_data, function(key, value){ 
+						$("#" + key).html(value); 
+					});
+					
+					// 장치 현황
+					$.each(data.device_cnt_data, function(key, value){ 
+						$("#" + key).html(value); 
+					});
+
+					// 닭 이미지 변경
+					let days = data.summary_data.summary_days;
+					if(days <= 10){	$("#hen_img").attr("src", "../images/hen-scale1.png"); }
+					if(days >= 11 && days <= 20){ $("#hen_img").attr("src","../images/hen-scale2.png");  }
+					if(days >= 21){ $("#hen_img").attr("src","../images/hen-scale3.png");  }
 
 					$('#device_buffer_table').bootstrapTable('load', data.buffer_data); //data-toggle="table" 하지않으면 Update 불가
 				}
@@ -757,17 +697,149 @@ include_once("../inc/bottom.php");
 	};
 
 	// 평균중량 불러오기
-	function get_avg_data(code){
-
+	function get_avg_data(sub_comm){
 		if(code != null && code != ""){			// "" or null 체크
+
 			var data_arr = {}; 
 			data_arr['oper'] = "get_avg_weight";
 			data_arr['code'] = code;
+			data_arr['comm'] = "view";
+
+			switch(sub_comm){
+				case "day":
+					$("#btn_excel_avg").attr("selection", "day");
+					break;
+				case "time":
+					$("#btn_excel_avg").attr("selection", "time");
+					break;
+				case "excel":
+					data_arr['comm'] = "excel";
+					break;
+			}
+
+			data_arr['term'] = $("#btn_excel_avg").attr("selection");
+			
 			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
-					$('#avg_weight_table').bootstrapTable('load', data.avg_weight_data); //data-toggle="table" 하지않으면 Update 불가
+					$('#avg_weight_table').bootstrapTable('load', data.avg_weight_data); 
 				}
 			});
+		}
+	};
+
+	// 오류이력 불러오기
+	function get_error_data(){
+		if(code != null && code != ""){			// "" or null 체크
+			var data_arr = {}; 
+			data_arr['oper'] = "get_error_history";
+			data_arr['code'] = code;
+			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
+				success: function(data) {
+					$('#error_history_table').bootstrapTable('load', data.error_history_data); 
+				}
+			});
+		}
+	};
+
+	// 오류이력 불러오기
+	function get_request_data(){
+		if(code != null && code != ""){			// "" or null 체크
+			var data_arr = {}; 
+			data_arr['oper'] = "get_request_history";
+			data_arr['code'] = code;
+			data_arr['indate'] = indate;
+			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
+				success: function(data) {
+					$('#request_history_table').bootstrapTable('load', data.request_history_data); 
+				}
+			});
+		}
+	};
+
+	// 로우데이터 불러오기
+	function get_raw_data(action, type, search_map){
+		$("#" + type + "_raw_data_table").bootstrapTable('showLoading');
+
+		if(code != null && code != ""){			// "" or null 체크
+			var data_arr = {}; 
+			data_arr['oper'] = "get_raw_data";
+			data_arr['code'] = code;
+			data_arr['type'] = type;
+			data_arr['action'] = action;
+			data_arr['search_map'] = search_map;
+			data_arr['indate'] = indate;
+
+			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
+				success: function(data) {
+					$("#" + type + "_raw_data_table").bootstrapTable('load', data.raw_data);
+					$("#" + type + "_raw_data_table").bootstrapTable('hideLoading');
+
+					is_load[type] = true;
+				},
+				complete: function(){
+					$("#" + type + "_raw_data_table").bootstrapTable('hideLoading');
+				}
+			});
+		}
+	};
+
+	// 로우데이터 검색 이벤트
+	function search_raw_data(action){
+		let search_map = {};
+		$.each($("#raw_data_search_form").serializeArray(), function(){ 
+			search_map[this.name] = this.value;
+		});
+
+		let type = $("#nav_raw_data").children(".nav-item").find("a.active").attr("id");
+
+		get_raw_data(action, type, search_map);
+	}
+
+	// 탭버튼 선택 이벤트
+	function raw_tab_click(type){
+		let search_map = {};
+		$.each($("#raw_data_search_form").serializeArray(), function(){ 
+			search_map[this.name] = this.value;
+		});
+
+		$("#cell_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#plc_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#dev_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+		$("#ext_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").hide();
+
+		$("#" + type + "_raw_data_table").parent(".fixed-table-body").parent(".fixed-table-container").parent(".bootstrap-table").show();
+
+		if(!is_load[type]){
+			get_raw_data("search", type, search_map);
+		}
+	};
+
+	// 탭버튼 선택
+	$(".tab-raw").click( function(){
+		let type = $(this).attr("id");
+		raw_tab_click(type);
+	});
+
+
+	//로우데이터 검색부 키 제한
+	$("#raw_data_search_form [name=search_sdate]").on("keyup", function() { $(this).val(""); });
+	$("#raw_data_search_form [name=search_edate]").on("keyup", function() { $(this).val(""); });
+	$("#raw_data_search_form [name=search_stime]").on("keyup", function() { $(this).val(""); });
+	$("#raw_data_search_form [name=search_etime]").on("keyup", function() { $(this).val(""); });
+	$("#raw_data_search_form [name=search_limit]").on("keyup", function() {
+		var temp = $(this).val();
+		temp = temp.replace(/[^0-9]/,"");
+		temp = temp.length > 4 ? temp.substr(0, 4) : temp;
+
+		$(this).val(temp);
+	});
+
+	// 버퍼테이블 패딩 삭제
+	function del_padding(value, row, index){
+		return {
+			css: {
+				padding: '0px'
+			}
 		}
 	};
 

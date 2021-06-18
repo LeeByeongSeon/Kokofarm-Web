@@ -152,7 +152,7 @@ switch($oper){
 			array("주소", "fdAddr", "STR", "center"),
 		);
 
-		convert_excel($select_query, $field_data, $title, $append_query);
+		convert_excel(get_select_data($select_query), $field_data, $title, $append_query);
 		break;
 }
 

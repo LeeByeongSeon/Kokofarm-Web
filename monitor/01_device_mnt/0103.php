@@ -30,14 +30,14 @@ include_once("../../common/php_module/common_func.php");
 				
 				<div class="widget-body no-padding">
 					<div class="widget-body-toolbar">
-						<form id="searchFORM" class="form-inline" onsubmit="return false;">
-							<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('allCamera')"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;전체</button>&nbsp;
-							<button type="button" class="btn btn-warning btn-sm" onClick="actionBtn('inCamera')"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;입추</button>&nbsp;
-							<button type="button" class="btn btn-danger  btn-sm" onClick="actionBtn('outCamera')"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;출하</button>
+						<form id="search_form" class="form-inline" onsubmit="return false;">
+							<button type="button" class="btn btn-primary btn-sm" onClick="get_camera_list('all')"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;전체</button>&nbsp;
+							<button type="button" class="btn btn-success btn-sm" onClick="get_camera_list('in')"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;입추</button>&nbsp;
+							<button type="button" class="btn btn-danger  btn-sm" onClick="get_camera_list('out')"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;출하</button>
 						</form>
 					</div>
 
-					<div id="ipCameras">
+					<div id="camera_grid">
 
 					</div>
 					
@@ -48,80 +48,60 @@ include_once("../../common/php_module/common_func.php");
 	</div>
 </article>
 <?
-include_once("WindowPopup.html");
-?>
-<?
 include_once("../inc/bottom.php");
 ?>
 
 <script language="javascript">
 
+	var open_window;
+	var open_url = "";
+
 	$(document).ready(function(){
 		
 		hide_dong = true;
 
-		actionBtn("allCamera");
-
-		call_tree_view("", act_grid_data);
-		set_tree_search(act_grid_data);
+		call_tree_view("", get_camera_list);
+		set_tree_search(get_camera_list);
 	});
 
-	function actionBtn(e){
-		switch(e){
-			case "allCamera":
-				var dataArr = {}; 
-					dataArr['oper'] = 'allCamera';
-				$.ajax({
-					url:'0103_action.php',
-					data:dataArr,
-					cache:false,
-					type:'post',
-					dataType:'json',
-					success: function(data) {
-						$("#ipCameras").html(data.ipCameras);
-					}
-				});
-				break;
-			
-			case "inCamera":
-				var dataArr = {}; 
-					dataArr['oper'] = 'inCamera';
-				$.ajax({
-					url:'0103_action.php',
-					data:dataArr,
-					cache:false,
-					type:'post',
-					dataType:'json',
-					success: function(data) {
-						$("#ipCameras").html(data.ipCameras);
-					}
-				});
-				break;
-			
-			case "outCamera":
-				var dataArr = {}; 
-					dataArr['oper'] = 'outCamera';
-				$.ajax({
-					url:'0103_action.php',
-					data:dataArr,
-					cache:false,
-					type:'post',
-					dataType:'json',
-					success: function(data) {
-						$("#ipCameras").html(data.ipCameras);
-					}
-				});
-				break;
-		}
-	}
-		
-	// 트리뷰 버튼 클릭시 리로드 이벤트
-	// function act_grid_data(action){
-	// 	switch(action){
-	// 		default:
-	// 			actionBtn(action);
-	// 			break;
-	// 	}
-	// };
+	function get_camera_list(comm){
+		var data_arr = {}; 
+		data_arr['oper'] = 'get_camera_grid';
+		data_arr['comm'] = comm;
+		$.ajax({
+			url:'0103_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
+			success: function(data) {
+				$("#camera_grid").html(data.camera_grid_data);
+			}
+		});
+	};
+	
+	// 카메라 선택 시 팝업창 띄움
+	function camera_popup(name, avg_weight, img_url){
+		open_url = img_url;
+		open_window = window.open("camera_popup.php?title=" + name, "camera_window", "width=1024, height=800");
+	};
+
+	function camera_load(img_obj){
+		// 팝업창 닫히면 
+		open_window.onbeforeunload = function(){
+			img_obj.onload = function(){"";};
+			img_obj.setAttribute("src", "");
+		};   
+
+		// 이미지가 로드되면
+		img_obj.onload = function(){
+			img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
+		};
+
+		// 이미지 로드 중 에러 발생시
+		img_obj.onerror = function(){
+			img_obj.setAttribute("src", "../images/noimage.jpg");
+			img_obj.onload = function(){"";};
+		};
+
+		// 첫 이미지 로드
+		img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
+	};
 
 </script>

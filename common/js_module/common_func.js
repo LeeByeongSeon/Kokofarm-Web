@@ -42,7 +42,7 @@ param
 - search : 농장 검색 입력 string
 - work : 농장 버튼 클릭 시 실행할 함수
 */
-function call_tree_view(search, work){ 
+function call_tree_view(search, work, in_out = "none"){ 
 
     $("#treeView").show();
 
@@ -57,17 +57,28 @@ function call_tree_view(search, work){
 
             tree_html += "<ul role='tree'>\n";
 
+            // 농장버튼 생성
             for(var farm_key in data){       // {KF0006|농장명 : {"KF0006|01":동명}, ...}
-
                 var infos = farm_key.split("|");
-                //tree_html += "<li class='parent_li' role='treeitem'>\n";
                 tree_html += "<li role='treeitem' style='cursor:pointer;'>\n";
                 tree_html += "<span class='tree-content' style='padding: 7px; color: #455a64;' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
                 tree_html += infos[1] + "</span>\n";
                 tree_html += "<ul class='tree-group' style='display:none;'>\n";
 
+                // 동 버튼 생성
                 for(var dong_key in data[farm_key]){
-                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' style='padding: 7px; color: #455a64;'>" + data[farm_key][dong_key] + "</li>\n";
+                    let [name, status] = data[farm_key][dong_key].split("|");
+
+                    switch(in_out){
+                        case "none":
+                            status = "";
+                            break;
+                        case "all":
+                            status = "&nbsp<span class='badge bg-" + (status == "입추" ? "blue" : "gray")  + " text-white'>" + status + "</span>";
+                            break;
+                    }
+
+                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' style='padding: 7px; color: #455a64;'>" + name + status + "</li>\n";
                 }
                 tree_html += "</ul>\n";
                 tree_html += "</li>\n";
@@ -93,20 +104,12 @@ function set_tree_action(search, work){
 
     if(search != ""){
         // 가장 첫 농장을 연다
-        if(!hide_dong){
-            $(".tree-content").first().parent("li").children("ul.tree-group").toggle(400);
-            $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
-        }
-
-        selected_id = $(".tree-content").first().attr('id');
-
-        set_selected_highlight("", selected_id);
+        click_tree_first(act_grid_data);
     }
     else{
         selected_id = "";
+        work(selected_id);
     }
-
-    work(selected_id);
 
     $(".tree-content").off("click").on("click", function(){		// 클릭 이벤트 
 
@@ -140,20 +143,38 @@ function set_tree_action(search, work){
 
 };
 
+/* 트리뷰 첫번째 아이템 강제 선택 함수
+param
+- work : 실행할 함수
+*/
+function click_tree_first(work){
+
+    if(!hide_dong){
+        $(".tree-content").first().parent("li").children("ul.tree-group").toggle(400);
+        $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+    }
+
+    selected_id = $(".tree-content").first().attr('id');
+    set_selected_highlight("", selected_id);
+
+    work(selected_id);
+};
+
+
 /* 트리뷰 검색 이벤트 세팅
 param
 - work : 농장 버튼 클릭 시 실행할 함수
 */
-function set_tree_search(work){
+function set_tree_search(work, in_out = "none"){
     $("#btn_tree_search").off("click").on("click", function(){
         var search_text = $("#form_tree_search [name=text_tree_search]").val();
-        call_tree_view(search_text, work);
+        call_tree_view(search_text, work, in_out);
     });
 
     $("#form_tree_search [name=text_tree_search]").keyup(function(e){
         if(e.keyCode == 13){
             var search_text = $(this).val();
-            call_tree_view(search_text, work);
+            call_tree_view(search_text, work, in_out);
         }
     });
 };
@@ -178,6 +199,8 @@ function set_selected_highlight(prev, curr){
         $("#" + curr).attr("is_selected", true);
         $("#" + curr).css("background-color", background_select).css("border", border_select).css("color", color_select);
     }
+
+    $("html, body").animate({scrollTop :0}, 0); //상단으로 포커싱함
 };
 
 /* 모달 팝업 - 기본형
@@ -217,6 +240,5 @@ var confirm_event = function (work){
 		$("#modal_confirm").modal('hide');
 	});
 };
-
 
 

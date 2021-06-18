@@ -11,8 +11,8 @@ $oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 if(isset($_REQUEST["code"])){
     $code = $_REQUEST["code"];
     $id = explode("_", $code)[1];
-    $farmID = substr($id, 0, 4);
-    $dongID = substr($id, 4);
+    $farmID = substr($id, 0, 6);
+    $dongID = substr($id, 6);
 }
 
 switch($oper){
@@ -31,6 +31,8 @@ switch($oper){
             $select_data = get_select_data($select_query);
 
             $reponse["code"] = $select_data[0]["cmCode"];
+            $reponse["cmIndate"] = $select_data[0]["cmIndate"];
+            $reponse["cmOutdate"] = $select_data[0]["cmOutdate"];
 
             echo json_encode($reponse);
         }
@@ -38,27 +40,288 @@ switch($oper){
         break;
 
 	case "get_avg_weight":          //평균중량
-        
-        $append_query = "AND awFarmid = \"" . $farmID . "\" AND awDongid = \"" . $dongID . "\"";
 
-        $select_query = "SELECT * FROM avg_weight WHERE awFarmid = awFarmid " . $append_query;
+        $now = date("Y-m-d H:i:s");
+
+        $term_query = $_REQUEST["term"] == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
+
+        $select_query = "SELECT cm.cmCode, aw.*, c.cName3 AS refWeight FROM comein_master AS cm 
+                        JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " .$term_query. "
+                        AND (awDate BETWEEN cm.cmIndate AND IFNULL(cm.cmOutdate, NOW()))
+                        LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
+                        WHERE cm.cmCode = \"" .$code. "\" ORDER BY aw.awDate DESC";
+
+        switch($_REQUEST["comm"]){
+            case "view":
+                $select_data = get_select_data($select_query);
+
+                $avg_weight_data = array();
+                foreach($select_data as $row){
+                    $avg_weight_data[] = array(
+                        'f1'  => $row["awDate"],							
+                        'f2'  => $row["awDays"],									
+                        'f3'  => $row["awWeight"],								
+                        'f4'  => $row["refWeight"] == "" ? "-" : $row["refWeight"],									
+                    );
+                }
+
+                $reponse["avg_weight_data"] = $avg_weight_data;
+                echo json_encode($reponse);
+                break;
+            
+            case "excel":
+                $title = $farmID . "_" . $dongID . "_평균중량";
+
+                header("Content-Type: application/vnd.ms-excel");
+                header("Expires: 0");
+                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+                header("content-disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
+
+                $field_data = array(
+                    /*농가 정보*/
+                    array("번호",       "No", "INT", "center"),
+                    array("농장ID",     "awFarmid", "STR", "center"),
+                    array("동ID",       "awDongid", "STR", "center"),
+                    array("산출시간",   "awDate", "STR", "center"),
+                    array("예측중량",   "awWeight", "STR", "center"),
+                    array("권고중량",   "refWeight", "STR", "center"),
+                    array("표준편차",   "awDevi", "STR", "center"),
+                    array("변이계수",   "awVc", "STR", "center"),
+                    array("+1 예측",    "awEstiT1", "STR", "center"),
+                    array("+2 예측",    "awEstiT2", "STR", "center"),
+                    array("+3 예측",    "awEstiT3", "STR", "center"),
+                    array("일령",       "awDays", "STR", "center"),
+                    array("정규분포",   "awNdis", "STR", "left"),
+                );
+
+                //echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
+                convert_excel(get_select_data($select_query), $field_data, $title, $code);
+                break;
+        }
+
+		break;
+
+    case "get_error_history":          //오류이력 - 추후에 입추기간만 가져오게 변경
+    
+        $append_query = "AND ccFarmid = \"" . $farmID . "\" AND ccDongid = \"" . $dongID . "\" ORDER BY ccCapDate DESC";
+
+        $select_query = "SELECT * FROM capture_camera WHERE ccFarmid = ccFarmid " . $append_query;
 
         $select_data = get_select_data($select_query);
 
-        $avg_weight_data = array();
+        $error_history_data = array();
         foreach($select_data as $row){
-            $avg_weight_data[] = array(
-                'f1'  => $row["awDate"],							
-                'f2'  => $row["awDays"],									
-                'f3'  => $row["awWeight"],								
-                'f4'  => $row["awWeight"],									
+            $error_history_data[] = array(
+                'f1'  => $row["ccCapDate"],							
+                'f2'  => $row["ccStatus"],									
+                'f3'  => "01",									
             );
         }
 
-        $reponse["avg_weight_data"] = $avg_weight_data;
-		echo json_encode($reponse);
+        $reponse["error_history_data"] = $error_history_data;
+        echo json_encode($reponse);
 
-		break;
+        break;
+
+    case "get_request_history":          //재산출 이력
+
+        $select_query = "SELECT * FROM request_calculate WHERE rcFarmid = \"" . $farmID . "\" AND rcDongid = \"" . $dongID . "\" 
+                        AND (rcRequestDate BETWEEN \"" . $_REQUEST["indate"] . "\" AND \"" . date('Y-m-d H:i:s') . "\") ORDER BY rcRequestDate DESC";
+
+        $select_data = get_select_data($select_query);
+
+        $request_history_data = array();
+        foreach($select_data as $row){
+
+            $change_status = "";
+            $change_str = "";
+
+            $checker = explode("|", $row["rcCommand"]);
+
+            if(in_array("Day", $checker)){
+                $change_str .= (strlen($change_str) > 2 ? "<br>" : "") . $row["rcPrevDate"] . " -> " . $row["rcChangeDate"];
+                $change_status .= (strlen($change_status) > 2 ? "<br>" : "") . "Day(일령)";
+            }
+
+            if(in_array("Lst", $checker)){
+                $change_str .= (strlen($change_str) > 2 ? "<br>" : "") . $row["rcPrevLst"] . " -> " . $row["rcChangeLst"];
+                $change_status .= (strlen($change_status) > 2 ? "<br>" : "") . "Lst(축종)";
+            }
+
+            if(in_array("Opt", $checker)){
+                $change_str .= (strlen($change_str) > 2 ? "<br>" : "") . $row["rcPrevRatio"] . " -> " . $row["rcChangeRatio"];
+                $change_status .= (strlen($change_status) > 2 ? "<br>" : "") . "Opt(재산출)";
+            }
+
+            $request_history_data[] = array(
+                'f1'  => $row["rcRequestDate"],							
+                'f2'  => $change_status,									
+                'f3'  => $change_str,
+                'f4'  => $row["rcMeasureDate"],
+                'f5'  => $row["rcMeasureVal"],	
+                'f6'  => $row["rcPrevWeight"],									
+            );
+        }
+
+        $reponse["request_history_data"] = $request_history_data;
+        echo json_encode($reponse);
+
+        break;
+
+    case "get_raw_data":          //로우데이터
+
+        $start_time = "";
+        $end_time = "";
+        $limit = "";
+        $order = -1;
+
+        if(isset($_REQUEST["search_map"])){
+			$sjson = $_REQUEST["search_map"];
+
+            $start_time = ($sjson["search_sdate"] != "" ? str_replace ("/", "-", $sjson["search_sdate"]) : substr($_REQUEST["indate"], 0, 10)) . " " . ($sjson["search_stime"] != "" ? $sjson["search_stime"] . ":00" : "00:00:00");
+            $end_time = ($sjson["search_edate"] != "" ? str_replace ("/", "-", $sjson["search_edate"]) : date('Y-m-d')) . " " . ($sjson["search_etime"] != "" ? $sjson["search_etime"] . ":00" : date('H:i:s'));
+            $limit = $sjson["search_limit"] != "" ? $sjson["search_limit"] : 100;
+            $order = $sjson["search_order"];
+		}
+
+        $pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time] ] ];
+        $pipe_sort  =   [ '$sort' => ['getTime' => (int)$order] ];
+        $pipe_limit =   [ '$limit' => (int)$limit ];
+
+        switch($_REQUEST["type"]){
+            case "cell":
+                $hide_arr = array("_id" => 0);
+                for($i=6; $i<=60; $i++){
+                    $field = sprintf("w%02d", $i);
+                    $hide_arr[$field] = 0;
+                }
+
+                $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
+
+                $result = get_aggregate_data("kokofarm3", "sensorData", $pipeline);
+
+                $raw_data = array();
+                foreach($result as $row){
+                    $raw_data[] = array(
+                        'f1'    => $row->getTime,
+                        'f2'    => $row->jeoulID,
+                        'f3'    => $row->temp,
+                        'f4'    => $row->humi,
+                        'f5'    => $row->co,
+                        'f6'    => $row->nh,
+                        'f7'    => $row->w01,
+                        'f8'    => $row->w02,
+                        'f9'    => $row->w03,
+                        'f10'   => $row->w04,
+                        'f11'   => $row->w05,
+                    );
+                }
+
+                break;
+
+            case "plc":
+                $hide_arr = array("_id" => 0);
+                
+                $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
+
+                $result = get_aggregate_data("kokofarm3", "plcSensor", $pipeline);
+
+                $raw_data = array();
+                foreach($result as $row){
+                    $row->Temp = array_slice($row->Temp, 0, 10);
+                    $row->Humi = array_slice($row->Humi, 0, 10);
+                    $raw_data[] = array(
+                        'f1'    => $row->getTime,
+                        'f2'    => $row->Temp,
+                        'f3'    => $row->Humi,
+                        'f4'    => $row->Co2,
+                        'f5'    => $row->Npre,
+                        'f6'    => $row->OutTemp,
+                        'f7'    => $row->OutHumi,
+                        'f8'    => $row->OutNh3,
+                        'f9'    => $row->OutH2s,
+                    );
+                }
+
+                break;
+
+            case "dev":
+                $hide_arr = array("_id" => 0);
+                
+                $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
+
+                $result = get_aggregate_data("kokofarm3", "plcHistory", $pipeline);
+
+                $raw_data = array();
+                foreach($result as $row){
+                    $raw_data[] = array(
+                        'f1'    => $row->getTime,
+                        'f2'    => $row->unitID,
+                        'f3'    => $row->uProperty,
+                        'f4'    => $row->uName,
+                        'f5'    => $row->uRemark,
+                        'f6'    => $row->uStatus,
+                    );
+                }
+
+                break;
+
+            case "ext":
+                $hide_arr = array("_id" => 0);
+                
+                $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
+
+                $result = get_aggregate_data("kokofarm3", "sensorExtData", $pipeline);
+
+                $raw_data = array();
+                foreach($result as $row){
+                    $raw_data[] = array(
+                        'f1'    => $row->getTime,
+                        'f2'    => $row->feedWeight,
+                        'f3'    => $row->feedWeightVal,
+                        'f4'    => $row->feedWater,
+                        'f5'    => $row->outTemp,
+                        'f6'    => $row->outHumi,
+                        'f7'    => $row->outNh3,
+                        'f8'    => $row->outH2s,
+                        'f9'    => $row->outDust,
+                        'f10'    => $row->outUDust,
+                        'f11'    => $row->outWinderec,
+                        'f12'    => $row->outWinspeed,
+                    );
+                }
+
+                break;
+        }
+
+        switch($_REQUEST["action"]){
+            case "search":
+                $reponse["raw_data"] = $raw_data;
+                echo json_encode($reponse);
+                break;
+            
+            case "excel":
+                $result = json_decode(json_encode($result), true);
+
+                $title = $farmID . "_" . $dongID . "_rawdata_" . $_REQUEST["type"];
+
+                header("Content-Type: application/vnd.ms-excel");
+                header("Expires: 0");
+                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+                header("content-disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
+
+                $field_data = array();
+                $field_data[] = array("번호", "No", "INT", "center");
+                foreach($result[0] as $key => $val){
+                    $field_data[] = array($key, $key, "STR", "center");
+                }
+
+                convert_excel($result, $field_data, $title, $code);
+
+                break;
+        }
+
+        break;
     
     case "get_buffer":          //버퍼테이블
 
@@ -87,15 +350,16 @@ switch($oper){
         $row = $select_data[0];
 
         $summary_data = array();
-        
 
         $summary_data["summary_name"] = $row["fdName"] . " (" . $row["cmFarmid"] . "-" . $row["cmFarmid"] . ")";
         $summary_data["summary_days"] = $row["days"];
         $summary_data["summary_avg"] = number_format($row["beAvgWeight"], 0);
         $summary_data["summary_devi"] = "표준편차<br>" . number_format($row["beDevi"], 1);
-        $summary_data["summary_inc"] = "일일증체량<br>" . empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0);
+        $summary_data["summary_inc"] = "일일증체량<br>" . (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
         $summary_data["summary_type"] = $row["cmIntype"] . " " . $row["cmInsu"] . "수";
         $summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
+        // $summary_data["summary_indate"] = $row["cmIndate"];
+        // $summary_data["summary_outdate"] = $row["cmOutdate"];
 
         $reponse["summary_data"] = $summary_data;
 
@@ -152,6 +416,16 @@ switch($oper){
 
         $reponse["buffer_data"] = $buffer_data;
 
+        $device_cnt_data = array();
+        $device_cnt_data["device_cnt_cell"] = count($sensor_map[0]);
+        $device_cnt_data["device_cnt_camera"] = 1;
+        $device_cnt_data["device_cnt_plc"] = $row["bpSensorDate"] == "" ? 0 : 1;
+        $device_cnt_data["device_cnt_feeder"] = $row["sfFeedDate"] == "" ? 0 : 1;
+        $device_cnt_data["device_cnt_water"] = $row["sfWaterDate"] == "" ? 0 : 1;
+        $device_cnt_data["device_cnt_out"] = $row["soSensorDate"] == "" ? 0 : 1;
+
+        $reponse["device_cnt_data"] = $device_cnt_data;
+
         echo json_encode($reponse);
 
         break;
@@ -163,14 +437,14 @@ function make_sub_table($header_arr, $body_arr){
     $data_html .= "<thead> <tr> ";
 
     foreach($header_arr as $header){
-        $data_html .= "<th style='background-color:#455a64; color:#f8f9fa; padding:1px;'>" .$header. "</th>";
+        $data_html .= "<th style='background-color:#568a89; color:#f8f9fa; padding:1px; font-weight:normal;'>" .$header. "</th>";
     }
 
     $data_html .= "</tr> </thead>";
     $data_html .= "<tbody> <tr>";
 
     foreach($body_arr as $body){
-        $data_html .= "<td style='padding:1px;'>" .$body. "</td>";
+        $data_html .= "<td style='padding:1px; background-color:#fbfbfb;'>" .number_format($body, 1). "</td>";
     }
 
     $data_html .= "</tr> </tbody>";

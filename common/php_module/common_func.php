@@ -1,7 +1,7 @@
 <?
 
-//Mysql 시작****************************************************
-include_once("../../common/php_module/mysql_conn.php");
+include_once("../../common/php_module/mysql_conn.php");   	//Mysql
+include_once("../../common/php_module/mongo_conn.php");	//mongo
 
 // select 결과 데이터 반환
 function get_select_data($query){
@@ -111,10 +111,7 @@ return
 function make_combo_by_query($query, $form_name, $default_name, $field){
 	$ret = "<select class=\"form-control\" name=\"$form_name\">";
 
-	if($default_name == ""){
-		$ret .= "<option value=\"\">전체</option>";
-	}
-	else{
+	if($default_name != ""){
 		$ret .= "<option value=\"\">$default_name</option>";
 	}
 
@@ -172,15 +169,14 @@ param
 - title : 엑셀 파일 제목
 - option : 검색 조건
 */
-function convert_excel($query, $field_data, $title, $option){
-	$result = get_select_data($query);
-	$row_len = count($result);
+function convert_excel($data, $field_data, $title, $option){
+	$row_len = count($data);
 	$colspan = count($field_data) - 1;
 	
 	$html="<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
 			<html>
 				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><head>
-					<style> table th {background:#A0B3B3;font-weight:normal; text-align:center;color:white} </style>
+					<style> table th {background:#A0B3B3;font-weight:normal; text-align:center; color:white;} </style>
 				<body style='border:solid 0.1pt #CCCCCC;font-size:14px'>
 					<table table border='1' style='width:100%;font-size:14px'>
 						<tr><th>출력일시</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . date('Y-m-d H:i:s') . "</td></tr>
@@ -191,7 +187,7 @@ function convert_excel($query, $field_data, $title, $option){
 
 	if($row_len > 0){
 		//헤더출력
-		$html .="<table table border='1' style='width:100%;font-size:14px'>";
+		$html .="<table table border='1' style='width:100%; font-size:14px;'>";
 		$html .="<tr>";
 			foreach($field_data as $key => $val){
 				$html .="<th>" . $val[0] . "</th>";
@@ -200,9 +196,9 @@ function convert_excel($query, $field_data, $title, $option){
 
 		//내용출력
 		$num = 0;
-		foreach($result as $row){
+		foreach($data as $row){
 			$num++;
-			$html .="<tr><th>" . $num . "</th>";
+			$html .="<tr><td>" . $num . "</td>";
 
 			$contents = "";
 			for($i=1; $i<=$colspan; $i++){
@@ -290,6 +286,34 @@ function conv_second_to_read($second){
 	$ret .= $second . "초";
 
 	return $ret;
+}
+
+/* 분 단위 전후의 시간을 구함
+param
+- time : 기준시간
+- term : 더하거나 뺄 시간 (분)
+return
+- ret : 기준시간에서 term을 계산한 시간
+*/
+function get_term_date($time, $term){
+	$ret = date("Y-m-d H:i:s", strtotime( $term . " minutes", strtotime($time)));
+	return $ret;
+}
+
+
+
+// 몽고db 관련---------------------------------------------------------------------------
+
+/* aggregate 하여 데이터를 가져옴
+param
+- db : 데이터를 가져올 데이터베이스 이름
+- coll : 데이터를 가져올 컬렉션 이름
+- pipe : aggregate 파이프라인
+return
+- ret : aggregate 결과값을 배열로 정리
+*/
+function get_aggregate_data($db, $coll, $pipe){
+    return mongo_conn::get_inst()->aggregate($db, $coll, $pipe);
 }
 
 ?>
