@@ -34,8 +34,8 @@ switch($oper){
                             (SELECT COUNT(*) FROM set_outsensor WHERE soFarmid = fFarmid) AS cnt_so
 						FROM farm WHERE fID = fID ". $append_query;
 
-		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
-		echo json_encode($reponse);
+		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+		echo json_encode($response);
 
 		break;
 

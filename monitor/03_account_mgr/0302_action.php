@@ -29,8 +29,8 @@ switch($oper){
 		//jqgrid 출력
 		$select_query = "SELECT *, CONCAT(fdFarmid, '|', fdDongid) AS pk FROM farm_detail WHERE fdFarmid = fdFarmid " .$append_query;
 
-		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
-		echo json_encode($reponse);
+		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+		echo json_encode($response);
 
 		break;
 

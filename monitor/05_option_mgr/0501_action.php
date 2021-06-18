@@ -30,8 +30,8 @@ switch($oper){
 		//jqgrid 출력
 		$select_query = "SELECT * FROM codeinfo WHERE cCode = cCode " .$append_query;
 
-		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
-		echo json_encode($reponse);
+		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+		echo json_encode($response);
 
 		break;
 

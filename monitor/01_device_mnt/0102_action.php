@@ -30,11 +30,11 @@ switch($oper){
 
             $select_data = get_select_data($select_query);
 
-            $reponse["code"] = $select_data[0]["cmCode"];
-            $reponse["cmIndate"] = $select_data[0]["cmIndate"];
-            $reponse["cmOutdate"] = $select_data[0]["cmOutdate"];
+            $response["code"] = $select_data[0]["cmCode"];
+            $response["cmIndate"] = $select_data[0]["cmIndate"];
+            $response["cmOutdate"] = $select_data[0]["cmOutdate"];
 
-            echo json_encode($reponse);
+            echo json_encode($response);
         }
 
         break;
@@ -65,8 +65,8 @@ switch($oper){
                     );
                 }
 
-                $reponse["avg_weight_data"] = $avg_weight_data;
-                echo json_encode($reponse);
+                $response["avg_weight_data"] = $avg_weight_data;
+                echo json_encode($response);
                 break;
             
             case "excel":
@@ -118,8 +118,8 @@ switch($oper){
             );
         }
 
-        $reponse["error_history_data"] = $error_history_data;
-        echo json_encode($reponse);
+        $response["error_history_data"] = $error_history_data;
+        echo json_encode($response);
 
         break;
 
@@ -163,8 +163,8 @@ switch($oper){
             );
         }
 
-        $reponse["request_history_data"] = $request_history_data;
-        echo json_encode($reponse);
+        $response["request_history_data"] = $request_history_data;
+        echo json_encode($response);
 
         break;
 
@@ -296,8 +296,8 @@ switch($oper){
 
         switch($_REQUEST["action"]){
             case "search":
-                $reponse["raw_data"] = $raw_data;
-                echo json_encode($reponse);
+                $response["raw_data"] = $raw_data;
+                echo json_encode($response);
                 break;
             
             case "excel":
@@ -361,7 +361,7 @@ switch($oper){
         // $summary_data["summary_indate"] = $row["cmIndate"];
         // $summary_data["summary_outdate"] = $row["cmOutdate"];
 
-        $reponse["summary_data"] = $summary_data;
+        $response["summary_data"] = $summary_data;
 
         $buffer_data = array();
 
@@ -414,7 +414,7 @@ switch($oper){
                     )
         );
 
-        $reponse["buffer_data"] = $buffer_data;
+        $response["buffer_data"] = $buffer_data;
 
         $device_cnt_data = array();
         $device_cnt_data["device_cnt_cell"] = count($sensor_map[0]);
@@ -424,9 +424,9 @@ switch($oper){
         $device_cnt_data["device_cnt_water"] = $row["sfWaterDate"] == "" ? 0 : 1;
         $device_cnt_data["device_cnt_out"] = $row["soSensorDate"] == "" ? 0 : 1;
 
-        $reponse["device_cnt_data"] = $device_cnt_data;
+        $response["device_cnt_data"] = $device_cnt_data;
 
-        echo json_encode($reponse);
+        echo json_encode($response);
 
         break;
 }

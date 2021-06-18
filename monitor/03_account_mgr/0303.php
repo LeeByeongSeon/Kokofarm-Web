@@ -80,8 +80,8 @@ include_once("../inc/bottom.php");
 					edittype:'select', editoptions:{value:<?=$group_combo_json?>}
 				},
 				{label: "성명",			name: "mgrName",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "전화번호",		name: "mgrTel",			align:'center',		editable:true, editrules:{ required: true} },
 				{label: "이메일", 		name: "mgrEmail",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "전화번호",		name: "mgrTel",			align:'center',		editable:true, editrules:{ required: true} },
 				{label: "계정구분",		name: "mgrType",		align:'center',		editable:true, editrules:{ required: true},
 					edittype:'select', editoptions:{value:<?=$mgr_combo_json?>}
 				},

@@ -32,8 +32,8 @@ switch($oper){
 						JOIN farm_detail AS fd ON fd.fdFarmid = si.siFarmid AND fd.fdDongid = si.siDongid 
 						WHERE siFarmid = siFarmid " .$append_query;
 
-		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
-		echo json_encode($reponse);
+		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+		echo json_encode($response);
 
 		break;
 

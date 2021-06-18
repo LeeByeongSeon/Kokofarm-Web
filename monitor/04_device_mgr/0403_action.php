@@ -33,8 +33,8 @@ switch($oper){
                         JOIN buffer_plc_status AS bp ON bp.bpFarmid = sp.spFarmid AND bp.bpDongid = sp.spDongid 
 						WHERE sp.spFarmid = sp.spFarmid " .$append_query;
 
-		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
-		echo json_encode($reponse);
+		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+		echo json_encode($response);
 
 		break;
 

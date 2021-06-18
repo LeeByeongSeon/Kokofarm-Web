@@ -243,18 +243,18 @@ switch($oper){
             $sord == "asc" ? asort($warn_level_map) : arsort($warn_level_map);
             
             foreach($warn_level_map as $key => $val){
-                $reponse["print_data"][] = $temp["print_data"][(int)$key];
+                $response["print_data"][] = $temp["print_data"][(int)$key];
             }
         }
         else{ 
-            $reponse = $temp;
+            $response = $temp;
         }
 
-        $reponse["page"] = $page;
-        $reponse["total"] = $total_pages;
-        $reponse["records"] = $total_len;
+        $response["page"] = $page;
+        $response["total"] = $total_pages;
+        $response["records"] = $total_len;
 
-        echo json_encode($reponse);
+        echo json_encode($response);
 
 		break;
 }

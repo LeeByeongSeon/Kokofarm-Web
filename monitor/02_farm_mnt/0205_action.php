@@ -31,9 +31,9 @@ switch($oper){
 		$select_query = "SELECT *, CONCAT(rcFarmid, '|', rcDongid, '|', rcRequestDate) AS pk
                          FROM request_calculate WHERE rcFarmid = rcFarmid " .$append_query;
 
-		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
         
-		echo json_encode($reponse);
+		echo json_encode($response);
 
 		break;
 

@@ -46,9 +46,9 @@ switch($oper){
             $tree_map[$farm_key][$dong_key] = $row["fdName"] . "|" . ($row["beStatus"] == "O" ? "출하" : "입추");
         }
 
-        $reponse = $tree_map;
+        $response = $tree_map;
 
-		echo json_encode($reponse);
+		echo json_encode($response);
 
 		break;
 }

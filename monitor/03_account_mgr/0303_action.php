@@ -29,31 +29,26 @@ switch($oper){
 		//jqgrid 출력
 		$select_query = "SELECT * FROM manager WHERE mgrID = mgrID ". $append_query;
         
-		$reponse = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
-		echo json_encode($reponse);
+		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+		echo json_encode($response);
 
 		break;
 
 	case "add":
-		//farm_detail을 확인 후 존재하면 insert
-		$farmID = check_str($_REQUEST["mgrID"]);
-
-		//$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\"";
 
 		$insert_map = array();
 
-		if(get_select_count($check_query) > 0){
-			$insert_map["mgrID"] 		= $farmID;
-			$insert_map["mgrPW"] 		= check_str($_REQUEST["fPW"]);
-			$insert_map["mgrGroupName"] = check_str($_REQUEST["fGroupName"]);
-			$insert_map["mgrName"]      = check_str($_REQUEST["fGroupid"]);
-			$insert_map["mgrTel"] 	    = check_str($_REQUEST["fFarmid"]);
-			$insert_map["mgrEmail"] 	= check_str($_REQUEST["fCeo"]);
-			$insert_map["mgrType"] 	    = check_str($_REQUEST["fName"]);
-			$insert_map["mgrDate"] 	    = check_str($_REQUEST["fName"]);
+		$insert_map["mgrID"] 		= check_str($_REQUEST["mgrID"]);
+		$insert_map["mgrPW"] 		= check_str($_REQUEST["mgrPW"]);
+		$insert_map["mgrGroupName"] = check_str($_REQUEST["mgrGroupName"]);
+		$insert_map["mgrName"]      = check_str($_REQUEST["mgrName"]);
+		$insert_map["mgrEmail"] 	= check_str($_REQUEST["mgrEmail"]);
+		$insert_map["mgrTel"] 	    = check_str($_REQUEST["mgrTel"]);
+		$insert_map["mgrType"] 	    = check_str($_REQUEST["mgrType"]);
+		$insert_map["mgrDate"] 	    = check_str($_REQUEST["mgrDate"]);
 
-			run_sql_insert("manager", $insert_map);
-		}
+		run_sql_insert("manager", $insert_map);
+
 		break;
 
 
@@ -62,13 +57,13 @@ switch($oper){
 
 		$update_map = array();
 
-        $update_map["mgrPW"] 		= check_str($_REQUEST["fPW"]);
-        $update_map["mgrGroupName"] = check_str($_REQUEST["fGroupName"]);
-        $update_map["mgrName"]      = check_str($_REQUEST["fGroupid"]);
-        $update_map["mgrTel"] 	    = check_str($_REQUEST["fFarmid"]);
-        $update_map["mgrEmail"] 	= check_str($_REQUEST["fCeo"]);
-        $update_map["mgrType"] 	    = check_str($_REQUEST["fName"]);
-        $update_map["mgrDate"] 	    = check_str($_REQUEST["fName"]);
+        $update_map["mgrPW"] 		= check_str($_REQUEST["mgrPW"]);
+        $update_map["mgrGroupName"] = check_str($_REQUEST["mgrGroupName"]);
+        $update_map["mgrName"]      = check_str($_REQUEST["mgrName"]);
+        $update_map["mgrEmail"] 	= check_str($_REQUEST["mgrEmail"]);
+        $update_map["mgrTel"] 	    = check_str($_REQUEST["mgrTel"]);
+        $update_map["mgrType"] 	    = check_str($_REQUEST["mgrType"]);
+        $update_map["mgrDate"] 	    = check_str($_REQUEST["mgrDate"]);
 
 		$where_query = "mgrID = \"" .$pk. "\" ";
 
@@ -105,9 +100,9 @@ switch($oper){
 			$select = $_REQUEST["select"];
 			$select_ids = explode("|", $select);
 			
-			$append_query = "AND scFarmid = \"" . $select_ids[0] . "\"";
+			$append_query = "AND mgrID = \"" . $select_ids[0] . "\"";
 
-			$append_query = isset($select_ids[1]) ? $append_query . " AND scDongid = \"" . $select_ids[1] . "\"" : $append_query;
+			$append_query = isset($select_ids[1]) ? $append_query . " AND mgrID = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
 		//jqgrid 출력
