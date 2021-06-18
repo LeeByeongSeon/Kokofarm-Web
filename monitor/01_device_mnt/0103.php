@@ -3,6 +3,15 @@ include_once("../inc/top.php");
 
 include_once("../../common/php_module/common_func.php");
 
+// $ip = "175.202.54.174";
+// $port = "15001";
+// $url = "/stw-cgi/video.cgi?msubmenu=stream&action=view&Profile=1&CodecType=MJPEG&Resolution=640x480&FrameRate=60&CompressionLevel=10";
+// $id = "admin";
+// $pw = "kokofarm5561";
+// $test_url = "../../common/php_module/camera_func.php?ip=" .$ip. "&port=" .$port. "&url=" .urlencode($url). "&id=" .$id. "&pw=" .$pw;
+
+// var_dump($test_url);
+
 ?>
 
 <style>
@@ -78,8 +87,17 @@ include_once("../inc/bottom.php");
 	
 	// 카메라 선택 시 팝업창 띄움
 	function camera_popup(name, avg_weight, img_url){
+
+		let pop_width = 1024;
+		let pop_height = 800;
+
+		let pop_left = Math.ceil(( window.screen.width - pop_width ) / 2);
+		let pop_top = Math.ceil(( window.screen.height - pop_height ) / 2);
+
+		let options = "width=" + pop_width + ", height=" + pop_height + ", left=" + pop_left + ", top=" + pop_top
+
 		open_url = img_url;
-		open_window = window.open("camera_popup.php?title=" + name, "camera_window", "width=1024, height=800");
+		open_window = window.open("camera_popup.php?title=" + name, "camera_popup", options);
 	};
 
 	function camera_load(img_obj){

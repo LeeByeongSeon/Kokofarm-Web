@@ -5,7 +5,7 @@
 	$camera_id			= $_REQUEST["id"];				//카메라ID
 	$camera_pw			= $_REQUEST["pw"];				//카메라PW
 
-	$access_url="http://" . $camera_ip . ":" . $camera_port . $camera_url; //주소세팅
+	$access_url = "http://" . $camera_ip . ":" . $camera_port . $camera_url; //주소세팅
 
 	if($camera_id!="" && $camera_pw!="" && $camera_ip!=""){
 		$ch=curl_init();									//curl 초기화 로딩
