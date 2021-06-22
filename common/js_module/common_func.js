@@ -60,14 +60,25 @@ function call_tree_view(search, work, in_out = "none"){
             // 농장버튼 생성
             for(var farm_key in data){       // {KF0006|농장명 : {"KF0006|01":동명}, ...}
                 var infos = farm_key.split("|");
-                tree_html += "<li role='treeitem' style='cursor:pointer;'>\n";
-                tree_html += "<span class='tree-content' style='padding: 7px; color: #455a64;' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
-                tree_html += infos[1] + "</span>\n";
-                tree_html += "<ul class='tree-group' style='display:none;'>\n";
+
+                let head = "";
+                let tail = "";
+
+                head += "<li role='treeitem' style='cursor:pointer;'>\n";
+                head += "<span class='tree-content' style='padding: 7px; color: #455a64;' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
+                head += infos[1];
+
+                tail += "</span>\n";
+                tail += "<ul class='tree-group' style='display:none;'>\n";
+
+                let cnt_in = 0;         //입추 수
+                let cnt_out = 0;        //출하 수
 
                 // 동 버튼 생성
                 for(var dong_key in data[farm_key]){
-                    let [name, status] = data[farm_key][dong_key].split("|");
+                    let [name, status, cmCode, cmIndate, cmOutdate] = data[farm_key][dong_key].split("|");
+
+                    status == "입추" ? cnt_in++ : cnt_out++;
 
                     switch(in_out){
                         case "none":
@@ -76,12 +87,31 @@ function call_tree_view(search, work, in_out = "none"){
                         case "all":
                             status = "&nbsp<span class='badge bg-" + (status == "입추" ? "blue" : "gray")  + " text-white'>" + status + "</span>";
                             break;
+                        case "in":
+                            status = status == "입추" ? "&nbsp<span class='badge bg-blue text-white'>입추</span>" : "pass";
+                            break;
+                        case "out":
+                            status = status == "출하" ? "&nbsp<span class='badge bg-gray text-white'>출하</span>" : "pass";
+                            break;
                     }
 
-                    tree_html += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' style='padding: 7px; color: #455a64;'>" + name + status + "</li>\n";
+                    // pass 이면 출력 안함
+                    if(status == "pass") {continue;}
+
+                    tail += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' ";
+                    tail += "style='padding: 7px; color: #455a64;' cmCode='" + cmCode + "', cmIndate='" + cmIndate + "', cmOutdate='" + cmOutdate + "'>" + name + status + "</li>\n";
                 }
-                tree_html += "</ul>\n";
-                tree_html += "</li>\n";
+                tail += "</ul>\n";
+                tail += "</li>\n";
+
+                if(in_out == "in" && cnt_in == 0) {continue;};          //입추 농가없으면 출력 x
+                if(in_out == "out" && cnt_out == 0) {continue;};        //출하 농가없으면 출력 x
+
+                head += cnt_in > 0 ? "&nbsp<span class='badge bg-blue text-white'>" + cnt_in + "</span>" : "";
+                head += cnt_out > 0 ? "&nbsp<span class='badge bg-gray text-white'>" + cnt_out + "</span>" : "";
+
+                tree_html += head + tail;
+
             }
 
             tree_html += "</ul>\n";
@@ -104,7 +134,7 @@ function set_tree_action(search, work){
 
     if(search != ""){
         // 가장 첫 농장을 연다
-        click_tree_first(act_grid_data);
+        click_tree_first(work);
     }
     else{
         selected_id = "";
@@ -239,6 +269,50 @@ var confirm_event = function (work){
 		work(false);
 		$("#modal_confirm").modal('hide');
 	});
+};
+
+// 날짜 유효성 검사
+function date_valid_check(input){
+    let [date_arr, time_arr] = input.split(" ");
+
+    if(time_arr == null) {return [false, "입력된 값이 (yyyy-MM-dd hh:mm:ss) 형식에 맞지 않습니다."];}
+
+    date_arr = date_arr.split("-");
+    time_arr = time_arr.split(":");
+
+    if(date_arr.length != 3) {return [false, "입력된 값이 (yyyy-MM-dd hh:mm:ss) 형식에 맞지 않습니다."];}
+    if(time_arr.length != 3) {return [false, "입력된 값이 (yyyy-MM-dd hh:mm:ss) 형식에 맞지 않습니다."];}
+
+    if(date_arr[0].length != 4) {return [false, "입력된 연도가 (yyyy-MM-dd) 형식에 맞지 않습니다."];}
+    if(date_arr[1].length != 2) {return [false, "입력된 월이 (yyyy-MM-dd) 형식에 맞지 않습니다."];}
+    if(date_arr[2].length != 2) {return [false, "입력된 일이 (yyyy-MM-dd) 형식에 맞지 않습니다."];}
+
+    if(time_arr[0].length != 2) {return [false, "입력된 시간이 (hh:mm:ss) 형식에 맞지 않습니다."];}
+    if(time_arr[1].length != 2) {return [false, "입력된 분이 (hh:mm:ss) 형식에 맞지 않습니다."];}
+    if(time_arr[2].length != 2) {return [false, "입력된 초가 (hh:mm:ss) 형식에 맞지 않습니다."];}
+
+    if(date_arr[1] < 1 || date_arr[1] > 12) {return [false, "입력된 달이 유효하지 않습니다."];}
+
+    // 숫자형으로 파싱
+    date_arr = date_arr.map((val) => Number(val));
+    time_arr = time_arr.map((val) => Number(val));
+
+    let day_max = 0;
+    day_max = [1,3,5,7,8,10,12].includes(date_arr[1]) ? 31 : 28;        // 31일인 달이 아니면
+    day_max = [4,6,9,11].includes(date_arr[1]) ? 31 : 28;               // 30일인 달이 아니면
+    // 윤년계산
+    if(date_arr[1] == 2 && date_arr[0] % 4 == 0){
+        day_max = (date_arr[0] % 100 == 0) && (date_arr[0] % 400 != 0) ? 28 : 29;
+    }
+
+    if(date_arr[2] < 1 || date_arr[2] > day_max) {return [false, "입력된 일이 유효하지 않습니다."];}
+
+    if(time_arr[0] < 0 || time_arr[0] > 24) {return [false, "입력된 시간이 유효하지 않습니다."];}
+    if(time_arr[1] < 0 || time_arr[1] > 59) {return [false, "입력된 분이 유효하지 않습니다."];}
+    if(time_arr[2] < 0 || time_arr[2] > 59) {return [false, "입력된 초가 유효하지 않습니다."];}
+
+    return [true, "완료"];
+    
 };
 
 

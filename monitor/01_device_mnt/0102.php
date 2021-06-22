@@ -60,7 +60,7 @@ $type_combo = make_combo_by_query($query, "request_type", "", "cName1");
 						</div>
 					</div>
 
-					<div class="col-md-6">
+					<div class="col-md-6" id="summary_camera">
 						
 					</div>
 					
@@ -393,8 +393,9 @@ $type_combo = make_combo_by_query($query, "request_type", "", "cName1");
 
 					<ul class="nav nav-tabs nav-tabs-right bordered" id="nav_raw_data" style="padding:5px;">&nbsp;&nbsp;
 						<form id="raw_data_search_form" class="form-inline" onsubmit="return false;">
-							<span class="fa fa-clock-o"></span>&nbsp;조회범위&nbsp;&nbsp;<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;
-							<input class="form-control" type="text" name="search_stime" maxlength="5" placeholder="시작시간" size="7"/>
+							<span class="fa fa-clock-o"></span>&nbsp;조회범위&nbsp;&nbsp;
+							<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;
+							<input class="form-control" type="text" name="search_stime" maxlength="5" placeholder="시작시간" size="7" />
 							&nbsp;&nbsp; ~ &nbsp;&nbsp;
 							<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
 							<input class="form-control" type="text" name="search_etime" maxlength="5" placeholder="종료시간" size="7" />&nbsp;&nbsp;
@@ -603,32 +604,21 @@ include_once("../inc/bottom.php");
 			return;
 		}
 
-		var data_arr = {}; 
-		data_arr['oper'] = "get_code";
-		data_arr['select'] = select;
-		// 입출하코드 가져오기
-		$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
-			success: function(data) {
-				code = data.code;
-				indate = data.cmIndate;
-				outdate = data.cmOutdate;
+		select = select.split("|").length != 2 ? select + "|01" : select;
+		let temp = $("#" + select.replace("|", "\\|") + "");
 
-				if(code == "" || code == null){
-					popup_alert("입출하 데이터 없음", "선택된 농장의 입출하 데이터가 없습니다.");
-				}
+		code = $(temp).attr("cmCode");
+		indate = $(temp).attr("cmIndate");
+		outdate = $(temp).attr("cmOutDate");
 
-				get_buffer_data();
-				get_avg_data("day");
-				get_error_data();
-				get_request_data();
+		if(code == "" || code == null){
+			popup_alert("입출하 데이터 없음", "선택된 농장의 입출하 데이터가 없습니다.");
+		}
 
-				// let search_map = {};
-				// $.each($("#raw_data_search_form").serializeArray(), function(){ 
-				// 	search_map[this.name] = this.value;
-				// });
-				// get_raw_data("search", "cell", search_map);
-			}
-		});
+		get_buffer_data();
+		get_avg_data("day");
+		get_error_data();
+		get_request_data();
 	};
 
 	// 동 선택 변경 시 검색 초기화
@@ -841,6 +831,44 @@ include_once("../inc/bottom.php");
 				padding: '0px'
 			}
 		}
+	};
+
+	// 카메라 선택 시 팝업창 띄움
+	function camera_popup(name, img_url){
+
+		let pop_width = 1024;
+		let pop_height = 800;
+
+		let pop_left = Math.ceil(( window.screen.width - pop_width ) / 2);
+		let pop_top = Math.ceil(( window.screen.height - pop_height ) / 2);
+
+		let options = "width=" + pop_width + ", height=" + pop_height + ", left=" + pop_left + ", top=" + pop_top
+
+		open_url = img_url;
+		open_window = window.open("camera_popup.php?title=" + name, "camera_popup", options);
+	};
+
+	// 카메라 이미지 불러오기 팝업창에서 실행
+	function camera_load(img_obj){
+		// 팝업창 닫히면 
+		open_window.onbeforeunload = function(){
+			img_obj.onload = function(){"";};
+			img_obj.setAttribute("src", "");
+		};   
+
+		// 이미지가 로드되면
+		img_obj.onload = function(){
+			img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
+		};
+
+		// 이미지 로드 중 에러 발생시
+		img_obj.onerror = function(){
+			img_obj.setAttribute("src", "../images/noimage.jpg");
+			img_obj.onload = function(){"";};
+		};
+
+		// 첫 이미지 로드
+		img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
 	};
 
 </script>

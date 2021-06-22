@@ -8,7 +8,7 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 
 ?>
 <!--입출하 농장 수 & 호수별 입추 수-->
-<div class="row fullSc">
+<div class="row">
 	<article class="col-xl-4">
 		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>

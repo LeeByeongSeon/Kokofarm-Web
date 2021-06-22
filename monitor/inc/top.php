@@ -144,8 +144,6 @@
 	<!-- date & time picker-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_datepicker/datepicker.css">
 	<link rel="stylesheet" href="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.css">
-	<script src="../../common/library/bootstrap_datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-	<script src="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.js" type="text/javascript"></script>
 
 	<!--BOOTSTRAP Table-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_table/bootstrap-table.css"/>

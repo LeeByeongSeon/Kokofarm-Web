@@ -64,16 +64,9 @@ function get_jqgrid_data($query, $page, $limit, $sidx, $sord){
 	$ret = array();
 	$total_len = get_select_count($query);
 
-	$total_pages = 0;
-	if( $total_len > 0) {
-		$total_pages = ceil($total_len / $limit);
-	}
-	if ($page > $total_pages) {
-		$page=$total_pages;
-	}
-	if ($limit < 0) {
-		$limit = 0;
-	}
+	$total_pages = $total_len > 0 ? ceil($total_len / $limit) : 0;
+	$page = $page > $total_pages ? $total_pages : $page;
+	$limit = $limit < 0 ? 0 : $limit;
 
 	$start = $limit * $page - $limit; // do not put $limit*($page - 1)
 	if ($start < 0) {

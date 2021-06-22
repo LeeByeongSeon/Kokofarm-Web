@@ -7,25 +7,24 @@ include_once("../../common/php_module/common_func.php");
 $dong_combo_json = make_jqgrid_combo_num(32);
 
 // 진행상태 콤보박스
-$stat_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"진행상태\"";
-$stat_combo = make_combo_by_query($stat_query, "search_stat", "진행상태", "cName1");
-$stat_combo_json = make_jqgrid_combo($stat_query, "cName1");
+$query = "SELECT CONCAT(cName1, '(', cName2, ')') AS cName1 FROM codeinfo WHERE cGroup= \"진행상태\"";
+$stat_combo = make_combo_by_query($query, "search_stat", "진행상태", "cName1");
+$stat_combo_json = make_jqgrid_combo($query, "cName1");
 
-// 요청시간 콤보박스
-$time_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"요청시간\"";
-$time_combo = make_combo_by_query($time_query, "search_time", "요청시간", "cName1");
-$time_combo_json = make_jqgrid_combo($time_query, "cName1");
+// 요청구분 콤보박스
+$query = "SELECT CONCAT(cName1, '(', cName2, ')') AS cName1 FROM codeinfo WHERE cGroup= \"요청구분\"";
+$request_combo = make_combo_by_query($query, "search_request", "요청구분", "cName1");
+$request_combo_json = make_jqgrid_combo($query, "cName1");
 
 // 축종 콤보박스
-$Lst_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"생계구분\"";
-$Lst_combo = make_combo_by_query($Lst_query, "search_Lst", "생계구분", "cName1");
-$Lst_combo_json = make_jqgrid_combo($Lst_query, "cName1");
+$query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"생계구분\"";
+$lst_combo = make_combo_by_query($query, "search_lst", "생계구분", "cName1");
+$lst_combo_json = make_jqgrid_combo($query, "cName1");
 
 ?>
 
 <!--재산출 요청 관리-->
-<div class="row fullSc">
-	<article class="col-xl-12 no-padding">
+	<article class="col-xl-10 float-right">
 		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
@@ -36,16 +35,14 @@ $Lst_combo_json = make_jqgrid_combo($Lst_query, "cName1");
 			<div class="widget-body">
 
 				<div class="widget-body-toolbar">
-					<form id="searchFORM" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
+					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
 						<?=$stat_combo?>&nbsp;&nbsp;
-						<?=$time_combo?>&nbsp;&nbsp;
-						<input type="text" id="sDate" name="sDate" class="form-control" maxlength='10' size="10" placeholder="시작일자">
-						&nbsp;-&nbsp;
-						<input type="text" id="eDate" name="eDate" class="form-control" maxlength='10' size="10" placeholder="종료일자">&nbsp;&nbsp;
-						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
-						<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-success btn-sm" onClick="search_action('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+						<?=$request_combo?>&nbsp;&nbsp;
+						<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;~&nbsp;
+						<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
+						<button type="button" class="btn btn-primary btn-sm" onClick="act_grid_data('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
+						<button type="button" class="btn btn-danger btn-sm" onClick="act_grid_data('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;
+						<button type="button" class="btn btn-success btn-sm" onClick="act_grid_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
 					</form>
 				</div>
 
@@ -58,21 +55,32 @@ $Lst_combo_json = make_jqgrid_combo($Lst_query, "cName1");
 					
 		</div>
 	</article>
-</div>
 
 <?
 include_once("../inc/bottom.php");
 ?>
 
 <script language="javascript">
+
+	var code = "";
+	var indate = "";
+	var outdate = "";
+
 	$(document).ready(function(){
 		//Date Picker 선언
-		$('#sDate').datepicker({ format: "yyyy-mm-dd",language: "kr",autoclose: true,});
-		$('#eDate').datepicker({ format: "yyyy-mm-dd",language: "kr",autoclose: true,});
+		$("#search_form [name=search_sdate]").datepicker({ format: "yyyy-mm-dd", language: "kr", autoclose: true});
+		$("#search_form [name=search_edate]").datepicker({ format: "yyyy-mm-dd", language: "kr", autoclose: true});
 
 		get_grid_data();
 
+		call_tree_view("", act_grid_data, "all");
+		set_tree_search(act_grid_data, "all");
+
 	});
+
+	// 검색부 키 제한
+	$("#search_form [name=search_sdate]").on("keyup", function() { $(this).val(""); });
+	$("#search_form [name=search_edate]").on("keyup", function() { $(this).val(""); });
 
 	function get_grid_data(){
 		$("#jqgrid").jqGrid({
@@ -84,55 +92,115 @@ include_once("../inc/bottom.php");
 			mtype:'post',
 			sortorder:"asc",
 			datatype:"json",
-			rowNum:17,
+			rowNum:16,
 			pager:"#jqgrid_pager",
 			viewrecords:true,
 			sortname:"pk",
 			rownumbers:true,
-			height:570,
+			height:530,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "요청시간", 		name: "rcRequestDate",	align:'center', 	editable:false, editrules:{ required: false}},
-				{label: "농장",				name: "rcFarmid",		align:'center',		editable:true, editrules:{ required: true},  width:"55%", },
-				{label: "동",				name: "rcDongid",		align:'center',		editable:true, editrules:{ required: true},  width:"30%", 
+				{label: "요청시간", 		name: "rcRequestDate",	align:'center', width:"110%"},
+				{label: "동 이름", 			name: "fdName",			align:'center', width:"100%"},
+				{label: "농장",				name: "rcFarmid",		hidden:true, editable:true, editrules:{ required: true, edithidden: true}},
+				{label: "동",				name: "rcDongid",		hidden:true, editable:true, editrules:{ required: true, edithidden: true}, 
 					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
 				},
-				{label: "요청 사항",		name: "rcCommand",		align:'center',		editable:true, editrules:{ required: true},  width:"60%", },
-				{label: "진행 상태",		name: "rcStatus",		align:'center',		editable:true, editrules:{ required: false}, width:"60%", },
-				{label: "승인시간",			name: "rcApproveDate",	align:'center',		editable:true, editrules:{ required: false} },
-				{label: "기존 축종",		name: "rcPrevLst",		align:'center',		editable:false, editrules:{ required: false},width:"60%", },
-				{label: "변경 축종",		name: "rcChangeLst",	align:'center',		editable:true, editrules:{ required: false}, width:"60%", 
-					edittype:'select', editoptions:{value:<?=$Lst_combo_json?>}
+				{label: "입추시간",			name: "cmIndate",			hidden:true,},
+				{label: "입추축종",			name: "cmIntype",			hidden:true,},
+				{label: "진행 상태",		name: "rcStatus",		align:'center', width:"70%"},
+				{label: "승인시간",			name: "rcApproveDate",	align:'center', width:"110%"},
+				{label: "요청 사항",		name: "rcCommand",		align:'center',	width:"80%"},
+				{label: "변경사항",			name: "rcChange",		align:'center', width:"300%"},
+				{label: "기존 축종",		name: "rcPrevLst",		hidden:true, },
+				{label: "축종",		name: "rcChangeLst",	hidden:true, editable:true, 
+					editrules:{ required: false, edithidden: true}, 
+					edittype:'select', editoptions:{value:<?=$lst_combo_json?>}
 				},
-				{label: "기존 입추시간",	name: "rcPrevDate",		align:'center',		editable:false, editrules:{ required: false}},
-				{label: "변경 입추시간",	name: "rcChangeDate",	align:'center',		editable:true, editrules:{ required: false} },
-				{label: "실측시간",			name: "rcMeasureDate",	align:'center',		editable:true, editrules:{ required: false} },
-				{label: "실측값",			name: "rcMeasureVal",	align:'center',		editable:true, editrules:{ required: false}, width:"80%", },
-				{label: "기존 예측중량",	name: "rcPrevWeight",	align:'center',		editable:false, editrules:{ required: false},width:"80%", },
-				{label: "기존 ratio",		name: "rcPrevRatio",	align:'center',		editable:false, editrules:{ required: false},width:"80%", },
-				{label: "변경 ratio",		name: "rcChangeRatio",	align:'center',		editable:false, editrules:{ required: false},width:"80%", },
-				{label: "완료시간",			name: "rcFinishDate",	align:'center',		editable:false, editrules:{ required: false}},
+				{label: "기존 입추시간",	name: "rcPrevDate",		hidden:true},
+				{label: "입추시간",	name: "rcChangeDate",	hidden:true, editable:true, editrules:{ required:false, edithidden:true}, editoptions:{placeholder:"0000-00-00 00:00:00"}
+					// editoptions:{
+					// 	dataInit: function(element) {
+					// 		$(element).datepicker({ format: "yyyy-mm-dd", language: "kr", autoclose: true,});
+					// 	}
+					// }
+				},
+				{label: "실측시간",			name: "rcMeasureDate",	align:'center',	editable:true, width:"110%", 
+					editrules:{ required:true, edithidden:true}, 
+					editoptions:{placeholder:"0000-00-00 00:00:00"}
+				},
+				{label: "실측값",			name: "rcMeasureVal",	align:'center',		editable:true, editrules:{ required: false, edithidden: true, number: true}, width:"60%"},
+				{label: "변경전 예측",		name: "rcPrevWeight",	align:'center',		 width:"60%", },
 				{label: "pk", 				name: "pk",				hidden:true },
 			],
 			onSelectRow: function(id){		  },
-			loadComplete:function(data){		}
+			loadComplete:function(data){
+				
+			}
 		});
 
 		$('#jqgrid').navGrid('#jqgrid_pager',
 			{ 
-				edit:true, add:true, del:true, search:false, refresh: true, view: false, position:"left", cloneToTop:false 
+				edit:true, add:false, del:true, search:false, refresh: true, view: false, position:"left", cloneToTop:false 
 			},
 			{ 
 				beforeInitData:function(){
-					$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:false}} );
+					$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true}} );
+					$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:true}} );
 
-				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
+				},
+				beforeSubmit:function(postdata, formid){
+					let valid_change_date = date_valid_check(postdata.rcChangeDate);
+					let valid_measure_date = date_valid_check(postdata.rcMeasureDate);
+
+					if(valid_change_date[0]) {return valid_change_date[1];} 
+					if(valid_measure_date[0]) {return valid_measure_date[1];} 
+
+					return [true, ""];
+				},
+				editCaption:"재산출 요청 수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
 			},
 			{	
 				beforeInitData:function(){
 					$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:false}} );
 
-				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
+					if(selected_id == ""){
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
+						return false;
+					}
+
+					var keys = selected_id.split("|");
+					
+					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
+
+						case 1:		//농장만 선택
+							$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							break;
+
+						case 2:		//동까지 선택
+							$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							
+							// 입추시간
+							$("#jqgrid").setColProp('rcChangeDate', {editoptions:{defaultValue:indate}});
+							break;
+					}
+				},
+				beforeSubmit:function(postdata, formid){
+
+					if(postdata.rcChangeDate != ""){
+						let valid_change_date = date_valid_check(postdata.rcChangeDate);
+						if(valid_change_date[0]) {return valid_change_date[1];} 
+					}
+
+					if(postdata.rcMeasureDate != ""){
+						let valid_measure_date = date_valid_check(postdata.rcMeasureDate);
+						if(valid_measure_date[0]) {return valid_measure_date[1];} 
+					}
+
+					return [true, ""];
+				},
+				addCaption:"재산출 요청", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText} 
 			},
 			{	
 				beforeInitData:function(){
@@ -146,5 +214,49 @@ include_once("../inc/bottom.php");
         $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
 		$("#jqgrid").jqGrid('excelExport', {url:'0502_action.php'});
     });
+
+	// 트리뷰 버튼 클릭시 리로드 이벤트
+	function act_grid_data(action){
+
+		let search_map = {};
+		$.each($("#search_form").serializeArray(), function(){ 
+			search_map[this.name] = this.value;
+		});
+		search_data = JSON.stringify(search_map);
+
+		switch(action){
+			default:
+				if(action.split("|").length == 2){
+					let temp = $("#" + action.replace("|", "\\|") + "");
+					code = $(temp).attr("cmCode");
+					indate = $(temp).attr("cmIndate");
+					outdate = $(temp).attr("cmOutDate");
+				}
+
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+			
+			case "search":
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "cancle":
+				//초기화
+				$("#search_form").each(function() {	this.reset();  });
+
+				//리로드
+				$.each($("#search_form").serializeArray(), function(){ 
+					search_map[this.name] = this.value; 
+				});
+				search_data = JSON.stringify(search_map);
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "excel":
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id, "search_data" : search_data}}); //POST 형식의 parameter 추가
+				$("#jqgrid").jqGrid('excelExport', {url:'0205_action.php'});
+				break;
+		}
+	};
 
 </script>

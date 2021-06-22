@@ -3,15 +3,6 @@ include_once("../inc/top.php");
 
 include_once("../../common/php_module/common_func.php");
 
-// $ip = "175.202.54.174";
-// $port = "15001";
-// $url = "/stw-cgi/video.cgi?msubmenu=stream&action=view&Profile=1&CodecType=MJPEG&Resolution=640x480&FrameRate=60&CompressionLevel=10";
-// $id = "admin";
-// $pw = "kokofarm5561";
-// $test_url = "../../common/php_module/camera_func.php?ip=" .$ip. "&port=" .$port. "&url=" .urlencode($url). "&id=" .$id. "&pw=" .$pw;
-
-// var_dump($test_url);
-
 ?>
 
 <style>
@@ -86,7 +77,7 @@ include_once("../inc/bottom.php");
 	};
 	
 	// 카메라 선택 시 팝업창 띄움
-	function camera_popup(name, avg_weight, img_url){
+	function camera_popup(name, img_url){
 
 		let pop_width = 1024;
 		let pop_height = 800;
@@ -99,7 +90,8 @@ include_once("../inc/bottom.php");
 		open_url = img_url;
 		open_window = window.open("camera_popup.php?title=" + name, "camera_popup", options);
 	};
-
+	
+	// 카메라 이미지 불러오기 팝업창에서 실행
 	function camera_load(img_obj){
 		// 팝업창 닫히면 
 		open_window.onbeforeunload = function(){

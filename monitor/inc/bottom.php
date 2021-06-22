@@ -64,3 +64,7 @@
 
 <!--BOOTSTRAP Table-->
 <script src="../../common/library/bootstrap_table/bootstrap-table.js"></script>
+
+<!-- date & time picker-->
+<script src="../../common/library/bootstrap_datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.js" type="text/javascript"></script>

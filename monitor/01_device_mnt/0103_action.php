@@ -46,11 +46,11 @@ switch($oper){
 
             $img_url = "../../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
             $camera_grid_data .= "<div class='col-md-3'>
-                                    <img src='$img_url' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg');\">
+                                    <img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg');\" onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">
                                     <p class='alert alert-" .($row["beStatus"] == "O" ? "danger" : "success"). "'>
                                         <span class='fa fa-home'></span>&nbsp; " .$name. "
 										<span class='pull-right'>&nbsp;&nbsp;&nbsp;
-                                            <span class='fa fa-camera' style='cursor:pointer' onClick=\"camera_popup('" .$name. "','" .$avg_weight. "','" .$img_url. "'); \"></span>
+                                            <span class='fa fa-camera' style='cursor:pointer' onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \"></span>
                                         </span>
 										<span class='pull-right'>&nbsp;&nbsp;&nbsp;
                                             <span class='fa fa-clock-o'></span>&nbsp;일령: " .$row["beDays"]. "

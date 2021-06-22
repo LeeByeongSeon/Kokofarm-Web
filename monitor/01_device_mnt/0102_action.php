@@ -328,7 +328,7 @@ switch($oper){
         $ref_date = date('Y-m-d H:i:s');
         $ref_date = substr($ref_date, 0, 15) . "0:00";
 
-        $select_query = "SELECT cm.*, fd.fdName, be.*, bp.*, sf.*, so.*, 
+        $select_query = "SELECT cm.*, fd.fdName, be.*, bp.*, sf.*, so.*, sc.*, 
                         IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) as days, 
                         GROUP_CONCAT(siCellid separator ' | ') AS siCellid, 
                         GROUP_CONCAT(siSensorDate separator ' | ') AS siSensorDate, 
@@ -342,9 +342,10 @@ switch($oper){
                         LEFT JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
                         LEFT JOIN buffer_plc_status AS bp ON bp.bpFarmid = cm.cmFarmid AND bp.bpDongid = cm.cmDongid
                         LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
-                        LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid
+                        LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid 
+                        LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
                         WHERE cmCode = '" .$code. "'
-                        GROUP BY cm.cmCode";
+                        GROUP BY cm.cmCode, sc.scPort";
 
         $select_data = get_select_data($select_query);
         $row = $select_data[0];
@@ -358,6 +359,11 @@ switch($oper){
         $summary_data["summary_inc"] = "일일증체량<br>" . (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
         $summary_data["summary_type"] = $row["cmIntype"] . " " . $row["cmInsu"] . "수";
         $summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
+
+        //카메라
+        $img_url = "../../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
+        $summary_data["summary_camera"] = "<img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg');\" onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">";
+
         // $summary_data["summary_indate"] = $row["cmIndate"];
         // $summary_data["summary_outdate"] = $row["cmOutdate"];
 
