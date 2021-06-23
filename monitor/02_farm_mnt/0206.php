@@ -35,16 +35,14 @@ $action_combo_json = make_jqgrid_combo($action_query, "cName1");
 			<div class="widget-body">
 
 				<div class="widget-body-toolbar">
-					<form id="searchFORM" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
+					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
 						<?=$write_combo?>&nbsp;&nbsp;
 						<?=$defect_combo?>&nbsp;&nbsp;
-						<input type="text" id="sDate" name="sDate" class="form-control" maxlength='10' size="10" placeholder=" 시작일자">
-						&nbsp;-&nbsp;
-						<input type="text" id="eDate" name="eDate" class="form-control" maxlength='10' size="10" placeholder=" 종료일자">&nbsp;&nbsp;
-						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
-						<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-						<button type="button" class="btn btn-danger btn-sm"  onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-success btn-sm" onClick="search_action('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+						<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;~&nbsp;
+						<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
+						<button type="button" class="btn btn-primary btn-sm" onClick="act_grid_data('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
+						<button type="button" class="btn btn-danger btn-sm" onClick="act_grid_data('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;
+						<button type="button" class="btn btn-success btn-sm" onClick="act_grid_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
 					</form>
 				</div>
 
@@ -82,7 +80,7 @@ include_once("../inc/bottom.php");
 			mtype:'post',
 			sortorder:"asc",
 			datatype:"json",
-			rowNum:17,
+			rowNum:15,
 			pager:"#jqgrid_pager",
 			viewrecords:true,
 			sortname:"pk",
@@ -91,12 +89,13 @@ include_once("../inc/bottom.php");
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "작성일",						name: "dmDate",			align:'center', 	},
-				{label: "농장ID",						name: "dmFarmid",		align:'center',		editable:true, editrules:{ required: true},
+				{label: "농장ID",						name: "dmFarmid",		hidden:true,		editable:true, editrules:{ required: true, edithidden: true},
 					editoptions : {size:10, maxlength:15}, formoptions:{label:"농장", rowpos:1, colpos:1}
 				},
-				{label: "동ID",							name: "dmDongid",		align:'center',		editable:true, editrules:{ required: true},  width:"40%", 
-					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}, formoptions:{label:"동", rowpos:1, colpos:2}
+				{label: "동ID",							name: "dmDongid",		hidden:true,		editable:true, editrules:{ required: true, edithidden: true}, 
+					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}, formoptions:{label:"동", rowpos:1, colpos:2, align:"center"}
 				},
+				{label: "농장명",						name: "fdName",			align:"center",		},
 				{label: "조치상태",						name: "dmStatus",		align:'center',		editable:true, editrules:{ required: true},
 					edittype:'select', editoptions : {value:<?=$action_combo_json?>}, formoptions:{label:"조치상태", rowpos:2, colpos:1}
 				},
@@ -111,7 +110,7 @@ include_once("../inc/bottom.php");
 				},
 				{label: "발생일",						name: "dmStartDate",	align:'center',		editable:true, editrules:{ required: false} ,
 					formoptions:{label:"발생일", rowpos:4, colpos:1}, 
-					editoptions:{dataInit:function(e){$(e).datepicker({dateFormat:'yy-mm-dd', language:'kr'});}, 
+					editoptions:{dataInit:function(e){$(e).datepicker({dateFormat:'yyyy-mm-dd', language:'kr'});}, 
 									defaultValue: function(){ 
 													var currentTime = new Date(); 
 													var month = parseInt(currentTime.getMonth() + 1); 
@@ -127,8 +126,8 @@ include_once("../inc/bottom.php");
 				{label: "발생시간",						name: "dmStartDate",	align:'center',		editable:true, editrules:{ required: false},
 					formoptions:{label:"발생시간", rowpos:4, colpos:2}
 				},
-				{label: "발생 장치<br>(존재 시 작성)",	name: "dmDevice",		align:'center',		editable:true, editrules:{ required: false},
-					formoptions:{label:"발생 장치<br>(존재 시 작성)", rowpos:5, colpos:1}
+				{label: "발생 장치",	name: "dmDevice",		align:'center',		editable:true, editrules:{ required: false},
+					formoptions:{label:"발생 장치", rowpos:5, colpos:1}
 				},
 				{label: "버전(제품)",					name: "dmDeviceVer",	align:'center',		editable:true, editrules:{ required: false},
 					formoptions:{label:"버전(제품)", rowpos:5, colpos:2}

@@ -207,6 +207,40 @@ switch($oper){
 
 		convert_excel(get_select_data($select_query), $field_data, $title, $append_query);
 		break;
+
+	case "approve":
+
+		$pk = check_str($_REQUEST["pk"]);
+		$keys = explode("|", $pk);
+
+		$farmID = $keys[0];
+		$dongID = $keys[1];
+		$request_date = $keys[2];
+
+		$status = $_REQUEST["status"];
+
+		$query = "SELECT rcStatus FROM request_calculate WHERE rcFarmid = \"" . $farmID . "\" AND rcDongid = \"" . $dongID . "\" AND rcRequestDate = \"" . $request_date . "\"";
+		$result = get_select_data($query);
+
+		if($result[0]["rcStatus"] == "R"){
+			$update_map = array();
+			$update_map['rcStatus'] = $status;
+			$update_map['rcApproveDate'] = date("Y-m-d H:i:s");
+
+			$where_query = "rcFarmid = '" . $farmID . "' AND rcDongid = '" . $dongID . "' AND rcRequestDate = '" . $request_date . "'";
+
+			run_sql_update("request_calculate", $update_map, $where_query);
+
+			$response['result'] = "ok";
+		}
+		else{
+			$response['result'] = "fail";
+			$response['err_msg'] = "이미 처리된 요청입니다.";
+		}
+
+		echo json_encode($response);
+
+		break;
 }
 
 ?>

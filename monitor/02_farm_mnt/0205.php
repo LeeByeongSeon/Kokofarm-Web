@@ -133,6 +133,78 @@ include_once("../inc/bottom.php");
 				{label: "변경전 예측",		name: "rcPrevWeight",	align:'center',		 width:"60%", },
 				{label: "pk", 				name: "pk",				hidden:true },
 			],
+			ondblClickRow: function(id){	
+				let row = $(this).jqGrid('getRowData', id);
+				
+				let row_status = row.rcStatus.split("(")[0]
+				let row_command = row.rcCommand.split("(")[0]
+
+				if(row_status == "R"){
+					let title = row.fdName + " 재산출 요청 승인";
+					let msg = "";
+					let now = get_now_datetime();
+
+					msg += "<div class='well' style='padding:5px;'>";
+					switch(row_command){
+						case "Day":
+							msg += "<div class='col-xs-12 no-padding' style='text-align:center'>일령 변경</div>";
+							msg += "<div class='col-xs-5 no-padding' style='text-align:center'> <p style='font-size:13px; font-weight:bold;'>";
+							msg += get_korea_date(row.rcPrevDate) + "<br>(" + get_date_diff(row.rcPrevDate, now) + "일령)</p> </div>";
+							msg += "<div class='col-xs-2 no-padding' style='text-align:center'><i class='fa-fw fa fa-arrow-right'></i></div>";
+							msg += "<div class='col-xs-5 no-padding' style='text-align:center'> <p style='font-size:13px; font-weight:bold;'>";
+							msg += get_korea_date(row.rcChangeDate) + "<br>(" + get_date_diff(row.rcChangeDate, now) + "일령)</p> </div>";
+							msg += "<div style='clear:both'></div>";
+							msg += "</div>";
+							break;
+
+						case "Opt":
+							msg += "<div class='col-xs-12 no-padding' style='text-align:center'>평균중량 최적화</div>";
+							msg += "<div class='col-xs-5 no-padding' style='text-align:center'> <p style='font-size:13px; font-weight:bold;'>";
+							msg += "예측값 : " + row.rcPrevWeight + "<br>(" + get_korea_date(row.rcMeasureDate) + ")</p> </div>";
+							msg += "<div class='col-xs-2 no-padding' style='text-align:center'><i class='fa-fw fa fa-arrow-right'></i></div>";
+							msg += "<div class='col-xs-5 no-padding' style='text-align:center'> <p style='font-size:13px; font-weight:bold;'>";
+							msg += "실측값 : " + row.rcMeasureVal + "<br>(" + get_korea_date(row.rcMeasureDate) + ")</p> </div>";
+							msg += "<div style='clear:both'></div>";
+							msg += "</div>";
+							break;
+
+						case "Lst":
+							msg += "<div class='col-xs-12 no-padding' style='text-align:center'>축종 변경</div>";
+							msg += "<div class='col-xs-5 no-padding' style='text-align:center'> <p style='font-size:18px; font-weight:bold;'>";
+							msg += row.rcPrevLst + "</p> </div>";
+							msg += "<div class='col-xs-2 no-padding' style='text-align:center'><i class='fa-fw fa fa-arrow-right'></i></div>";
+							msg += "<div class='col-xs-5 no-padding' style='text-align:center'> <p style='font-size:18px; font-weight:bold;'>";
+							msg += row.rcChangeLst + "</p> </div>";
+							msg += "<div style='clear:both'></div>";
+							msg += "</div>";
+							break;
+					}
+
+					popup_confirm(title, msg, function(confirm){
+						let confirm_data = {};
+						confirm_data['oper'] = "approve";
+						confirm_data['pk'] = row.pk;
+						confirm_data['status'] = confirm ? "A" : "J";
+
+						$.ajax({url:'0205_action.php',data:confirm_data, cache:false, type:'post', dataType:'json',
+							success: function(data) {
+								switch(data.result){
+									case "ok":
+										act_grid_data("search");
+										break;
+
+									case "fail":
+										popup_alert("승인 오류", data.err_msg);
+										act_grid_data("search");
+										break;
+								}
+							}
+						});
+					});
+				}
+				//show_data_modal(data_id);
+                //$("#del_jqGridSlave").click();
+			},
 			onSelectRow: function(id){		  },
 			loadComplete:function(data){
 				

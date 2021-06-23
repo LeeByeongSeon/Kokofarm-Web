@@ -28,7 +28,8 @@ switch($oper){
 		}
 
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(dmFarmid, '|', dmDongid, '|', dmDate) AS pk FROM defect_manage WHERE dmFarmid = dmFarmid " .$append_query;
+		$select_query = "SELECT dm.*, fd.fdName, CONCAT(dmFarmid, '|', dmDongid, '|', dmDate) AS pk FROM defect_manage AS dm
+						JOIN farm_detail AS fd ON fd.fdFarmid = dm.dmFarmid AND fd.fdDongid = dm.dmDongid " .$append_query;
 
 		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($response);

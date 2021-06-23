@@ -315,4 +315,125 @@ function date_valid_check(input){
     
 };
 
+// 두 날짜의 차이를 구함
+function get_date_diff(start, end){
+
+	if(start.length >= 10 && end.length >= 10){
+		start_date = new Date(start.substr(0,4), parseInt(start.substr(5,2)) - 1, parseInt(start.substr(8,2)) + 1);
+		end_date = new Date(end.substr(0,4), parseInt(end.substr(5,2)) - 1, parseInt(end.substr(8,2)) + 1);
+
+		var diff = end_date.getTime() - start_date.getTime();
+
+    	diff = Math.ceil(diff / (1000 * 3600 * 24));
+
+		return diff;
+	}
+	return 0;
+};
+
+// 두 시간의 차이를 구함
+function get_time_diff(start, end){
+
+	if(start.length >= 15 && end.length >= 15){
+		start_date = new Date(start.substr(0,4), start.substr(5,2), start.substr(8,2), start.substr(11,2), start.substr(14,2), start.substr(17,2));
+		end_date = new Date(end.substr(0,4), end.substr(5,2), end.substr(8,2), end.substr(11,2), end.substr(14,2), end.substr(17,2));
+
+		var diff = end_date.getTime() - start_date.getTime();
+    	diff = Math.ceil(diff / 1000);
+
+		return diff;
+	}
+	return 0;
+};
+
+// 현재 시간을 YYYY-MM-DD hh:mm:ss 형식으로 가져옴
+function get_now_datetime(){
+    return get_now_date() + " " + get_now_time();
+};
+
+// 현재 날짜를 YYYY-MM-DD 형식으로 가져옴
+function get_now_date(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+};
+
+// 현재 시간을 hh:mm:ss 형식으로 가져옴
+function get_now_time(){
+    var date = new Date();
+    var hour = ("0" + date.getHours()).slice(-2);
+    var min = ("0" + date.getMinutes()).slice(-2);
+    var sec = ("0" + date.getSeconds()).slice(-2);
+
+    return hour + ":" + min + ":" + sec;
+};
+
+// gap 만큼 더하거나 뺀 시간을 리턴
+function get_gap_time(origin, gap){
+	var origin_date = new Date(origin);
+	var ret = origin_date.getTime() + gap;
+	var return_date = new Date(ret);
+
+	return get_format_datetime(return_date);
+};
+
+// date 객체를 받아 YYYY-MM-DD 포맷팅
+function get_format_date(date){
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+};
+
+// date 객체를 받아 hh:mm:ss 포맷팅
+function get_format_time(date){
+    var hour = ("0" + date.getHours()).slice(-2);
+    var min = ("0" + date.getMinutes()).slice(-2);
+    var sec = ("0" + date.getSeconds()).slice(-2);
+
+    return hour + ":" + min + ":" + sec;
+};
+
+// date 객체를 받아 YYYY-MM-DD hh:mm:ss 포맷팅
+function get_format_datetime(date){
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+	var hour = ("0" + date.getHours()).slice(-2);
+    var min = ("0" + date.getMinutes()).slice(-2);
+    var sec = ("0" + date.getSeconds()).slice(-2);
+
+    return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+};
+
+// 월 일 시간 형태로 변경
+function get_korea_date(time){
+    var ret = time.substr(5, 2) + "월 " + time.substr(8, 2) + "일 " + time.substr(11, 5);
+    return ret;
+}
+
+// 쿠키 설정
+function set_cookie(name, val, time){
+	var date = new Date();
+	date.setTime(date.getTime() + time*24*60*60*1000);
+	document.cookie = name + '=' + val + ';expires=' + date.toUTCString() + ';path=/';
+};
+
+// 쿠키 가져오기
+function get_cookie(name){
+	var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	//var tt = value ? value[2] : null;
+	//alert("get_cookie => " + name + " : " + tt);
+	return value ? value[2] : null;
+};
+
+// 쿠키 삭제하기
+function del_cookie(name){
+	document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;path=/';
+};
+
 
