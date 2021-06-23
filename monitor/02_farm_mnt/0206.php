@@ -57,6 +57,10 @@ $action_combo_json = make_jqgrid_combo($action_query, "cName1");
 	</article>
 
 <?
+include_once("0206_modal.php");
+?>
+
+<?
 include_once("../inc/bottom.php");
 ?>
 
@@ -146,8 +150,11 @@ include_once("../inc/bottom.php");
 				},
 				{label: "pk", 							name: "pk",				hidden:true },
 			],
-			onSelectRow: function(id){		  },
-			loadComplete:function(data){		}
+			onSelectRow: function(id){	},
+			loadComplete:function(data){	},
+			ondblClickRow:function(id){
+				$("#modal_confirm").show();
+			}
 		});
 
 		$('#jqgrid').navGrid('#jqgrid_pager',
