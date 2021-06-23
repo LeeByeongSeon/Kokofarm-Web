@@ -24,7 +24,7 @@ $action_combo_json = make_jqgrid_combo($action_query, "cName1");
 ?>
 
 <!--결함 및 A/S 관리-->
-	<article class="col-xl-12 no-padding">
+	<article class="col-xl-10 float-right">
 		<div class="jarviswidget jarviswidget-color-orange-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
@@ -36,6 +36,7 @@ $action_combo_json = make_jqgrid_combo($action_query, "cName1");
 
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
+						<?=$action_combo?>&nbsp;&nbsp;
 						<?=$write_combo?>&nbsp;&nbsp;
 						<?=$defect_combo?>&nbsp;&nbsp;
 						<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;~&nbsp;
@@ -63,12 +64,19 @@ include_once("../inc/bottom.php");
 <script language="javascript">
 	$(document).ready(function(){
 		//Date Picker 선언
-		$('#sDate').datepicker({ format: "yyyy-mm-dd",language: "kr",autoclose: true,});
-		$('#eDate').datepicker({ format: "yyyy-mm-dd",language: "kr",autoclose: true,});
+		$("#search_form [name=search_sdate]").datepicker({ format: "yyyy-mm-dd", language: "kr", autoclose: true});
+		$("#search_form [name=search_edate]").datepicker({ format: "yyyy-mm-dd", language: "kr", autoclose: true});
 
 		get_grid_data();
 
+		call_tree_view("", act_grid_data, "all");
+		set_tree_search(act_grid_data, "all");
+
 	});
+
+	// 검색부 키 제한
+	$("#search_form [name=search_sdate]").on("keyup", function() { $(this).val(""); });
+	$("#search_form [name=search_edate]").on("keyup", function() { $(this).val(""); });
 
 	function get_grid_data(){
 		$("#jqgrid").jqGrid({
@@ -80,26 +88,30 @@ include_once("../inc/bottom.php");
 			mtype:'post',
 			sortorder:"asc",
 			datatype:"json",
-			rowNum:15,
+			rowNum:16,
 			pager:"#jqgrid_pager",
 			viewrecords:true,
 			sortname:"pk",
 			rownumbers:true,
-			height:570,
+			height:525,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "작성일",						name: "dmDate",			align:'center', 	},
+				{label: "발생일",						name: "dmStartDate",	align:'center',		editable:true, editrules:{ required: false} ,
+					formoptions:{label:"발생일", rowpos:4}, 
+					editoptions:{defaultValue:get_now_datetime}
+				},
+				{label: "작성일",						name: "dmDate",			hidden:true, 	},
 				{label: "농장ID",						name: "dmFarmid",		hidden:true,		editable:true, editrules:{ required: true, edithidden: true},
-					editoptions : {size:10, maxlength:15}, formoptions:{label:"농장", rowpos:1, colpos:1}
+					editoptions : {size:10, maxlength:15}, formoptions:{label:"농장ID", rowpos:1, colpos:1}
 				},
 				{label: "동ID",							name: "dmDongid",		hidden:true,		editable:true, editrules:{ required: true, edithidden: true}, 
-					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}, formoptions:{label:"동", rowpos:1, colpos:2, align:"center"}
+					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}, formoptions:{label:"동ID", rowpos:1, colpos:2}
 				},
 				{label: "농장명",						name: "fdName",			align:"center",		},
 				{label: "조치상태",						name: "dmStatus",		align:'center',		editable:true, editrules:{ required: true},
 					edittype:'select', editoptions : {value:<?=$action_combo_json?>}, formoptions:{label:"조치상태", rowpos:2, colpos:1}
 				},
-				{label: "담당자",						name: "dmActor",		align:'center',		editable:true, editrules:{ required: false},
+				{label: "담당자",						name: "dmActor",		hidden:true,		editable:true, editrules:{ required: false},
 					formoptions:{label:"담당자", rowpos:2, colpos:2}
 				},
 				{label: "작성 구분",					name: "dmWrite",		align:'center',		editable:true, editrules:{ required: true},
@@ -108,40 +120,22 @@ include_once("../inc/bottom.php");
 				{label: "결함 구분",					name: "dmDefect",		align:'center',		editable:true, editrules:{ required: false},
 					edittype:'select', editoptions:{value:<?=$defect_combo_json ?>}, formoptions:{label:"결함 구분", rowpos:3, colpos:2}
 				},
-				{label: "발생일",						name: "dmStartDate",	align:'center',		editable:true, editrules:{ required: false} ,
-					formoptions:{label:"발생일", rowpos:4, colpos:1}, 
-					editoptions:{dataInit:function(e){$(e).datepicker({dateFormat:'yyyy-mm-dd', language:'kr'});}, 
-									defaultValue: function(){ 
-													var currentTime = new Date(); 
-													var month = parseInt(currentTime.getMonth() + 1); 
-														month = month <= 9 ? "0" + month : month; 
-													var day = currentTime.getDate(); 
-														day = day <= 9 ? "0" + day : day; 
-													var year = currentTime.getFullYear(); 
-													
-												 return year + "-" + month + "-" + day;
-												}
-								}
-				},
-				{label: "발생시간",						name: "dmStartDate",	align:'center',		editable:true, editrules:{ required: false},
-					formoptions:{label:"발생시간", rowpos:4, colpos:2}
-				},
 				{label: "발생 장치",	name: "dmDevice",		align:'center',		editable:true, editrules:{ required: false},
 					formoptions:{label:"발생 장치", rowpos:5, colpos:1}
 				},
 				{label: "버전(제품)",					name: "dmDeviceVer",	align:'center',		editable:true, editrules:{ required: false},
 					formoptions:{label:"버전(제품)", rowpos:5, colpos:2}
 				},
-				{label: "문제점(현상)",					name: "dmProblem",		align:'center',		editable:true, editrules:{ required: false},
+				{label: "문제점(현상)",					name: "dmProblem",		hidden:true,		editable:true, editrules:{ required: false, edithidden: true},
 					edittype:'textarea', editoptions : { maxlength:1000, rows :2}, formoptions:{label:"문제점(현상)", rowpos:6}
 				},
-				{label: "원인(추정)",					name: "dmCause",		align:'center',		editable:true, editrules:{ required: false},
+				{label: "원인(추정)",					name: "dmCause",		hidden:true,		editable:true, editrules:{ required: false, edithidden: true},
 					edittype:'textarea', editoptions : { maxlength:1000, rows :2}, formoptions:{label:"원인(추정)", rowpos:7}
 				},
-				{label: "조치내용",						name: "dmAction",		align:'center',		editable:true, editrules:{ required: false},
+				{label: "조치내용",						name: "dmAction",		hidden:true,		editable:true, editrules:{ required: false, edithidden: true},
 					edittype:'textarea', editoptions : { maxlength:1000, rows :2}, formoptions:{label:"조치내용", rowpos:8}
 				},
-				{label: "기타",							name: "dmOthers",		align:'center',		editable:true, editrules:{ required: false},
+				{label: "기타",							name: "dmOthers",		hidden:true,		editable:true, editrules:{ required: false, edithidden: true},
 					formoptions:{label:"기타", rowpos:9}
 				},
 				{label: "pk", 							name: "pk",				hidden:true },
@@ -160,30 +154,44 @@ include_once("../inc/bottom.php");
 
 				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText},
 				beforeShowForm:function(){ // colspan="3" 추가해서 폼 맞춤
-					var $tr1 = $("#tr_dmProblem").children("td.DataTD");
-					$tr1.attr("colspan","3");
-					var $tr2 = $("#tr_dmCause").children("td.DataTD");
-					$tr2.attr("colspan","3");
-					var $tr3 = $("#tr_dmAction").children("td.DataTD");
-					$tr3.attr("colspan","3");
-					var $tr4 = $("#tr_dmOthers").children("td.DataTD");
-					$tr4.attr("colspan","3");
+					$("#tr_dmStartDate").children("td.DataTD").attr("colspan","3")
+					$("#tr_dmProblem").children("td.DataTD").attr("colspan","3")
+					$("#tr_dmCause").children("td.DataTD").attr("colspan","3");
+					$("#tr_dmAction").children("td.DataTD").attr("colspan","3");
+					$("#tr_dmOthers").children("td.DataTD").attr("colspan","3");
 				}
 			},
 			{	
 				beforeInitData:function(){
 					$("#jqgrid").setColProp('dmDongid', {editoptions:{readonly:false}} );
 
+					if(selected_id == ""){
+						popup_alert("농장 미선택", "농장을 먼저 선택해주세요");
+						return false;
+					}
+
+					var keys = selected_id.split("|");
+					
+					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
+
+						case 1:		//농장만 선택
+							$("#jqgrid").setColProp('dmFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							break;
+
+						case 2:		//동까지 선택
+							$("#jqgrid").setColProp('dmFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
+							$("#jqgrid").setColProp('dmDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
+							
+							break;
+					}
+
 				},addCaption:"자료추가", closeAfterAdd: true, recreateForm: true, errorTextFormat:function (data) {return 'Error: ' + data.responseText},
 				beforeShowForm:function(){
-					var $tr1 = $("#tr_dmProblem").children("td.DataTD");
-					$tr1.attr("colspan","3");
-					var $tr2 = $("#tr_dmCause").children("td.DataTD");
-					$tr2.attr("colspan","3");
-					var $tr3 = $("#tr_dmAction").children("td.DataTD");
-					$tr3.attr("colspan","3");
-					var $tr4 = $("#tr_dmOthers").children("td.DataTD");
-					$tr4.attr("colspan","3");
+					$("#tr_dmStartDate").children("td.DataTD").attr("colspan","3")
+					$("#tr_dmProblem").children("td.DataTD").attr("colspan","3")
+					$("#tr_dmCause").children("td.DataTD").attr("colspan","3");
+					$("#tr_dmAction").children("td.DataTD").attr("colspan","3");
+					$("#tr_dmOthers").children("td.DataTD").attr("colspan","3");
 				}
 			},
 			{	
@@ -198,5 +206,22 @@ include_once("../inc/bottom.php");
         $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
 		$("#jqgrid").jqGrid('excelExport', {url:'0502_action.php'});
     });
+
+	// 트리뷰 버튼 클릭시 리로드 이벤트
+	function act_grid_data(action){
+
+		let search_map = {};
+		$.each($("#search_form").serializeArray(), function(){ 
+			search_map[this.name] = this.value;
+		});
+		search_data = JSON.stringify(search_map);
+
+		switch(action){
+			default:
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+				
+		}
+	};
 
 </script>

@@ -250,7 +250,11 @@ param
 - msg : 모달에 표시될 내용
 - wokr : 확인/취소 버튼 클릭 시 실행될 함수
 */
-function popup_confirm(title, msg, work){
+function popup_confirm(title, msg, work, ok_msg = "확인", cancle_msg = "취소"){
+
+    $("#modal_confirm_ok").html(ok_msg);					//modal title
+    $("#modal_confirm_cancle").html(cancle_msg);					//modal title
+
 	$("#modal_confirm_title").html(title);					//modal title
 	$("#modal_confirm_body").html("<p>" + msg + "</p>");		//modal 내용
 	$("#modal_confirm").modal('show');						//modal open

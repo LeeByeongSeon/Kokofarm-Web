@@ -22,9 +22,9 @@ switch($oper){
 			$select = $_REQUEST["select"];
 			$select_ids = explode("|", $select);
 			
-			$append_query = "AND rcFarmid = \"" . $select_ids[0] . "\"";
+			$append_query = "AND dmFarmid = \"" . $select_ids[0] . "\"";
 
-			$append_query = isset($select_ids[1]) ? $append_query . " AND rcDongid = \"" . $select_ids[1] . "\"" : $append_query;
+			$append_query = isset($select_ids[1]) ? $append_query . " AND dmDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
 		//jqgrid 출력

@@ -97,7 +97,7 @@ include_once("../inc/bottom.php");
 			viewrecords:true,
 			sortname:"pk",
 			rownumbers:true,
-			height:530,
+			height:525,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "요청시간", 		name: "rcRequestDate",	align:'center', width:"110%"},
@@ -200,7 +200,7 @@ include_once("../inc/bottom.php");
 								}
 							}
 						});
-					});
+					}, "승인", "거절");
 				}
 				//show_data_modal(data_id);
                 //$("#del_jqGridSlave").click();
