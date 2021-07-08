@@ -256,7 +256,7 @@ textarea.form-control {
   background-color: #3276b1; }
 
 .show > .dropdown-menu {
-  animation: flipInX 0.4s both; }
+  animation: flipInX 0.4s none; }/* both 대신 none 넣어봄 이상있을 시 원복*/
 
 .dropdown-menu-right {
   left: auto !important;
@@ -371,7 +371,7 @@ textarea.form-control {
 .badge {
   color: #fff;
   padding: 0.23077rem 0.53846rem;
-  border-radius: 0.76923rem;
+  /*border-radius: 0.76923rem;*/
   font-size: 0.92308rem;
   min-width: 10px; }
 
@@ -2180,7 +2180,7 @@ article.sortable-grid {
     .jarviswidget > header .widget-icon + h2 {
       padding-left: 20px; }
   .jarviswidget > header .widget-header {
-    max-width: 50%;
+    max-width: 80%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
@@ -7222,7 +7222,7 @@ hr.simple {
     line-height: normal;
     width: 27px;
     position: absolute;
-    right: -21px;
+    right: 5%;
     font-size: 1.53846rem; }
   .sa-aside-left .badge {
     font-weight: 700;
@@ -7694,7 +7694,7 @@ hr.simple {
     overflow: hidden; }
   .sa-fixed-navigation:not(.minified) .sa-left-menu {
     position: absolute;
-    left: 0;
+    right: 0;
     top: 40px;
     bottom: -17px;
     overflow: scroll;
@@ -7714,19 +7714,19 @@ hr.simple {
   z-index: 9; }
 
 .sa-hidden-menu .sa-aside-left {
-  transition: left 0.2s ease;
+  transition: right 0.2s ease;
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   bottom: 0;
   z-index: 1;
   padding-top: 49px;
-  left: -16.15385rem; }
+  right: -16.15385rem; }
   .sa-hidden-menu .sa-aside-left:hover {
-    left: 0; }
+    right: 0; }
 
 .sa-hidden-menu .sa-content-wrapper {
-  margin-left: 0.76923rem; }
+  margin-right: 0.76923rem; }
 
 .sa-fixed-header {
   padding-top: 3.76923rem; }
@@ -7762,19 +7762,21 @@ hr.simple {
 
 @media (max-width: 979px) {
   .sa-aside-left {
+    display: none;
     transition: none;
     position: absolute;
-    left: 0;
+    right: 0;
     bottom: 0;
     z-index: 1;
     padding-top: 49px;
-    left: -16.92308rem; }
+    right: -16.92308rem; }
   .sa-hidden-menu .sa-aside-left {
+    display: block;
     transition: none;
-    position: relative;
-    left: 0;
-    padding-top: 0;
-    left: 0 !important; }
+    position: absolute;
+    right: 0;
+    /*padding-top: 0;*/
+    right: 0 !important; }
   .sa-fixed-ribbon {
     padding-top: 3.76923rem; }
     .sa-fixed-ribbon .sa-content {
@@ -10383,11 +10385,12 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
     color: #2196F3 !important; }
   .smart-style-6 .sa-aside-left .sa-left-menu a {
     color: #868686;
-    font-size: 1rem; }
+    font-size: 1.3rem; }
   .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a {
-    color: #568a89; }
+    color: #568a89;
+    font-weight: 700; }
     .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a:before {
-      color: #A0F; }
+      color: #455a64; }
   .smart-style-6 .sa-aside-left .sa-left-menu > li > a {
     text-transform: uppercase;
     padding-top: 12px;

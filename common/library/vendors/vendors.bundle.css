@@ -4758,7 +4758,8 @@ input[type="button"].btn-block {
   white-space: nowrap;
   background-color: #e9ecef;
   border: 1px solid #ced4da;
-  border-radius: 0.25rem;
+  justify-content: center;
+  /*border-radius: 0.25rem;*/
 }
 
 .input-group-text input[type="radio"],
@@ -5285,7 +5286,7 @@ input[type="button"].btn-block {
 }
 
 .navbar-nav .dropdown-menu {
-  position: static;
+  /*position: static;*/
   float: none;
 }
 
@@ -8619,7 +8620,7 @@ button.bg-dark:focus {
 }
 
 .shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.15) !important;
 }
 
 .shadow-lg {
