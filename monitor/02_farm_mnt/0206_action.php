@@ -27,9 +27,20 @@ switch($oper){
 			$append_query = isset($select_ids[1]) ? $append_query . " AND dmDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
+		// 검색창 입력
+		if(isset($_REQUEST["search_data"])){
+			$search_data = $_REQUEST["search_data"];
+			$search_json = json_decode(stripslashes($search_data), true);
+
+			$append_query .= $search_json["search_status"] != "" ? " AND dmStatus = \"" .(explode("(", $search_json["search_status"])[0]). "\"" : "";
+			$append_query .= $search_json["search_write"] != "" ? " AND dmWrite = \"" .(explode("(", $search_json["search_write"])[0]). "\"" : "";
+			$append_query .= $search_json["search_defect"] != "" ? " AND dmDefect = \"" .(explode("(", $search_json["search_defect"])[0]). "\"" : "";
+			$append_query .= " AND (LEFT(dmStartDate, 10) BETWEEN \"" .($search_json["search_sdate"] != "" ? $search_json["search_sdate"] : "2000-01-01"). "\" AND \"" .($search_json["search_edate"] != "" ? $search_json["search_edate"] : date("Y-m-d")). "\" )";
+		}
+
 		//jqgrid 출력
 		$select_query = "SELECT dm.*, fd.fdName, CONCAT(dmFarmid, '|', dmDongid, '|', dmDate) AS pk FROM defect_manage AS dm
-						JOIN farm_detail AS fd ON fd.fdFarmid = dm.dmFarmid AND fd.fdDongid = dm.dmDongid " .$append_query;
+						JOIN farm_detail AS fd ON fd.fdFarmid = dm.dmFarmid AND fd.fdDongid = dm.dmDongid WHERE dmFarmid = dmFarmid " .$append_query;
 
 		$response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
 		echo json_encode($response);
@@ -40,7 +51,7 @@ switch($oper){
 		//farm_detail을 확인 후 존재하면 insert
 		$farmID = check_str($_REQUEST["dmFarmid"]);
 		$dongID = sprintf('%02d', check_str($_REQUEST["dmDongid"]));
-		$dateID = check_str($_REQUEST["dmDate"]);
+		$dm_date = check_str($_REQUEST["dmDate"]);
 
 		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\";";
 
@@ -49,16 +60,19 @@ switch($oper){
 		if(get_select_count($check_query) > 0){
 			$insert_map["dmFarmid"]    = $farmID;
 			$insert_map["dmDongid"]    = $dongID;
-			$insert_map["dmDate"]      = $dateID;
+			$insert_map["dmDate"]      = $dm_date;
 			$insert_map["dmStatus"]    = check_str($_REQUEST["dmStatus"]);
 			$insert_map["dmWrite"]     = check_str($_REQUEST["dmWrite"]);
 			$insert_map["dmDefect"]    = check_str($_REQUEST["dmDefect"]);
+			$insert_map["dmDevice"]    = check_str($_REQUEST["dmDevice"]);
 			$insert_map["dmDeviceVer"] = check_str($_REQUEST["dmDeviceVer"]);
 			$insert_map["dmProblem"]   = check_str($_REQUEST["dmProblem"]);
 			$insert_map["dmCause"]     = check_str($_REQUEST["dmCause"]);
 			$insert_map["dmAction"]    = check_str($_REQUEST["dmAction"]);
 			$insert_map["dmOthers"]    = check_str($_REQUEST["dmOthers"]);
 			$insert_map["dmActor"]     = check_str($_REQUEST["dmActor"]);
+			$insert_map["dmStartDate"]   = check_str($_REQUEST["dmStartDate"]);
+			$insert_map["dmEndDate"]     = check_str($_REQUEST["dmEndDate"]);
 
 			run_sql_insert("defect_manage", $insert_map);
 		}
@@ -78,6 +92,7 @@ switch($oper){
         $update_map["dmStatus"]    = check_str($_REQUEST["dmStatus"]);
         $update_map["dmWrite"]     = check_str($_REQUEST["dmWrite"]);
         $update_map["dmDefect"]    = check_str($_REQUEST["dmDefect"]);
+		$insert_map["dmDevice"]    = check_str($_REQUEST["dmDevice"]);
         $update_map["dmDeviceVer"] = check_str($_REQUEST["dmDeviceVer"]);
         $update_map["dmProblem"]   = check_str($_REQUEST["dmProblem"]);
         $update_map["dmCause"]     = check_str($_REQUEST["dmCause"]);
@@ -130,13 +145,25 @@ switch($oper){
 			$append_query = isset($select_ids[1]) ? $append_query . " AND dmDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
+		// 검색창 입력
+		if(isset($_REQUEST["search_data"])){
+			$search_data = $_REQUEST["search_data"];
+			$search_json = json_decode(stripslashes($search_data), true);
+
+			$append_query .= $search_json["search_status"] != "" ? " AND dmStatus = \"" .(explode("(", $search_json["search_status"])[0]). "\"" : "";
+			$append_query .= $search_json["search_write"] != "" ? " AND dmWrite = \"" .(explode("(", $search_json["search_write"])[0]). "\"" : "";
+			$append_query .= $search_json["search_defect"] != "" ? " AND dmDefect = \"" .(explode("(", $search_json["search_defect"])[0]). "\"" : "";
+			$append_query .= " AND (LEFT(dmStartDate, 10) BETWEEN \"" .($search_json["search_sdate"] != "" ? $search_json["search_sdate"] : "2000-01-01"). "\" AND \"" .($search_json["search_edate"] != "" ? $search_json["search_edate"] : date("Y-m-d")). "\" )";
+		}
+
 		//jqgrid 출력
-		$select_query = "SELECT *, CONCAT(dmFarmid, '|', dmDongid, '|', dmDate) AS pk FROM defect_manage
-                        WHERE dmFarmid = dmFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
+		$select_query = "SELECT dm.*, fd.fdName, CONCAT(dmFarmid, '|', dmDongid, '|', dmDate) AS pk FROM defect_manage AS dm
+						JOIN farm_detail AS fd ON fd.fdFarmid = dm.dmFarmid AND fd.fdDongid = dm.dmDongid WHERE dmFarmid = dmFarmid " .$append_query. " ORDER BY " .$sidx. " " .$sord;
 
 		$field_data = array(
 			/*농가 정보*/
 			array("번호", "No", "INT", "center"),
+			array("농장명", "fdName", "STR", "center"),
 			array("작성일", "dmDate", "STR", "center"),
 			array("조치상태", "dmStatus", "STR", "center"),
 			array("농장ID", "dmFarmid", "STR", "center"),

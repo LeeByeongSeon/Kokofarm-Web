@@ -190,6 +190,28 @@ function click_tree_first(work){
     work(selected_id);
 };
 
+/* 트리뷰 특정 id 아이템 강제 선택 함수
+param
+- work : 실행할 함수
+- pk : 선택할 농장 pk
+*/
+function click_tree_by_id(work, pk){
+
+    let token = pk.split("|");
+    let farmID = token[0];
+    //let dongID = token.length > 1 ? token[1] : "01";
+
+    if(!hide_dong){
+        $("#" + farmID).parent("li").children("ul.tree-group").toggle(400);
+        $("#" + farmID).children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+    }
+
+    selected_id = pk;
+    set_selected_highlight("", selected_id);
+
+    work(selected_id);
+}
+
 
 /* 트리뷰 검색 이벤트 세팅
 param
@@ -441,3 +463,188 @@ function del_cookie(name){
 };
 
 
+// am chart 관련---------------------------------------------------------------------
+/* 차트 형태 별 그래프 데이터 리턴
+param
+- chart_id : 화면에 출력할 div tag의 ID값
+- chart_data : josn배열
+- chart_style : 차트모양
+- is_zoom : Zoom 출력 여부
+- is_label : Label 출력 여부
+- font_size : 차트의 출력되는 font size
+*/
+function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label, font_size){
+    if(chart_data.length <= 0){ return false; }
+
+    let graph_json = [];
+    let category = "";
+    let graph_cnt = -1;
+    let graph_color = ["#3366CC","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#DC3912"];
+    let circle_lastkey = "";
+
+    for(key in chart_data[0]){
+        graph_cnt++;
+        if(graph_cnt == 0) { 
+            category = key; 
+        }
+        else{
+            var graph_obj = {};
+            graph_obj["title"] = key; 
+			graph_obj["valueField"] = key;
+			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
+			graph_obj["bullet"] = "round";						/*꼭지점*/
+			graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+			graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
+
+            if(is_label === "Y"){
+				graph_obj["labelText"]="[[value]]";					/*값 출력*/
+			}
+
+			switch(chart_style){
+				case "라인차트":
+					graph_obj["type"] = "smoothedLine";					/*차트모양*/
+					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					break;
+				case "영역차트":
+					graph_obj["type"] = "smoothedLine";					/*smoothedLine*/
+					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["fillAlphas"] = 0.2;
+					break;
+				default:
+					graph_obj["type"] = "column";							/*차트모양*/
+					graph_obj["lineAlpha"] = 0.2;
+					graph_obj["fillAlphas"] = 0.9;
+
+					break;
+			}
+			graph_json.push(graph_obj);
+        }
+
+        circle_lastkey = key;
+    }
+
+    //차트옵션 정하기
+	let chart_option = {"type": "serial", "theme": "light", "language":"ko", "marginRight":20, "fontSize":font_size,
+                        "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
+                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
+                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
+                        "categoryAxis":{ "minPeriod": "hh", "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+	};
+
+    switch(chart_style){
+		case "가로-Bar":
+			chart_option["rotate"] = true;
+			break;
+		case "세로-Bar":
+			chart_option["rotate"] = false;
+			break;
+		case "가로-누적":
+			chart_option["rotate"] = true;
+			chart_option["valueAxes"] = [{"stackType": "regular", "axisAlpha": 0.5, "gridAlpha": 0}]; /*누적형식(regular:일반,100%:100%누적)*/
+			break;
+		case "세로-누적":
+			chart_option["rotate"] = false;
+			chart_option["valueAxes"] = [{"stackType": "regular", "axisAlpha": 0.5, "gridAlpha": 0}]; /*누적형식(regular:일반,100%:100%누적)*/
+			break;
+		case "원형차트":
+			chart_option = {};
+			chart_option = {
+				"type":"pie", "theme":"light", "startDuration":0.1, "fontSize":font_size,
+				"dataProvider": chart_data, "valueField": circle_lastkey, "titleField": category,
+				"outlineAlpha": 0.4,
+				"innerRadius": 80,	 /*내부 Holl*/
+				"pullOutRadius": 50, /*Pie 크기조정==>숫자가 작을수록 Pie는 커짐*/
+				"legend":{"bulletType":"round", "position":"right", "align":"center", "valueWidth":0}, /*범례*/
+				"depth3D": 10,		 /*3D효과 각도조절*/
+				"balloonText": "<font style='font-size:14px'><b>[[title]]</b><br>[[value]] ([[percents]]%)</font>",
+				"allLabels": [{"y": "48%", "align": "center", "size": 25, "bold": true, "text": circle_lastkey, "color": "#555"}], /*Pie안쪽의 Text*/
+			};
+			break;
+	}
+
+	if(is_zoom === "Y"){
+		chart_option["chartScrollbar"] = {"autoGridCount": true, "scrollbarHeight": 30};
+	}
+
+    //차트 그리기
+	let chart = AmCharts.makeChart(chart_id, chart_option);
+	chart.addListener("dataUpdated", zoom_chart(chart));
+};
+
+// am chart 관련---------------------------------------------------------------------
+/* 막대모양 차트 그리기
+param
+- chart_id : 화면에 출력할 div tag의 ID값
+- chart_data : josn배열
+- is_zoom : Zoom 출력 여부
+- is_label : Label 출력 여부
+- font_size : 차트의 출력되는 font size
+*/
+function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size){
+    if(chart_data.length <= 0){ return false; }
+
+    let graph_json = [];
+    let category = "";
+    let graph_cnt = -1;
+    let graph_color = ["#3366CC","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#DC3912"];
+
+    for(key in chart_data[0]){
+        graph_cnt++;
+        if(graph_cnt == 0) { 
+            category = key; 
+        }
+        else{
+            var graph_obj = {};
+            graph_obj["title"] = key; 
+			graph_obj["valueField"] = key;
+			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
+
+            if(is_label === "Y"){
+				graph_obj["labelText"]="[[value]]";					/*값 출력*/
+                graph_obj["bullet"] = "round";						/*꼭지점*/
+                graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+                graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
+			}
+
+			switch(graph_cnt){
+				case 1:
+					graph_obj["type"] = "column";						/*차트모양*/
+					graph_obj["lineColor"] = graph_color[1];			/*라인컬라*/
+					graph_obj["lineAlpha"] = 0.2;
+					graph_obj["fillAlphas"] = 0.9;
+					break;
+				case 2:
+					graph_obj["type"] = "smoothedLine";				/*차트모양*/
+					graph_obj["lineColor"] = graph_color[3];			/*라인컬라*/
+					graph_obj["lineThickness"] = 3;					/*라인굵기*/
+					graph_obj["bulletBorderThickness"] = 3;
+					break;
+			}
+			graph_json.push(graph_obj);
+        }
+
+        circle_lastkey = key;
+    }
+
+    //차트옵션 정하기
+	let chart_option = {"type": "serial", "theme": "light", "language":"ko", "marginRight":20, "fontSize":font_size,
+                        "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
+                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
+                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
+                        //"categoryAxis":{ "minPeriod": "hh", "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+	};
+
+	if(is_zoom === "Y"){
+		chart_option["chartScrollbar"] = {"autoGridCount": true, "scrollbarHeight": 30};
+	}
+
+    //차트 그리기
+	let chart = AmCharts.makeChart(chart_id, chart_option);
+	chart.addListener("dataUpdated", zoom_chart(chart));
+};
+
+function zoom_chart(chart) {
+	let len = chart.chartData.length;
+    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+    chart.zoomToIndexes(len-90, len-1);
+};

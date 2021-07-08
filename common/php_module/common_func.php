@@ -1,5 +1,7 @@
 <?
 
+session_start();
+
 include_once("../../common/php_module/mysql_conn.php");   	//Mysql
 include_once("../../common/php_module/mongo_conn.php");	//mongo
 
@@ -84,6 +86,71 @@ function get_jqgrid_data($query, $page, $limit, $sidx, $sord){
 	foreach($result as $row){
 		$ret["print_data"][] = $row;
 	}
+
+	return $ret;
+}
+
+/* 구간별 평균중량 데이터 가져오기
+param
+- comein_code : 입출하 코드
+- term : 1시간, 1일 중 어떤 간격으로 가져올지
+- type : 출력할 타입 지정 - 하루의 데이터인지 전체 입추구간 데이터인지
+return
+- ret : 평균중량 데이터
+*/
+function get_avg_history($comein_code, $term, $type){
+
+	$ret = array();
+
+	$now = date("Y-m-d H:i:s");
+
+	$term_query = $term == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
+	$type_query = "";
+
+	switch($type){
+		case "all":
+			$type_query = " AND (aw.awDate BETWEEN cm.cmIndate AND 
+							(CASE WHEN (cm.cmOutdate is null) THEN NOW() 
+								WHEN (cm.cmOutdate = '2000-01-01 00:00:00') THEN NOW() 
+							ELSE cm.cmOutdate END))";
+			break;
+		
+		case "day":
+			$type_query = " AND (aw.awDate BETWEEN \"" . substr($now, 0, 10) . "00:00:00\" AND \"" . substr($now, 0, 10) . "23:59:59\")";
+			break;
+	}
+
+	$select_query = "SELECT cm.cmCode, DATEDIFF(aw.awDate, cm.cmIndate) + 1 AS days, aw.*, c.cName3 AS refWeight FROM comein_master AS cm 
+                        JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " . $term_query . $type_query ." 
+                        LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
+                        WHERE cm.cmCode = \"" .$comein_code. "\" ORDER BY aw.awDate ASC";
+	
+	$select_data = get_select_data($select_query);
+
+	$chart = array();		// 차트에 사용할 데이터
+	$table = array();		// 테이블에 사용할 데이터
+
+	foreach($select_data as $val){
+		$remark = $type == "all" ? "일령" : "시간";
+
+		$chart[] = array(
+			$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
+			$remark => $val["awDate"],
+			"평균중량" => sprintf('%0.1f', $val["awWeight"]),
+			"권고중량" => sprintf('%0.1f', $val["refWeight"])
+		);
+
+		$table[] = array(
+			"f1" => $val["awDate"],
+			"f2" => $val["days"],
+			"f3" => sprintf('%0.1f', $val["awWeight"]),
+			"f4" => sprintf('%0.1f', $val["refWeight"])
+		);
+	}
+
+	$ret["query"] = $select_query;
+	$ret["chart"] = $chart;
+	$ret["table"] = $table;
 
 	return $ret;
 }

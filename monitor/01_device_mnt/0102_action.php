@@ -41,31 +41,23 @@ switch($oper){
 
 	case "get_avg_weight":          //평균중량
 
-        $now = date("Y-m-d H:i:s");
+        //$now = date("Y-m-d H:i:s");
 
-        $term_query = $_REQUEST["term"] == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
+        //$term_query = $_REQUEST["term"] == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
 
-        $select_query = "SELECT cm.cmCode, aw.*, c.cName3 AS refWeight FROM comein_master AS cm 
-                        JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " .$term_query. "
-                        AND (awDate BETWEEN cm.cmIndate AND IFNULL(cm.cmOutdate, NOW()))
-                        LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
-                        WHERE cm.cmCode = \"" .$code. "\" ORDER BY aw.awDate DESC";
+        // $select_query = "SELECT cm.cmCode, aw.*, c.cName3 AS refWeight FROM comein_master AS cm 
+        //                 JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " .$term_query. "
+        //                 AND (awDate BETWEEN cm.cmIndate AND IFNULL(cm.cmOutdate, NOW()))
+        //                 LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
+        //                 WHERE cm.cmCode = \"" .$code. "\" ORDER BY aw.awDate DESC";
+
+        $avg_history = get_avg_history($code, $_REQUEST["term"], "all");
 
         switch($_REQUEST["comm"]){
             case "view":
-                $select_data = get_select_data($select_query);
+                $response["avg_weight_table"] = $avg_history["table"];
+                $response["avg_weight_chart"] = $avg_history["chart"];
 
-                $avg_weight_data = array();
-                foreach($select_data as $row){
-                    $avg_weight_data[] = array(
-                        'f1'  => $row["awDate"],							
-                        'f2'  => $row["awDays"],									
-                        'f3'  => $row["awWeight"],								
-                        'f4'  => $row["refWeight"] == "" ? "-" : $row["refWeight"],									
-                    );
-                }
-
-                $response["avg_weight_data"] = $avg_weight_data;
                 echo json_encode($response);
                 break;
             
@@ -95,7 +87,7 @@ switch($oper){
                 );
 
                 //echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
-                convert_excel(get_select_data($select_query), $field_data, $title, $code);
+                convert_excel(get_select_data($avg_history["query"]), $field_data, $title, $code);
                 break;
         }
 

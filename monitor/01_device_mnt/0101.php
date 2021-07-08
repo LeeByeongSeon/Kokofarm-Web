@@ -59,6 +59,8 @@ include_once("../inc/bottom.php");
 			jsonReader:{repeatitems:false, id:'cmCode', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "입출하코드", 		name: "cmCode",				hidden:true 	},
+				{label: "농장ID", 			name: "cmFarmid",			hidden:true 	},
+				{label: "동ID", 			name: "cmDongid",			hidden:true 	},
 				{label: "농장명",			name: "fdName",				align:'left',		},
 				{label: "일령",				name: "days",				align:'center',		width:"50%"},
 				{label: "축종",				name: "cmIntype",			align:'center',		width:"50%"},
@@ -76,7 +78,15 @@ include_once("../inc/bottom.php");
 				{label: "외기환경",		 	name: "soSensorDate",		align:'center',		},
 			],
 			onSelectRow: function(id){		  },
-			loadComplete:function(data){		}
+			loadComplete:function(data){		},
+			ondblClickRow:function(id){
+				let row = $(this).jqGrid('getRowData', id);
+
+				let farmID = row.cmFarmid;
+				let dongID = row.cmDongid;
+
+				window.location = "0102.php?farmID=" + farmID + "&dongID=" + dongID; 
+			}
 		});
 
 		$('#jqgrid').navGrid('#jqgrid_pager',

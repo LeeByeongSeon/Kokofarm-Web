@@ -35,7 +35,7 @@ switch($oper){
 		break;
 
 	case "add":
-		//farm_detail을 확인 후 존재하면 insert
+		//farm을 확인 후 존재하면 insert
 		$farmID = check_str($_REQUEST["fdFarmid"]);
 		$dongID = sprintf('%02d', check_str($_REQUEST["fdDongid"]));
 
@@ -54,12 +54,34 @@ switch($oper){
 
 			run_sql_insert("farm_detail", $insert_map);
 
+			// 버퍼테이블 생성
 			$insert_map = array();
 			$insert_map["beFarmid"] = $farmID;
 			$insert_map["beDongid"] = $dongID;
 
 			run_sql_insert("buffer_sensor_status", $insert_map);
 			
+			// 디폴트로 저울 3개를 insert
+			$insert_map = array();
+			$now = date('Y-m-d H:i:s');
+			$insert_map["siFarmid"] = $farmID;
+			$insert_map["siDongid"] = $dongID;
+			$insert_map["siDate"] = $now;
+			for($i=1; $i<=3; $i++){
+				$insert_map["siCellid"] = sprintf('%02d', $i);
+				run_sql_insert("set_iot_cell", $insert_map);
+			}
+
+			// 디폴트로 카메라 1개 insert
+			$insert_map = array();
+			$insert_map["scFarmid"] = $farmID;
+			$insert_map["scDongid"] = $dongID;
+			$insert_map["scPort"] = "150" + $dongID;
+			$insert_map["scUrl"] = "/stw-cgi/video.cgi?msubmenu=snapshot&action=view&Resolution=640x480";
+			$insert_map["scId"] = "admin";
+			$insert_map["scPw"] = "kokofarm5561";
+			run_sql_insert("set_camera", $insert_map);
+
 		}
 		break;
 

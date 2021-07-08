@@ -40,7 +40,6 @@ switch($oper){
 		break;
 
 	case "add":
-		//farm_detail을 확인 후 존재하면 insert
 		$pk = check_str($_REQUEST["fID"]);
 
 		$insert_map = array();

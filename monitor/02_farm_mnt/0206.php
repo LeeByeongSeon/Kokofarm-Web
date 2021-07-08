@@ -6,6 +6,11 @@ include_once("../../common/php_module/common_func.php");
 // 동 선택 콤보박스
 $dong_combo_json = make_jqgrid_combo_num(32);
 
+// 조치상태 콤보박스
+$status_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"조치상태\"";
+$status_combo = make_combo_by_query($status_query, "search_status", "조치상태", "cName1");
+$status_combo_json = make_jqgrid_combo($status_query, "cName1");
+
 // 작성구분 콤보박스
 $write_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"작성구분\"";
 $write_combo = make_combo_by_query($write_query, "search_write", "작성구분", "cName1");
@@ -15,11 +20,6 @@ $write_combo_json = make_jqgrid_combo($write_query, "cName1");
 $defect_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"결함구분\"";
 $defect_combo = make_combo_by_query($defect_query, "search_defect", "결함구분", "cName1");
 $defect_combo_json = make_jqgrid_combo($defect_query, "cName1");
-
-// 조치상태 콤보박스
-$action_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"조치상태\"";
-$action_combo = make_combo_by_query($action_query, "search_action", "조치상태", "cName1");
-$action_combo_json = make_jqgrid_combo($action_query, "cName1");
 
 ?>
 
@@ -36,7 +36,7 @@ $action_combo_json = make_jqgrid_combo($action_query, "cName1");
 
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
-						<?=$action_combo?>&nbsp;&nbsp;
+						<?=$status_combo?>&nbsp;&nbsp;
 						<?=$write_combo?>&nbsp;&nbsp;
 						<?=$defect_combo?>&nbsp;&nbsp;
 						<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;~&nbsp;
@@ -113,7 +113,7 @@ include_once("../inc/bottom.php");
 				},
 				{label: "농장명",						name: "fdName",			align:"center",		},
 				{label: "조치상태",						name: "dmStatus",		align:'center',		editable:true, editrules:{ required: true},
-					edittype:'select', editoptions : {value:<?=$action_combo_json?>}, formoptions:{label:"조치상태", rowpos:2, colpos:1}
+					edittype:'select', editoptions : {value:<?=$status_combo_json?>}, formoptions:{label:"조치상태", rowpos:2, colpos:1}
 				},
 				{label: "담당자",						name: "dmActor",		hidden:true,		editable:true, editrules:{ required: false},
 					formoptions:{label:"담당자", rowpos:2, colpos:2}
@@ -147,7 +147,17 @@ include_once("../inc/bottom.php");
 			onSelectRow: function(id){	},
 			loadComplete:function(data){	},
 			ondblClickRow:function(id){
-				$("#modal_confirm").show();
+				let row = $(this).jqGrid('getRowData', id);
+
+				for(let key in row){
+					try {
+						document.getElementById(key).innerHTML = row[key];
+					} catch (error) {
+						
+					}
+				}
+
+				$("#modal_detail").modal('show');	
 			}
 		});
 
@@ -227,7 +237,27 @@ include_once("../inc/bottom.php");
 			default:
 				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
 				break;
-				
+			
+			case "search":
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "cancle":
+				//초기화
+				$("#search_form").each(function() {	this.reset();  });
+
+				//리로드
+				$.each($("#search_form").serializeArray(), function(){ 
+					search_map[this.name] = this.value; 
+				});
+				search_data = JSON.stringify(search_map);
+				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+				break;
+
+			case "excel":
+				$("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id, "search_data" : search_data}}); //POST 형식의 parameter 추가
+				$("#jqgrid").jqGrid('excelExport', {url:'0206_action.php'});
+				break;
 		}
 	};
 

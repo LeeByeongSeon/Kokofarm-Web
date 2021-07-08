@@ -1,10 +1,14 @@
 <?
 include_once("../inc/top.php");
-include_once("../../common/php_module/common_func.php");
 
 // 축종선택 콤보박스
 $query = "SELECT cName1 FROM codeinfo WHERE cGroup = \"생계구분\"";
 $type_combo = make_combo_by_query($query, "request_type", "", "cName1");
+
+$init_farm = isset($_REQUEST["farmID"]) ? $_REQUEST["farmID"] : "";
+$init_dong = isset($_REQUEST["dongID"]) ? $_REQUEST["dongID"] : "";
+
+$init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : ""; 
 
 ?>
 <!--농장정보 & 이슈사항-->
@@ -199,7 +203,7 @@ $type_combo = make_combo_by_query($query, "request_type", "", "cName1");
 			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량 (표)</h2>	
+						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량</h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto">
@@ -208,6 +212,9 @@ $type_combo = make_combo_by_query($query, "request_type", "", "cName1");
 									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('day')">일령별</button>
 									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('time')">시간별</button>
 							</div>&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="$('#avg_weight_table_div').toggle(400)">
+								<span class="fa fa-table"></span>&nbsp;&nbsp;표 출력
+							</button>&nbsp;&nbsp;
 							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg">
 								<span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀
 							</button>
@@ -217,16 +224,22 @@ $type_combo = make_combo_by_query($query, "request_type", "", "cName1");
 
 				<div class="widget-body">
 
-					<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
-						<thead>
-							<tr>
-								<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
-								<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
-								<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
-								<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
-							</tr>
-						</thead>
-					</table>
+					<div class="col-xl-12">
+						<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
+					</div>
+					
+					<div class="col-xl-12" id="avg_weight_table_div" style="display:none;">
+						<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+							<thead>
+								<tr>
+									<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
+									<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
+									<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
+									<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
 					
 				</div>
 						
@@ -580,6 +593,8 @@ include_once("../inc/bottom.php");
 	is_load["dev"] = false;
 	is_load["ext"] = false;
 
+	var init_id = "<?=$init_id?>";
+
 	$(document).ready(function(){
 
 		call_tree_view("", act_grid_data, "all");
@@ -600,7 +615,13 @@ include_once("../inc/bottom.php");
 	function load_data(select){
 		
 		if(select == ""){
-			click_tree_first(act_grid_data);
+			if(init_id == ""){
+				click_tree_first(act_grid_data);
+			}
+			else{
+				click_tree_by_id(act_grid_data, init_id);
+				init_id = "";
+			}
 			return;
 		}
 
@@ -711,7 +732,8 @@ include_once("../inc/bottom.php");
 			
 			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
-					$('#avg_weight_table').bootstrapTable('load', data.avg_weight_data); 
+					$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table); 
+					draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12);
 				}
 			});
 		}

@@ -1,4 +1,6 @@
 <?
+	include_once("../../common/php_module/common_func.php");
+
 	//메뉴 구성
 	$menu_struct = array(
 		//장치 현황
@@ -131,7 +133,7 @@
 	<script src="../../common/library/amchart/lang/ko.js" type="text/javascript"></script>
 
 	<!-- myDefined JS-->
-	<script src="../../common/library/my_define/my_define.js"></script>
+	<!-- <script src="../../common/library/my_define/my_define.js"></script> -->
 	<link rel="stylesheet" type="text/css" href="../../common/library/my_define/my_define.css">
 
 	<!--Template CSS-->
@@ -184,7 +186,7 @@
 
 					<div class="sa-logo-space d-table-cell h-100">
 						<div class="flex-row d-flex align-items-center h-100">
-							<a class="sa-logo-link" href="javascript:void(0)" title="KOKOFARM"><img alt="KOKOFARM" src="../images/logo.png" class="sa-logo"></a>
+							<a class="sa-logo-link" href="../01_device_mnt/0101.php" title="KOKOFARM"><img alt="KOKOFARM" src="../images/logo.png" class="sa-logo"></a>
 						</div>  
 					</div>
 

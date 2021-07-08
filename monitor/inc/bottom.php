@@ -37,6 +37,26 @@
 		</div><!--modal-dialog -->
 	</div><!--modal -->
 
+	<!--Modal Confirm-->
+	<div id="modal_confirm" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_confirm_title" class="modal-title float-right">Modal title</h4>
+                    <button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div id="modal_confirm_body" class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_confirm_ok">확인</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_confirm_cancle">취소</button>
+                </div>
+            </div><!--modal-content -->
+        </div><!--modal-dialog -->
+    </div><!--modal -->
+
+
 </body>
 </html>
 
@@ -49,3 +69,12 @@
 <!-- date & time picker-->
 <script src="../../common/library/bootstrap_datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.js" type="text/javascript"></script>
+
+
+<script language="javascript">
+	$(document).ready(function(){
+
+		
+	});
+
+</script>
