@@ -5,6 +5,43 @@ session_start();
 include_once("../../common/php_module/mysql_conn.php");   	//Mysql
 include_once("../../common/php_module/mongo_conn.php");	//mongo
 
+// set_iot_cell 데이터 삽입용
+// function cell_all(){
+// 	$query = "SELECT * FROM farm_detail";
+
+// 	$farm_arr = get_select_data($query);
+// 	foreach($farm_arr as $row){
+// 		$insert_map = array();
+// 		$insert_map["siFarmid"] = $row["fdFarmid"];
+// 		$insert_map["siDongid"] = $row["fdDongid"];
+
+// 		$now = date('Y-m-d H:i:s');
+// 		$insert_map["siDate"] = $now;
+// 		for($i=1; $i<=3; $i++){
+// 			$insert_map["siCellid"] = sprintf('%02d', $i);
+// 			run_sql_insert("set_iot_cell", $insert_map);
+// 		}
+// 	}
+// }
+
+function buffer_code(){
+	$query = "SELECT cmFarmid, cmDongid, MAX(cmCode) AS maxCode FROM comein_master GROUP BY cmFarmid, cmDongid";
+
+	$farm_arr = get_select_data($query);
+
+	foreach($farm_arr as $row){
+		$update_map = array();
+		$update_map["beComeinCode"] = $row["maxCode"];
+
+		$where = "beFarmid = '" . $row["cmFarmid"] . "' AND beDongid = '" . $row["cmDongid"] . "'";
+
+		run_sql_update("buffer_sensor_status", $update_map, $where);
+
+	}
+}
+
+
+
 // select 결과 데이터 반환
 function get_select_data($query){
     $ret = sql_conn::get_inst()->select($query);
