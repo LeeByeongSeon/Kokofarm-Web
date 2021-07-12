@@ -51,7 +51,7 @@ switch($oper){
 		//farm_detail을 확인 후 존재하면 insert
 		$farmID = check_str($_REQUEST["dmFarmid"]);
 		$dongID = sprintf('%02d', check_str($_REQUEST["dmDongid"]));
-		$dm_date = check_str($_REQUEST["dmDate"]);
+		$dm_date = date("Y-m-d H:i:s");
 
 		$check_query = "SELECT * FROM farm_detail WHERE fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\";";
 

@@ -135,7 +135,7 @@ param
 return
 - ret : 평균중량 데이터
 */
-function get_avg_history($comein_code, $term, $type){
+function get_avg_history($comein_code, $term, $type, $is_inc = false){
 
 	$ret = array();
 
@@ -167,22 +167,45 @@ function get_avg_history($comein_code, $term, $type){
 	$chart = array();		// 차트에 사용할 데이터
 	$table = array();		// 테이블에 사용할 데이터
 
+	$first = $select_data[0]["awWeight"];
+	$last = 0;
+
 	foreach($select_data as $val){
 		$remark = $type == "all" ? "일령" : "시간";
 
-		$chart[] = array(
-			$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
-			$remark => $val["awDate"],
-			"평균중량" => sprintf('%0.1f', $val["awWeight"]),
-			"권고중량" => sprintf('%0.1f', $val["refWeight"])
-		);
+		if(!$is_inc){		// default = false
+			$chart[] = array(
+				$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
+				$remark => $val["awDate"],
+				"평균중량" => sprintf('%0.1f', $val["awWeight"]),
+				"권고중량" => sprintf('%0.1f', $val["refWeight"])
+			);
+	
+			$table[] = array(
+				"f1" => $val["awDate"],
+				"f2" => $val["days"],
+				"f3" => sprintf('%0.1f', $val["awWeight"]),
+				"f4" => sprintf('%0.1f', $val["refWeight"])
+			);
+		}
+		else{		//증체로 계산
+			$inc_val = $val["awWeight"] - $first;				// 증체값 계산
+			$inc_val = $inc_val >= $last ? $inc_val : $last;	// 계산된 값이 마지막 증체값 보다 작으면 마지막 증체값으로 사용
 
-		$table[] = array(
-			"f1" => $val["awDate"],
-			"f2" => $val["days"],
-			"f3" => sprintf('%0.1f', $val["awWeight"]),
-			"f4" => sprintf('%0.1f', $val["refWeight"])
-		);
+			$last = $inc_val;		// 마지막 증체값 저장
+
+			$chart[] = array(
+				$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
+				$remark => $val["awDate"],
+				"평균중량" => sprintf('%0.1f',$inc_val)
+			);
+	
+			$table[] = array(
+				"f1" => $val["awDate"],
+				"f2" => $val["days"],
+				"f3" => sprintf('%0.1f', $inc_val)
+			);
+		}
 	}
 
 	$ret["query"] = $select_query;
@@ -205,7 +228,7 @@ param
 return
 - ret : 콤보박스 html
 */
-function make_combo_by_query($query, $form_name, $default_name, $field){
+function make_combo_by_query($query, $form_name, $default_name, $field, $selected = ""){
 	$ret = "<select class=\"form-control\" name=\"$form_name\">";
 
 	if($default_name != ""){
@@ -215,7 +238,8 @@ function make_combo_by_query($query, $form_name, $default_name, $field){
 	$result = get_select_data($query);
 
 	foreach($result as $row){
-		$ret .="<option value=\"" . $row[$field] . "\">" . $row[$field] . "</option>";
+		// selected로 받은 값이 있을 경우 selected를 삽입
+		$ret .="<option value=\"" . $row[$field] . "\" " .($row[$field] == $selected ? "selected" : ""). ">" . $row[$field] . "</option>";
 	}
 
 	$ret .="</select>";

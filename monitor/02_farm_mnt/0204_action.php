@@ -17,6 +17,34 @@ if(isset($_REQUEST["code"])){
 
 switch($oper){
 
+    default:
+        $page = check_str($_REQUEST['page']); // jqGrid의 page 속성의 값
+        $limit = check_str($_REQUEST['rows']);// jqGrid의 rowNum 속성의 값
+        $sidx = check_str($_REQUEST['sidx']); // jqGrid의 sortname 속성의 값
+        $sord = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
+
+        //검색필드
+        $append_query = "";
+
+        if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
+            $select = $_REQUEST["select"];
+            $select_ids = explode("|", $select);
+            
+            $append_query = "AND cmFarmid = \"" . $select_ids[0] . "\"";
+
+            $append_query = isset($select_ids[1]) ? $append_query . " AND cmDongid = \"" . $select_ids[1] . "\"" : $append_query;
+        }
+
+        //jqgrid 출력
+        $select_query = "SELECT cm.*, fd.fdName FROM comein_master AS cm
+                        JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
+                        WHERE LENGTH(cmOutdate) > 2 " .$append_query;
+
+        $response = get_jqgrid_data($select_query, $page, $limit, $sidx, $sord);
+        echo json_encode($response);
+
+        break;
+
     case "get_code":
         if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
             $select = $_REQUEST["select"];
@@ -40,16 +68,6 @@ switch($oper){
         break;
 
 	case "get_avg_weight":          //평균중량
-
-        //$now = date("Y-m-d H:i:s");
-
-        //$term_query = $_REQUEST["term"] == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
-
-        // $select_query = "SELECT cm.cmCode, aw.*, c.cName3 AS refWeight FROM comein_master AS cm 
-        //                 JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " .$term_query. "
-        //                 AND (awDate BETWEEN cm.cmIndate AND IFNULL(cm.cmOutdate, NOW()))
-        //                 LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
-        //                 WHERE cm.cmCode = \"" .$code. "\" ORDER BY aw.awDate DESC";
 
         $avg_history = get_avg_history($code, $_REQUEST["term"], "all");
 
@@ -117,11 +135,13 @@ switch($oper){
 
     case "get_request_history":          //재산출 이력
 
-        $select_query = "SELECT * FROM request_calculate WHERE rcFarmid = \"" . $farmID . "\" AND rcDongid = \"" . $dongID . "\" 
-                        AND (rcRequestDate BETWEEN \"" . $_REQUEST["indate"] . "\" AND \"" . date('Y-m-d H:i:s') . "\") ORDER BY rcRequestDate DESC";
+        $select_query = "SELECT cm.*, rc.* FROM comein_master AS cm 
+                        LEFT JOIN request_calculate AS rc ON rc.rcCode = cm.cmCode
+                        WHERE cm.cmCode = \"" .$code. "\"";
 
         $select_data = get_select_data($select_query);
 
+        // 재산출 이력 출력 테이블 만들기
         $request_history_data = array();
         foreach($select_data as $row){
 
@@ -156,6 +176,7 @@ switch($oper){
         }
 
         $response["request_history_data"] = $request_history_data;
+        $response["measure_weight_data"] = json_decode($select_data[0]["cmMeasureWeight"]);
         echo json_encode($response);
 
         break;
@@ -312,119 +333,6 @@ switch($oper){
 
                 break;
         }
-
-        break;
-    
-    case "get_buffer":          //버퍼테이블
-
-        $ref_date = date('Y-m-d H:i:s');
-        $ref_date = substr($ref_date, 0, 15) . "0:00";
-
-        $select_query = "SELECT cm.*, fd.fdName, be.*, bp.*, sf.*, so.*, sc.*, 
-                        IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) as days, 
-                        GROUP_CONCAT(siCellid separator ' | ') AS siCellid, 
-                        GROUP_CONCAT(siSensorDate separator ' | ') AS siSensorDate, 
-                        GROUP_CONCAT(TRUNCATE(siTemp, 1) separator ' | ') AS siTemp, GROUP_CONCAT(TRUNCATE(siHumi, 1) separator ' | ') AS siHumi, 
-                        GROUP_CONCAT(TRUNCATE(siCo2, 1) separator ' | ') AS siCo2, GROUP_CONCAT(TRUNCATE(siNh3, 1) separator ' | ') AS siNh3,
-                        aw.awWeight 
-                        FROM comein_master AS cm
-                        LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND awDate = '" .$ref_date. "' 
-                        LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
-                        LEFT JOIN set_iot_cell AS si ON si.siFarmid = cm.cmFarmid AND si.siDongid = cm.cmDongid
-                        LEFT JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
-                        LEFT JOIN buffer_plc_status AS bp ON bp.bpFarmid = cm.cmFarmid AND bp.bpDongid = cm.cmDongid
-                        LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
-                        LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid 
-                        LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
-                        WHERE cmCode = '" .$code. "'
-                        GROUP BY cm.cmCode, sc.scPort";
-
-        $select_data = get_select_data($select_query);
-        $row = $select_data[0];
-
-        $summary_data = array();
-
-        $summary_data["summary_name"] = $row["fdName"] . " (" . $row["cmFarmid"] . "-" . $row["cmDongid"] . ")";
-        $summary_data["summary_days"] = $row["days"];
-        $summary_data["summary_avg"] = number_format($row["beAvgWeight"], 0);
-        $summary_data["summary_devi"] = "표준편차<br>" . number_format($row["beDevi"], 1);
-        $summary_data["summary_inc"] = "일일증체량<br>" . (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
-        $summary_data["summary_type"] = $row["cmIntype"] . " " . $row["cmInsu"] . "수";
-        $summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
-
-        //카메라
-        $img_url = "../../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
-        $summary_data["summary_camera"] = "<img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg');\" onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">";
-
-        // $summary_data["summary_indate"] = $row["cmIndate"];
-        // $summary_data["summary_outdate"] = $row["cmOutdate"];
-
-        $response["summary_data"] = $summary_data;
-
-        $buffer_data = array();
-
-        // set_iot_sensor 데이터 모음
-        $sensor_map = array(
-            explode(" | ", $row["siCellid"]), 
-            explode(" | ", $row["siSensorDate"]), 
-            explode(" | ", $row["siTemp"]), 
-            explode(" | ", $row["siHumi"]), 
-            explode(" | ", $row["siCo2"]), 
-            explode(" | ", $row["siNh3"]), 
-        );
-
-        // 저울별로 테이블에 적재
-        for($i=0; $i<count($sensor_map[0]); $i++){
-            $buffer_data[] = array(
-                'f1'  => "IoT저울-" . $sensor_map[0][$i],							
-                'f2'  => $sensor_map[1][$i],	
-                'f3'  => make_sub_table( array("온도(℃)", "습도(%)", "CO2(ppm)", "NH3(ppm)"), array($sensor_map[2][$i], $sensor_map[3][$i], $sensor_map[4][$i], $sensor_map[5][$i]) )
-            );
-        }
-
-        // 급이 / 급수
-        $buffer_data[] = array(
-            'f1'  => "급이/급수",							
-            'f2'  => $row["sfFeedDate"] == "" ? "NONE" : $row["sfFeedDate"],
-            'f3'  => make_sub_table( array("사료빈 무게", "일일급이량", "유량센서", "일일급수량"), array($row["sfFeed"], $row["sfDailyFeed"], $row["sfWater"], $row["sfDailyWater"]) )
-        );
-
-        // 외기환경
-        $buffer_data[] = array(
-            'f1'  => "외기환경",							
-            'f2'  => $row["soSensorDate"] == "" ? "NONE" : $row["soSensorDate"],
-            'f3'  => make_sub_table( 
-                        array("온도(℃)", "습도(%)", "CO2(ppm)", "H2S(ppm)", "미세먼지(ppm)", "초미세먼지(ppm)", "풍향", "풍속"), 
-                        array($row["soTemp"], $row["soHumi"], $row["soNh3"], $row["soH2s"], $row["soDust"], $row["soUDust"], $row["soWindDirection"], $row["soWindSpeed"]) 
-                    )
-        );
-
-        // plc 환경
-        $buffer_data[] = array(
-            'f1'  => "plc환경",							
-            'f2'  => $row["bpSensorDate"] == "" ? "NONE" : $row["bpSensorDate"],
-            'f3'  => make_sub_table( 
-                        array("내부온도(℃)", "내부습도(%)", "내부CO2(ppm)", "내부음압", "외부온도(℃)", "외부습도(%)", "외부NH3(ppm)", "외부H2S(ppm)"), 
-                        array(
-                            get_split_avg($row["bpTemp"]), get_split_avg($row["bpHumi"]), get_split_avg($row["bpCo2"]), get_split_avg($row["bpNPre"]), 
-                            get_split_avg($row["bpOutTemp"]), get_split_avg($row["bpOutHumi"]), get_split_avg($row["bpOutNh3"]), get_split_avg($row["bpOutH2s"])
-                        ) 
-                    )
-        );
-
-        $response["buffer_data"] = $buffer_data;
-
-        $device_cnt_data = array();
-        $device_cnt_data["device_cnt_cell"] = count($sensor_map[0]);
-        $device_cnt_data["device_cnt_camera"] = 1;
-        $device_cnt_data["device_cnt_plc"] = $row["bpSensorDate"] == "" ? 0 : 1;
-        $device_cnt_data["device_cnt_feeder"] = $row["sfFeedDate"] == "" ? 0 : 1;
-        $device_cnt_data["device_cnt_water"] = $row["sfWaterDate"] == "" ? 0 : 1;
-        $device_cnt_data["device_cnt_out"] = $row["soSensorDate"] == "" ? 0 : 1;
-
-        $response["device_cnt_data"] = $device_cnt_data;
-
-        echo json_encode($response);
 
         break;
 }

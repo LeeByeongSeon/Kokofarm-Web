@@ -14,7 +14,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 <!--농장정보 & 이슈사항-->
 <article class="col-xl-10 float-right">
 	<div class="row">
-		<div class="col-xl-5">
+		<div class="col-xl-6">
 			<div class="jarviswidget jarviswidget-color-green-dark" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
@@ -40,7 +40,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 									</div>
 									<div class="col-md-8 no-padding">
 										<div style="text-align:center; font-weight:bold; font-size:15px">평균중량</div>
-										<div id="summary_avg" style="text-align:center; font-weight:bold; font-size:24px; color:#455a64">1020</div>
+										<div id="summary_avg" style="text-align:center; font-weight:bold; font-size:24px; color:#b94a48">1020</div>
 
 										<div id="summary_devi" class="col-md-6 no-padding" style="text-align:center; font-weight:bold;">표준편차<br>13.1</div>
 										<div id="summary_inc" class="col-md-6 no-padding" style="text-align:center; font-weight:bold;">일일증체량<br>40</div>
@@ -73,7 +73,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			</div>
 		</div>
 
-		<div class="col-xl-7">
+		<div class="col-xl-6">
 			<div class="jarviswidget jarviswidget-color-red no-padding" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
@@ -82,41 +82,11 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 				</header>
 
 				<div class="widget-body">
-
-					<table class="table table-bordered table-hover" style="text-align: center;">
-						<thead>
-							<th>이슈</th>
-							<th>상태</th>
-							<th>내용</th>
-							<th>비고</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td>평균중량 현황</td>
-								<td>정상</td>
-								<td>권고중량 대비 +20 / 직전일령 증체량 43g</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>재산출 요청</td>
-								<td><span style="color:red">승인 필요</span></td>
-								<td>일령 변경 요청</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>경함 조치 진행</td>
-								<td><span style="color:red">조치 필요</span></td>
-								<td>카메라 이상</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>IoT 저울-01</td>
-								<td><span style="color:red">장치 이상</span></td>
-								<td>데이터 중단</td>
-								<td>-</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="col-md-4 no-padding">
+						<div style="padding-top:0.2rem; padding-bottom:0.8rem; font-size: 15px">
+							<b id="summary_feed">망성농장-01동 (KF0013-01) </b>
+						</div>
+					</div>
 					
 				</div>
 						
@@ -225,7 +195,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 				<div class="widget-body">
 
 					<div class="col-xl-12">
-						<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
+						<div id="avg_weight_chart" style="height:465px; width:100%;"></div>
 					</div>
 					
 					<div class="col-xl-12" id="avg_weight_table_div" style="display:none;">

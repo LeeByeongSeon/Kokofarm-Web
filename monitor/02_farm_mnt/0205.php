@@ -8,7 +8,7 @@ $dong_combo_json = make_jqgrid_combo_num(32);
 
 // 진행상태 콤보박스
 $query = "SELECT CONCAT(cName1, '(', cName2, ')') AS cName1 FROM codeinfo WHERE cGroup= \"진행상태\"";
-$stat_combo = make_combo_by_query($query, "search_stat", "진행상태", "cName1");
+$stat_combo = make_combo_by_query($query, "search_stat", "진행상태", "cName1", "R(요청)");
 $stat_combo_json = make_jqgrid_combo($query, "cName1");
 
 // 요청구분 콤보박스
@@ -126,10 +126,10 @@ include_once("../inc/bottom.php");
 					// }
 				},
 				{label: "실측시간",			name: "rcMeasureDate",	align:'center',	editable:true, width:"110%", 
-					editrules:{ required:true, edithidden:true}, 
+					editrules:{edithidden:true}, 
 					editoptions:{placeholder:"0000-00-00 00:00:00"}
 				},
-				{label: "실측값",			name: "rcMeasureVal",	align:'center',		editable:true, editrules:{ required: false, edithidden: true, number: true}, width:"60%"},
+				{label: "실측값",			name: "rcMeasureVal",	align:'center',		editable:true, editrules:{edithidden: true, number: true}, width:"60%"},
 				{label: "변경전 예측",		name: "rcPrevWeight",	align:'center',		 width:"60%", },
 				{label: "pk", 				name: "pk",				hidden:true },
 			],
@@ -213,7 +213,7 @@ include_once("../inc/bottom.php");
 
 		$('#jqgrid').navGrid('#jqgrid_pager',
 			{ 
-				edit:true, add:false, del:true, search:false, refresh: true, view: false, position:"left", cloneToTop:false 
+				edit:true, add:true, del:true, search:false, refresh: true, view: false, position:"left", cloneToTop:false 
 			},
 			{ 
 				beforeInitData:function(){
@@ -241,22 +241,27 @@ include_once("../inc/bottom.php");
 						return false;
 					}
 
-					var keys = selected_id.split("|");
-					
-					switch(keys.length){	// 농장 버튼이 선택된 경우 selected_id => KF0006 -- 동 버튼이 선택된 경우 selected_id => KF0006|01
+					let keys = selected_id.split("|");
+					let farm = keys[0];
+					let dong = keys.length > 1 ? keys[1] : "01";
 
-						case 1:		//농장만 선택
-							$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							break;
+					let temp = $("#" + farm + "\\|" + dong + "");
+					let code = $(temp).attr("cmCode");
+					let indate = $(temp).attr("cmIndate");
+					let outdate = $(temp).attr("cmOutDate");
 
-						case 2:		//동까지 선택
-							$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true, defaultValue:keys[0]}} );
-							$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:true, defaultValue:keys[1]}} );
-							
-							// 입추시간
-							$("#jqgrid").setColProp('rcChangeDate', {editoptions:{defaultValue:indate}});
-							break;
+					//alert("selected_id : " + selected_id + "\ncode : " + code + "\nindate : " + indate + "\noudate : " + outdate);
+
+					if(outdate.length > 2){
+						popup_alert("농장 선택 오류", "입추된 농장만 재산출 요청 가능합니다.");
+						return false;
 					}
+
+					$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true, defaultValue:farm}} );
+					$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:true, defaultValue:dong}} );
+
+					$("#jqgrid").setColProp('rcChangeDate', {editoptions:{readonly:true, defaultValue:indate}} );
+					
 				},
 				beforeSubmit:function(postdata, formid){
 
@@ -269,6 +274,9 @@ include_once("../inc/bottom.php");
 						let valid_measure_date = date_valid_check(postdata.rcMeasureDate);
 						if(valid_measure_date[0]) {return valid_measure_date[1];} 
 					}
+
+					let row_id = $("#jqgrid").jqGrid("getGridParam", "selrow");
+					let row_data = $("#jqgrid").jqGrid("getRowData", row_id);
 
 					return [true, ""];
 				},

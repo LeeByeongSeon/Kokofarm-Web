@@ -63,7 +63,7 @@ include_once("../inc/bottom.php");
 				{label: "동ID", 			name: "cmDongid",			hidden:true 	},
 				{label: "농장명",			name: "fdName",				align:'left',		},
 				{label: "일령",				name: "days",				align:'center',		width:"50%"},
-				{label: "축종",				name: "cmIntype",			align:'center',		width:"50%"},
+				{label: "축종",				name: "cmIntype",			align:'center',		width:"60%"},
 				{label: "저울연결",	 		name: "siSensorDate",		align:'center',		},
 				{label: "온도(℃)", 			name: "siTemp",				align:'center',		sortable:false},
 				{label: "습도(%)",			name: "siHumi",				align:'center',		sortable:false},
