@@ -327,39 +327,15 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 				
 				<div class="widget-body">
 
-					<table class="table table-bordered table-hover" style="text-align: center;">
+					<table id="cell_control_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
-							<th></th>
-							<th>영점조정</th>
-							<th colspan="2">버전확인</th>
-							<th colspan="2">데이터 조회(온도/습도/CO2/NH3/증량)</th>
+							<tr>
+								<th data-field='f1' data-visible="true" data-align="center" >저울 번호</th>
+								<th data-field='f2' data-visible="true" data-align="center" >펌웨어 버전</th>
+								<th data-field='f3' data-visible="true" data-align="center" >데이터 (온도/습도/CO2/NH3/중량)</th>
+								<th data-field='f4' data-visible="true" data-align="center" >영점조정</th>
+							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td><button class="btn btn-success">영점</button></td>
-								<td><button class="btn btn-success">버전</button></td>
-								<td>3.2</td>
-								<td><button class="btn btn-success">조회</button></td>
-								<td>23.4/54.6/4300/0/517</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td><button class="btn btn-success">영점</button></td>
-								<td><button class="btn btn-success">버전</button></td>
-								<td>3.2</td>
-								<td><button class="btn btn-success">조회</button></td>
-								<td>23.4/54.6/4300/0/517</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td><button class="btn btn-success">영점</button></td>
-								<td><button class="btn btn-success">버전</button></td>
-								<td>3.1</td>
-								<td><button class="btn btn-success">조회</button></td>
-								<td>23.4/54.6/4300/0/517</td>
-							</tr>
-						</tbody>
 					</table>
 					
 				</div>
@@ -644,6 +620,8 @@ include_once("../inc/bottom.php");
 					if(days >= 21){ $("#hen_img").attr("src","../images/hen-scale3.png");  }
 
 					$('#device_buffer_table').bootstrapTable('load', data.buffer_data); //data-toggle="table" 하지않으면 Update 불가
+					
+					$('#cell_control_table').bootstrapTable('load', data.cell_control_data);
 				}
 			});
 		}
@@ -806,6 +784,48 @@ include_once("../inc/bottom.php");
 
 		window.location = page + "?farmID=" + farmID + "&dongID=" + dongID; 
 	};
+
+	// 웹소켓으로 서버에 명령 전송
+	function itr_send(send, id, need_confirm = false){
+
+		if(need_confirm){
+			msg = $("#summary_name").html() + " " + id.substr(id.length - 2, id.length) + "번 저울의 영점을 조정하시겠습니까?";
+			popup_confirm("영점 조정 확인", msg, function(confirm){
+				
+				if(confirm){
+					socket_send(send, id);
+				}
+
+			});
+		}
+		else{
+			socket_send(send, id);
+		}
+	};
+	function socket_send(send, id){
+		let data_arr = {}; 
+		data_arr['oper'] = "socket_send";
+		data_arr['send'] = send;
+
+		$.ajax({url:'0102_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
+			success: function(data) {
+
+				switch(data.recv.retCode){
+					case "S":
+						$("#" + id + " #ret").html(data.recv.retValue + "&nbsp;&nbsp;");
+						break;
+					
+					case "F":
+						$("#" + id + " #ret").html("fail" + "&nbsp;&nbsp;");
+						break;
+
+					default:
+						$("#" + id + " #ret").html("no response" + "&nbsp;&nbsp;");
+						break;
+				}
+			}
+		});
+	}
 
 	// 카메라 선택 시 팝업창 띄움
 	function camera_popup(name, img_url){

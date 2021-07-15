@@ -1,6 +1,7 @@
 <?
 
 include_once("../../common/php_module/common_func.php");
+include_once("../../common/php_module/socket_func.php");
 
 $response = array();
 
@@ -361,7 +362,8 @@ switch($oper){
 
         $response["summary_data"] = $summary_data;
 
-        $buffer_data = array();
+        $buffer_data = array();         // 버퍼 데이터 테이블 표시
+        $cell_control_data = array();        // 조회 및 설정 테이블 표시
 
         // set_iot_sensor 데이터 모음
         $sensor_map = array(
@@ -379,6 +381,18 @@ switch($oper){
                 'f1'  => "IoT저울-" . $sensor_map[0][$i],							
                 'f2'  => $sensor_map[1][$i],	
                 'f3'  => make_sub_table( array("온도(℃)", "습도(%)", "CO2(ppm)", "NH3(ppm)"), array($sensor_map[2][$i], $sensor_map[3][$i], $sensor_map[4][$i], $sensor_map[5][$i]) )
+            );
+
+            $cell_id = $sensor_map[0][$i];
+            $version_info = cell_version_info($row["cmFarmid"], $row["cmDongid"], $cell_id);
+            $sensor_info = cell_sensor_info($row["cmFarmid"], $row["cmDongid"], $cell_id);
+            $zero_set = cell_zero_set($row["cmFarmid"], $row["cmDongid"], $cell_id);
+
+            $cell_control_data[] = array(
+                'f1'  => $sensor_map[0][$i], 
+                'f2'  => "<button class='btn btn-primary' id='btn_cell_version_" .$cell_id. "' onClick='itr_send(\"" .$version_info. "\", \"btn_cell_version_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
+                'f3'  => "<button class='btn btn-primary' id='btn_cell_sensor_" .$cell_id. "' onClick='itr_send(\"" .$sensor_info. "\", \"btn_cell_sensor_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
+                'f4'  => "<button class='btn btn-primary' id='btn_zeor_set_" .$cell_id. "' onClick='itr_send(\"" .$zero_set. "\", \"btn_zeor_set_" .$cell_id. "\", true)'><span id='ret'></span><span class='fa fa-cog'></span></button>",
             );
         }
 
@@ -419,7 +433,8 @@ switch($oper){
         }
 
         $response["buffer_data"] = $buffer_data;
-
+        $response["cell_control_data"] = $cell_control_data;
+ 
         $device_cnt_data = array();
         $device_cnt_data["device_cnt_cell"] = count($sensor_map[0]);
         $device_cnt_data["device_cnt_camera"] = 1;
@@ -432,6 +447,15 @@ switch($oper){
 
         echo json_encode($response);
 
+        break;
+
+    case "socket_send":
+        $send = $_REQUEST["send"];
+        $recv = send_packet($send);
+
+        $response["recv"] = $recv;
+
+        echo json_encode($response);
         break;
 }
 
