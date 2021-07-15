@@ -24,9 +24,9 @@ include_once("../inc/top.php");
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div class="col-xs-4 float-left">
+				<div class="col-xs-4 float-left text-center">
 					<img class="p-2 img-reponsive henImage">
-					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
+					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_in_term"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-4">
 					<h1 class="font-weight-bold text-danger text-center" style="margin-top: 20%" id="summary_avg_weight"></h1>
@@ -184,7 +184,7 @@ include_once("../inc/bottom.php")
 			success: function(data){
 				
 				//일령
-				var inTerm = data.summary.summary_interm;
+				var inTerm = data.summary.summary_in_term;
 
 				//일령기간별 이미지
 				if(inTerm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png"); }

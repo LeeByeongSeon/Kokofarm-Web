@@ -35,27 +35,29 @@ include_once("../../common/php_module/common_func.php");
 						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = maw.awFarmid AND sf.sfDongid = maw.awDongid AND sf.sfFeedDate = maw.maxDate
 						JOIN comein_master AS cm ON cmCode = \"$cmCode\"";
 
+			//var_dump($select_sql);
+
 			$get_data = get_select_data($select_sql);
 
 			$curr_interm = $get_data[0]["inTerm"];		 //현재 일령
-			$curr_weight = $get_data[0]["awWeight"];	 //현재 평균중량
-			$curr_devi   = $get_data[0]["awDevi"];		 //현재 표준편차
+			$curr_weight = $get_data[0]["beAvgWeight"];	 //현재 평균중량
+			$curr_devi   = $get_data[0]["beDevi"];		 //현재 표준편차
 
-			$prev_weight = $get_data[1]["awWeight"];	 //어제 평균중량
-			$prev_esti1  = $get_data[1]["awEstiT1"];	 //어제 +1 예측
-			$prev_esti2  = $get_data[1]["awEstiT2"];	 //어제 +2 예측
-			$prev_esti3  = $get_data[1]["awEstiT3"];	 //어제 +3 예측
-			$prev_date   = $get_data[1]["awDate"];		 //어제 마지막 산출 시간
+			$prev_weight = $get_data[1]["beAvgWeight"];	 //어제 평균중량
+			$prev_esti1  = $get_data[1]["beEstiT1"];	 //어제 +1 예측
+			$prev_esti2  = $get_data[1]["beEstiT2"];	 //어제 +2 예측
+			$prev_esti3  = $get_data[1]["beEstiT3"];	 //어제 +3 예측
+			$prev_date   = $get_data[1]["beAvgWeightDate"];		 //어제 마지막 산출 시간
 
 			$daily_water = $get_data[0]["sfDailyWater"]; //일일 급수량
 			$daily_feed  = $get_data[0]["sfDailyFeed"];  //일일 급이량
 
 			if(count($get_data) < 2){
-				$prev_weight = $get_data[0]["awWeight"];	 //어제 평균중량
-				$prev_esti1  = $get_data[0]["awEstiT1"];	 //어제 +1 예측
-				$prev_esti2  = $get_data[0]["awEstiT2"];	 //어제 +2 예측
-				$prev_esti3  = $get_data[0]["awEstiT3"];	 //어제 +3 예측
-				$prev_date   = $get_data[0]["awDate"];		 //어제 마지막 산출 시간
+				$prev_weight = $get_data[0]["beAvgWeight"];	 //어제 평균중량
+				$prev_esti1  = $get_data[0]["beEstiT1"];	 //어제 +1 예측
+				$prev_esti2  = $get_data[0]["beEstiT2"];	 //어제 +2 예측
+				$prev_esti3  = $get_data[0]["beEstiT3"];	 //어제 +3 예측
+				$prev_date   = $get_data[0]["beAvgWeightDate"];		 //어제 마지막 산출 시간
 			}
 
 			if($curr_interm > 15){
@@ -89,7 +91,7 @@ include_once("../../common/php_module/common_func.php");
 
 			$summary = array(
 				"summary_indate"    	=> substr($get_data[0]["cmIndate"], 0, 10),		/*입추일자*/ 
-				"summary_interm"    	=> $curr_interm,								/*현재 일령*/ 
+				"summary_in_term"    	=> $curr_interm,								/*현재 일령*/ 
 				"summary_intype"    	=> $get_data[0]["cmIntype"]." - ",				/*입추형식-육계,토종계,삼계,산란계*/
 				"summary_insu"      	=> $get_data[0]["cmInsu"],						/*입추수량*/
 				"summary_avg_weight"	=> sprintf('%0.1f', $curr_weight)."g",			/*실시간 평균중량*/
@@ -115,10 +117,10 @@ include_once("../../common/php_module/common_func.php");
 				"summary_day_water"		=> $daily_water."L",							/*일일 급수량*/
 				"summary_day_feed"		=> $daily_feed."Kg",							/*일일 급이량*/
 				
-				"curr_avg_temp" 		=> sprintf('%0.1f', $getData[0]["beAvgTemp"] + corrTemp),	/*현재 온도 센서 평균*/
-				"curr_avg_humi" 		=> sprintf('%0.1f', $getData[0]["beAvgHumi"] + corrHumi),	/*현재 습도 센서 평균*/
-				"curr_avg_co2"  		=> sprintf('%0.1f', $getData[0]["beAvgCo2"] + corrCo2),		/*현재 이산화탄소 센서 평균*/
-				"curr_avg_nh3"  		=> sprintf('%0.1f', $getData[0]["beAvgNh3"] + corrNh3),		/*현재 암모니아 센서 평균*/
+				"curr_avg_temp" 		=> sprintf('%0.1f', $get_data[0]["beAvgTemp"] + corrTemp),	/*현재 온도 센서 평균*/
+				"curr_avg_humi" 		=> sprintf('%0.1f', $get_data[0]["beAvgHumi"] + corrHumi),	/*현재 습도 센서 평균*/
+				"curr_avg_co2"  		=> sprintf('%0.1f', $get_data[0]["beAvgCo2"] + corrCo2),	/*현재 이산화탄소 센서 평균*/
+				"curr_avg_nh3"  		=> sprintf('%0.1f', $get_data[0]["beAvgNh3"] + corrNh3),	/*현재 암모니아 센서 평균*/
 			);
 			$response["summary"] = $summary;
 			

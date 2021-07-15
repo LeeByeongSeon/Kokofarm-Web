@@ -223,3 +223,12 @@
 							<div class="row error_alarm" style="display : none;">
 								<h5 class='font-weight-bold text-center text-danger'> 최종 수집시간 : <span><?=$final_date?></span></h5>
 							</div>
+							
+							<!--알람 메시지--->
+							<div class="row" id="alarm_form">
+								<div class="col-xs-12">
+									<div class="alert alert-danger" role="alert" id="alarm_msg" style="text-align:center; margin:0; font-size:18px;">
+										message
+									</div>
+								</div>
+							</div><!--row--->

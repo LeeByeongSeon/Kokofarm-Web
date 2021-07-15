@@ -6,6 +6,43 @@
 			</div>
 		</div>
 	</div>
+	
+	<!--Modal Alert-->
+	<div id="modal_alert" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="modal_alert_title" class="modal-title float-right">Modal title</h4>
+					<button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div id="modal_alert_body" class="modal-body">
+					<p>One fine body…</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+				</div>
+			</div><!--modal-content -->
+		</div><!--modal-dialog -->
+	</div><!--modal -->
+
+	<!--Modal Confirm-->
+	<div id="modal_confirm" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_confirm_title" class="modal-title float-right">Modal title</h4>
+                    <button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div id="modal_confirm_body" class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_confirm_ok">확인</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_confirm_cancle">취소</button>
+                </div>
+            </div><!--modal-content -->
+        </div><!--modal-dialog -->
+    </div><!--modal -->
 
 </body>
 </html>
@@ -43,6 +80,17 @@
 				$(".alarm").css("display", "block").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다.<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>");
 				$(".error_alarm").css("display", "block");
 				break;
+		}
+
+		
+		// 데이터 입력이 
+		if(data.msg == ""){
+			$("#alarm_msg").html("");
+			$("#alarm_form").hide();
+		}
+		else{
+			$("#alarm_msg").html(data.msg);
+			$("#alarm_form").show();
 		}
 
 	});

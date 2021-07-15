@@ -6,13 +6,12 @@ $oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 
 if(isset($_REQUEST["cmCode"])){
 	$cmCode = $_REQUEST["cmCode"];
-	$id = explode("_", $code)[1];
+	$id = explode("_", $cmCode)[1];
 	$farmID = substr($id, 0, 6);
 	$dongID = substr($id, 6);
 };
 
-$response  = array();
-$field_arr = array();
+$response   = array();
 
 switch($oper){
 
@@ -82,27 +81,36 @@ switch($oper){
 
 	case "edit_intype":
 
-		$field_arr["rcFarmid"] 	    = check_str($_REQUEST["rcFarmid"]); 		//농장 ID
-		$field_arr["rcDongid"] 	    = check_str($_REQUEST["rcDongid"]); 		//동 ID
-		$field_arr["rcRequestDate"] = date("Y-m-d H:i:s"); 						//요청 시간
-		$field_arr["rcCode"] 	    = check_str($_REQUEST["rcCode"]); 			//입추코드
-		$field_arr["rcCommand"]		= check_str($_REQUEST["rcCommand"]); 		//산출 명령
-		$field_arr["rcStatus"] 	    = "R";										//작업 상태 (초기는 R (Request))
+		$insert_map = array();
 
-		$field_arr["rcPrevLst"] 	= check_str($_REQUEST["rcPrevLst"]); 		//변경 전 축종
-		$field_arr["rcChangeLst"]   = check_str($_REQUEST["rcChangeLst"]); 		//변경 후 축종
-		$field_arr["rcPrevDate"]    = check_str($_REQUEST["rcPrevDate"]); 		//변경 전 입추시간
-		$field_arr["rcChangeDate"]  = check_str($_REQUEST["rcChangeDate"]); 	//변경 후 입추시간
-		$field_arr["rcMeasureDate"] = check_str($_REQUEST["rcMeasureDate"]);	//실측 시간
-		$field_arr["rcMeasureVal"]  = check_str($_REQUEST["rcMeasureVal"]); 	//실측 중량
+		$insert_map["rcFarmid"] 	    = $farmID; 								//농장 ID
+		$insert_map["rcDongid"] 	    = $dongID; 								//동 ID
+		$insert_map["rcRequestDate"] 	= date("Y-m-d H:i:s"); 					//요청 시간
+		$insert_map["rcCode"] 	    	= $cmCode;								//입추코드
+		$insert_map["rcCommand"]		= check_str($_REQUEST["rcCommand"]); 	//산출 명령
+		$insert_map["rcStatus"] 	    = "R";									//작업 상태 (초기는 R (Request))
 
-		run_sql_insert("request_calculate", $field_arr);
+		$insert_map["rcPrevLst"] 	 = check_str($_REQUEST["rcPrevLst"]); 		//변경 전 축종
+		$insert_map["rcChangeLst"]   = check_str($_REQUEST["rcChangeLst"]); 	//변경 후 축종
+		$insert_map["rcPrevDate"]    = check_str($_REQUEST["rcPrevDate"]); 		//변경 전 입추시간
+		$insert_map["rcChangeDate"]  = check_str($_REQUEST["rcChangeDate"]); 	//변경 후 입추시간
+		$insert_map["rcMeasureDate"] = check_str($_REQUEST["rcMeasureDate"]);	//실측 시간
+		$insert_map["rcMeasureVal"]  = check_str($_REQUEST["rcMeasureVal"]); 	//실측 중량
 
-		$update_arr = array();
-		$update_arr["cmInsu"] = check_str($_REQUEST["tr_count"]);
-		run_sql_update("comein_master", $update_arr, "cmCode=\"" . check_str($_REQUEST["rcCode"]) ."\"");
+		run_sql_insert("request_calculate", $insert_map);
 
-		//$response["summaryInsu"] = $update_arr["cmInsu"];
+
+		$update_map = array();
+
+		$update_map["cmInsu"] = check_str($_REQUEST["tr_count"]);
+		
+		$where_query = "cmCode = \"".$cmCode."\"";
+
+		run_sql_update("comein_master", $update_map, $where_query);
+
+		$response["change_inSU"] = $update_map["cmInsu"];
+
+		echo json_encode($response);
 
 		break;
 }

@@ -1,15 +1,6 @@
 <?
 include_once("../inc/top.php");
 ?>
-
-<!--알람 메시지--->
-<div class="row" id="alarm_form">
-	<div class="col-xs-12">
-		<div class="alert alert-danger" role="alert" id="alarm_msg" style="text-align:center; margin:0; font-size:18px;">
-			message
-		</div>
-	</div>
-</div><!--row--->
 	
 <div class="row">
 	<div class="col-xs-12">
@@ -23,6 +14,7 @@ include_once("../inc/top.php");
 				<form id="request_form" onsubmit="return false;">
 					<input type="hidden" name="request_origin" 	  value="">
 					<input type="hidden" name="request_dong_name" value="<?=$fd_Name?>">
+					<input type="hidden" name="in_su" 			  value="">
 					
 					<div class="col-xs-12 text-center no-padding" id="request_alarm"></div>
 
@@ -69,7 +61,7 @@ include_once("../inc/top.php");
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">입추 수</span>
-							<input type="text" class="form-control" aria-label="입추 수" name="change_inSU" min="0" max="99999">
+							<input type="text" class="form-control" aria-label="입추 수" name="change_inSU" min="0" max="99999" value="">
 						</div>
 					</div>
 					<div class="col-xs-12 text-center">
@@ -105,7 +97,7 @@ include_once("../inc/top.php");
 						<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 평균중량 재산출은 20일령 이후에 적용가능합니다.</label></div>
 						<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 모든 변경사항은 관리자 승인 후에 적용됩니다.</label></div>
 						<div class="col-xs-12 text-right no-padding">
-							<button type="submit" class="btn btn-primary" id="request_ok">요청</button>
+							<button type="button" class="btn btn-primary" id="request_ok">요청</button>
 						</div>
 					</div>
 				</form>
@@ -152,6 +144,7 @@ include_once("../inc/bottom.php")
 					$("#request_form [name=change_intype]").removeAttr("checked");
 					$("#request_form [name=change_intype]:input[value=" + data.cm_in_type + "]").prop("checked", true);
 					$("#request_form [name=change_inSU]").val(in_su);
+					$("#request_form [name=in_su]").val(in_su);
 
 					data.cm_in_date = data.cm_in_date.substr(0, 15) + "0:00";
 						var in_date = data.cm_in_date.substr(0,10);
@@ -296,119 +289,126 @@ include_once("../inc/bottom.php")
 	}
 
 	// 일령변경, 축종변경, 최적화 요청
-	$("#request_ok").click(function() {
+		$("#request_ok").click(function() {
 
-		var origin 	  = $("#request_form [name=request_origin]").val().split("|");	// 0:cmIntype 1:cmIndate
-		var dong_name = $("#request_form [name=request_dong_name]").val();			// 요청 동 이름
+			var origin 	  = $("#request_form [name=request_origin]").val().split("|");	// 0:cmIntype 1:cmIndate
+			var dong_name = $("#request_form [name=request_dong_name]").val();			// 요청 동 이름
 
-		var tr_date   = $("#request_form [name=in_date]").val() + " " + $("#request_form [name=in_time_hour]").val() + ":" + $("#request_form [name=in_time_minute]").val();
-		var tr_type   = $("#request_form [name=change_intype]:checked").val();
-		var tr_count  = $("#request_form [name=change_inSU]").val();
-		var measure_date = $("#request_form [name=measure_date]").val() + " " + $("#request_form [name=measure_time_hour]").val() + ":" + $("#request_form [name=measure_time_minute]").val();
-		var measure_val  = $("#request_form [name=measure_val]").val();
+			var tr_date   = $("#request_form [name=in_date]").val() + " " + $("#request_form [name=in_time_hour]").val() + ":" + $("#request_form [name=in_time_minute]").val();
+			var tr_type   = $("#request_form [name=change_intype]:checked").val();
+			var tr_count  = $("#request_form [name=change_inSU]").val();
+			var measure_date = $("#request_form [name=measure_date]").val() + " " + $("#request_form [name=measure_time_hour]").val() + ":" + $("#request_form [name=measure_time_minute]").val();
+			var measure_val  = $("#request_form [name=measure_val]").val();
 
-		//alert("origin : " + origin + "\ntr_date : " + tr_date + "\ntr_type : " + tr_type  + "\nmeasure_date : " + measure_date + "\nmeasure_val : " + measure_val);
+			// alert("origin : " + origin + "\ntr_date : " + tr_date + "\ntr_type : " + tr_type  + "\nmeasure_date : " + measure_date + "\nmeasure_val : " + measure_val);
 
-		var rc_comm = "";
-		var notice = "";
+			var rc_comm = "";
+			var msg = "";
 
-		var curr_day = get_now_date();			//현재
-		var days = $("#summary_interm").html(); //일령
-		
-		//alert(days);
+			var curr_day = get_now_date();			//현재
+			var days = $("#summary_interm").html(); //일령 top.php
 
-		// 축종 변경
-		if(origin[0] != tr_type){
-			notice += "- 축종을 <span style='font-weight:bold;'>\"" + origin[0] + "\"</span>에서 <span style='font-weight:bold;'>\"" + tr_type + "\"</span>으로 변경<br><br>";
-			rc_comm += "Lst|";
-		}
+			// alert(days);
 
-		// 입추수 변경
-		var in_count = $("#summaryInsu").html();
-		if(in_count != tr_count){
-			notice += "- 입추수를 <span style='font-weight:bold;'>\"" + in_count + "\"</span>에서 <span style='font-weight:bold;'>\"" + tr_count + "\"</span>으로 변경<br><br>";
-		}
-
-		// 입추일자 오류처리
-		if(origin[1].substr(0, 16) != tr_date){
-			var origin_diff = get_date_diff(origin[1], curr_day) + 1;
-			var trans_diff  = get_date_diff(tr_date, curr_day) + 1;
-
-			notice += "- 입추일자를 <span style='font-weight:bold;'>\"" + datetime_easy(origin[1]) + " ("+ origin_diff +"일령)\"</span>에서 <br>";
-			notice += "<span style='font-weight:bold;'>\"" + datetime_easy(tr_date) + " ("+ trans_diff +"일령)\"</span>으로 변경<br><br>";
-
-			rc_comm += "Day|";
-		}
-
-		// 최적화 오류처리
-		if(measure_val.length != 0){
-
-			// 20일령 이전 차단
-			if(parseInt(days) < 20){
-				view_alarm("request_opt_alarm", "평균중량 재산출은 20일령 이후에 진행해주세요</label>");
-				return;
+			// 축종 변경
+			if(origin[0] != tr_type){
+				msg += "- 축종을 <span style='font-weight:bold;'>\"" + origin[0] + "\"</span>에서 <span style='font-weight:bold;'>\"" + tr_type + "\"</span>으로 변경<br><br>";
+				rc_comm += "Lst|";
 			}
 
-			var measure_diff = get_time_diff(measure_date + ":00", get_now_datetime());
-			
-			if(measure_diff < 1800){
-				view_alarm("request_opt_alarm", "실측시간은 현재시간보다 최소 30분 이전으로 입력해주세요</label>");
-				return;
+			// 입추수 변경
+			var in_count = $("#request_form [name=in_su]").val();
+			if(in_count != tr_count){
+				msg += "- 입추수를 <span style='font-weight:bold;'>\"" + in_count + "\"</span>에서 <span style='font-weight:bold;'>\"" + tr_count + "\"</span>으로 변경<br><br>";
 			}
 
-			if(parseInt(measure_val) < 400 || parseInt(measure_val) > 2500){
-				view_alarm("request_opt_alarm", "실측값은 400 ~ 2500 사이의 값을 입력해주세요</label>");
-				return;
+			// 입추일자 오류처리
+			if(origin[1].substr(0, 16) != tr_date){
+				var origin_diff = get_date_diff(origin[1], curr_day) + 1;
+				var trans_diff  = get_date_diff(tr_date, curr_day) + 1;
+
+				msg += "- 입추일자를 <span style='font-weight:bold;'>\"" + get_korea_date(origin[1]) + " ("+ origin_diff +"일령)\"</span>에서 <br>";
+				msg += "<span style='font-weight:bold;'>\"" + get_korea_date(tr_date) + " ("+ trans_diff +"일령)\"</span>으로 변경<br><br>";
+
+				rc_comm += "Day|";
 			}
 
-			notice += "- 평균중량 재산출을 <span style='font-weight:bold;'>\"" + datetime_easy(measure_date) + "\"</span>에 측정한 <span style='font-weight:bold;'>" + measure_val + "g</span>으로 진행<br><br>";
-			rc_comm += "Opt|";
-		}
+			// 최적화 오류처리
+			if(measure_val.length != 0){
 
-		// 에러 확인 완료 후 적용될 값이 있으면 confirm창 출력
-		if(notice.length < 1){
-			view_alarm("request_alarm", "수정하여 적용할 값이 존재하지 않습니다</label>");
-		}
-		else{
-			notice = "- " + dong_name + "의 데이터를 변경<br><br>" + notice;
+				//alert(measure_val);
 
-			popup_confirm("아래의 변경사항을 적용하시겠습니까?", notice, 
-				function(confirm) {
-					alarm_clear();
-
-					if(confirm){
-						var data_arr = {};
-							data_arr['oper'] = "edit_intype";
-
-							data_arr["rcFarmid"]  = farmID;		//농장 ID
-							data_arr["rcDongid"]  = dongID;		//동 ID
-							data_arr["rcCode"]    = cmCode;		//입추코드
-							data_arr["rcCommand"] = rc_comm.substr(0, rc_comm.length-1);	//변환 명령
-
-							data_arr["rcPrevLst"]   = origin[0];	//변경 전 축종
-							data_arr["rcChangeLst"] = tr_type;		//변경 후 축종
-
-							data_arr["rcPrevDate"]   = origin[1];	//변경 전 입추시간
-							data_arr["rcChangeDate"] = tr_date + origin[1].substr(origin[1].length - 3, 3);		//변경 후 입추시간
-
-							data_arr["rcMeasureDate"] = measure_date.length > 3 ? measure_date + ":00" : "2000-01-01 00:00:00";		// 실측 시간
-							data_arr["rcMeasureVal"]  = measure_date.length > 3 ? measure_val : 0;	// 실측 중량
-
-							data_arr["tr_count"] = tr_count;
-
-						set_cookie("is_opt_com", "yes", 1);
-
-						set_cookie("is_end_request", "no", 2);
-
-						$.ajax({url:'0105_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
-							success: function(data) {
-								$("#request_form").each(function() {	this.reset();  });
-							}
-						});
-					}
+				// 20일령 이전 차단
+				if(parseInt(days) < 20){
+					view_alarm("request_opt_alarm", "평균중량 재산출은 20일령 이후에 진행해주세요</label>");
+					return;
 				}
-			);
-		}
-	});
+
+				var measure_diff = get_time_diff(measure_date + ":00", get_now_datetime());
+				
+				if(measure_diff < 1800){
+					view_alarm("request_opt_alarm", "실측시간은 현재시간보다 최소 30분 이전으로 입력해주세요</label>");
+					return;
+				}
+
+				if(parseInt(measure_val) < 400 || parseInt(measure_val) > 2500){
+					view_alarm("request_opt_alarm", "실측값은 400 ~ 2500 사이의 값을 입력해주세요</label>");
+					return;
+				}
+
+				msg += "- 평균중량 재산출을 <span style='font-weight:bold;'>\"" + get_korea_date(measure_date) + "\"</span>에 측정한 <span style='font-weight:bold;'>" + measure_val + "g</span>으로 진행<br><br>";
+				rc_comm += "Opt|";
+			}
+
+			// 에러 확인 완료 후 적용될 값이 있으면 confirm창 출력
+			if(msg.length < 1){
+				//alert(msg);
+				view_alarm("request_alarm", "수정하여 적용할 값이 존재하지 않습니다</label>");
+			}
+			else{
+				msg = "- " + dong_name + "의 데이터를 변경<br><br>" + msg;
+
+				//alert(msg);
+
+				popup_confirm("아래의 변경사항을 적용하시겠습니까?", msg, function(confirm) {
+						
+						alarm_clear();
+
+						if(confirm){
+							//alert("confirm");
+							var data_arr = {};
+								data_arr["oper"] = "edit_intype";
+								
+								data_arr["cmCode"]    = cmCode;			//입추코드
+								data_arr["rcCommand"] = rc_comm.substr(0, rc_comm.length-1);	//변환 명령
+
+								data_arr["rcPrevLst"]   = origin[0];	//변경 전 축종
+								data_arr["rcChangeLst"] = tr_type;		//변경 후 축종
+
+								data_arr["rcPrevDate"]   = origin[1];	//변경 전 입추시간
+								data_arr["rcChangeDate"] = tr_date + origin[1].substr(origin[1].length - 3, 3);		//변경 후 입추시간
+
+								data_arr["rcMeasureDate"] = measure_date.length > 3 ? measure_date + ":00" : "2000-01-01 00:00:00";		// 실측 시간
+								data_arr["rcMeasureVal"]  = measure_date.length > 3 ? measure_val : 0;	// 실측 중량
+
+								data_arr["tr_count"] = tr_count;
+
+							set_cookie("is_opt_com", "yes", 1);
+
+							set_cookie("is_end_request", "no", 2);
+
+							$.ajax({url:'0105_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
+								success: function(data) {
+									//alert("ok");
+									$("#request_form").each(function() {	this.reset();  });
+									$("#change_inSU").val(data.change_inSU);	//입추수만 변경
+								}
+							});
+						}
+					}
+				);
+			}
+		});
+	
 	
 </script>
