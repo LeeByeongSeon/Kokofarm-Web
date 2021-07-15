@@ -101,11 +101,25 @@ switch($oper){
 
 	case "add":
 
-		// $insert_map = array();
+		$insert_map = array();
 
-		// $insert_map["rcFarmid"]     		= check_str($_REQUEST["rcFarmid"]);
-		// $insert_map["rcDongid"]     		= check_str($_REQUEST["rcDongid"]);
-		// $insert_map["rcRequestDate"]     	= date("Y-m-d H:i:S");
+		$insert_map["rcFarmid"]     		= check_str($_REQUEST["rcFarmid"]);
+		$insert_map["rcDongid"]     		= check_str($_REQUEST["rcDongid"]);
+		$insert_map["rcRequestDate"]     	= date("Y-m-d H:i:s");
+		$insert_map["rcCode"]     			= check_str($_REQUEST["rcCode"]);
+		$insert_map["rcCommand"]     		= check_str($_REQUEST["rcCommand"]);
+		$insert_map["rcStatus"]     		= "R";
+		$insert_map["rcPrevDate"]     		= check_str($_REQUEST["rcPrevDate"]);
+		$insert_map["rcChangeDate"]     	= check_str($_REQUEST["rcChangeDate"]);
+		$insert_map["rcPrevLst"]     		= check_str($_REQUEST["rcPrevLst"]);
+		$insert_map["rcChangeLst"]     		= check_str($_REQUEST["rcChangeLst"]);
+
+		if(strpos($insert_map["rcCommand"], "Opt") !== false){
+			$insert_map["rcMeasureDate"] = check_str($_REQUEST["rcMeasureDate"]);
+			$insert_map["rcMeasureVal"] = check_str($_REQUEST["rcMeasureVal"]);
+		}
+
+		run_sql_insert("request_calculate", $insert_map);
 
 		break;
 

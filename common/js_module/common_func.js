@@ -76,7 +76,7 @@ function call_tree_view(search, work, in_out = "none"){
 
                 // 동 버튼 생성
                 for(var dong_key in data[farm_key]){
-                    let [name, status, cmCode, cmIndate, cmOutdate] = data[farm_key][dong_key].split("|");
+                    let [name, status, cmCode, cmIndate, cmOutdate, cmIntype] = data[farm_key][dong_key].split("|");
 
                     status == "입추" ? cnt_in++ : cnt_out++;
 
@@ -99,7 +99,7 @@ function call_tree_view(search, work, in_out = "none"){
                     if(status == "pass") {continue;}
 
                     tail += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' ";
-                    tail += "style='padding: 7px; color: #455a64;' cmCode='" + cmCode + "', cmIndate='" + cmIndate + "', cmOutdate='" + cmOutdate + "'>" + name + status + "</li>\n";
+                    tail += "style='padding: 7px; color: #455a64;' cmCode='" + cmCode + "', cmIndate='" + cmIndate + "', cmOutdate='" + cmOutdate + "', cmIntype='" + cmIntype + "'>" + name + status + "</li>\n";
                 }
                 tail += "</ul>\n";
                 tail += "</li>\n";
@@ -325,7 +325,7 @@ function date_valid_check(input){
 
     let day_max = 0;
     day_max = [1,3,5,7,8,10,12].includes(date_arr[1]) ? 31 : 28;        // 31일인 달이 아니면
-    day_max = [4,6,9,11].includes(date_arr[1]) ? 31 : 28;               // 30일인 달이 아니면
+    day_max = [4,6,9,11].includes(date_arr[1]) ? 30 : day_max;               // 30일인 달이 아니면
     // 윤년계산
     if(date_arr[1] == 2 && date_arr[0] % 4 == 0){
         day_max = (date_arr[0] % 100 == 0) && (date_arr[0] % 400 != 0) ? 28 : 29;
@@ -333,13 +333,50 @@ function date_valid_check(input){
 
     if(date_arr[2] < 1 || date_arr[2] > day_max) {return [false, "입력된 일이 유효하지 않습니다."];}
 
-    if(time_arr[0] < 0 || time_arr[0] > 24) {return [false, "입력된 시간이 유효하지 않습니다."];}
+    if(time_arr[0] < 0 || time_arr[0] > 23) {return [false, "입력된 시간이 유효하지 않습니다."];}
     if(time_arr[1] < 0 || time_arr[1] > 59) {return [false, "입력된 분이 유효하지 않습니다."];}
     if(time_arr[2] < 0 || time_arr[2] > 59) {return [false, "입력된 초가 유효하지 않습니다."];}
 
     return [true, "완료"];
     
 };
+
+// 날짜 형식 강제 입력 함수
+function force_input_date(input){
+    let len = input.length;	
+
+    let iter = [-1, 4, 7, 10, 13, 16, 19];
+    let limit = [0, 3000, 12, 31, 24, 60, 60];
+    let spliter = ["-", "-", " ", ":", ":", ""];
+
+    input = len > 19 ? input.slice(0, 19) : input;
+
+    // 연월일시분초 검사
+    for(i=1; i<iter.length; i++){
+        if(len >= iter[i]){
+            
+            let check = input.slice(iter[i-1] + 1, iter[i])
+            if(!isNaN(check) && check <= limit[i]){
+                input = len == iter[i-1] ? input + spliter[i-1] : input;
+            }
+            else{
+                let ret_val = input.slice(0, iter[i-1]) + (i >= 2 ? spliter[i-2] : "");
+                return ret_val;
+            }
+        }
+
+        if(len == iter[i]){				// 길이가 4면 '-'를 붙임 - 그 이후는 시간형식에 따라 반복됨 
+            input = input + spliter[i-1];
+        }
+        else if(len > iter[i] + 1){		// 길이가 6이상 일때 index 4가 '-' 가 아니면 강제 변환
+            if(input.charAt(iter[i]) != spliter[i-1]) { 
+                input = input.slice(0, iter[i-1]) + spliter[i-1];
+            }
+        }
+    }
+
+    return input;
+}
 
 // 두 날짜의 차이를 구함
 function get_date_diff(start, end){

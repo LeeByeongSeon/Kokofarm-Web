@@ -110,32 +110,39 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 							<tr style="height:38px">
 								<th>장치명</th>
 								<th>설치수</th>
+								<th>장치 설정</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr style="height:45px">
 								<td>IoT 저울</td>
 								<td id="device_cnt_cell">3</td>
+								<td><button type="button" class="btn btn-primary btn-sm" onClick="page_move('../04_device_mgr/0401.php')"><span class="fa fa-cog"></span></button></td>
 							</tr>
 							<tr style="height:45px">
 								<td>IP 카메라</td>
 								<td id="device_cnt_camera">1</td>
+								<td><button type="button" class="btn btn-primary btn-sm" onClick="page_move('../04_device_mgr/0402.php')"><span class="fa fa-cog"></span></button></td>
 							</tr>
 							<tr style="height:45px">
 								<td>자동환경제어장치</td>
 								<td id="device_cnt_plc">1</td>
+								<td><button type="button" class="btn btn-primary btn-sm" onClick="page_move('../04_device_mgr/0403.php')"><span class="fa fa-cog"></span></button></td>
 							</tr>
 							<tr style="height:45px">
 								<td>사료빈 로드셀</td>
 								<td id="device_cnt_feeder">1</td>
+								<td><button type="button" class="btn btn-primary btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-cog"></span></button></td>
 							</tr>
 							<tr style="height:45px">
 								<td>유량센서</td>
 								<td id="device_cnt_water">1</td>
+								<td><button type="button" class="btn btn-primary btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-cog"></span></button></td>
 							</tr>
 							<tr style="height:45px">
 								<td>외기환경센서</td>
 								<td id="device_cnt_out">1</td>
+								<td><button type="button" class="btn btn-primary btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-cog"></span></button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -482,42 +489,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 
 	<!--재산출-->
 	<div class="row">
-		<div class="col-xl-3">
-			<div class="jarviswidget jarviswidget-color-info" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-				<header>
-					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;재산출 요청</h2>	
-					</div>
-				</header>
-
-				<div class="widget-body">
-					<form class="form-horizontal" id="request_form" onsubmit="return false;">
-						<div class="form-group row">
-							<label class="control-label col-xl-3" style="padding-left:5px;">입추일자</label>
-							<div class="col-xl-5"><input class="form-control" type="text" name="request_indate" maxlength="10" placeholder="입추일"/></div>
-							<div class="col-xl-4"><input class="form-control" type="text" name="request_intime" maxlength="10" placeholder="입추시간"/></div>
-						</div>
-						<div class="form-group row">
-							<label class="control-label col-xl-3" style="padding-left:5px;">축종</label>
-							<div class="col-xl-9"><?=$type_combo?></div>
-						</div>
-						<div class="form-group row">
-							<label class="control-label col-xl-3" style="padding-left:5px;">실측일자</label>
-							<div class="col-xl-5"><input class="form-control" type="text" name="request_m_date" maxlength="10" placeholder="실측일"/></div>
-							<div class="col-xl-4"><input class="form-control" type="text" name="request_m_time" maxlength="10" placeholder="실측시간"/></div>
-						</div>
-						<div class="form-group row">
-							<label class="control-label col-xl-3" style="padding-left:5px;">실측값</label>
-							<div class="col-xl-9"><input class="form-control" name="search_limit" placeholder="500~2500"></div>
-						</div>
-						<button class="btn btn-primary" style="width:-webkit-fill-available" id="btn_request">재산출</button>
-					</form>
-				</div>
-						
-			</div>
-		</div>
-
-		<div class="col-xl-9">
+		<div class="col-xl-12">
 			<div class="jarviswidget jarviswidget-color-info no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
@@ -823,6 +795,16 @@ include_once("../inc/bottom.php");
 				padding: '0px'
 			}
 		}
+	};
+
+	// 페이지 이동
+	function page_move(page){
+		let keys = selected_id.split("|");
+
+		let farmID = keys[0];
+		let dongID = keys.length == 2 ? keys[1] : "01";
+
+		window.location = page + "?farmID=" + farmID + "&dongID=" + dongID; 
 	};
 
 	// 카메라 선택 시 팝업창 띄움
