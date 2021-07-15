@@ -17,13 +17,13 @@
 <script src="../../common/library/bootstrap_table/bootstrap-table.js"></script>
 
 <script>
-
-	//I:입추 O:출하 E:에러 W:대기(에러) 상태일 때 '출하'표시 & 예측평체 div를 지움
+	// 농장 각 동의 'data-'를 가져옴 수정될수도
 	var select_dong = $(".dropdown-item");
 
 	$(document).ready(function(){
 		
-		var now_status = select_dong.attr("data-status");	//beStatus 상태 값 가져옴
+		//I:입추 O:출하 E:에러 W:대기(에러) 상태일 때 '출하'표시 & 예측평체 div를 지움
+		var now_status = $("input[name=now_status]").val();	//beStatus 상태 값 가져옴
 
 		switch(now_status){
 			case "O": //출하
@@ -35,12 +35,12 @@
 				break;
 			
 			case "E": //에러
-				$(".alarm").css("display", "block").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '오류 상태' 입니다.<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>");
+				$(".alarm").css("display", "block").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다.<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>");
 				$(".error_alarm").css("display", "block");
 				break;
 
 			case "W": //에러
-				$(".alarm").css("display", "block").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '오류 상태' 입니다.<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>");
+				$(".alarm").css("display", "block").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다.<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>");
 				$(".error_alarm").css("display", "block");
 				break;
 		}

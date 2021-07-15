@@ -11,7 +11,7 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div id="today_water_chart" style="height: 260px;"></div>
+				<div id="today_feed_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -26,7 +26,7 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div id="day_water_chart" style="height: 260px;"></div>
+				<div id="day_feed_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -41,7 +41,7 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div id="today_feed_chart" style="height: 260px;"></div>
+				<div id="today_water_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -56,7 +56,7 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div id="day_feed_chart" style="height: 260px;"></div>
+				<div id="day_water_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -68,5 +68,32 @@ include_once("../inc/bottom.php")
 ?>
 
 <script language="javascript">
+	
+	var cmCode = select_dong.attr("data-cmCode");	//등록코드
 
+	$(document).ready(function(){
+		get_water(cmCode,"day");
+	});
+
+	function get_water(){
+		
+		if(cmCode != null && cmCode != ""){
+
+			var data_arr = {};
+				data_arr["oper"]   = "today_feed";
+				data_arr["cmCode"] = cmCode;
+				data_arr["term"]   = "day";
+
+			$.ajax({
+				url:'0103_action.php',
+				type:'post',
+				cache:false,
+				data:data_arr,
+				dataType:'json',
+				success: function(data){
+					draw_select_chart("today_feed_chart", data.today_feed_chart, "영역차트", "Y", "N", 12);
+				}
+			});
+		};
+	}
 </script>

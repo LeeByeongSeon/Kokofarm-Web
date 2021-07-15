@@ -1,14 +1,6 @@
 <?
 
 include_once("../../common/php_module/common_func.php");
-
-	define("corrDevi",1.28);		  //표준편차보정=>초기화는 *1임(곱하기)
-	define("corrDayWeightPer",1.5);   //일별 증체중량의 보정값=>초기화는 *1임(곱하기)
-
-	define("corrTemp",-1.2);	//저울-온도보정
-	define("corrHumi",7);		//저울-습도보정
-	define("corrCo2", 0);		//저울-CO2보정
-	define("corrNh3", 0);		//저울-NH3보정
 	
 	$response = array();
 
@@ -19,7 +11,7 @@ include_once("../../common/php_module/common_func.php");
 		$id = explode("_", $code)[1];
 		$farmID = substr($id, 0, 6);
 		$dongID = substr($id, 6);
-	}
+	};
 
 	switch($oper){
 		case "get_avg_weight":
@@ -62,34 +54,44 @@ include_once("../../common/php_module/common_func.php");
 	
 					convert_excel(get_select_data($select_query), $field_data, $title, $cmCode);
 					break;
-			}
+			};
 
 			break;
 
 		case "get_scale_status":
-			$select_query = "SELECT cm.*, si.*, IFNULL(DATEDIFF(current_date(),cmIndate)+1,0) as inTERM FROM comein_master AS cm
+			$select_query = "SELECT cm.*, si.*, IFNULL(DATEDIFF(current_date(),cmIndate)+1,0) AS inTERM FROM comein_master AS cm
 							 LEFT JOIN set_iot_cell AS si ON si.siFarmid = cm.cmFarmid AND si.siDongid = cm.cmDongid WHERE cmCode = '" . $cmCode . "'";		
 
 			$select_data = get_select_data($select_query);
 
-			$cell_weight = $select_data[0]["siWeight"];
-			$cell_temp 	 = $select_data[0]["siTemp"];
-			$cell_humi 	 = $select_data[0]["siHumi"];
-			$cell_co2  	 = $select_data[0]["siCo2"];
-			$cell_nh3  	 = $select_data[0]["siNh3"];
-
 			foreach($select_data as $val){
+
+				$cell_weight = $val["siWeight"];
+				$cell_temp 	 = $val["siTemp"];
+				$cell_humi 	 = $val["siHumi"];
+				$cell_co2  	 = $val["siCo2"];
+				$cell_nh3  	 = $val["siNh3"];
+
 				$cell_data[] = array(
 					'f1' => "IoT저울-".$val["siCellid"],
-					'f2' => sprint('%0.1f', $cell_weight),
-					'f3' => sprint('%0.1f', $cell_temp),
-					'f4' => sprint('%0.1f', $cell_humi),
-					'f5' => sprint('%0.1f', $cell_co2),
-					'f6' => sprint('%0.1f', $cell_nh3),
+					'f2' => sprintf('%0.1f', $cell_weight),
+					'f3' => sprintf('%0.1f', $cell_temp),
+					'f4' => sprintf('%0.1f', $cell_humi),
+					'f5' => sprintf('%0.1f', $cell_co2),
+					'f6' => sprintf('%0.1f', $cell_nh3),
 				);
-			}
-
+			};
 			$response["cell_data"] = $cell_data;
+
+			echo json_encode($response);
+
+			break;
+
+		case "get_inc_weight":
+
+			$result = get_avg_history($cmCode, $_REQUEST["term"], "all", true);
+
+			$response["today_inc_weight"] = $result["chart"];
 
 			echo json_encode($response);
 

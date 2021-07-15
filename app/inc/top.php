@@ -4,6 +4,7 @@
 	$userID = check_str($_REQUEST["userID"]);
 	$userPW = check_str($_REQUEST["userPW"]);
 
+	// farm 정보와 일치하는지 확인
 	$select_sql = "SELECT fFarmid, fName FROM farm WHERE fID = \"$userID\" AND fPW = \"$userPW\"";                          
 	$select_get_data = get_select_data($select_sql);
 
@@ -11,31 +12,37 @@
 	$farmName = $select_get_data[0]["fName"];
 
 	if(!empty($farmID)) {
-		$str_sql = "SELECT fdFarmid, fdDongid, fdName FROM farm_detail WHERE fdFarmid = \"$farmID\"";
-		$get_data = get_select_data($str_sql);
+		// farmid를 통해 farm_detail 농장,동,농장명 가져옴
+		$str_sql  = "SELECT fdFarmid, fdDongid, fdName FROM farm_detail WHERE fdFarmid = \"$farmID\"";
+		$chk_data = get_select_data($str_sql);
 
-		$fd_Name   = $get_data[0]["fdName"];
-		$fd_farmID = $get_data[0]["fdFarmid"];
-		$fd_dongID = $get_data[0]["fdDongid"];
+		$fd_Name = $chk_data[0]["fdName"];
+		$fd_Farm = $chk_data[0]["fdFarmid"];
+		$fd_Dong = $chk_data[0]["fdDongid"];
 
 		$nav_menu = "";
 
-		foreach($get_data as $val) {
-			$str_sql2 = "SELECT be.beStatus, be.beSensorDate, aw.awWeight, cm.cmCode, IFNULL(DATEDIFF(current_date(), cmIndate)+1, 0) as inTERM
-				 		 FROM comein_master AS cm
-						 LEFT JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
-						 LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awFarmid = cm.cmDongid
+		foreach($chk_data as $val) {
+			// farm_detail의 농장id, 동id를 통해 농장마다 소유하고 있는 동 나열
+			$str_sql2 = "SELECT cmCode, IFNULL(DATEDIFF(current_date(), cmIndate)+1, 0) AS inTERM
+				 		 FROM comein_master
 				 		 WHERE cmFarmid='".$val["fdFarmid"]."' AND cmDongid='".$val["fdDongid"]."' AND IFNULL(LENGTH(cmIndate), 0) >= 4 AND IFNULL(LENGTH(cmOutdate), 0) <= 4";
 			$get_data2 = get_select_data($str_sql2);
 
 			$cmCode  	= $get_data2[0]["cmCode"];		 //등록코드
 			$inTERM  	= $get_data2[0]["inTERM"];		 //일령
-			$aWeight 	= $get_data2[0]["awWeight"];	 //평균중량
-			$now_status = $get_data2[0]["beStatus"];	 //I:입추 O:출하 E:에러 W:대기(에러) 상태
-			$final_date = $get_data2[0]["beSensorDate"]; //최종 데이터 수집시간
 
-			$nav_menu .= "<a class='dropdown-item' href='#' data-farmID='".$val["fdFarmid"]."' data-dongID='".$val["fdDongid"]."' data-cmCode='".$cmCode."' data-status='".$now_status."'>".$val["fdName"]."</a>";
+			$nav_menu .= "<a class='dropdown-item' href='#' data-farmID='".$val["fdFarmid"]."' data-dongID='".$val["fdDongid"]."' data-cmCode='".$cmCode."'>".$val["fdName"]."</a>";
 		}
+
+		//상단에 나타낼 정보
+		$str_sql3 = "SELECT beAvgWeight, beStatus, beSensorDate FROM buffer_sensor_status WHERE beFarmid = \"$fd_Farm\" AND beDongid = \"$fd_Dong\"";
+		$get_avg  = get_select_data($str_sql3);
+
+		$aWeight 	= $get_avg[0]["beAvgWeight"];	 //평균중량
+		$avg_weight = sprintf('%0.1f',$aWeight);
+		$now_status = $get_avg[0]["beStatus"];	 	 //I:입추 O:출하 E:에러 W:대기(에러) 상태
+		$final_date = $get_avg[0]["beSensorDate"]; 	 //최종 데이터 수집시간
 	}
 	
 	//메뉴 구성
@@ -196,10 +203,10 @@
 									</div>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">일령 - <?=$inTERM?>일</a>
+									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">일령 - <span id="summary_interm"><?=$inTERM?></span>일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">평체 - <?=$aWeight?>g</a>
+									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">평체 - <?=$avg_weight?>g</a>
 								</li>
 							</ul>
 						</div>
@@ -210,7 +217,7 @@
 						
 							<!--출하상태 표시 div-->
 							<div class="row alarm" style="display : none;">
-								
+								<input type="hidden" name="now_status" value="<?=$now_status?>">
 							</div>
 							
 							<div class="row error_alarm" style="display : none;">

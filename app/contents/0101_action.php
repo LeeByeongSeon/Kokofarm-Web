@@ -2,9 +2,7 @@
 
 include_once("../../common/php_module/common_func.php");
 
-	define("corrDevi",1.28);		  //표준편차보정=>초기화는 *1임(곱하기)
-	define("corrDayWeightPer",1.5);   //일별 증체중량의 보정값=>초기화는 *1임(곱하기)
-
+	define("corrDevi",1.28);	//표준편차보정=>초기화는 *1임(곱하기)
 	define("corrTemp",-1.2);	//저울-온도보정
 	define("corrHumi",7);		//저울-습도보정
 	define("corrCo2", 0);		//저울-CO2보정
@@ -26,8 +24,8 @@ include_once("../../common/php_module/common_func.php");
 		
 			$to_day = date("Y-m-d");
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
-
-			$select_sql = "SELECT aw.*, sf.*, cm.*, be.*, IFNULL(DATEDIFF(aw.awDate, cmIndate) + 1, 0) AS inTERM FROM
+																					//inTERM(awDate), inTerm(current_date()) 수정?될 수 있음 일단 현재일령은 inTerm 으로
+			$select_sql = "SELECT aw.*, sf.*, cm.*, be.*, IFNULL(DATEDIFF(aw.awDate, cmIndate) + 1, 0) AS inTERM, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM
 						(SELECT awFarmid, awDongid, MAX(awDate) AS maxDate
 							FROM avg_weight WHERE awFarmid = \"$farmID \" AND awDongid = \"$dongID\" AND 
 							awDate BETWEEN \"".$yester_day." 00:00:00\" AND \"".$to_day." 23:59:00\"
@@ -37,11 +35,9 @@ include_once("../../common/php_module/common_func.php");
 						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = maw.awFarmid AND sf.sfDongid = maw.awDongid AND sf.sfFeedDate = maw.maxDate
 						JOIN comein_master AS cm ON cmCode = \"$cmCode\"";
 
-			//var_dump($select_sql);
-
 			$get_data = get_select_data($select_sql);
 
-			$curr_interm = $get_data[0]["inTERM"];		 //현재 일령
+			$curr_interm = $get_data[0]["inTerm"];		 //현재 일령
 			$curr_weight = $get_data[0]["awWeight"];	 //현재 평균중량
 			$curr_devi   = $get_data[0]["awDevi"];		 //현재 표준편차
 
@@ -119,10 +115,10 @@ include_once("../../common/php_module/common_func.php");
 				"summary_day_water"		=> $daily_water."L",							/*일일 급수량*/
 				"summary_day_feed"		=> $daily_feed."Kg",							/*일일 급이량*/
 				
-				"curr_avg_temp" 		=> sprintf('%0.1f',$getData[0]["beAvgTemp"] + corrTemp),	/*현재 온도 센서 평균*/
-				"curr_avg_humi" 		=> sprintf('%0.1f',$getData[0]["beAvgHumi"] + corrHumi),	/*현재 습도 센서 평균*/
-				"curr_avg_co2"  		=> sprintf('%0.1f',$getData[0]["beAvgCo2"] + corrCo2),		/*현재 이산화탄소 센서 평균*/
-				"curr_avg_nh3"  		=> sprintf('%0.1f',$getData[0]["beAvgNh3"] + corrNh3),		/*현재 암모니아 센서 평균*/
+				"curr_avg_temp" 		=> sprintf('%0.1f', $getData[0]["beAvgTemp"] + corrTemp),	/*현재 온도 센서 평균*/
+				"curr_avg_humi" 		=> sprintf('%0.1f', $getData[0]["beAvgHumi"] + corrHumi),	/*현재 습도 센서 평균*/
+				"curr_avg_co2"  		=> sprintf('%0.1f', $getData[0]["beAvgCo2"] + corrCo2),		/*현재 이산화탄소 센서 평균*/
+				"curr_avg_nh3"  		=> sprintf('%0.1f', $getData[0]["beAvgNh3"] + corrNh3),		/*현재 암모니아 센서 평균*/
 			);
 			$response["summary"] = $summary;
 			

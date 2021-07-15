@@ -631,7 +631,7 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size)
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
                         "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
                         "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        //"categoryAxis":{ "minPeriod": "hh", "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "categoryAxis":{ "minPeriod": "hh", "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
 	};
 
 	if(is_zoom === "Y"){

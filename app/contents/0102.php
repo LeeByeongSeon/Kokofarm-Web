@@ -7,7 +7,7 @@ include_once("../inc/top.php")
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0 0">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-table text-success"></i>&nbsp;&nbsp;평균중량 표</h2>	
+					<h2 class="font-weight-bold text-primary"><i class="fa fa-file-text-o text-success"></i>&nbsp;&nbsp;평균중량</h2>	
 				</div>
 
 				<div class="widget-toolbar ml-auto" style="height: 25px; line-height: 25px; margin-top: 0.3rem;">
@@ -97,6 +97,7 @@ include_once("../inc/bottom.php")
 	
 		get_avg_data(cmCode,"day");
 		get_cell_data();
+		get_inc_data(cmCode);
 
 	});
 
@@ -106,9 +107,9 @@ include_once("../inc/bottom.php")
 		if(cmCode != null && cmCode != ""){			// "" or null 체크
 
 			var data_arr = {}; 
-			data_arr['oper']   = "get_avg_weight"
-			data_arr["cmCode"] = cmCode;	//등록코드
-			data_arr['comm']   = "view";
+				data_arr['oper']   = "get_avg_weight"
+				data_arr["cmCode"] = cmCode;	//등록코드
+				data_arr['comm']   = "view";
 
 			switch(sub_comm){
 				case "day":
@@ -139,6 +140,7 @@ include_once("../inc/bottom.php")
 		}
 	};
 
+	//현재 저울 상태
 	function get_cell_data(){
 
 		if(cmCode != null && cmCode != ""){
@@ -159,5 +161,27 @@ include_once("../inc/bottom.php")
 			});
 		}
 	};
+
+	//오늘 증체중량
+	function get_inc_data(cmCode){
+
+		if(cmCode != null && cmCode != ""){
+
+			var data_arr = {};
+				data_arr["oper"] = "get_inc_weight";
+				data_arr["cmCode"] = cmCode;
+
+			$.ajax({
+				url:'0102_action.php',
+				data:data_arr,
+				cache:false,
+				type:'post',
+				dataType:'json',
+				success: function(data){
+					draw_bar_line_chart("today_weight_chart", data.today_inc_weight, "N", "N", 12);
+				}
+			});
+		}
+	}
 
 </script>
