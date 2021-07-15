@@ -383,44 +383,50 @@ switch($oper){
         }
 
         // 급이 / 급수
-        $buffer_data[] = array(
-            'f1'  => "급이/급수",							
-            'f2'  => $row["sfFeedDate"] == "" ? "NONE" : $row["sfFeedDate"],
-            'f3'  => make_sub_table( array("사료빈 무게", "일일급이량", "유량센서", "일일급수량"), array($row["sfFeed"], $row["sfDailyFeed"], $row["sfWater"], $row["sfDailyWater"]) )
-        );
+        if($row["sfFarmid"] != ""){
+            $buffer_data[] = array(
+                'f1'  => "급이/급수",							
+                'f2'  => $row["sfFeedDate"] == "" ? "NONE" : $row["sfFeedDate"],
+                'f3'  => make_sub_table( array("사료빈 무게", "일일급이량", "유량센서", "일일급수량"), array($row["sfFeed"], $row["sfDailyFeed"], $row["sfWater"], $row["sfDailyWater"]) )
+            );
+        }
 
         // 외기환경
-        $buffer_data[] = array(
-            'f1'  => "외기환경",							
-            'f2'  => $row["soSensorDate"] == "" ? "NONE" : $row["soSensorDate"],
-            'f3'  => make_sub_table( 
-                        array("온도(℃)", "습도(%)", "CO2(ppm)", "H2S(ppm)", "미세먼지(ppm)", "초미세먼지(ppm)", "풍향", "풍속"), 
-                        array($row["soTemp"], $row["soHumi"], $row["soNh3"], $row["soH2s"], $row["soDust"], $row["soUDust"], $row["soWindDirection"], $row["soWindSpeed"]) 
-                    )
-        );
+        if($row["soFarmid"] != ""){
+            $buffer_data[] = array(
+                'f1'  => "외기환경",							
+                'f2'  => $row["soSensorDate"] == "" ? "NONE" : $row["soSensorDate"],
+                'f3'  => make_sub_table( 
+                            array("온도(℃)", "습도(%)", "CO2(ppm)", "H2S(ppm)", "미세먼지(ppm)", "초미세먼지(ppm)", "풍향", "풍속"), 
+                            array($row["soTemp"], $row["soHumi"], $row["soNh3"], $row["soH2s"], $row["soDust"], $row["soUDust"], $row["soWindDirection"], $row["soWindSpeed"]) 
+                        )
+            );
+        }
 
         // plc 환경
-        $buffer_data[] = array(
-            'f1'  => "plc환경",							
-            'f2'  => $row["bpSensorDate"] == "" ? "NONE" : $row["bpSensorDate"],
-            'f3'  => make_sub_table( 
-                        array("내부온도(℃)", "내부습도(%)", "내부CO2(ppm)", "내부음압", "외부온도(℃)", "외부습도(%)", "외부NH3(ppm)", "외부H2S(ppm)"), 
-                        array(
-                            get_split_avg($row["bpTemp"]), get_split_avg($row["bpHumi"]), get_split_avg($row["bpCo2"]), get_split_avg($row["bpNPre"]), 
-                            get_split_avg($row["bpOutTemp"]), get_split_avg($row["bpOutHumi"]), get_split_avg($row["bpOutNh3"]), get_split_avg($row["bpOutH2s"])
-                        ) 
-                    )
-        );
+        if($row["bpFarmid"] != ""){
+            $buffer_data[] = array(
+                'f1'  => "plc환경",							
+                'f2'  => $row["bpSensorDate"] == "" ? "NONE" : $row["bpSensorDate"],
+                'f3'  => make_sub_table( 
+                            array("내부온도(℃)", "내부습도(%)", "내부CO2(ppm)", "내부음압", "외부온도(℃)", "외부습도(%)", "외부NH3(ppm)", "외부H2S(ppm)"), 
+                            array(
+                                get_split_avg($row["bpTemp"]), get_split_avg($row["bpHumi"]), get_split_avg($row["bpCo2"]), get_split_avg($row["bpNPre"]), 
+                                get_split_avg($row["bpOutTemp"]), get_split_avg($row["bpOutHumi"]), get_split_avg($row["bpOutNh3"]), get_split_avg($row["bpOutH2s"])
+                            ) 
+                        )
+            );
+        }
 
         $response["buffer_data"] = $buffer_data;
 
         $device_cnt_data = array();
         $device_cnt_data["device_cnt_cell"] = count($sensor_map[0]);
         $device_cnt_data["device_cnt_camera"] = 1;
-        $device_cnt_data["device_cnt_plc"] = $row["bpSensorDate"] == "" ? 0 : 1;
-        $device_cnt_data["device_cnt_feeder"] = $row["sfFeedDate"] == "" ? 0 : 1;
-        $device_cnt_data["device_cnt_water"] = $row["sfWaterDate"] == "" ? 0 : 1;
-        $device_cnt_data["device_cnt_out"] = $row["soSensorDate"] == "" ? 0 : 1;
+        $device_cnt_data["device_cnt_plc"] = $row["bpFarmid"] == "" ? 0 : 1;
+        $device_cnt_data["device_cnt_feeder"] = $row["sfFarmid"] == "" ? 0 : 1;
+        $device_cnt_data["device_cnt_water"] = $row["sfFarmid"] == "" ? 0 : 1;
+        $device_cnt_data["device_cnt_out"] = $row["soFarmid"] == "" ? 0 : 1;
 
         $response["device_cnt_data"] = $device_cnt_data;
 

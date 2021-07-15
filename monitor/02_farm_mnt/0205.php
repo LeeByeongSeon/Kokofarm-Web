@@ -65,6 +65,7 @@ include_once("../inc/bottom.php");
 	var code = "";
 	var indate = "";
 	var outdate = "";
+	var intype = "";
 
 	$(document).ready(function(){
 		//Date Picker 선언
@@ -103,9 +104,7 @@ include_once("../inc/bottom.php");
 				{label: "요청시간", 		name: "rcRequestDate",	align:'center', width:"110%"},
 				{label: "동 이름", 			name: "fdName",			align:'center', width:"100%"},
 				{label: "농장",				name: "rcFarmid",		hidden:true, editable:true, editrules:{ required: true, edithidden: true}},
-				{label: "동",				name: "rcDongid",		hidden:true, editable:true, editrules:{ required: true, edithidden: true}, 
-					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
-				},
+				{label: "동",				name: "rcDongid",		hidden:true, editable:true, editrules:{ required: true, edithidden: true}},
 				{label: "입추시간",			name: "cmIndate",			hidden:true,},
 				{label: "입추축종",			name: "cmIntype",			hidden:true,},
 				{label: "진행 상태",		name: "rcStatus",		align:'center', width:"70%"},
@@ -118,16 +117,29 @@ include_once("../inc/bottom.php");
 					edittype:'select', editoptions:{value:<?=$lst_combo_json?>}
 				},
 				{label: "기존 입추시간",	name: "rcPrevDate",		hidden:true},
-				{label: "입추시간",	name: "rcChangeDate",	hidden:true, editable:true, editrules:{ required:false, edithidden:true}, editoptions:{placeholder:"0000-00-00 00:00:00"}
-					// editoptions:{
-					// 	dataInit: function(element) {
-					// 		$(element).datepicker({ format: "yyyy-mm-dd", language: "kr", autoclose: true,});
-					// 	}
-					// }
+				{label: "입추시간",	name: "rcChangeDate",	hidden:true, editable:true, editrules:{ required:false, edithidden:true}, 
+					editoptions:{
+						placeholder:"0000-00-00 00:00:00", 
+						dataInit: function(element) {
+							$(element).on("keyup", function() {
+								let temp = $(this).val();
+								temp = force_input_date(temp);		// 데이트폼 입력 보조 함수
+								$(this).val(temp);
+							});
+						}
+					}
 				},
-				{label: "실측시간",			name: "rcMeasureDate",	align:'center',	editable:true, width:"110%", 
-					editrules:{edithidden:true}, 
-					editoptions:{placeholder:"0000-00-00 00:00:00"}
+				{label: "실측시간",			name: "rcMeasureDate",	align:'center',	editable:true, width:"110%", editrules:{edithidden:true}, 
+					editoptions:{
+						placeholder:"0000-00-00 00:00:00", 
+						dataInit: function(element) {
+							$(element).on("keyup", function() {
+								let temp = $(this).val();
+								temp = force_input_date(temp);		// 데이트폼 입력 보조 함수
+								$(this).val(temp);
+							});
+						}
+					}
 				},
 				{label: "실측값",			name: "rcMeasureVal",	align:'center',		editable:true, editrules:{edithidden: true, number: true}, width:"60%"},
 				{label: "변경전 예측",		name: "rcPrevWeight",	align:'center',		 width:"60%", },
@@ -202,8 +214,6 @@ include_once("../inc/bottom.php");
 						});
 					}, "승인", "거절");
 				}
-				//show_data_modal(data_id);
-                //$("#del_jqGridSlave").click();
 			},
 			onSelectRow: function(id){		  },
 			loadComplete:function(data){
@@ -220,13 +230,58 @@ include_once("../inc/bottom.php");
 					$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true}} );
 					$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:true}} );
 
+					$("#jqgrid").setColProp('rcChangeLst', {editoptions:{readonly:true}} );
+					$("#jqgrid").setColProp('rcChangeDate', {editoptions:{readonly:true}} );
+					$("#jqgrid").setColProp('rcMeasureDate', {editoptions:{readonly:true}} );
+					$("#jqgrid").setColProp('rcMeasureVal', {editoptions:{readonly:true}} );
+
+					let row_id = $("#jqgrid").jqGrid("getGridParam", "selrow");
+					let row_data = $("#jqgrid").jqGrid("getRowData", row_id);
+
+					let comm = row_data.rcCommand;
+
+					// 요청된 명령에 대해서만 수정가능하게 조정
+					if(comm.indexOf("Opt") != -1) {
+						$("#jqgrid").setColProp('rcMeasureDate', {editoptions:{readonly:false}} );
+						$("#jqgrid").setColProp('rcMeasureVal', {editoptions:{readonly:false}} );
+					}
+
+					if(comm.indexOf("Day") != -1) {
+						$("#jqgrid").setColProp('rcChangeDate', {editoptions:{readonly:false}} );
+					}
+
+					if(comm.indexOf("Lst") != -1) {
+						$("#jqgrid").setColProp('rcChangeLst', {editoptions:{readonly:false}} );
+					}
+
 				},
 				beforeSubmit:function(postdata, formid){
-					let valid_change_date = date_valid_check(postdata.rcChangeDate);
-					let valid_measure_date = date_valid_check(postdata.rcMeasureDate);
+					if(postdata.rcChangeDate != ""){
+						let valid_change_date = date_valid_check(postdata.rcChangeDate);
+						if(!valid_change_date[0]) {return valid_change_date;} 
+					}
 
-					if(valid_change_date[0]) {return valid_change_date[1];} 
-					if(valid_measure_date[0]) {return valid_measure_date[1];} 
+					if(postdata.rcMeasureDate != ""){
+						let valid_measure_date = date_valid_check(postdata.rcMeasureDate);
+						if(!valid_measure_date[0]) {return valid_measure_date;} 
+					}
+
+					let change_to_now = get_time_diff(postdata.rcChangeDate, get_now_datetime());			// 실측시간 - 현재시간 차이
+					if(change_to_now < 60 * 30){
+						return [false, "입추 후 최소 30분이 지난 후에 입력해주세요"];
+					}
+
+					if(postdata.rcMeasureVal > 500 && postdata.rcMeasureVal < 2500){	// 실측값이 존재하는 경우
+						let meas_to_now = get_time_diff(postdata.rcMeasureDate, get_now_datetime());			// 실측시간 - 현재시간 차이
+						if(meas_to_now < 60 * 30){		// 30분 이전의 실측 데이터만 입력 - 미래 데이터 입력 방지
+							return [false, "실측 후 최소 30분이 지난 후에 입력해주세요"];
+						}
+					}
+					else{
+						if(postdata.rcMeasureVal != 0){			// 0이면 재산출 작업이 아닌것으로 판단
+							return [false, "유효한 값을 입력해주세요"]; 
+						}
+					}
 
 					return [true, ""];
 				},
@@ -241,15 +296,6 @@ include_once("../inc/bottom.php");
 						return false;
 					}
 
-					let keys = selected_id.split("|");
-					let farm = keys[0];
-					let dong = keys.length > 1 ? keys[1] : "01";
-
-					let temp = $("#" + farm + "\\|" + dong + "");
-					let code = $(temp).attr("cmCode");
-					let indate = $(temp).attr("cmIndate");
-					let outdate = $(temp).attr("cmOutDate");
-
 					//alert("selected_id : " + selected_id + "\ncode : " + code + "\nindate : " + indate + "\noudate : " + outdate);
 
 					if(outdate.length > 2){
@@ -257,26 +303,76 @@ include_once("../inc/bottom.php");
 						return false;
 					}
 
+					let keys = selected_id.split("|");
+					let farm = keys[0];
+					let dong = keys.length > 1 ? keys[1] : "01";
+
 					$("#jqgrid").setColProp('rcFarmid', {editoptions:{readonly:true, defaultValue:farm}} );
 					$("#jqgrid").setColProp('rcDongid', {editoptions:{readonly:true, defaultValue:dong}} );
 
-					$("#jqgrid").setColProp('rcChangeDate', {editoptions:{readonly:true, defaultValue:indate}} );
+					$("#jqgrid").setColProp('rcChangeDate', {editoptions:{defaultValue:indate}} );
 					
 				},
 				beforeSubmit:function(postdata, formid){
 
+					let comm = "";
+
 					if(postdata.rcChangeDate != ""){
 						let valid_change_date = date_valid_check(postdata.rcChangeDate);
-						if(valid_change_date[0]) {return valid_change_date[1];} 
+						if(!valid_change_date[0]) {return valid_change_date;} 
 					}
 
 					if(postdata.rcMeasureDate != ""){
 						let valid_measure_date = date_valid_check(postdata.rcMeasureDate);
-						if(valid_measure_date[0]) {return valid_measure_date[1];} 
+						if(!valid_measure_date[0]) {return valid_measure_date;} 
 					}
 
-					let row_id = $("#jqgrid").jqGrid("getGridParam", "selrow");
-					let row_data = $("#jqgrid").jqGrid("getRowData", row_id);
+					// 실측값 입력 판단
+					if(postdata.rcMeasureVal > 500 && postdata.rcMeasureVal < 2500){	// 실측값이 존재하는 경우
+						let meas_to_indate = get_time_diff(indate, postdata.rcMeasureDate);		// 입추시간 - 실측시간 차이
+						let meas_to_now = get_time_diff(postdata.rcMeasureDate, get_now_datetime());			// 실측시간 - 현재시간 차이
+
+						if(meas_to_indate < (60 * 60 * 24) * 20){	// 20일 이후의 실측값만 입력 받음
+							return [false, "20일령 이후의 실측값만 입력 가능"];
+						}
+
+						if(meas_to_now < 60 * 30){		// 30분 이전의 실측 데이터만 입력 - 미래 데이터 입력 방지
+							return [false, "실측 후 최소 30분이 지난 후에 입력해주세요"];
+						}
+
+						comm += "Opt|";
+
+					}
+					else{
+						if(postdata.rcMeasureVal != 0){			// 0이면 재산출 작업이 아닌것으로 판단
+							return [false, "유효한 값을 입력해주세요"]; 
+						}
+					}
+
+					// 입추일자 변경 판단
+					if(postdata.rcChangeDate.substr(0, 17) != indate.substr(0, 17)){
+						let change_to_now = get_time_diff(postdata.rcChangeDate, get_now_datetime());			// 실측시간 - 현재시간 차이
+						if(change_to_now < 60 * 30){
+							return [false, "입추 후 최소 30분이 지난 후에 입력해주세요"];
+						}
+						comm += "Day|";
+					}
+
+					// 축종 변경 판단
+					if(postdata.rcChangeLst != intype){
+						comm += "Lst|";
+					}
+
+					if(comm.length > 2){
+						comm = comm.substr(0, comm.length - 1);
+						postdata["rcCommand"] = comm;
+						postdata["rcCode"] = code;
+						postdata["rcPrevDate"] = indate;
+						postdata["rcPrevLst"] = intype;
+					}
+					else{
+						return [false, "변경된 값이 존재하지 않습니다"];
+					}
 
 					return [true, ""];
 				},
@@ -306,12 +402,15 @@ include_once("../inc/bottom.php");
 
 		switch(action){
 			default:
-				if(action.split("|").length == 2){
-					let temp = $("#" + action.replace("|", "\\|") + "");
-					code = $(temp).attr("cmCode");
-					indate = $(temp).attr("cmIndate");
-					outdate = $(temp).attr("cmOutDate");
-				}
+				let keys = selected_id.split("|");
+				let farm = keys[0];
+				let dong = keys.length > 1 ? keys[1] : "01";
+
+				let temp = $("#" + farm + "\\|" + dong + "");
+				code = $(temp).attr("cmCode");
+				indate = $(temp).attr("cmIndate");
+				outdate = $(temp).attr("cmOutDate");
+				intype = $(temp).attr("cmIntype");
 
 				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
 				break;

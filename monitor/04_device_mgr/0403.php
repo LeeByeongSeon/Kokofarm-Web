@@ -6,6 +6,11 @@ include_once("../../common/php_module/common_func.php");
 // 동 선택 콤보박스
 $dong_combo_json = make_jqgrid_combo_num(32);
 
+$init_farm = isset($_REQUEST["farmID"]) ? $_REQUEST["farmID"] : "";
+$init_dong = isset($_REQUEST["dongID"]) ? $_REQUEST["dongID"] : "";
+
+$init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : ""; 
+
 ?>
 
 <!--PLC 관리-->
@@ -43,6 +48,9 @@ include_once("../inc/bottom.php");
 ?>
 
 <script language="javascript">
+
+	var init_id = "<?=$init_id?>";
+
 	$(document).ready(function(){
 
 		get_grid_data();
@@ -147,6 +155,12 @@ include_once("../inc/bottom.php");
 
 	// 트리뷰 버튼 클릭시 리로드 이벤트
 	function act_grid_data(action){
+
+		if(action == "" && init_id != ""){
+			click_tree_by_id(act_grid_data, init_id);
+			init_id = "";
+			return;
+		}
 
 		switch(action){
 			default:
