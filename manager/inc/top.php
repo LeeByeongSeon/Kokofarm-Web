@@ -13,6 +13,7 @@
 		array("0102.php", "농장별 세부현황"),
 		array("0103.php", "농장별 출하내역"),
 		array("0104.php", "재산출 요청 관리"),
+		array("1001.php", "설정")
 	);
 
 	$curr_url = $_SERVER["PHP_SELF"];
