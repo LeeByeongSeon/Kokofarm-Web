@@ -354,7 +354,8 @@ switch($oper){
 
         //카메라
         $img_url = "../../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
-        $summary_data["summary_camera"] = "<img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg');\" onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">";
+        $summary_data["summary_camera"] = "<img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
+                                        <img id='cameraIcon' src='../images/play.png' class='fadeIn animated' onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">";
 
         // $summary_data["summary_indate"] = $row["cmIndate"];
         // $summary_data["summary_outdate"] = $row["cmOutdate"];

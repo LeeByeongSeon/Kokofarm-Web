@@ -229,7 +229,7 @@ return
 - ret : 콤보박스 html
 */
 function make_combo_by_query($query, $form_name, $default_name, $field, $selected = ""){
-	$ret = "<select class=\"form-control\" name=\"$form_name\">";
+	$ret = "<select class=\"form-control w-auto\" name=\"$form_name\">";
 
 	if($default_name != ""){
 		$ret .= "<option value=\"\">$default_name</option>";

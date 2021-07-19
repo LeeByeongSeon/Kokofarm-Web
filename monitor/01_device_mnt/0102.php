@@ -11,6 +11,17 @@ $init_dong = isset($_REQUEST["dongID"]) ? $_REQUEST["dongID"] : "";
 $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : ""; 
 
 ?>
+
+<style>
+#cameraIcon {
+	position:absolute;
+	max-width:100%; max-height:100%;
+	width:auto; height:auto;
+	margin:auto;
+	top:0; bottom:0; left:15px; right:0;
+}
+</style>
+
 <!--농장정보 & 이슈사항-->
 <article class="col-xl-10 float-right">
 	<div class="row">
@@ -25,34 +36,31 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 				<div class="widget-body">
 
 					<div class="col-md-6 no-padding">
-						<div style="padding-top:0.2rem; padding-bottom:0.8rem; font-size: 15px">
-							<b id="summary_name">망성농장-01동 (KF0013-01) </b>
+						<div class="text-center text-secondary">
+							<h2 class="font-weight-bold p-2 no-margin"><span id="summary_name">망성농장-01동 (KF0013-01) </span></h2>
 						</div>
 
 						<div>
-							<div class="well" style="padding:15px;">
+							<div class="well">
 								<div class="col-md-12 no-padding">
-									<div class="col-md-4 no-padding">
-										<img id="hen_img" src="../images/hen-scale1.png" width="100%" height="100px">
-										<div style="position:absolute; top:34px; font-size:16px; color:white; width:100%; text-align:center;">
-											<span id="summary_days">30</span>일령
-										</div>
+									<div class="col-md-4 no-padding text-center">
+										<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png">
+										<div class="carousel-caption"><h2 class="p-2 no-margin font-weight-bold"> <span id="summary_days"></span>일 </h2></div>
 									</div>
 									<div class="col-md-8 no-padding">
-										<div style="text-align:center; font-weight:bold; font-size:15px">평균중량</div>
-										<div id="summary_avg" style="text-align:center; font-weight:bold; font-size:24px; color:#b94a48">1020</div>
+										<div class="text-center font-weight-bold"><h1 class="text-center font-weight-bold no-margin no-padding"><small class="font-weight-bold">평균중량</small><br><span class="text-danger" id="summary_avg"></span></h1></div>
 
-										<div id="summary_devi" class="col-md-6 no-padding" style="text-align:center; font-weight:bold;">표준편차<br>13.1</div>
-										<div id="summary_inc" class="col-md-6 no-padding" style="text-align:center; font-weight:bold;">일일증체량<br>40</div>
+										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_devi">13.1</span></h6></div>
+										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_inc">40</span></h6></div>
 									</div>
 								</div>
 
 								<div class="col-md-12 no-padding">
 									<div class="col-md-4 no-padding">
-										<div id="summary_type" style="text-align:center;">육계 20000수 </div>
+										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_type">육계 20000수 </span></h6></div>
 									</div>
 									<div class="col-md-8 no-padding">
-										<div id="summary_comein" style="text-align:center;">입추일자 : 2021-06-10 </div>
+										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_comein">입추일자 : 2021-06-10 </span></h6></div>
 
 										<div id="summary_indate" style="display:none;"></div>
 										<div id="summary_outdate" style="display:none;"></div>
