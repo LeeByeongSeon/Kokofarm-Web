@@ -15,7 +15,11 @@
     const TARGET = "81";
     const TAIL = "EE";
 
-    // 패킷 생성
+    //--------------------------------------------------------
+	// 패킷 생성
+	// $comm : 명령 바이트 (1 Byte)
+	// $data : data 바이트 (n Byte)
+	//--------------------------------------------------------
     function make_packet($comm, $data){
         $ret = "";
 
@@ -33,302 +37,191 @@
 
     }
 
-    
-	
 	//--------------------------------------------------------
-	// 영점 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	// $cellID : 저울번호		입력형식 : "01" 
-	//--------------------------------------------------------
-	function conv_itr_zero_set($farmID, $dongID, $cellID){
-		$ret = "";
-		$itr_head = "AA815405";
-		$itr_comm = "46";		//ascii 코드 F = 0x46
-		$itr_crc = "";
-		$itr_tail = "EE";
-
-		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );	//저울 
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-		$itr_cellID = get_cell($cellID, "3");
-
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm . $itr_cellID;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=16; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
-
-		return $ret;
-	}
-	
-	//--------------------------------------------------------
-	// 로그데이터 삭제 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_itr_log_delete($farmID, $dongID){
-		$ret = "";
-		$itr_head = "AA815304";
-		$itr_comm = "53";		//ascii 코드 S = 0x53
-		$itr_crc = "";
-		$itr_tail = "EE";
-
-		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=14; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
-
-		return $ret;
-	}
-
-	//--------------------------------------------------------
-	// 원격업데이트 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_itr_ctrl_update($farmID, $dongID){
-		$ret = "";
-		$itr_head = "AA815304";
-		$itr_comm = "55";		//ascii 코드 U = 0x53
-		$itr_crc = "";
-		$itr_tail = "EE";
-
-		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=14; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
-
-		return $ret;
-	}
-
-	//--------------------------------------------------------
-	// 통합제어기 펌웨어 확인 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_itr_ctrl_firmware_check($farmID, $dongID){
-		$ret = "";
-		$itr_head = "AA816D04";
-		$itr_comm = "56";		//ascii 코드 V = 0x56
-		$itr_crc = "";
-		$itr_tail = "EE";
-
-		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=14; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
-
-		return $ret;
-	}
-
-	//--------------------------------------------------------
-	// 저울 펌웨어 확인 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_itr_cell_firmware_check($farmID, $dongID){
-		return conv_remote_check("4D", $farmID, $dongID);
-	}
-
-	//--------------------------------------------------------
-	// 팬설정 확인 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_fan_check($farmID, $dongID){
-		return conv_remote_check("4F", $farmID, $dongID);
-	}
-
-	//--------------------------------------------------------
-	// 통합제어기 펌웨어 업데이트 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	// "57"
-	//--------------------------------------------------------
-	function conv_update_firmware($farmID, $dongID){
-		return conv_remote_setting("57", $farmID, $dongID);
-	}
-
-	//--------------------------------------------------------
-	// 재부팅 명령 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	// "52"
-	//--------------------------------------------------------
-	function conv_reboot($farmID, $dongID){
-		return conv_remote_setting("52", $farmID, $dongID);
-	}
-
-	//--------------------------------------------------------
-	// 팬 동작온도 설정 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	// "54"
-	//--------------------------------------------------------
-	function conv_fan_temp_start($farmID, $dongID, $temp){
-		return conv_remote_setting_with_temp("54", $farmID, $dongID, $temp);
-	}
-
-	//--------------------------------------------------------
-	// 팬 정지온도 설정 변환 함수
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	// "4F"
-	//--------------------------------------------------------
-	function conv_fan_temp_stop($farmID, $dongID, $temp){
-		return conv_remote_setting_with_temp("4F", $farmID, $dongID, $temp);
-	}
-
-	//--------------------------------------------------------
-	// 원격 설정 명령
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_remote_setting($itr_comm, $farmID, $dongID){
-		$ret = "";
-		$itr_head = "AA815304";
-		//$itr_comm = "52";		//ascii 코드 R = 0x52
-		$itr_crc = "";
-		$itr_tail = "EE";
-
-		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=14; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
-
-		return $ret;
-	}
-
-	//--------------------------------------------------------
-	// 원격 설정 명령 + 온도값
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_remote_setting_with_temp($itr_comm, $farmID, $dongID, $temp){
-		$ret = "";
-		$itr_head = "AA815305";
-		//$itr_comm = "52";		//ascii 코드 R = 0x52
-		$itr_crc = "";
-		$itr_tail = "EE";
-
-		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-
-		$itr_temp = strtoupper( sprintf("%02s", dechex( (int)$temp ) ) );
-
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm . $itr_temp;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=16; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
-
-		return $ret;
-	}
-
-	//--------------------------------------------------------
-	// 원격 조회명령
-	// $farmID : 농장		입력형식 : "KF0001"
-	// $dongID : 동			입력형식 : "01"
-	//--------------------------------------------------------
-	function conv_remote_check($itr_comm, $farmID, $dongID){
-		$ret = "";
-		$itr_head = "AA816D04";
-		//$itr_comm = "4D";		//ascii 코드 M = 0x4D
-		$itr_crc = "";
-		$itr_tail = "EE";
-
-		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=14; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
-
-		return $ret;
-	}
-
-	//--------------------------------------------------------
-	// 원격 조회명령 + 저울까지
+	// 저울 원격 설정 명령 (0x54)
+	// $sub : 서브명령
 	// $farmID : 농장		입력형식 : "KF0001"
 	// $dongID : 동			입력형식 : "01"
 	// $cellID : 저울		입력형식 : "01"
 	//--------------------------------------------------------
-	function conv_remote_check_with_cell($itr_comm, $farmID, $dongID, $cellID){
+	function comm_remote_set_cell($sub, $farmID, $dongID, $cellID, $value = ""){
 		$ret = "";
-		$itr_head = "AA816D05";
-		//$itr_comm = "4D";		//ascii 코드 M = 0x4D
-		$itr_crc = "";
-		$itr_tail = "EE";
 
 		$farmID = substr($farmID, 2, 4);
-		$itr_farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
-		$itr_dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
-		$itr_cellID = get_cell($cellID, "0");
+		$farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
+		$dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
+		$cellID = get_ascii_number($cellID[1]);		// 원퍼스트 펌웨어 최대갯수가 10개이고, 아스키로 처리됨
 
-		$ret = $itr_head . $itr_farmID . $itr_dongID . $itr_comm . $itr_cellID;
-		
-		$itr_crc = substr($ret, 2, 2);
-
-		for($i=4; $i<=16; $i=$i+2){
-			$itr_crc = make_crc($itr_crc, substr($ret, $i, 2));
-		}
-		
-		$ret = $ret . $itr_crc . $itr_tail;
+		$data = $farmID . $dongID . $sub . $cellID . get_ascii_number($value);
+		$ret = make_packet("54", $data);
 
 		return $ret;
+	}
+
+	//--------------------------------------------------------
+	// GW 원격 설정 명령 (0x53)
+	// $sub : 서브명령
+	// $farmID : 농장		입력형식 : "KF0001"
+	// $dongID : 동			입력형식 : "01"
+	//--------------------------------------------------------
+	function comm_remote_set_gw($sub, $farmID, $dongID, $value = ""){
+		$ret = "";
+
+		$farmID = substr($farmID, 2, 4);
+		$farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
+		$dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
+
+		$data = $farmID . $dongID . $sub . get_ascii_number($value);
+		$ret = make_packet("53", $data);
+
+		return $ret;
+	}
+
+	//--------------------------------------------------------
+	// GW 원격 조회 명령 (0x6D)
+	// $sub : 서브명령
+	// $farmID : 농장		입력형식 : "KF0001"
+	// $dongID : 동			입력형식 : "01"
+	//--------------------------------------------------------
+	function comm_remote_info_gw($sub, $farmID, $dongID, $cellID = ""){
+		$ret = "";
+
+		$farmID = substr($farmID, 2, 4);
+		$farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
+		$dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
+
+		$cellID = $cellID != "" ? get_ascii_number($cellID[1]) : "";
+
+		$data = $farmID . $dongID . $sub . $cellID;
+		$ret = make_packet("6D", $data);
+
+		return $ret;
+	}
+
+	// 실제 사용할 명령 변환 함수 모음 ---------------------------------------------------------
+	// param
+	// $sub : 서브명령
+	// $farmID : 농장			입력형식 : "KF0001"
+	// $dongID : 동				입력형식 : "01"
+	// $cellID : 저울번호		입력형식 : "01" 
+	// $value : 온도 및 기타 설정값 입력
+	//--------------------------------------------------------
+
+	/* 저울 설정 명령*/
+	//--------------------------------------------------------
+	// 영점 설정 
+	//--------------------------------------------------------
+    function cell_zero_set($farmID, $dongID, $cellID){
+		return comm_remote_set_cell("46", $farmID, $dongID, $cellID);		// 0x46 (F)
+	}
+
+	//--------------------------------------------------------
+	// 500점 설정
+	//--------------------------------------------------------
+	function cell_500_set($farmID, $dongID, $cellID){
+		return comm_remote_set_cell("47", $farmID, $dongID, $cellID, "500");		// 0x47 (G)
+	}
+
+	//--------------------------------------------------------
+	// 온도 보정값 설정
+	//--------------------------------------------------------
+	function cell_temp_set($farmID, $dongID, $cellID, $value){
+		return comm_remote_set_cell("54", $farmID, $dongID, $cellID, $value);		// 0x54 (T)
+	}
+
+	//--------------------------------------------------------
+	// 습도 보정값 설정
+	//--------------------------------------------------------
+	function cell_humi_set($farmID, $dongID, $cellID, $value){
+		return comm_remote_set_cell("48", $farmID, $dongID, $cellID, $value);		// 0x48 (H)
+	}
+
+	//--------------------------------------------------------
+	// 이산화탄소 보정값 설정
+	//--------------------------------------------------------
+	function cell_co2_set($farmID, $dongID, $cellID, $value){
+		return comm_remote_set_cell("50", $farmID, $dongID, $cellID, $value);		// 0x50 (P)
+	}
+
+	//--------------------------------------------------------
+	// 암모니아 보정값 설정
+	//--------------------------------------------------------
+	function cell_nh3_set($farmID, $dongID, $cellID, $value){
+		return comm_remote_set_cell("4D", $farmID, $dongID, $cellID, $value);		// 0x4D (M)
+	}
+
+
+	/* GW 설정 명령*/
+	//--------------------------------------------------------
+	// 로그데이터 삭제
+	//--------------------------------------------------------
+    function gw_log_delete($farmID, $dongID){
+		return comm_remote_set_gw("53", $farmID, $dongID);		// 0x53 (S)
+	}
+
+	//--------------------------------------------------------
+	// 업데이트 시작
+	//--------------------------------------------------------
+    function gw_update($farmID, $dongID){
+		return comm_remote_set_gw("57", $farmID, $dongID);		// 0x57 (W)
+	}
+
+	//--------------------------------------------------------
+	// 재부팅
+	//--------------------------------------------------------
+    function gw_restart($farmID, $dongID){
+		return comm_remote_set_gw("52", $farmID, $dongID);		// 0x52 (R)
+	}
+
+	//--------------------------------------------------------
+	// 팬 동작온도 설정
+	//--------------------------------------------------------
+    function gw_fan_on_temp($farmID, $dongID, $value){
+		return comm_remote_set_gw("54", $farmID, $dongID, $value);		// 0x54 (T)
+	}
+
+	//--------------------------------------------------------
+	// 팬 정지온도 설정
+	//--------------------------------------------------------
+    function gw_fan_off_temp($farmID, $dongID, $value){
+		return comm_remote_set_gw("4F", $farmID, $dongID, $value);		// 0x4F (O)
+	}
+
+
+	/* GW 조회 명령*/
+	//--------------------------------------------------------
+	// GW 버전 조회
+	//--------------------------------------------------------
+    function gw_version_info($farmID, $dongID){
+		return comm_remote_info_gw("56", $farmID, $dongID);		// 0x56 (V)
+	}
+
+	//--------------------------------------------------------
+	// IoT저울 버전 조회
+	//--------------------------------------------------------
+    function cell_version_info($farmID, $dongID, $cellID){
+		return comm_remote_info_gw("4D", $farmID, $dongID, $cellID);		// 0x4D (M)
+	}
+
+	//--------------------------------------------------------
+	// 저울 중량 데이터 조회
+	//--------------------------------------------------------
+    function cell_weight_info($farmID, $dongID, $cellID){
+		return comm_remote_info_gw("57", $farmID, $dongID, $cellID);		// 0x57 (W)
+	}
+
+	//--------------------------------------------------------
+	// 저울 센서 데이터 조회
+	//--------------------------------------------------------
+    function cell_sensor_info($farmID, $dongID, $cellID){
+		return comm_remote_info_gw("53", $farmID, $dongID, $cellID);		// 0x53 (S)
+	}
+
+	//--------------------------------------------------------
+	// 팬 정보 조회
+	//--------------------------------------------------------
+    function gw_fan_info($farmID, $dongID, $cellID){
+		return comm_remote_info_gw("4F", $farmID, $dongID);		// 0x4F (O)
 	}
 
 	//--------------------------------------------------------
@@ -347,142 +240,52 @@
 	}
 
 	//--------------------------------------------------------
-	// 저울번호 얻어오기
+	// 숫자를 아스키로 변환
 	//--------------------------------------------------------
-	function get_cell($cellID, $append){
-		$ret = (int)$cellID;
-		if($ret <= 10){
-			$ret = strtoupper(dechex($ret));
+	function get_ascii_number($value){
+		$ascii = "";
+		for($i=0; $i<strlen($value); $i++){
+			$ascii .= "3" . $value[$i];
 		}
-		$ret = $append . $ret;
 
-		return $ret;
+		return $ascii;
 	}
 
-	//var_dump($_REQUEST);
 
-	if(!empty($_REQUEST["farmID"])){
-		
-		$farmID = $_REQUEST["farmID"];
-		$dongID = $_REQUEST["dongID"];
-		$cellID = $_REQUEST["cellID"];
-		$temp = $_REQUEST["temp"];
+	// 실제 웹소켓 전송 부
+	function send_packet($send){
+		$host = "192.168.0.70";
+		$port = 3300;
 
-		$comm = $_REQUEST["comm"];
+		$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("error : create fail");
+		$conn = socket_connect($sock, $host, $port) or die("error : connect fail");
 
-		if(is_numeric($farmID) && is_numeric($dongID) && is_numeric($cellID) && is_numeric($temp) && !empty($comm)){
-			$farmID = "KF" . sprintf("%04s", $farmID);
-			$dongID = sprintf("%02s", $dongID );
-			$cellID = sprintf("%02s", $cellID );
-			
-			$send = "";
+		socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 4, 'usec' => 0));
 
-			switch($_REQUEST["comm"]){
-				case "G/W버전":
-					$send = conv_itr_ctrl_firmware_check($farmID, $dongID);
-					break;
-				case "저울버전":
-					$send = conv_itr_cell_firmware_check($farmID, $dongID);
-					break;
-				case "로그삭제":
-					$send = conv_itr_log_delete($farmID, $dongID);
-					break;
-				case "저울영점":
-					$send = conv_itr_zero_set($farmID, $dongID, $cellID);
-					break;
-				case "재부팅":
-					$send = conv_reboot($farmID, $dongID);
-					break;
-				case "업데이트":
-					$send = conv_update_firmware($farmID, $dongID);
-					break;
-				case "팬설정조회" :
-					$send = conv_fan_check($farmID, $dongID);
-					break;
-				case "팬동작온도" :
-					$send = conv_fan_temp_start($farmID, $dongID, $temp);
-					break;
-				case "팬정지온도" :
-					$send = conv_fan_temp_stop($farmID, $dongID, $temp);
-					break;
-				case "저울개별조회" :
-					$send = conv_remote_check_with_cell("57", $farmID, $dongID, $cellID);
-					break;
-				case "저울환경조회" :
-					$send = conv_remote_check("53", $farmID, $dongID);
-					break;
-			}
+		$ret = "";
+		$len = strlen($send);
 
-			//var_dump($send);
-
-			$port = 3300;
-			//$host = "192.168.0.60";
-			$host = "kokofarm.co.kr";
-
-			$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("error : create fail");
-			$conn = socket_connect($sock, $host, $port) or die("error : connect fail");
-			
-			$ret = "";
-			$len = strlen($send);
-
-			for($i=0; $i<$len; $i+=2){
-				//$retstr .= "\x" . substr($comm, $i, 2);
-				$ret .= pack("H*", substr($send, $i, 2));
-			}
-			
-			try{
-				socket_write($sock, $ret, $len/2) or die("error : write fail");
-
-				$receive = socket_read($sock, 1024) or die("error : read fail");	//20-10-19 농장, 동 조회 패킷 날라오므로 회피해야함
-
-				$receive = socket_read($sock, 1024) or die("error : read fail");
-				$receive = substr($receive, 2);
-				$receive = json_decode($receive);
-
-				var_dump($receive);
-
-				socket_close($sock);
-			}
-			catch(Exception $e){
-				echo $e->getMessage();
-			}
+		for($i=0; $i<$len; $i+=2){
+			$ret .= pack("H*", substr($send, $i, 2));
 		}
-	}
-	else{
-		
+
+		try{
+			socket_write($sock, $ret, $len/2) or die("error : write fail");
+
+			$receive = socket_read($sock, 1024) or die("error : read fail");	//20-10-19 농장, 동 조회 패킷 날라오므로 회피해야함
+
+			$receive = socket_read($sock, 1024) or die("error : read fail");
+			$receive = substr($receive, 2);
+			$receive = json_decode($receive);
+
+			socket_close($sock);
+		}
+		catch(Exception $e){
+			$receive = $e->getMessage();
+		}
+
+		return $receive;
+
 	}
 
 ?>
-
-<!-- <form action="kkf_itr.php" method="post">
-	<p>
-		<strong>농장</strong>
-		<input type="text" name="farmID" value="<? echo $_REQUEST["farmID"] ?>">
-	</p>
-	<p>
-		<strong>동&nbsp&nbsp&nbsp</strong>
-		<input type="text" name="dongID" value="<? echo $_REQUEST["dongID"] ?>">
-	</p>
-	<p>
-		<strong>저울</strong>
-		<input type="text" name="cellID" value="<? echo $_REQUEST["cellID"] ?>">
-	</p>
-	<p>
-		<strong>온도값</strong>
-		<input type="text" name="temp" value="<? echo $_REQUEST["temp"] ?>">
-	</p>
-	<p>
-		<input type="submit" name="comm" value="G/W버전">
-		<input type="submit" name="comm" value="저울버전">
-		<input type="submit" name="comm" value="로그삭제">
-		<input type="submit" name="comm" value="저울영점">
-		<input type="submit" name="comm" value="재부팅">
-		<input type="submit" name="comm" value="업데이트">
-		<input type="submit" name="comm" value="팬설정조회">
-		<input type="submit" name="comm" value="팬동작온도">
-		<input type="submit" name="comm" value="팬정지온도">
-		<input type="submit" name="comm" value="저울개별조회">
-		<input type="submit" name="comm" value="저울환경조회">
-	</p>
-	
-</form> -->

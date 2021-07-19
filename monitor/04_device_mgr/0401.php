@@ -11,6 +11,13 @@ $init_dong = isset($_REQUEST["dongID"]) ? $_REQUEST["dongID"] : "";
 
 $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : ""; 
 
+include_once("../../common/php_module/socket_func.php");
+//var_dump(cell_zero_set("KF0011", "01", "01"));
+//var_dump(cell_sensor_info("KF0018", "01", "01"));
+
+//$test = send_packet(cell_version_info("KF0006", "01", "02"));
+//var_dump($test);
+
 ?>
 
 <!--IoT 저울 관리-->
