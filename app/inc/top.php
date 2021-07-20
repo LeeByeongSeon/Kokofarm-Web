@@ -4,45 +4,30 @@
 	$userID = check_str($_REQUEST["userID"]);
 	$userPW = check_str($_REQUEST["userPW"]);
 
-	// farm 정보와 일치하는지 확인
-	$select_sql = "SELECT fFarmid, fName FROM farm WHERE fID = \"$userID\" AND fPW = \"$userPW\"";                          
-	$select_get_data = get_select_data($select_sql);
+	// 농장 정보 확인
+	$select_query = "SELECT f.fID, f.fPW, f.fName, fd.*, be.beStatus, be.beComeinCode, be.beAvgWeight, be.beAvgWeightDate, rc.rcStatus, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
+					JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
+					JOIN buffer_sensor_status AS be ON be.beFarmid = fd.fdFarmid AND be.beDongid = fd.fdDongid 
+					JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
+					LEFT JOIN request_calculate AS rc ON rc.rcCode = be.beComeinCode AND rcStatus IN ('R', 'A', 'W', 'C') 
+					WHERE f.fID = \"" .$userID. "\" AND f.fPW = \"" .$userPW. "\"";
 
-	$farmID   = $select_get_data[0]["fFarmid"];
-	$farmName = $select_get_data[0]["fName"];
+	$init_data = get_select_data($select_query);
 
-	if(!empty($farmID)) {
-		// farmid를 통해 farm_detail 농장,동,농장명 가져옴
-		$str_sql  = "SELECT fdFarmid, fdDongid, fdName FROM farm_detail WHERE fdFarmid = \"$farmID\"";
-		$chk_data = get_select_data($str_sql);
+	$fName = $init_data[0]["fName"];
+	
+	if(count($init_data) > 0){		// 데이터가 있으면
+		$select_html = "";
 
-		$fd_Name = $chk_data[0]["fdName"];
-		$fd_Farm = $chk_data[0]["fdFarmid"];
-		$fd_Dong = $chk_data[0]["fdDongid"];
-
-		$nav_menu = "";
-
-		foreach($chk_data as $val) {
-			// farm_detail의 농장id, 동id를 통해 농장마다 소유하고 있는 동 나열
-			$str_sql2 = "SELECT cmCode, IFNULL(DATEDIFF(current_date(), cmIndate)+1, 0) AS inTERM
-				 		 FROM comein_master
-				 		 WHERE cmFarmid='".$val["fdFarmid"]."' AND cmDongid='".$val["fdDongid"]."' AND IFNULL(LENGTH(cmIndate), 0) >= 4 AND IFNULL(LENGTH(cmOutdate), 0) <= 4";
-			$get_data2 = get_select_data($str_sql2);
-
-			$cmCode  	= $get_data2[0]["cmCode"];		 //등록코드
-			$inTERM  	= $get_data2[0]["inTERM"];		 //일령
-
-			$nav_menu .= "<a class='dropdown-item' href='#' data-farmID='".$val["fdFarmid"]."' data-dongID='".$val["fdDongid"]."' data-cmCode='".$cmCode."'>".$val["fdName"]."</a>";
+		foreach($init_data as $val){
+			$select_html .= "<option id='dong_item' value=\"" . $val["beComeinCode"] . "\" ";
+			$select_html .= "rcStatus=\"" . $val["rcStatus"] . "\", interm=\"" . $val["interm"] . "\", beAvgWeightDate=\"" . $val["beAvgWeightDate"] . "\", ";
+			$select_html .= "beAvgWeight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", beStatus=\"" . $val["beStatus"] . "\">" . $val["fdName"];
+			$select_html .= "</option>";
 		}
-
-		//상단에 나타낼 정보
-		$str_sql3 = "SELECT beAvgWeight, beStatus, beSensorDate FROM buffer_sensor_status WHERE beFarmid = \"$fd_Farm\" AND beDongid = \"$fd_Dong\"";
-		$get_avg  = get_select_data($str_sql3);
-
-		$aWeight 	= $get_avg[0]["beAvgWeight"];	 //평균중량
-		$avg_weight = sprintf('%0.1f',$aWeight);
-		$now_status = $get_avg[0]["beStatus"];	 	 //I:입추 O:출하 E:에러 W:대기(에러) 상태
-		$final_date = $get_avg[0]["beSensorDate"]; 	 //최종 데이터 수집시간
+	}
+	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
+		
 	}
 	
 	//메뉴 구성
@@ -59,7 +44,7 @@
 	$curr_url = $_SERVER["PHP_SELF"];
 	$splited_url = explode("/", $curr_url);
 	$depth_1_url = $splited_url[sizeof($splited_url) - 1];
-	$add_url = "?userID=$userID&userPW=$userPW";
+	$add_url = "?userID=" .$userID. "&userPW=" .$userPW ;
 
 	// 상단 메뉴 html 동적 생성
     $top_menu_html = "";
@@ -156,7 +141,7 @@
 					<div class="sa-logo-space d-table-cell h-100">
 						<div class="flex-row d-flex align-items-center h-100">
 							<img alt="KOKOFARM" src="../images/icon.png" class="sa-logo img-responsive" style="width: fit-content; height: fit-content">
-							<h3 class="text-white font-weight-normal" style="margin:0">&nbsp;<?=$farmName?></h3>
+							<h3 class="text-white font-weight-normal" style="margin:0">&nbsp;<?=$fName?></h3>
 						</div>  
 					</div>
 					<div class="d-table-cell h-100 w-100 align-middle">
@@ -195,18 +180,18 @@
 						<div class="navbar-collapse">
 							<ul class="navbar-nav justify-content-between" style="flex-direction: row">
 								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle border" style="width: 138.64px; text-align: center;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<span><?=$fd_Name?></span>
-									</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 138.64px;">
-										<?=$nav_menu?>
-									</div>
+									<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 138.64px;">
+									</div> -->
+									<select class="form-select form-select-lg" id="top_select" aria-label="dong select">
+										<?=$select_html?>
+									</select>
+
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">일령 - <span id="summary_interm"><?=$inTERM?></span>일</a>
+									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">일령 - <span id="top_interm"></span>일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">평체 - <?=$avg_weight?>g</a>
+									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">평체 - <span id="top_avg"></span>g</a>
 								</li>
 							</ul>
 						</div>
@@ -216,18 +201,21 @@
 						<section id="widget-grid" class="w-100">
 						
 							<!--출하상태 표시 div-->
-							<div class="row alarm" style="display : none;">
-								<input type="hidden" name="now_status" value="<?=$now_status?>">
+							<div class="row" id="top_status_info" style="display:none;">
+								<div class="col-xs-12" id="top_status_msg"></div>
+								<div class="col-xs-12"><h5 class='font-weight-bold text-center text-danger' id="top_last_time" ></span></h5></div>
+								<div class="col-xs-12"><h5 class='font-weight-bold text-center text-danger' id="top_last_avg" ></span></h5></div>
 							</div>
 							
-							<div class="row error_alarm" style="display : none;">
-								<h5 class='font-weight-bold text-center text-danger'> 최종 수집시간 : <span><?=$final_date?></span></h5>
-							</div>
+							<!-- <div class="row" style="display:none;">
+								<h5 class='font-weight-bold text-center text-danger' id="top_last_time" ></span></h5>
+								<h5 class='font-weight-bold text-center text-danger' id="top_last_avg" ></span></h5>
+							</div> -->
 							
 							<!--알람 메시지--->
-							<div class="row" id="alarm_form">
+							<div class="row">
 								<div class="col-xs-12">
-									<div class="alert alert-danger" role="alert" id="alarm_msg" style="text-align:center; margin:0; font-size:18px;">
+									<div class="alert alert-danger" role="alert" id="top_request_info" style="text-align:center; margin:0; font-size:18px; display:none;">
 										message
 									</div>
 								</div>

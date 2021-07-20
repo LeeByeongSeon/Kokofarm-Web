@@ -103,7 +103,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--일일 급이 / 급수량-->
-<div class="row">
+<div class="row" id="row_feed_water" style="display:none;">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
@@ -157,23 +157,20 @@ include_once("../inc/bottom.php")
 	var open_window;
 	var open_url = "";
 
+	var code = "";
+
 	$(document).ready(function(){
 		//카메라 종료
 		cameraImg.onload="";
 
-		//해당 동의 'data-' 가져오기(select_dong -> bottom.php)
-		var cmCode = select_dong.attr("data-cmCode");	//동ID
-
-		//alert(farmID +" & "+ dongID +" & "+ cmCode);
-
-		get_data(cmCode);
+		load_data(code);
 
 	});
 
-	function get_data(cmCode){
+	function get_dong_data(cmCode){
 		
 		var data_arr = {};
-			data_arr["cmCode"] = cmCode;	//등록코드
+		data_arr["cmCode"] = cmCode;	//등록코드
 		
 		$.ajax({
 			url:'0101_action.php',
@@ -188,26 +185,23 @@ include_once("../inc/bottom.php")
 
 				//일령기간별 이미지
 				if(inTerm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png"); }
-				if(inTerm >= 11 && inTerm<=20){ $(".henImage").attr("src","../images/hen-scale2.png"); }
+				if(inTerm >= 11 && inTerm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png"); }
 				if(inTerm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); }
 				
 				//각 요약정보[summary]
 				$.each(data.summary, function(key,val){	$("#" + key).html(val); });
 
 				//어제평균중량 산출 시간 표현
-				var prev_date = data.summary.summary_day_inc1;
-				//$("#summary_day_inc1").html("산출시간<br>" + prev_date.substr(5, 2) + "월 " + prev_date.substr(8, 2) + "일 " + prev_date.substr(11, 2) + "시");
-				$("#summary_day_inc1").html("기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분");
-
-				//카메라 URL 받아오기
-				//$("#camera_img").attr("src", data.camera_url);
+				let prev_date = data.summary.summary_day_inc1;
+				prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
+				$("#summary_day_inc1").html(prev_date);
 				
 				//카메라
 				$("#camera_zone").html(data.camera_zone);
 
 			},
 			error: function(request,status,error){
-				alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
 			}
 		});
 	}
@@ -236,18 +230,25 @@ include_once("../inc/bottom.php")
 		};   
 
 		// 이미지가 로드되면
-			img_obj.onload = function(){
+		img_obj.onload = function(){
 			img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
 		};
 
 		// 이미지 로드 중 에러 발생시
-			img_obj.onerror = function(){
+		img_obj.onerror = function(){
 			img_obj.setAttribute("src", "../images/noimage.jpg");
 			img_obj.onload = function(){"";};
 		};
 
 		// 첫 이미지 로드
 		img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
+	};
+
+	function camera_close(img_obj){
+		img_obj.setAttribute("src", "../images/noimage.jpg");
+		img_obj.onload = function(){"";};
+
+		open_window.close();
 	};
 
 </script>
