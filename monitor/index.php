@@ -8,41 +8,34 @@
   	<link rel="stylesheet" href="../../common/library/fonts/font.css"> <!--Google fonts-->
 	
 	<script src="../common/library/jquery/jquery.min.js"></script>						<!-- jQuery -->
-	<script src="../common/library/jquery/jquery-ui-1.10.3.min.js"></script>				<!-- jQuery UI-->
-	<script src="../common/library/bootstrap/bootstrap.min.js"></script>					<!-- BOOTSTRAP JS -->
+	<script src="../common/library/jquery/jquery-ui-1.10.3.min.js"></script>			<!-- jQuery UI-->
+	<script src="../common/library/bootstrap/bootstrap.min.js"></script>				<!-- BOOTSTRAP JS -->
 	<script src="../common/library/smartwidgets/jarvis.widget.min.js"></script>			<!-- JARVIS WIDGETS -->
 	
 	<!-- BOOTSTRAP CSS -->
 	<link rel="stylesheet" type="text/css" media="screen" href="../common/library/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="../common/library/fonts/font-awesome.min.css"> 
 
-	<!--common-->
-	<script src="../common/js_module/common_func.js"></script>
-
 	<style>
-	body
-	{
+	body{
 		font-family: 'NanumSquare', sans-serif;
 		background-color: #E8E6E6;
 	}
-	#loginArea
-	{
+	#login_area{
 		position:absolute;
 		top:25%;
-		left:27%;
+		left:30%;
 		width:45%;
 		height:297px;
 		background-color: white;
 		border-radius: 20px;
 	}
-	#loginLogo
-	{
+	#login_logo{
 		position:absolute;
 		top:18.5%;
-		left:26.5%;
+		left:30%;
 	}
-	#loginImg
-	{
+	#login_img{
 		float:left;
 		width:350px;
 		height: inherit;
@@ -50,8 +43,7 @@
 		background-repeat: no-repeat;
 		border-radius: 20px 0px 0px 20px;
 	}
-	#login_form
-	{
+	#login_form{
 		float:right;
 		width:350px;
 		height: inherit;
@@ -59,77 +51,77 @@
 		margin-top:5px;
 		padding:15px;
 	}
-	#login_form font
-	{
+	#login_form font{
 		font-size: 17px;
 		color:#7C7A7A;
 	}
-	#login_form h1
-	{
+	#login_form h1{
 		font-weight: bold;
 		color:orange;
 	}
 	a:link{color:orange;text-decoration: none;}
 	a:visited{ color: gray; text-decoration: none;}
 	a:hover{ color: orange; text-decoration: none;}
-	#login_form button
-	{
+
+	#login_form button{
 		float:right;
 		width:320px;
 	}
-	#loginFooter
-	{
+	#login_footer{
 		clear:both;
 	}
-	#loginFooter p
-	{
+	#login_footer p{
 		font-size:13px;
 		color:gray;
 	}
-	input[type=password] 
-	{
+	input[type=password]{
 		font-family: "Geogia";
 		&::placeholder {font-family: "NanumSquare";}
 	}
-	@media screen and (max-width:787px)
-	{
-		#loginLogo
-		{
-			margin:auto;
+	p{
+		margin-top: 2rem;
+	}
+	button{
+		
+		margin-top: 1rem;
+	}
+	@media screen and (max-width:768px){
+		#login_logo{
+			position: relative;
+			top: 15rem;
+			left: 25%;
+			margin:auto !important;
 		}
-		#loginArea
-		{
+		#login_area{
 			margin: auto;
 			left:15%;
 			width:70%;
-			height:250px;
+			height:297px;
 			border-radius: 10px;
 		}
-		#loginImg
-		{
+		#login_img{
 			display: none;
 		}
-		#login_form
-		{
+		#login_form{
 			margin: 5px 0px 0px 0px;
 		}
 	}
 	</style>
 </head>
 <body>
-	<img src="./images/logo.png" id="loginLogo" class="animate__animated animate__fadeIn">
-	<div id="loginArea" class="animate__animated animate__fadeIn">
-		<div id="loginImg">
+	<img src="./images/logo.png" id="login_logo" class="fadeIn animated">
+	<div class="fadeIn animated" id="login_area">
+		<div id="login_img">
 
 		</div><!--loginImg-->
 		<div id="login_form">
-			<h1>Login&nbsp;<font>[육계 - 생육관제 V3.0]</font></h1>
+			<h1>Login&nbsp;<small>[육계 - 생육관제 V3.0]</small></h1>
 			<p><input class="form-control" name="id" type="text" placeholder="아이디" maxlength="20" size="20"></p>
 			<p><input class="form-control" name="pw" type="password" placeholder="비밀번호" maxlength="20" size="20"></p>
 			<button class="btn btn-success" type="button" id="btn_login">로그인</button><br><br>
-			<p><a href="">kokoFarm 홈페이지</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">보고서 버전으로 가기</a></p>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="">kokoFarm 홈페이지</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">보고서 버전으로 가기</a></p>
 		</div><!--login_form-->
-		<div id="loginFooter">
+		<div id="login_footer">
 			<p>kokoFarm : 계사 생육관제 모니터링 시스템<br>Copyright© 2019 EMOTION Co., Ltd. All rights reserved.</p>
 		</div><!--loginFooter-->
 	</div><!--loginArea-->
@@ -155,7 +147,11 @@
 </body>
 </html>
 
+<!--common-->
+<script src="../common/js_module/common_func.js"></script>
+
 <script language="javascript">
+
 	$(document).ready(function(){
 
 		$("#btn_login").click(function() {
@@ -185,6 +181,5 @@
 			return false;
 		});
 	});
-
 
 </script>

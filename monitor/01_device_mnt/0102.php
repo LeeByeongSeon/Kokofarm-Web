@@ -82,20 +82,43 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 		</div>
 
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-red no-padding" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-red" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-warning"></i>&nbsp;&nbsp;&nbsp;이슈사항</h2>	
+						<h2><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;&nbsp;이슈사항</h2>	
 					</div>
 				</header>
-
-				<div class="widget-body">
-					<div class="col-md-4 no-padding">
-						<div style="padding-top:0.2rem; padding-bottom:0.8rem; font-size: 15px">
-							<b id="summary_feed">망성농장-01동 (KF0013-01) </b>
+				<div class="widget-body" style="height: 275px;">
+					<div class="col-xs-7 float-left mt-4 pr-4 pl-0" style="border-right: 2px dotted #ddd">
+						<div class="row">
+							<div class="col-xs-7 h-50 float-left">
+								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feeder-03.png" style="width: 8rem;"><div class="carousel-caption"><h5 class="font-weight-bold text-secondary">50%<h5></div></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급이량</span><br><span class="font-xl">123.1Kg</span></div>
+							</div>
+							<div class="col-xs-5 h-50 float-right">
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급이량</span><br><span class="font-xl">123.1Kg</span></div>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-xs-7 h-50 float-left">
+								<div class="col-xs-7 pt-4 pb-0 px-0 h-75 text-center"><img src="../images/feeder-07.png" style="width: 5rem;"></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급수량</span><br><span class="font-xl">123.1L</span></div>
+							</div>
+							<div class="col-xs-5 h-50 float-right">
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량</span><br><span class="font-xl">123.1L</span></div>
+							</div>
 						</div>
 					</div>
-					
+					<div class="col-xs-5 float-right mt-1">
+						<div class="col-xs-12 h-100 no-padding">
+							<ul class="list-group">
+								<li class="list-group-item"><div class="alert alert-danger m-0"> <i class="fa fa-gears fa-spin"></i> 재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert alert-danger m-0"> <i class="fa fa-warning"></i> 결함 진행사항 존재</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #455a64; border-color: #568a89;"> <i class="fa fa-spinner fa-pulse"></i> 재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #568a89; border-color: #455a64;"> <i class="fa fa-rotate-right fa-spin"></i> 재산출 요청 중</div></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 						
 			</div>
@@ -275,10 +298,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 
-				<div class="widget-body">
-					<table class="table table-bordered table-hover" style="width:300px; height:170px; text-align:center; float:left;">
+				<div class="widget-body" style="height: 245px;">
+					<table class="table table-bordered table-hover float-left text-center" style="width:300px; height:170px;">
 						<thead>
-							<td colspan="4"><button class="btn btn-primary" style="width:200px">GW 냉각팬 조회</button></td>
+							<td colspan="4"><button class="btn btn-primary" style="width:200px" id="gw_lookup">GW 냉각팬 조회</button></td>
 						</thead>
 						<tbody>
 							<tr>
@@ -288,8 +311,8 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 								<th>동작 상태</th>
 							</tr>
 							<tr>
-								<td>45</td>
-								<td>3</td>
+								<td id="gw_temp1">45</td>
+								<td id="gw_temp2">3</td>
 								<td>47</td>
 								<td>1</td>
 							</tr>
@@ -873,4 +896,9 @@ include_once("../inc/bottom.php");
 		img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
 	};
 
+	// GW 냉각팬 조회 버튼 클릭시
+	$("#gw_lookup").click(function(){
+		$("#gw_temp1").html("<input class='form-control' type='text' maxlength='5' size='2' dir='rtl' value='45'>");
+		$("#gw_temp2").html("<input class='form-control' type='text' maxlength='5' size='2' dir='rtl' value='3'>");
+	});
 </script>

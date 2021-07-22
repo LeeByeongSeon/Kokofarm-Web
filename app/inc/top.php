@@ -164,7 +164,9 @@
 		<div class="sa-page-body">
 
 			<!--오른쪽 상세메뉴-->
-			<div class="sa-aside-left" style="width:40%; background-color: whitesmoke; z-index: 100;">
+			
+			<div class="left-menu-bg col-xs-12 w-100 h-100" style="display: none; background: rgba(0, 0, 0, 0.5)"></div>
+			<div class="sa-aside-left bg-color-whitesmoke" style="width: 35%; z-index: 100; position: fixed; background-color: whitesmoke;">
 				<div class="sa-left-menu-outer">
 					<ul class="metismenu sa-left-menu" id="menu1">
 						<?=$top_menu_html?>
@@ -182,16 +184,16 @@
 								<li class="nav-item dropdown">
 									<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 138.64px;">
 									</div> -->
-									<select class="form-select form-select-lg" id="top_select" aria-label="dong select">
+									<select class="form-control form-control-lg text-secondary" id="top_select" aria-label="dong select">
 										<?=$select_html?>
 									</select>
 
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">일령 - <span id="top_interm"></span>일</a>
+									<a class="nav-link w-100 text-center font-md" style="cursor: default;" href="#">일령 - <span id="top_interm"></span>일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" style="width: 100px; text-align: center; cursor: default;" href="#">평체 - <span id="top_avg"></span>g</a>
+									<a class="nav-link w-100 text-center font-md" style="cursor: default;" href="#">평체 - <span id="top_avg"></span>g</a>
 								</li>
 							</ul>
 						</div>
@@ -199,12 +201,24 @@
 
 					<div class="d-flex w-100">
 						<section id="widget-grid" class="w-100">
-						
-							<!--출하상태 표시 div-->
-							<div class="row" id="top_status_info" style="display:none;">
-								<div class="col-xs-12" id="top_status_msg"></div>
-								<div class="col-xs-12"><h5 class='font-weight-bold text-center text-danger' id="top_last_time" ></span></h5></div>
-								<div class="col-xs-12"><h5 class='font-weight-bold text-center text-danger' id="top_last_avg" ></span></h5></div>
+							
+						<!--출하상태 표시 div-->		
+							<div class="card border-danger mb-4 mx-auto" id="top_status_info">
+								<div class="card-header"> <i class="fa fa-bell-o text-orange"></i> 상태 알림</div>
+								<div class="card-body">
+									<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">
+										<tr>
+											<td colspan="2" id="top_status_msg"></td>
+										</tr>
+										<tr>
+											<td class="w-50 font-md" id="top_time_info"></td><td class="w-50 font-md text-danger" id="top_last_time"></td>
+										</tr>
+										<tr>
+											<td class="w-50 font-md" id="top_avg_info"></td><td class="w-50 font-md text-danger" id="top_last_avg"></td>
+										</tr>
+									</table>
+								</div>
+								<div class="card-footer bg-transparent text-right font-md" id="top_notice" style="border-top: 0"></div>
 							</div>
 							
 							<!-- <div class="row" style="display:none;">

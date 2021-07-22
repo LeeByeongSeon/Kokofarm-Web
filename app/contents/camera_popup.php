@@ -18,10 +18,10 @@
                 <button class="btn btn-default" type="button" onClick="zoom('-');">축소</button>
             </div>
         </div> -->
-        <img class="img-responsive center-block" id="camera_img" src="../images/noimage.jpg" style="opacity: 1.0; filter: alpha(opacity=100); margin:auto">
+        <img class="img-responsive" id="camera_img" src="../images/noimage.jpg" style="opacity: 1.0; filter: alpha(opacity=100); margin:auto">
 
-        <div style="width:0px; padding:5px" class="center-block">
-            <button class="btn btn-danger no-padding" type="button" onClick="end();">닫기</button>
+        <div class="text-center pt-2">
+            <button class="btn btn-danger" type="button" onClick="end();">닫기</button>
         </div>
     </body>
 </html>
