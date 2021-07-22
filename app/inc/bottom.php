@@ -101,25 +101,45 @@
 
 		// 출하 상태 확인
 		$("#top_status_info").hide();
+
+		var notice = "<span class='font-xs text-secondary'> ※ 해당 상태가 지속된다면 관리자에게 문의 바랍니다.</span>";
+
 		switch(beStatus){
 			case "O": //출하
-				$("#top_status_msg").html("<h3 class='font-weight-bold text-danger text-center'> 현재 '출하 상태' 입니다<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>").show();
-				$("#top_last_avg").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : " + avg + "g");
-				$("#top_last_time").html("<i class='fa fa-clock-o text-secondary'></i> 출하시간 : " + time);
+				// $("#top_status_msg").html("<h3 class='font-weight-bold text-danger text-center'>현재 '출하 상태' 입니다</h3>").show();
+				// $("#top_last_time").html("<i class='fa fa-clock-o text-secondary'></i> 출하시간 : " + time);
+				// $("#top_last_avg").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : " + avg + "g" + notice);
+				
+				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger'>현재 '출하 상태' 입니다</h3>").show();
+				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 최종 출하 시간 : ");
+				$("#top_last_time").html(time);
+				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
+				$("#top_last_avg").html(avg + "g");
+				$("#top_notice").html(notice);
 				$("#top_status_info").show();
 				break;
 			
 			case "E": //에러
-				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다.<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>").show();
-				$("#top_last_avg").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : " + avg + "g");
-				$("#top_last_time").html("<i class='fa fa-clock-o text-secondary'></i> 오류 발생 시간 : " + time);
+				// $("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다</h3>").show();
+				// $("#top_last_time").html("<i class='fa fa-clock-o text-secondary'></i> 오류 발생 시간 : " + time);
+				// $("#top_last_avg").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : " + avg + "g" + notice);
+
+				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다</h3>").show();
+				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 오류 발생 시간 : ");
+				$("#top_last_time").html(time);
+				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
+				$("#top_last_avg").html(avg + "g");
+				$("#top_notice").html(notice);
 				$("#top_status_info").show();
 				break;
 
 			case "W": //출하 대기
-				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '출하 대기 상태' 입니다.<br><small>해당 화면이 지속된다면 관리자에게 문의 바랍니다.</small></h3>").show();
-				$("#top_last_avg").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : " + avg + "g");
-				$("#top_last_time").html("<i class='fa fa-clock-o text-secondary'></i> 저울 분리 시간 : " + time);
+				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '출하 대기 상태' 입니다</h3>").show();
+				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 저울 분리 시간 : ");
+				$("#top_last_time").html(time);
+				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
+				$("#top_last_avg").html(avg + "g");
+				$("#top_notice").html(notice);
 				$("#top_status_info").show();
 				break;
 		}
