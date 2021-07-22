@@ -135,7 +135,7 @@ param
 return
 - ret : 평균중량 데이터
 */
-function get_avg_history($comein_code, $term, $type, $is_inc = false){
+function get_avg_history($comein_code, $term, $type){
 
 	$ret = array();
 
@@ -153,7 +153,7 @@ function get_avg_history($comein_code, $term, $type, $is_inc = false){
 			break;
 		
 		case "day":
-			$type_query = " AND (aw.awDate BETWEEN \"" . substr($now, 0, 10) . "00:00:00\" AND \"" . substr($now, 0, 10) . "23:59:59\")";
+			$type_query = " AND (aw.awDate BETWEEN \"" . substr($now, 0, 10) . " 00:00:00\" AND \"" . substr($now, 0, 10) . " 23:59:59\")";
 			break;
 	}
 
@@ -165,51 +165,45 @@ function get_avg_history($comein_code, $term, $type, $is_inc = false){
 	$select_data = get_select_data($select_query);
 
 	$chart = array();		// 차트에 사용할 데이터
+	$increase = array();	// 증체 차트에 사용할 데이터
 	$table = array();		// 테이블에 사용할 데이터
 
 	$first = $select_data[0]["awWeight"];
 	$last = 0;
 
+	$remark = $type == "all" ? "일령" : "시간";
+
 	foreach($select_data as $val){
-		$remark = $type == "all" ? "일령" : "시간";
 
-		if(!$is_inc){		// default = false
-			$chart[] = array(
-				$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
-				$remark => $val["awDate"],
-				"평균중량" => sprintf('%0.1f', $val["awWeight"]),
-				"권고중량" => sprintf('%0.1f', $val["refWeight"])
-			);
-	
-			$table[] = array(
-				"f1" => $val["awDate"],
-				"f2" => $val["days"],
-				"f3" => sprintf('%0.1f', $val["awWeight"]),
-				"f4" => sprintf('%0.1f', $val["refWeight"])
-			);
-		}
-		else{		//증체로 계산
-			$inc_val = $val["awWeight"] - $first;				// 증체값 계산
-			$inc_val = $inc_val >= $last ? $inc_val : $last;	// 계산된 값이 마지막 증체값 보다 작으면 마지막 증체값으로 사용
+		$inc_val = $val["awWeight"] - $first;				// 증체값 계산
+		$inc_val = $inc_val >= $last ? $inc_val : $last;	// 계산된 값이 마지막 증체값 보다 작으면 마지막 증체값으로 사용
 
-			$last = $inc_val;		// 마지막 증체값 저장
+		$last = $inc_val;		// 마지막 증체값 저장
 
-			$chart[] = array(
-				$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
-				$remark => $val["awDate"],
-				"평균중량" => sprintf('%0.1f',$inc_val)
-			);
-	
-			$table[] = array(
-				"f1" => $val["awDate"],
-				"f2" => $val["days"],
-				"f3" => sprintf('%0.1f', $inc_val)
-			);
-		}
+		$chart[] = array(
+			//$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
+			$remark => $val["awDate"],
+			"평균중량" => sprintf('%0.1f', $val["awWeight"]),
+			"권고중량" => sprintf('%0.1f', $val["refWeight"])
+		);
+
+		$increase[] = array(
+			//$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
+			$remark => $val["awDate"],
+			"증체중량" => sprintf('%0.1f', $inc_val)
+		);
+
+		$table[] = array(
+			"f1" => $val["awDate"],
+			"f2" => $val["days"],
+			"f3" => sprintf('%0.1f', $val["awWeight"]),
+			"f4" => sprintf('%0.1f', $val["refWeight"])
+		);
 	}
 
 	$ret["query"] = $select_query;
 	$ret["chart"] = $chart;
+	$ret["increase"] = $increase;
 	$ret["table"] = $table;
 
 	return $ret;
@@ -435,6 +429,145 @@ return
 */
 function get_aggregate_data($db, $coll, $pipe){
     return mongo_conn::get_inst()->aggregate($db, $coll, $pipe);
+}
+
+function get_feed_history($code, $type){
+
+	$ret = array();
+
+	$id = explode("_", $code)[1];
+	$farmID = substr($id, 0, 6);
+	$dongID = substr($id, 6);
+
+	$select_query = "SELECT *, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS interm FROM comein_master WHERE cmCode = \"" .$code. "\""; 
+	$comein_data = get_select_data($select_query)[0];
+
+	$start_time = $comein_data["cmIndate"];
+	$end_time = $comein_data["cmOutdate"] == "" ? date("Y-m-d H:i:s") : $comein_data["cmOutdate"];
+	$order = 1;
+
+	$pipe_sort  =   [ '$sort' => ['_id' => $order] ];
+
+	$pipe_project = [
+		'$project' => [
+			'_id' => 1,
+			'feed' => [
+				'$reduce' => [
+					'input' => '$feedval',
+					'initialValue' => ['feed' => 0],
+					'in' => ['feed' => ['$add' => [ '$$value.feed', '$$this' ] ] ]
+				]
+			],
+			'water' => [
+				'$reduce' => [
+					'input' => '$waterval',
+					'initialValue' => ['water' => 0],
+					'in' => ['water' => ['$add' => [ '$$value.water', '$$this' ] ] ]
+				]
+			]
+		]
+	];
+
+	$pipe_branches = array();
+
+	switch($type){
+
+		case "get_all":
+			$start_time = substr($start_time, 0, 10) . " 00:00:00";
+			$end_time = substr($end_time, 0, 10) . " 00:00:00";
+			$end_time = get_term_date($end_time, 1440);
+
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time] ] ];
+
+			$iter_time = $start_time;
+			while($iter_time != $end_time){
+				$pipe_branches[] = [
+					'case' => [
+						'$and' => [ 
+							['$gte' => ['$getTime', $iter_time]],
+							['$lte' => ['$getTime', substr($iter_time, 0, 10) . " 23:59:59"]],
+						]
+					],
+					'then' => $iter_time
+				];
+
+				$iter_time = get_term_date($iter_time, 1440);
+			}
+
+			break;
+
+		case "get_today":
+			$start_time = $comein_data["interm"] > 1 ? substr(date("Y-m-d H:i:s"), 0, 10) . " 00:00:00" : substr($start_time, 0, 15) . "0:00";
+			$end_time = substr($end_time, 0, 15) . "0:00";
+
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time] ] ];
+
+			$iter_time = $start_time;
+			while($iter_time != $end_time){
+				$pipe_branches[] = [
+					'case' => [
+						'$and' => [ 
+							['$gte' => ['$getTime', $iter_time]],
+							['$lte' => ['$getTime', substr($iter_time, 0, 15) . "9:59"]],
+						]
+					],
+					'then' => $iter_time
+				];
+
+				$iter_time = get_term_date($iter_time, 10);
+			}
+
+			break;
+	}
+
+	$pipe_group = [ 
+		'$group' => [
+			'_id' => [ 
+				'$switch' => [ 
+					'branches' => $pipe_branches,
+					'default' => 'default value'
+				] 
+			],
+			'feedval' => [ '$push' => '$feedWeightval' ],
+			'waterval' => [ '$push' => '$feedWaterval' ],
+		] 
+	];
+
+	$pipeline = [ $pipe_match, $pipe_group, $pipe_project, $pipe_sort];
+
+	$result = get_aggregate_data("kokofarm1", "sensorExtData", $pipeline);
+
+	$remark = $type == "get_all" ? "일령" : "시간";
+
+	$chart_feed = array();
+	$chart_water = array();
+
+	// 차트데이터로 변환
+	for($i=0; $i<count($result); $i++){
+		$val = $result[$i];
+
+		$chart_feed[] = array(
+			$remark => $val->_id,
+			"급이량" => $val->feed->feed,
+		);
+
+		$chart_water[] = array(
+			$remark => $val->_id,
+			"급수량" => $val->water->water,
+		);
+
+		$table[] = array(
+			"f1" => $val->_id,
+			"f2" => $val->feed->feed,
+			"f3" => $val->water->water,
+		);
+	}
+
+	$ret["chart_feed"] = $chart_feed;
+	$ret["chart_water"] = $chart_water;
+	$ret["table"] = $table;
+
+	return $ret;
 }
 
 ?>

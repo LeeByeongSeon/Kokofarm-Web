@@ -58,27 +58,20 @@ include_once("../../common/php_module/common_func.php");
 
 			break;
 
-		case "get_scale_status":
-			$select_query = "SELECT cm.*, si.*, IFNULL(DATEDIFF(current_date(),cmIndate)+1,0) AS inTERM FROM comein_master AS cm
+		case "get_cell_status":
+			$select_query = "SELECT cm.cmFarmid, cm.cmDongid, si.* FROM comein_master AS cm
 							 LEFT JOIN set_iot_cell AS si ON si.siFarmid = cm.cmFarmid AND si.siDongid = cm.cmDongid WHERE cmCode = '" . $cmCode . "'";		
 
 			$select_data = get_select_data($select_query);
 
 			foreach($select_data as $val){
-
-				$cell_weight = $val["siWeight"];
-				$cell_temp 	 = $val["siTemp"];
-				$cell_humi 	 = $val["siHumi"];
-				$cell_co2  	 = $val["siCo2"];
-				$cell_nh3  	 = $val["siNh3"];
-
 				$cell_data[] = array(
-					'f1' => "IoT저울-".$val["siCellid"],
-					'f2' => sprintf('%0.1f', $cell_weight),
-					'f3' => sprintf('%0.1f', $cell_temp),
-					'f4' => sprintf('%0.1f', $cell_humi),
-					'f5' => sprintf('%0.1f', $cell_co2),
-					'f6' => sprintf('%0.1f', $cell_nh3),
+					'f1' => "IoT저울-". $val["siCellid"],
+					'f2' => sprintf('%0.1f', $val["siWeight"]),
+					'f3' => sprintf('%0.1f', $val["siTemp"]),
+					'f4' => sprintf('%0.1f', $val["siHumi"]),
+					'f5' => sprintf('%0.1f', $val["siCo2"]),
+					'f6' => sprintf('%0.1f', $val["siNh3"]),
 				);
 			};
 			$response["cell_data"] = $cell_data;
@@ -89,10 +82,10 @@ include_once("../../common/php_module/common_func.php");
 
 		case "get_inc_weight":
 
-			$result = get_avg_history($cmCode, $_REQUEST["term"], "all", true);
+			$result = get_avg_history($cmCode, "time", "day");
 
-			$response["today_inc_weight"] = $result["chart"];
-
+			$response["today_inc_weight"] = $result["increase"];
+			
 			echo json_encode($response);
 
 			break;

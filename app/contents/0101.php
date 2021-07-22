@@ -13,7 +13,7 @@ include_once("../inc/top.php");
 </style>
 
 <!--실시간 평균-->
-<div class="row">
+<div class="row" id="row_summary" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0 0">
@@ -26,7 +26,7 @@ include_once("../inc/top.php");
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
 				<div class="col-xs-4 float-left text-center">
 					<img class="p-2 img-reponsive henImage">
-					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_in_term"></span>일 </h1></div>
+					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-4">
 					<h1 class="font-weight-bold text-danger text-center" style="margin-top: 20%" id="summary_avg_weight"></h1>
@@ -47,7 +47,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--예측평체-->
-<div class="row avg_weight">
+<div class="row" id="row_avg_esti">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0;">
@@ -69,7 +69,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--현재 센서별 평균정보-->	
-<div class="row">
+<div class="row" id="row_cell_avg">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
@@ -133,7 +133,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--IP 카메라-->
-<div class="row">
+<div class="row" id="row_camera_view" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
@@ -157,19 +157,15 @@ include_once("../inc/bottom.php")
 	var open_window;
 	var open_url = "";
 
-	var code = "";
-
 	$(document).ready(function(){
-		//카메라 종료
-		cameraImg.onload="";
 
-		load_data(code);
+		load_data();
 
 	});
 
-	function get_dong_data(cmCode){
+	function get_dong_data(cmCode, beStatus){
 		
-		var data_arr = {};
+		let data_arr = {};
 		data_arr["cmCode"] = cmCode;	//등록코드
 		
 		$.ajax({
@@ -179,22 +175,36 @@ include_once("../inc/bottom.php")
 			type:'post',
 			dataType:'json',
 			success: function(data){
-				
-				//일령
-				var inTerm = data.summary.summary_in_term;
 
-				//일령기간별 이미지
-				if(inTerm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png"); }
-				if(inTerm >= 11 && inTerm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png"); }
-				if(inTerm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); }
-				
-				//각 요약정보[summary]
-				$.each(data.summary, function(key,val){	$("#" + key).html(val); });
+				if(beStatus != "O"){
 
-				//어제평균중량 산출 시간 표현
-				let prev_date = data.summary.summary_day_inc1;
-				prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
-				$("#summary_day_inc1").html(prev_date);
+					$("#row_summary").show();
+					$("#row_avg_esti").show();
+					$("#row_cell_avg").show();
+					//$("#row_feed_water").show();
+
+					//일령
+					let interm = data.summary.summary_interm;
+
+					//일령기간별 이미지
+					if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png"); }
+					if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png"); }
+					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); }
+
+					//각 요약정보[summary]
+					$.each(data.summary, function(key,val){	$("#" + key).html(val); });
+
+					//어제평균중량 산출 시간 표현
+					let prev_date = data.summary.summary_day_inc1;
+					prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
+					$("#summary_day_inc1").html(prev_date);
+				}
+				else{
+					$("#row_summary").hide();
+					$("#row_avg_esti").hide();
+					$("#row_cell_avg").hide();
+					$("#row_feed_water").hide();
+				}
 				
 				//카메라
 				$("#camera_zone").html(data.camera_zone);

@@ -123,9 +123,8 @@
 				$("#top_status_info").show();
 				break;
 		}
-		
 
-		get_dong_data(code);
+		get_dong_data(code, beStatus);
 	};
 
 </script>

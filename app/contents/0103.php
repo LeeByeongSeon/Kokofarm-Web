@@ -26,7 +26,7 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div id="day_feed_chart" style="height: 260px;"></div>
+				<div id="daily_feed_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -56,7 +56,7 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div id="day_water_chart" style="height: 260px;"></div>
+				<div id="daily_water_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -68,32 +68,54 @@ include_once("../inc/bottom.php")
 ?>
 
 <script language="javascript">
-	
-	var cmCode = select_dong.attr("data-cmCode");	//등록코드
+
+	var comein_code = "";
 
 	$(document).ready(function(){
-		get_water(cmCode,"day");
+		load_data();
 	});
 
-	function get_water(){
+	function get_dong_data(cmCode, beStatus){
+		comein_code = cmCode;
+		get_all();
+		get_today();
+	};
+
+	function get_all(){
 		
-		if(cmCode != null && cmCode != ""){
+		let data_arr = {};
+		data_arr["oper"]   = "get_all";
+		data_arr["cmCode"] = comein_code;
 
-			var data_arr = {};
-				data_arr["oper"]   = "today_feed";
-				data_arr["cmCode"] = cmCode;
-				data_arr["term"]   = "day";
+		$.ajax({
+			url:'0103_action.php',
+			type:'post',
+			cache:false,
+			data:data_arr,
+			dataType:'json',
+			success: function(data){
+				draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
+				draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD");
+			}
+		});
+	}
 
-			$.ajax({
-				url:'0103_action.php',
-				type:'post',
-				cache:false,
-				data:data_arr,
-				dataType:'json',
-				success: function(data){
-					draw_select_chart("today_feed_chart", data.today_feed_chart, "영역차트", "Y", "N", 12);
-				}
-			});
-		};
+	function get_today(){
+		
+		let data_arr = {};
+		data_arr["oper"]   = "get_today";
+		data_arr["cmCode"] = comein_code;
+
+		$.ajax({
+			url:'0103_action.php',
+			type:'post',
+			cache:false,
+			data:data_arr,
+			dataType:'json',
+			success: function(data){
+				draw_bar_line_chart("today_feed_chart", data.chart_feed, "Y", "N", 12, "mm");
+				draw_bar_line_chart("today_water_chart", data.chart_water, "Y", "N", 12, "mm");
+			}
+		});
 	}
 </script>

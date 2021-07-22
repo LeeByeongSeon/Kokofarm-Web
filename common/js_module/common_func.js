@@ -510,7 +510,7 @@ param
 - is_label : Label 출력 여부
 - font_size : 차트의 출력되는 font size
 */
-function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label, font_size){
+function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label, font_size, period = "hh"){
     if(chart_data.length <= 0){ return false; }
 
     let graph_json = [];
@@ -565,7 +565,7 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
                         "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
                         "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        "categoryAxis":{ "minPeriod": "hh", "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
 	};
 
     switch(chart_style){
@@ -617,8 +617,10 @@ param
 - is_label : Label 출력 여부
 - font_size : 차트의 출력되는 font size
 */
-function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size){
+function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period = "hh"){
     if(chart_data.length <= 0){ return false; }
+
+    console.log(JSON.stringify(chart_data));
 
     let graph_json = [];
     let category = "";
@@ -659,8 +661,6 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size)
 			}
 			graph_json.push(graph_obj);
         }
-
-        circle_lastkey = key;
     }
 
     //차트옵션 정하기
@@ -668,7 +668,7 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size)
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
                         "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
                         "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        "categoryAxis":{ "minPeriod": "hh", "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
 	};
 
 	if(is_zoom === "Y"){
@@ -677,11 +677,17 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size)
 
     //차트 그리기
 	let chart = AmCharts.makeChart(chart_id, chart_option);
-	chart.addListener("dataUpdated", zoom_chart(chart));
+	//chart.addListener("dataUpdated", zoom_chart(chart));
 };
 
 function zoom_chart(chart) {
-	let len = chart.chartData.length;
-    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-    chart.zoomToIndexes(len-90, len-1);
+
+    try {
+        //console.log(chart.chartData);
+        let len = chart.chartData.length;
+        // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+        chart.zoomToIndexes(len-90, len-1);
+    } catch (error) {
+        
+    }
 };

@@ -5,46 +5,68 @@
 	$userPW = check_str($_REQUEST["userPW"]);
 
 	// 농장 정보 확인
-	$select_query = "SELECT f.fID, f.fPW, f.fName, fd.*, be.beStatus, be.beComeinCode, be.beAvgWeight, be.beAvgWeightDate, rc.rcStatus, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
+	$select_query = "SELECT f.fID, f.fPW, f.fName, fd.*, be.beStatus, be.beComeinCode, be.beAvgWeight, be.beAvgWeightDate, rc.rcStatus, sf.sfFarmid, so.soFarmid, 
+					IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
 					JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
 					JOIN buffer_sensor_status AS be ON be.beFarmid = fd.fdFarmid AND be.beDongid = fd.fdDongid 
 					JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 					LEFT JOIN request_calculate AS rc ON rc.rcCode = be.beComeinCode AND rcStatus IN ('R', 'A', 'W', 'C') 
+					LEFT JOIN set_feeder AS sf ON sf.sfFarmid = fd.fdFarmid AND sf.sfDongid = fd.fdDongid 
+                    LEFT JOIN set_outsensor AS so ON so.soFarmid = fd.fdFarmid AND so.soDongid = fd.fdDongid 
 					WHERE f.fID = \"" .$userID. "\" AND f.fPW = \"" .$userPW. "\"";
 
 	$init_data = get_select_data($select_query);
 
-	$fName = $init_data[0]["fName"];
+	// url 체크
+	$curr_url = $_SERVER["PHP_SELF"];
+	$splited_url = explode("/", $curr_url);
+	$depth_1_url = $splited_url[sizeof($splited_url) - 1];
+	$add_url = "?userID=" .$userID. "&userPW=" .$userPW ;
+
+	// 메뉴창에 급이, 외기 표시 조정 변수
+	$exist_feed = false;
+	$exist_out = false;
 	
 	if(count($init_data) > 0){		// 데이터가 있으면
 		$select_html = "";
 
 		foreach($init_data as $val){
+			
+			// 페이지 따라 존재하는 동만 셀렉트에 표현
+			$test = $val["fdFarmid"];
+			switch($depth_1_url){
+				case "0103.php":
+					$test = $val["sfFarmid"];
+					break;
+				case "0104.php":
+					$test = $val["soFarmid"];
+					break;
+			}
+
+			if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
+
 			$select_html .= "<option id='dong_item' value=\"" . $val["beComeinCode"] . "\" ";
 			$select_html .= "rcStatus=\"" . $val["rcStatus"] . "\", interm=\"" . $val["interm"] . "\", beAvgWeightDate=\"" . $val["beAvgWeightDate"] . "\", ";
 			$select_html .= "beAvgWeight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", beStatus=\"" . $val["beStatus"] . "\">" . $val["fdName"];
 			$select_html .= "</option>";
+
+			if($val["fdFarmid"] == $val["sfFarmid"]){ $exist_feed = true; }
+			if($val["fdFarmid"] == $val["soFarmid"]){ $exist_out = true; }
 		}
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
-		
+		// 오류 페이지로 이동
 	}
 	
 	//메뉴 구성
-	$menu_struct = array(
-		array("0101.php", "요약현황"),
-		array("0102.php", "IoT저울"),
-		array("0103.php", "급이/급수"),
-		array("0104.php", "외기환경"),
-		array("0105.php", "재산출 요청"),
-		array("0106.php", "출하내역"),
-		array("1001.php", "설정"),
-	);
-
-	$curr_url = $_SERVER["PHP_SELF"];
-	$splited_url = explode("/", $curr_url);
-	$depth_1_url = $splited_url[sizeof($splited_url) - 1];
-	$add_url = "?userID=" .$userID. "&userPW=" .$userPW ;
+	$menu_struct = array();
+	$menu_struct[] = array("0101.php", "요약현황");
+	$menu_struct[] = array("0102.php", "IoT저울");
+	if($exist_feed){ $menu_struct[] = array("0103.php", "급이/급수"); }
+	if($exist_out){ $menu_struct[] = array("0104.php", "외기환경"); }
+	$menu_struct[] = array("0105.php", "재산출 요청");
+	$menu_struct[] = array("0106.php", "출하내역");
+	$menu_struct[] = array("1001.php", "설정");
 
 	// 상단 메뉴 html 동적 생성
     $top_menu_html = "";
@@ -60,6 +82,9 @@
 			}
 		}
 	}
+
+	// 농장 이름 선택 시 요약 화면으로 복귀
+	$farm_name = "<a href='javascript:void(0)' class='text-white font-weight-normal' style='margin:0; font-size:18px' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
 	
 ?>
 
@@ -141,7 +166,7 @@
 					<div class="sa-logo-space d-table-cell h-100">
 						<div class="flex-row d-flex align-items-center h-100">
 							<img alt="KOKOFARM" src="../images/icon.png" class="sa-logo img-responsive" style="width: fit-content; height: fit-content">
-							<h3 class="text-white font-weight-normal" style="margin:0">&nbsp;<?=$fName?></h3>
+							&nbsp;&nbsp;&nbsp;<?=$farm_name?>
 						</div>  
 					</div>
 					<div class="d-table-cell h-100 w-100 align-middle">
