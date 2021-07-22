@@ -102,7 +102,7 @@
 		// 출하 상태 확인
 		$("#top_status_info").hide();
 
-		var notice = "<span class='font-xs text-secondary'> ※ 해당 상태가 지속된다면 관리자에게 문의 바랍니다.</span>";
+		let notice = "<span class='font-xs text-secondary'> ※ 해당 상태가 지속된다면 관리자에게 문의 바랍니다.</span>";
 
 		switch(beStatus){
 			case "O": //출하

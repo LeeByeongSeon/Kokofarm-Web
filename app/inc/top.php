@@ -228,7 +228,7 @@
 						<section id="widget-grid" class="w-100">
 							
 						<!--출하상태 표시 div-->		
-							<div class="card border-danger mb-4 mx-auto" id="top_status_info">
+							<div class="card border-danger mb-4 mx-auto d-none" id="top_status_info">
 								<div class="card-header"> <i class="fa fa-bell-o text-orange"></i> 상태 알림</div>
 								<div class="card-body">
 									<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">

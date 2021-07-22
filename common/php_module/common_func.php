@@ -542,6 +542,12 @@ function get_feed_history($code, $type){
 	$chart_feed = array();
 	$chart_water = array();
 
+	$chart_feed_stack = array();
+	$chart_water_stack = array();
+
+	$feed_stack = 0;
+	$water_stack = 0;
+
 	// 차트데이터로 변환
 	for($i=0; $i<count($result); $i++){
 		$val = $result[$i];
@@ -556,6 +562,18 @@ function get_feed_history($code, $type){
 			"급수량" => $val->water->water,
 		);
 
+		$feed_stack = $feed_stack + $val->feed->feed;
+		$chart_feed_stack[] = array(
+			$remark => $val->_id,
+			"누적급이량" => $feed_stack,
+		);
+
+		$water_stack = $water_stack + $val->water->water;
+		$chart_water_stack[] = array(
+			$remark => $val->_id,
+			"누적급수량" => $water_stack,
+		);
+
 		$table[] = array(
 			"f1" => $val->_id,
 			"f2" => $val->feed->feed,
@@ -565,6 +583,8 @@ function get_feed_history($code, $type){
 
 	$ret["chart_feed"] = $chart_feed;
 	$ret["chart_water"] = $chart_water;
+	$ret["chart_feed_stack"] = $chart_feed_stack;
+	$ret["chart_water_stack"] = $chart_water_stack;
 	$ret["table"] = $table;
 
 	return $ret;
