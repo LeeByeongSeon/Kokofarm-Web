@@ -113,7 +113,7 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body shadow pt-3" style="border-radius: 0 0 10px 10px; padding:1rem; height: 250px">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center"><img src="../images/feeder-01.png" style="width: 8rem;"><br>
+					<div class="col-xs-12 text-center"><img src="../images/feed-04.png" style="width: 8rem;"><br>
 						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
 					</div>
 				</div>
@@ -125,7 +125,7 @@ include_once("../inc/top.php");
 				</div>
 				<div style="clear:both"></div><hr style="margin-top:0px">
 				<div class="col-xs-4 no-padding" style="margin-top: 10px">
-					<div class="col-xs-12 text-center"><img src="../images/feeder-07.png" style="width: 6rem;"><br><span></span></div>
+					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
 				</div>
 				<div class="col-xs-4" style="margin-top: 10px">
 					<div class="col-xs-12 text-right">일일 급수량<br><span id="extra_curr_water" style="font-size:28px">0</span></div>

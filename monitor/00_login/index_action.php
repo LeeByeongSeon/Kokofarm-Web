@@ -1,5 +1,5 @@
 <?
-include_once("../common/php_module/common_func.php");
+include_once("../../common/php_module/common_func.php");
 
 $response = array();
 $oper = check_str($_REQUEST["oper"]);
@@ -28,17 +28,17 @@ switch($oper){
 			switch($mgr_type){
                 case "계열화회사":
                     $response["msg"] = "ok";
-					$response["url"] = "02_farm_mnt/0201.php";
+					$response["url"] = "../02_farm_mnt/0201.php";
                     break;
 
 				case "일반관리자":
 					$response["msg"] = "ok";
-					$response["url"] = "01_device_mnt/0101.php";
+					$response["url"] = "../01_device_mnt/0101.php";
 					break;
 
 				case "슈퍼관리자":
 					$response["msg"] = "ok";
-					$response["url"] = "01_device_mnt/0101.php";
+					$response["url"] = "../01_device_mnt/0101.php";
 					break;
 			}
 		}
