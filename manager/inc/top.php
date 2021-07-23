@@ -116,7 +116,7 @@
 					<div class="sa-logo-space d-table-cell h-100">
 						<div class="flex-row d-flex align-items-center h-100">
 							<img alt="KOKOFARM" src="../images/logo.png" class="sa-logo img-responsive">
-							<h3 class="text-white font-weight-normal" style="margin:0">&nbsp;</h3>
+							&nbsp;<span class="badge badge-secondary">manager</span>
 						</div>  
 					</div>
 					<div class="d-table-cell h-100 w-100 align-middle">
