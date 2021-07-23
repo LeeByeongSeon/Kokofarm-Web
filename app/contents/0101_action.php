@@ -26,11 +26,12 @@ include_once("../../common/php_module/common_func.php");
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
 			// 버퍼 및 입추정보, 카메라 데이터
-			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, fd.fdName, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
-						JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
-						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
-						LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid
-						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
+			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, so.*, fd.fdName, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
+						JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid 
+						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid 
+						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid 
+						LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
+						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
 						WHERE cmCode = \"" .$cmCode. "\"";
 
 						//LEFT JOIN request_calculate AS rc ON rc.rcCode = \"" .$cmCode. "\" 
@@ -131,12 +132,43 @@ include_once("../../common/php_module/common_func.php");
 				"summary_day_water"		=> $daily_water."L",							/*일일 급수량*/
 				"summary_day_feed"		=> $daily_feed."Kg",							/*일일 급이량*/
 				
-				"curr_avg_temp" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgTemp"] + corrTemp),	/*현재 온도 센서 평균*/
-				"curr_avg_humi" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgHumi"] + corrHumi),	/*현재 습도 센서 평균*/
-				"curr_avg_co2"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgCo2"] + corrCo2),	/*현재 이산화탄소 센서 평균*/
-				"curr_avg_nh3"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgNh3"] + corrNh3),	/*현재 암모니아 센서 평균*/
+				"summary_avg_temp" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgTemp"] + corrTemp),	/*현재 온도 센서 평균*/
+				"summary_avg_humi" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgHumi"] + corrHumi),	/*현재 습도 센서 평균*/
+				"summary_avg_co2"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgCo2"] + corrCo2),	/*현재 이산화탄소 센서 평균*/
+				"summary_avg_nh3"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgNh3"] + corrNh3),	/*현재 암모니아 센서 평균*/
 			);
 			$response["summary"] = $summary;
+
+			$extra = array();
+			if($buffer_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
+				$extra["extra_curr_feed"] = $buffer_data[0]["sfDailyFeed"];
+				$extra["extra_prev_feed"] = $buffer_data[0]["sfPrevFeed"];
+				$extra["extra_curr_water"] = $buffer_data[0]["sfDailyWater"];
+				$extra["extra_prev_water"] = $buffer_data[0]["sfPrevWater"];
+
+				// 남은 사료빈 용량 확인
+				$feed_max = $buffer_data[0]["sfFeedMax"];
+				$curr_feed = $buffer_data[0]["sfFeed"];
+
+				$percent = $curr_feed / $feed_max;
+
+				$percent = round($percent * 100);
+
+				$extra["extra_feed_percent"] = $percent . "%";
+			}
+
+			if($buffer_data[0]["soFarmid"] != ""){		// 외기 데이터가 있으면
+				$extra["extra_out_temp"] = 		sprintf('%0.1f', $buffer_data[0]["soTemp"]);
+				$extra["extra_out_humi"] = 		sprintf('%0.1f', $buffer_data[0]["soHumi"]);
+				$extra["extra_out_nh3"] = 		sprintf('%0.1f', $buffer_data[0]["soNh3"]);
+				$extra["extra_out_h2s"] = 		sprintf('%0.1f', $buffer_data[0]["soH2s"]);
+				$extra["extra_out_dust"] = 		sprintf('%0.1f', $buffer_data[0]["soDust"]);
+				$extra["extra_out_udust"] = 	sprintf('%0.1f', $buffer_data[0]["soUDust"]);
+				$extra["extra_out_direction"] = sprintf('%0.1f', $buffer_data[0]["soWindDirection"]);
+				$extra["extra_out_wind"] = 		sprintf('%0.1f', $buffer_data[0]["soWindSpeed"]);
+			}
+
+			$response["extra"] = $extra;
 
 			$name = $buffer_data[0]["fdName"];
 

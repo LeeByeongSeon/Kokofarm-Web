@@ -80,21 +80,21 @@ include_once("../inc/top.php");
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:1rem">
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/temp.png" style="width: 1rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">온도(℃)<br><span id="curr_avg_temp" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">온도(℃)<br><span id="summary_avg_temp" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/drop.png" style="width: 4rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">습도(％)<br><span id="curr_avg_humi" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">습도(％)<br><span id="summary_avg_humi" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/co2.png" style="width: 4rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">이산화탄소(ppm)<br><span id="curr_avg_co2" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">이산화탄소(ppm)<br><span id="summary_avg_co2" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/nh3.png" style="width: 5rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">암모니아(ppm)<br><span id="curr_avg_nh3" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">암모니아(ppm)<br><span id="summary_avg_nh3" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div>
 				</div>
 			</div>
@@ -103,33 +103,35 @@ include_once("../inc/top.php");
 </div>
 
 <!--일일 급이 / 급수량-->
-<div class="row" id="row_feed_water">
+<div class="row" id="row_feed_water" style="display: none;">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary feeder"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;일일 급이 / 급수량</h2>	
+					<h2 class="font-weight-bold text-primary feeder"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;급이 및 급수 정보</h2>	
 				</div>
 			</header>
 			<div class="widget-body shadow pt-3" style="border-radius: 0 0 10px 10px; padding:1rem; height: 250px">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center"><img src="../images/feeder-01.png" style="width: 8rem;"><br><div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary">100%</h3></div></div>
+					<div class="col-xs-12 text-center"><img src="../images/feeder-01.png" style="width: 8rem;"><br>
+						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+					</div>
 				</div>
 				<div class="col-xs-4" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-right">일일 급이량<br><span id="summary_day_feed" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">일일 급이량<br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-xs-4" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-right">전일 급이량<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">전일 급이량<br><span id="extra_prev_feed" style="font-size:28px">0</span></div>
 				</div>
 				<div style="clear:both"></div><hr style="margin-top:0px">
 				<div class="col-xs-4 no-padding" style="margin-top: 10px">
 					<div class="col-xs-12 text-center"><img src="../images/feeder-07.png" style="width: 6rem;"><br><span></span></div>
 				</div>
 				<div class="col-xs-4" style="margin-top: 10px">
-					<div class="col-xs-12 text-right">일일 급수량<br><span id="summary_day_water" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">일일 급수량<br><span id="extra_curr_water" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-xs-4" style="margin-top: 10px">
-					<div class="col-xs-12 text-right">전일 급수량<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">전일 급수량<br><span id="extra_prev_water" style="font-size:28px">0</span></div>
 				</div>
 			</div>
 		</div>
@@ -137,7 +139,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--현재 외기환경 센서 정보-->
-<div class="row" id="">
+<div class="row" id="row_outsensor" style="display: none;">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
@@ -148,42 +150,42 @@ include_once("../inc/top.php");
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:1rem">
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding text-center text-danger"><img src="../images/temp.png" style="width: 1rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding text-right">온도(℃)<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding text-right">온도(℃)<br><span id="extra_out_temp" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding text-center"><img src="../images/drop.png" style="width: 4rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding text-right">습도(％)<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding text-right">습도(％)<br><span id="extra_out_humi" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/nh3.png" style="width: 5rem;"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">암모니아(ppm)<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">암모니아(ppm)<br><span id="extra_out_nh3" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding text-center"><img src="../images/h2s.png" style="width: 5rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding text-right">황화수소(ppm)<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding text-right">황화수소(ppm)<br><span id="extra_out_h2s" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/pm10.png" style="width: 10rem;"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">미세먼지(㎍/㎥)<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">미세먼지(㎍/㎥)<br><span id="extra_out_dust" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/pm2.5.png" style="width: 10rem;"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">초미세먼지(㎍/㎥)<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">초미세먼지(㎍/㎥)<br><span id="extra_out_udust" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding text-center"><img src="../images/wind-direction.png" style="width: 6rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding text-right">풍향<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding text-right">풍향<br><span id="extra_out_direction" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div>
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding text-center"><img src="../images/wind.png" style="width: 3.5rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding text-right">풍속(m/s)<br><span id="" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding text-right">풍속(m/s)<br><span id="extra_out_wind" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div>
 				</div>
 			</div>
@@ -235,12 +237,14 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 
+				$("#row_feed_water").hide();
+				$("#row_outsensor").hide();
+
 				if(top_be_status != "O"){
 
 					$("#row_summary").show();
 					$("#row_avg_esti").show();
 					$("#row_cell_avg").show();
-					//$("#row_feed_water").show();
 
 					//일령
 					let interm = data.summary.summary_interm;
@@ -251,18 +255,27 @@ include_once("../inc/bottom.php")
 					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); }
 
 					//각 요약정보[summary]
-					$.each(data.summary, function(key,val){	$("#" + key).html(val); });
+					$.each(data.summary, function(key, val){	$("#" + key).html(val); });
 
 					//어제평균중량 산출 시간 표현
 					let prev_date = data.summary.summary_day_inc1;
 					prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
 					$("#summary_day_inc1").html(prev_date);
+
+					// 급이, 급수, 외기 창 표시할지 선택
+					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
+					if(data.extra.hasOwnProperty("extra_curr_feed")){
+						$("#row_feed_water").show();
+					}
+					if(data.extra.hasOwnProperty("extra_out_temp")){
+						$("#row_outsensor").show();
+					}
+
 				}
 				else{
 					$("#row_summary").hide();
 					$("#row_avg_esti").hide();
 					$("#row_cell_avg").hide();
-					$("#row_feed_water").hide();
 				}
 				
 				//카메라
