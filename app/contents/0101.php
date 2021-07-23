@@ -74,7 +74,7 @@ include_once("../inc/top.php");
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary sensor"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;현재 센서별 평균정보</h2>	
+					<h2 class="font-weight-bold text-primary sensor"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;현재 저울 센서별 평균정보</h2>	
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:1rem">
@@ -103,7 +103,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--일일 급이 / 급수량-->
-<div class="row" id="row_feed_water" style="display:none;">
+<div class="row" id="row_feed_water">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
@@ -138,7 +138,7 @@ include_once("../inc/top.php");
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary sensor"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;현재 외기환경 센서 정보</h2>	
+					<h2 class="font-weight-bold text-primary sensor"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;외기환경 센서 정보</h2>	
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:1rem">
