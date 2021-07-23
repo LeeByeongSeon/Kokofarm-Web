@@ -65,7 +65,7 @@ include_once("../inc/top.php")
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;오늘 외기환경 변화</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 				<div class="widget-body-toolbar">
 					<div id="" class="btn-group">
 						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'온도','INOUTDAY');">
