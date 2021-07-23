@@ -227,6 +227,7 @@ include_once("../inc/bottom.php")
 	function get_dong_data(){
 		
 		let data_arr = {};
+		data_arr["oper"] = "get_buffer";	//등록코드
 		data_arr["cmCode"] = top_code;	//등록코드
 		
 		$.ajax({

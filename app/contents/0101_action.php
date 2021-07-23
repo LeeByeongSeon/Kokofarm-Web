@@ -20,7 +20,7 @@ include_once("../../common/php_module/common_func.php");
 	}
 
 	switch($oper){
-		default :
+		case "get_buffer":
 		
 			$to_day = date("Y-m-d");
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));

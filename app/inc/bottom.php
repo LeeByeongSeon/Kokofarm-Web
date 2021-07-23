@@ -87,7 +87,7 @@
 
 		// 재산출 요청 존재 확인
 		let request_info = "";
-		$("#top_request_info").hide();
+		$("#top_request_row").hide();
 		switch(top_rc_status){
 			case "R":		//요청
 				request_info = "재산출 요청 승인 대기 중 <i class='fa fa-spinner fa-pulse'></i>";
@@ -105,7 +105,7 @@
 
 		if(request_info != ""){
 			$("#top_request_info").html(request_info);
-			$("#top_request_info").show();
+			$("#top_request_row").show();
 		}
 
 		// 출하 상태 확인

@@ -228,15 +228,15 @@
 						<section id="widget-grid" class="w-100">
 							
 							<!--알람 메시지--->
-							<div class="row">
+							<div class="row" id="top_request_row" style="display:none;">
 								<div class="col-xs-12 mb-4">
-									<div class="alert alert-danger text-center m-0 font-weight-bold fadeIn animated" role="alert" id="top_request_info" style="font-size:18px; display:none;">
+									<div class="alert alert-danger text-center m-0 font-weight-bold fadeIn animated" role="alert" id="top_request_info" style="font-size:18px;">
 										message
 									</div>
 								</div>
 							</div>
 
-						<!--출하상태 표시 div-->		
+							<!--출하상태 표시 div-->		
 							<div class="card border-danger mb-4 mx-auto d-none" id="top_status_info">
 								<div class="card-header font-weight-bold text-primary pl-2"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
 								<div class="card-body">
