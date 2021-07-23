@@ -209,16 +209,16 @@
 								<li class="nav-item dropdown">
 									<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 138.64px;">
 									</div> -->
-									<select class="form-control form-control-lg text-secondary" id="top_select" aria-label="dong select">
+									<select class="form-control form-control-lg text-secondary mt-1" id="top_select" aria-label="dong select">
 										<?=$select_html?>
 									</select>
 
 								</li>
 								<li class="nav-item">
-									<a class="nav-link w-100 text-center font-md" style="cursor: default;" href="#">일령 - <span id="top_interm"></span>일</a>
+									<a class="nav-link w-100 text-center font-md mb-2" style="cursor: default;" href="#">일령 - <span id="top_interm"></span>일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link w-100 text-center font-md" style="cursor: default;" href="#">평체 - <span id="top_avg"></span>g</a>
+									<a class="nav-link w-100 text-center font-md mb-2" style="cursor: default;" href="#">평체 - <span id="top_avg"></span>g</a>
 								</li>
 							</ul>
 						</div>
@@ -227,19 +227,28 @@
 					<div class="d-flex w-100">
 						<section id="widget-grid" class="w-100">
 							
+							<!--알람 메시지--->
+							<div class="row">
+								<div class="col-xs-12 mb-4">
+									<div class="alert alert-danger text-center m-0 font-weight-bold fadeIn animated" role="alert" id="top_request_info" style="font-size:18px; display:none;">
+										message
+									</div>
+								</div>
+							</div>
+
 						<!--출하상태 표시 div-->		
 							<div class="card border-danger mb-4 mx-auto d-none" id="top_status_info">
-								<div class="card-header"> <i class="fa fa-bell-o text-orange"></i> 상태 알림</div>
+								<div class="card-header font-weight-bold text-primary pl-2"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
 								<div class="card-body">
 									<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">
 										<tr>
 											<td colspan="2" id="top_status_msg"></td>
 										</tr>
 										<tr>
-											<td class="w-50 font-md" id="top_time_info"></td><td class="w-50 font-md text-danger" id="top_last_time"></td>
+											<td class="w-50 font-md text-secondary" id="top_time_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_time"></td>
 										</tr>
 										<tr>
-											<td class="w-50 font-md" id="top_avg_info"></td><td class="w-50 font-md text-danger" id="top_last_avg"></td>
+											<td class="w-50 font-md text-secondary" id="top_avg_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_avg"></td>
 										</tr>
 									</table>
 								</div>
@@ -251,11 +260,3 @@
 								<h5 class='font-weight-bold text-center text-danger' id="top_last_avg" ></span></h5>
 							</div> -->
 							
-							<!--알람 메시지--->
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="alert alert-danger" role="alert" id="top_request_info" style="text-align:center; margin:0; font-size:18px; display:none;">
-										message
-									</div>
-								</div>
-							</div><!--row--->
