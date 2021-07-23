@@ -241,6 +241,31 @@ function make_combo_by_query($query, $form_name, $default_name, $field, $selecte
 	return $ret;
 };
 
+/* 배열을 콤보박스로 만들어 리턴
+param
+- arr : 콤보박스에 출력할 데이터 배열
+- form_name : 콤보박스의 name
+- default_name : 콤보박스에 처음 출력될 값
+return
+- ret : 콤보박스 html
+*/
+function make_combo_by_array($arr, $form_name, $default_name, $selected = ""){
+	$ret = "<select class=\"form-control w-auto\" name=\"" .$form_name. "\">";
+
+	if($default_name != ""){
+		$ret .= "<option value=''>".$default_name."</option>";
+	}
+
+	foreach($arr as $key => $val){
+		// selected로 받은 값이 있을 경우 selected를 삽입
+		$ret .="<option value=\"" . $key . "\" " .($key == $selected ? "selected" : ""). ">" . $val . "</option>";
+	}
+
+	$ret .="</select>";
+
+	return $ret;
+};
+
 /* query로 데이터를 불러온 후 jqgrid edit 형식의 콤보박스 json을 생성
 param
 - query : 콤보박스에 출력할 데이터의 select query

@@ -55,6 +55,14 @@
 
 <script>
 
+	var top_code = "";
+	var top_avg = "";
+	var top_time = "";
+	var top_interm = "";
+	var top_rc_status = "";
+	var top_be_status = "";
+	var top_name = "";
+
 	$(document).ready(function(){
 
 		$("#top_select").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
@@ -66,20 +74,21 @@
 	// 데이터를 불러옴
 	function load_data(){
 		let option = $("#top_select option:selected");
-		let code = $(option).val();
-		let avg = $(option).attr("beAvgWeight");
-		let time = $(option).attr("beAvgWeightDate");
-		let interm = $(option).attr("interm");
-		let rcStatus = $(option).attr("rcStatus");
-		let beStatus = $(option).attr("beStatus");
+		top_code = $(option).val();
+		top_avg = $(option).attr("beAvgWeight");
+		top_time = $(option).attr("beAvgWeightDate");
+		top_interm = $(option).attr("interm");
+		top_rc_status = $(option).attr("rcStatus");
+		top_be_status = $(option).attr("beStatus");
+		top_name = $(option).html();
 
-		$("#top_interm").html(interm);
-		$("#top_avg").html(avg);
+		$("#top_interm").html(top_interm);
+		$("#top_avg").html(top_avg);
 
 		// 재산출 요청 존재 확인
 		let request_info = "";
 		$("#top_request_info").hide();
-		switch(rcStatus){
+		switch(top_rc_status){
 			case "R":		//요청
 				request_info = "요청 승인 대기 중";
 				break;
@@ -104,29 +113,23 @@
 
 		let notice = "<span class='font-xs text-secondary'> ※ 해당 상태가 지속된다면 관리자에게 문의 바랍니다.</span>";
 
-		switch(beStatus){
+		switch(top_be_status){
 			case "O": //출하
-				// $("#top_status_msg").html("<h3 class='font-weight-bold text-danger text-center'>현재 '출하 상태' 입니다</h3>").show();
-				// $("#top_last_time").html("<i class='fa fa-clock-o text-secondary'></i> 출하시간 : " + time);
-				// $("#top_last_avg").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : " + avg + "g" + notice);
 				
 				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger'>현재 '출하 상태' 입니다</h3>").show();
 				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 최종 출하 시간 : ");
-				$("#top_last_time").html(time);
+				$("#top_last_time").html(top_time);
 				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
-				$("#top_last_avg").html(avg + "g");
+				$("#top_last_avg").html(top_avg + "g");
 				$("#top_notice").html(notice);
 				$("#top_status_info").show();
 				break;
 			
 			case "E": //에러
-				// $("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다</h3>").show();
-				// $("#top_last_time").html("<i class='fa fa-clock-o text-secondary'></i> 오류 발생 시간 : " + time);
-				// $("#top_last_avg").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : " + avg + "g" + notice);
 
 				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '통신 오류 상태' 입니다</h3>").show();
 				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 오류 발생 시간 : ");
-				$("#top_last_time").html(time);
+				$("#top_last_time").html(top_time);
 				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
 				$("#top_last_avg").html(avg + "g");
 				$("#top_notice").html(notice);
@@ -136,15 +139,15 @@
 			case "W": //출하 대기
 				$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-danger no-margin'>현재 '출하 대기 상태' 입니다</h3>").show();
 				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 저울 분리 시간 : ");
-				$("#top_last_time").html(time);
+				$("#top_last_time").html(top_time);
 				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
-				$("#top_last_avg").html(avg + "g");
+				$("#top_last_avg").html(top_avg + "g");
 				$("#top_notice").html(notice);
 				$("#top_status_info").show();
 				break;
 		}
 
-		get_dong_data(code, beStatus);
+		get_dong_data();		// 각 페이지 별로 선언 필요
 	};
 
 </script>

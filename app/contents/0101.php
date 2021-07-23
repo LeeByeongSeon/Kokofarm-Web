@@ -163,10 +163,10 @@ include_once("../inc/bottom.php")
 
 	});
 
-	function get_dong_data(cmCode, beStatus){
+	function get_dong_data(){
 		
 		let data_arr = {};
-		data_arr["cmCode"] = cmCode;	//등록코드
+		data_arr["cmCode"] = top_code;	//등록코드
 		
 		$.ajax({
 			url:'0101_action.php',
@@ -176,7 +176,7 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 
-				if(beStatus != "O"){
+				if(top_be_status != "O"){
 
 					$("#row_summary").show();
 					$("#row_avg_esti").show();

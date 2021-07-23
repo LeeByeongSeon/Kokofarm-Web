@@ -84,7 +84,7 @@
 	}
 
 	// 농장 이름 선택 시 요약 화면으로 복귀
-	$farm_name = "<a href='javascript:void(0)' class='text-white font-weight-normal' style='margin:0; font-size:18px' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
+	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-white font-weight-normal' style='margin:0; font-size:18px' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
 	
 ?>
 

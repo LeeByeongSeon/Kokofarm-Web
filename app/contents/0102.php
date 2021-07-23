@@ -93,16 +93,11 @@ include_once("../inc/bottom.php")
 
 <script language="javascript">
 
-	var comein_code = "";
-
 	$(document).ready(function(){
-	
 		load_data();
-
 	});
 
-	function get_dong_data(cmCode, beStatus){
-		comein_code = cmCode;
+	function get_dong_data(){
 		get_cell_data();
 		get_avg_data("day");
 		get_inc_data();
@@ -113,7 +108,7 @@ include_once("../inc/bottom.php")
 		
 		let data_arr = {}; 
 		data_arr['oper']   = "get_avg_weight"
-		data_arr["cmCode"] = comein_code;	//등록코드
+		data_arr["cmCode"] = top_code;	//등록코드
 		data_arr['comm']   = "view";
 
 		switch(comm){
@@ -148,7 +143,7 @@ include_once("../inc/bottom.php")
 
 		let data_arr = {};
 		data_arr['oper'] = "get_cell_status";
-		data_arr['cmCode'] = comein_code;
+		data_arr['cmCode'] = top_code;
 		
 		$.ajax({
 			url:'0102_action.php',
@@ -167,7 +162,7 @@ include_once("../inc/bottom.php")
 
 		let data_arr = {};
 		data_arr["oper"] = "get_inc_weight";
-		data_arr["cmCode"] = comein_code;
+		data_arr["cmCode"] = top_code;
 
 		$.ajax({
 			url:'0102_action.php',
