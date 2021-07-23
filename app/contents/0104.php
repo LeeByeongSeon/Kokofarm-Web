@@ -66,6 +66,22 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+				<div class="widget-body-toolbar">
+					<div id="" class="btn-group">
+						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'온도','INOUTDAY');">
+							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온/습도
+						</button>
+						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'습도','INOUTDAY');">
+							<i class="fa fa-warning"></i>&nbsp;&nbsp;악취
+						</button>
+						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'CO2','INOUTDAY');">
+							<i class="fa fa-cloud"></i>&nbsp;&nbsp;미세먼지
+						</button>
+						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'NH3','INOUTDAY');">
+							<i class="fa fa-flag"></i>&nbsp;&nbsp;바람
+						</button>
+					</div>
+				</div>
 				<div id="today_water_chart" style="height: 260px;"></div>
 			</div>
 		</div>
