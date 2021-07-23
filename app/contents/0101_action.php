@@ -164,8 +164,38 @@ include_once("../../common/php_module/common_func.php");
 				$extra["extra_out_h2s"] = 		sprintf('%0.1f', $buffer_data[0]["soH2s"]);
 				$extra["extra_out_dust"] = 		sprintf('%0.1f', $buffer_data[0]["soDust"]);
 				$extra["extra_out_udust"] = 	sprintf('%0.1f', $buffer_data[0]["soUDust"]);
-				$extra["extra_out_direction"] = sprintf('%0.1f', $buffer_data[0]["soWindDirection"]);
 				$extra["extra_out_wind"] = 		sprintf('%0.1f', $buffer_data[0]["soWindSpeed"]);
+
+				$direction = sprintf('%d', $buffer_data[0]["soWindDirection"]);
+
+				switch($direction){
+					case 0:
+					case 360:
+						$direction = "북풍";
+						break;
+					case 45:
+						$direction = "북동풍";
+						break;
+					case 90:
+						$direction = "동풍";
+						break;
+					case 135:
+						$direction = "남동풍";
+						break;
+					case 180:
+						$direction = "남풍";
+						break;
+					case 225:
+						$direction = "남서풍";
+						break;
+					case 270:
+						$direction = "서풍";
+						break;
+					case 315:
+						$direction = "북서풍";
+						break;
+				}
+				$extra["extra_out_direction"] = $direction;
 			}
 
 			$response["extra"] = $extra;

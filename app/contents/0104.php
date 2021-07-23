@@ -72,6 +72,21 @@ include_once("../inc/top.php")
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
+			<header style="border-radius: 10px 10px 0 0">
+				<div class="widget-header">	
+					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 외기환경 변화</h2>	
+				</div>
+			</header>
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+				<div id="today_water_chart" style="height: 260px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?
 include_once("../inc/bottom.php")
 ?>
@@ -83,8 +98,12 @@ include_once("../inc/bottom.php")
 	});
 
 	function get_dong_data(){
+		get_buffer();
+	};
+
+	function get_buffer(){
 		let data_arr = {};
-		data_arr["oper"] = "get_outsensor";	
+		data_arr["oper"] = "get_buffer";	
 		data_arr["cmCode"] = top_code;	//등록코드
 		
 		$.ajax({

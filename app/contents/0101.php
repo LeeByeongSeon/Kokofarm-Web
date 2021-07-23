@@ -113,7 +113,7 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body shadow pt-3" style="border-radius: 0 0 10px 10px; padding:1rem; height: 250px">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center"><img src="../images/feed-04.png" style="width: 8rem;"><br>
+					<div class="col-xs-12 text-center"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
 						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
 					</div>
 				</div>
@@ -266,6 +266,15 @@ include_once("../inc/bottom.php")
 					// 급이, 급수, 외기 창 표시할지 선택
 					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
 					if(data.extra.hasOwnProperty("extra_curr_feed")){
+						
+						let per = data.extra.extra_feed_percent;
+						per = parseInt(per);
+						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
+						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
+						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
+						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
+						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
+
 						$("#row_feed_water").show();
 					}
 					if(data.extra.hasOwnProperty("extra_out_temp")){

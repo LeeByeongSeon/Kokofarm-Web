@@ -620,7 +620,7 @@ param
 function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period = "hh"){
     if(chart_data.length <= 0){ return false; }
 
-    console.log(JSON.stringify(chart_data));
+    //console.log(JSON.stringify(chart_data));
 
     let graph_json = [];
     let category = "";
