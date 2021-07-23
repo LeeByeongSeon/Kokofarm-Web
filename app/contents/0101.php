@@ -111,21 +111,25 @@ include_once("../inc/top.php");
 					<h2 class="font-weight-bold text-primary feeder"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;일일 급이 / 급수량</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:1rem">
-				<div class="col-xs-9">
-					<div class="col-xs-5" style="text-align:right">일일 급수량<br><span id="summary_day_water" style="font-size:28px">0</span></div>
-					<div class="col-xs-7 no-padding" style="text-align:center"></div>
+			<div class="widget-body shadow pt-3" style="border-radius: 0 0 10px 10px; padding:1rem; height: 250px">
+				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
+					<div class="col-xs-12 text-center"><img src="../images/feeder-01.png" style="width: 8rem;"><br><div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary">100%</h3></div></div>
 				</div>
-				<div class="col-xs-3">
-					<div class="col-xs-6 no-padding" style="text-align:center"><img src="../images/temp.png" style="width: 1rem;"><br><span></span></div>
+				<div class="col-xs-4" style="margin-bottom: 15px">
+					<div class="col-xs-12 text-right">일일 급이량<br><span id="summary_day_feed" style="font-size:28px">0</span></div>
+				</div>
+				<div class="col-xs-4" style="margin-bottom: 15px">
+					<div class="col-xs-12 text-right">전일 급이량<br><span id="" style="font-size:28px">0</span></div>
 				</div>
 				<div style="clear:both"></div><hr style="margin-top:0px">
-				<div class="col-xs-9">
-					<div class="col-xs-5" style="text-align:right">일일 급이량<br><span id="summary_day_feed" style="font-size:28px">0</span></div>
-					<div class="col-xs-7 no-padding" style="text-align:center"></div>
+				<div class="col-xs-4 no-padding" style="margin-top: 10px">
+					<div class="col-xs-12 text-center"><img src="../images/feeder-07.png" style="width: 6rem;"><br><span></span></div>
 				</div>
-				<div class="col-xs-3">
-					<div class="col-xs-6 no-padding" style="text-align:center"><img src="../images/temp.png" style="width: 1rem;"><br><span></span></div>
+				<div class="col-xs-4" style="margin-top: 10px">
+					<div class="col-xs-12 text-right">일일 급수량<br><span id="summary_day_water" style="font-size:28px">0</span></div>
+				</div>
+				<div class="col-xs-4" style="margin-top: 10px">
+					<div class="col-xs-12 text-right">전일 급수량<br><span id="" style="font-size:28px">0</span></div>
 				</div>
 			</div>
 		</div>
