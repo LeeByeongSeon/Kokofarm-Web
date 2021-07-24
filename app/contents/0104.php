@@ -67,22 +67,22 @@ include_once("../inc/top.php")
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 				<div class="widget-body-toolbar">
-					<div id="" class="btn-group">
-						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'온도','INOUTDAY');">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_temp_humi', 'today');">
 							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온/습도
 						</button>
-						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'습도','INOUTDAY');">
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_gas', 'today');">
 							<i class="fa fa-warning"></i>&nbsp;&nbsp;악취
 						</button>
-						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'CO2','INOUTDAY');">
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_dust', 'today');">
 							<i class="fa fa-cloud"></i>&nbsp;&nbsp;미세먼지
 						</button>
-						<button type="button" class="btn btn-default" onClick="getSensor(chkInOutCode,'NH3','INOUTDAY');">
-							<i class="fa fa-flag"></i>&nbsp;&nbsp;바람
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_wind', 'today');">
+							<i class="fa fa-flag"></i>&nbsp;&nbsp;풍향/풍속
 						</button>
 					</div>
 				</div>
-				<div id="today_water_chart" style="height: 260px;"></div>
+				<div id="today_outsensor_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -97,7 +97,23 @@ include_once("../inc/top.php")
 				</div>
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div id="today_water_chart" style="height: 260px;"></div>
+			<div class="widget-body-toolbar">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_temp_humi', 'daily');">
+							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온/습도
+						</button>
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_gas', 'daily');">
+							<i class="fa fa-warning"></i>&nbsp;&nbsp;악취
+						</button>
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_dust', 'daily');">
+							<i class="fa fa-cloud"></i>&nbsp;&nbsp;미세먼지
+						</button>
+						<button type="button" class="btn btn-default" onClick="get_sensor('chart_wind', 'daily');">
+							<i class="fa fa-flag"></i>&nbsp;&nbsp;풍향/풍속
+						</button>
+					</div>
+				</div>
+				<div id="daily_outsensor_chart" style="height: 260px;"></div>
 			</div>
 		</div>
 	</div>
@@ -109,12 +125,17 @@ include_once("../inc/bottom.php")
 
 <script language="javascript">
 
+	var today_data = null;
+	var daily_data = null;
+
 	$(document).ready(function(){
 		load_data();
 	});
 
 	function get_dong_data(){
 		get_buffer();
+		get_all();
+		get_today();
 	};
 
 	function get_buffer(){
@@ -135,6 +156,62 @@ include_once("../inc/bottom.php")
 		});
 	};
 
+	function get_all(){
+		
+		let data_arr = {};
+		data_arr["oper"]   = "get_all";
+		data_arr["cmCode"] = top_code;
+
+		$.ajax({
+			url:'0104_action.php',
+			type:'post',
+			cache:false,
+			data:data_arr,
+			dataType:'json',
+			success: function(data){
+				daily_data = data;
+				draw_select_chart("daily_outsensor_chart", data.chart_temp_humi, "세로-Bar", "Y", "N", 12, "hh");
+			}
+		});
+	};
+
+	function get_today(){
+		
+		let data_arr = {};
+		data_arr["oper"]   = "get_today";
+		data_arr["cmCode"] = top_code;
+
+		$.ajax({
+			url:'0104_action.php',
+			type:'post',
+			cache:false,
+			data:data_arr,
+			dataType:'json',
+			success: function(data){
+				today_data = data;
+				draw_select_chart("today_outsensor_chart", data.chart_temp_humi, "세로-Bar", "Y", "N", 12, "mm");
+			}
+		});
+	};
+
+	function get_sensor(chart_name, type){
+		let use_div = null;
+		let use_data = null;
+		switch(type){
+			case "today":
+				use_div = "today_outsensor_chart";
+				use_data = today_data;
+				break;
+			case "daily":
+				use_div = "daily_outsensor_chart";
+				use_data = daily_data;
+				break;
+		}
+
+		if(use_data != null){
+			draw_select_chart(use_div, use_data[chart_name], "세로-Bar", "Y", "N", 12, "mm");
+		}
+	}
 
 
 </script>

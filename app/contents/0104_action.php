@@ -7,8 +7,8 @@ include_once("../../common/php_module/common_func.php");
 	$oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 
 	if(isset($_REQUEST["cmCode"])){
-		$cmCode = $_REQUEST["cmCode"];
-		$id = explode("_", $cmCode)[1];
+		$code = $_REQUEST["cmCode"];
+		$id = explode("_", $code)[1];
 		$farmID = substr($id, 0, 6);
 		$dongID = substr($id, 6);
 	}
@@ -66,6 +66,22 @@ include_once("../../common/php_module/common_func.php");
 
 			echo json_encode($response);
 
+			break;
+
+		case "get_today":
+		case "get_all":
+			$result = get_outsensor_history($code, $oper);
+
+			$response["chart_temp_humi"] = 	$result["chart_temp_humi"];
+			$response["chart_gas"] = 		$result["chart_gas"];
+			$response["chart_dust"] = 		$result["chart_dust"];
+			$response["chart_wind"] = 		$result["chart_wind"];
+			$response["table_temp_humi"] = 	$result["table_temp_humi"];
+			$response["table_gas"] = 		$result["table_gas"];
+			$response["table_dust"] = 		$result["table_dust"];
+			$response["table_wind"] = 		$result["table_wind"];
+
+			echo json_encode($response);
 			break;
 	}
 ?>

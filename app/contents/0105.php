@@ -185,7 +185,7 @@ include_once("../inc/bottom.php")
 					$("#request_form [name=change_hour]").html(make_time_combo(this.value, in_hour));
 				});
 
-				if(top_interm >= 2){		// 재산출은 20일령부터 입력
+				if(top_interm >= 20){		// 재산출은 20일령부터 입력
 					$("#request_form [name=measure_date]").html(make_date_combo(now, -3));
 					$("#request_form [name=measure_hour]").html(make_time_combo(now, "00"));
 					$("#request_form [name=measure_minute]").val("00").prop("selected", true);

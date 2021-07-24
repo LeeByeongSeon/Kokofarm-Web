@@ -41,10 +41,11 @@ include_once("../../common/php_module/common_func.php");
 
 			case "get_today":
 				$result = get_feed_history($code, $oper);
-				$response["chart_feed"] = $result["chart_feed_stack"];
-				$response["chart_water"] = $result["chart_water_stack"];
+				//$response["chart_feed"] = $result["chart_feed_stack"];
+				//$response["chart_water"] = $result["chart_water_stack"];
+				$response["chart_feed"] = $result["chart_feed"];
+				$response["chart_water"] = $result["chart_water"];
 				break;
-			
 			case "get_all":
 				$result = get_feed_history($code, $oper);
 				$response["chart_feed"] = $result["chart_feed"];

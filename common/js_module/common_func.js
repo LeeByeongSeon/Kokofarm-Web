@@ -653,7 +653,8 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
 					graph_obj["fillAlphas"] = 0.9;
 					break;
 				case 2:
-					graph_obj["type"] = "smoothedLine";				/*차트모양*/
+					//graph_obj["type"] = "smoothedLine";				/*차트모양*/
+                    graph_obj["type"] = "column";				/*차트모양*/
 					graph_obj["lineColor"] = graph_color[3];			/*라인컬라*/
 					graph_obj["lineThickness"] = 3;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;

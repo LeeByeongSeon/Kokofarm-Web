@@ -456,6 +456,13 @@ function get_aggregate_data($db, $coll, $pipe){
     return mongo_conn::get_inst()->aggregate($db, $coll, $pipe);
 }
 
+/* 급이량 및 급수량 데이터를 가져옴
+param
+- code : 입출하코드
+- type : 일령별 또는 오늘 데이터를 가져올지 선택
+return
+- ret : aggregate 결과값을 배열로 정리
+*/
 function get_feed_history($code, $type){
 
 	$ret = array();
@@ -498,13 +505,12 @@ function get_feed_history($code, $type){
 	switch($type){
 
 		case "get_all":
-			$start_time = substr($start_time, 0, 10) . " 00:00:00";
 			$end_time = substr($end_time, 0, 10) . " 00:00:00";
 			$end_time = get_term_date($end_time, 1440);
 
 			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time] ] ];
 
-			$iter_time = $start_time;
+			$iter_time = substr($start_time, 0, 10) . " 00:00:00";		// 일령별로 자르기 위함
 			while($iter_time != $end_time){
 				$pipe_branches[] = [
 					'case' => [
@@ -558,7 +564,7 @@ function get_feed_history($code, $type){
 		] 
 	];
 
-	$pipeline = [ $pipe_match, $pipe_group, $pipe_project, $pipe_sort];
+	$pipeline = [ $pipe_match, $pipe_group, $pipe_sort, $pipe_project];
 
 	$result = get_aggregate_data("kokofarm1", "sensorExtData", $pipeline);
 
@@ -572,6 +578,8 @@ function get_feed_history($code, $type){
 
 	$feed_stack = 0;
 	$water_stack = 0;
+
+	$table = array();
 
 	// 차트데이터로 변환
 	for($i=0; $i<count($result); $i++){
@@ -610,6 +618,234 @@ function get_feed_history($code, $type){
 	$ret["chart_water"] = $chart_water;
 	$ret["chart_feed_stack"] = $chart_feed_stack;
 	$ret["chart_water_stack"] = $chart_water_stack;
+	$ret["table"] = $table;
+
+	return $ret;
+}
+
+/* 외기환경 데이터를 가져옴
+param
+- code : 입출하코드
+- type : 일령별 또는 오늘 데이터를 가져올지 선택
+return
+- ret : aggregate 결과값을 배열로 정리
+*/
+function get_outsensor_history($code, $type){
+	$ret = array();
+
+	$id = explode("_", $code)[1];
+	$farmID = substr($id, 0, 6);
+	$dongID = substr($id, 6);
+
+	$select_query = "SELECT *, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS interm FROM comein_master WHERE cmCode = \"" .$code. "\""; 
+	$comein_data = get_select_data($select_query)[0];
+
+	$start_time = $comein_data["cmIndate"];
+	$end_time = $comein_data["cmOutdate"] == "" ? date("Y-m-d H:i:s") : $comein_data["cmOutdate"];
+	$order = 1;
+
+	$pipe_sort  =   [ '$sort' => ['getTime' => $order] ];
+
+	switch($type){
+		case "get_all":
+			$pipe_addfield = [ '$addFields' => ['minu' => ['$substr' => ['$getTime', 14, 2] ] ] ];			// 1시간 단위로 가져옴
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time], 'minu' => ['$eq' => '00']] ];
+
+			break;
+
+		case "get_today":
+			$start_time = $comein_data["interm"] > 1 ? substr(date("Y-m-d H:i:s"), 0, 10) . " 00:00:00" : substr($start_time, 0, 15) . "0:00";
+			$end_time = substr($end_time, 0, 15) . "0:00";
+
+			$pipe_addfield = [ '$addFields' => ['minu' => ['$substr' => ['$getTime', 15, 1] ] ] ];			// 10분 단위로 가져옴
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time], 'minu' => ['$eq' => '0']] ];
+
+			break;
+	}
+
+	$pipeline = [ $pipe_addfield, $pipe_match, $pipe_sort ];
+
+	$result = get_aggregate_data("kokofarm1", "sensorExtData", $pipeline);
+
+	$chart_temp_humi = array();
+	$chart_gas = array();
+	$chart_dust = array();
+	$chart_wind = array();
+
+	$table_temp_humi = array();
+	$table_gas = array();
+	$table_dust = array();
+	$table_wind = array();
+
+	// 차트데이터로 변환
+	for($i=0; $i<count($result); $i++){
+		$val = $result[$i];
+
+		$chart_temp_humi[] = array(
+			"시간" => $val->getTime,
+			"온도" => $val->outTemp,
+			"습도" => $val->outHumi,
+		);
+
+		$chart_gas[] = array(
+			"시간" => $val->getTime,
+			"암모니아" => $val->outNh3,
+			"황화수소" => $val->outH2s,
+		);
+
+		$chart_dust[] = array(
+			"시간" => $val->getTime,
+			"미세먼지" => $val->outDust,
+			"초미세먼지" => $val->outUDust,
+		);
+
+		$chart_wind[] = array(
+			"시간" => $val->getTime,
+			"풍향" => $val->outWinderec,
+			"풍속" => $val->outWindspeed,
+		);
+
+		$table_temp_humi[] = array(
+			"f1" => $val->getTime,
+			"f2" => $val->outTemp,
+			"f3" => $val->outHumi,
+		);
+
+		$table_gas[] = array(
+			"f1" => $val->getTime,
+			"f2" => $val->outNh3,
+			"f3" => $val->outH2s,
+		);
+
+		$table_dust[] = array(
+			"f1" => $val->getTime,
+			"f2" => $val->outDust,
+			"f3" => $val->outUDust,
+		);
+
+		$table_wind[] = array(
+			"f1" => $val->getTime,
+			"f2" => $val->outWinderec,
+			"f3" => $val->outWindspeed,
+		);
+	}
+
+	$ret["chart_temp_humi"] = $chart_temp_humi;
+	$ret["chart_gas"] = $chart_gas;
+	$ret["chart_dust"] = $chart_dust;
+	$ret["chart_wind"] = $chart_wind;
+	
+	$ret["table_temp_humi"] = $table_temp_humi;
+	$ret["table_gas"] = $table_gas;
+	$ret["table_dust"] = $table_dust;
+	$ret["table_wind"] = $table_wind;
+
+	return $ret;
+}
+
+/* 저울 센서 데이터를 가져옴
+param
+- code : 입출하코드
+- type : 일령별 또는 오늘 데이터를 가져올지 선택
+return
+- ret : aggregate 결과값을 배열로 정리
+*/
+function get_sensor_history($code, $type){
+	$ret = array();
+
+	$id = explode("_", $code)[1];
+	$farmID = substr($id, 0, 6);
+	$dongID = substr($id, 6);
+
+	$select_query = "SELECT *, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS interm FROM comein_master WHERE cmCode = \"" .$code. "\""; 
+	$comein_data = get_select_data($select_query)[0];
+
+	$start_time = $comein_data["cmIndate"];
+	$end_time = $comein_data["cmOutdate"] == "" ? date("Y-m-d H:i:s") : $comein_data["cmOutdate"];
+	$order = 1;
+
+	$pipe_sort  =   [ '$sort' => ['_id' => $order] ];
+
+	switch($type){
+		case "get_all":
+			$pipe_addfield = [ '$addFields' => [						// 1시간 단위로 가져옴
+				'minu' => ['$substr' => ['$getTime', 14, 2] ], 
+				'group_time' => ['$substr' => ['$getTime', 0, 16] ]
+			]];	
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time], 'minu' => ['$eq' => '00']] ];
+
+			break;
+
+		case "get_today":
+			$start_time = $comein_data["interm"] > 1 ? substr(date("Y-m-d H:i:s"), 0, 10) . " 00:00:00" : substr($start_time, 0, 15) . "0:00";
+			$end_time = substr($end_time, 0, 15) . "0:00";
+
+			$pipe_addfield = [ '$addFields' => [						// 10분 단위로 가져옴
+				'minu' => ['$substr' => ['$getTime', 15, 1] ], 
+				'group_time' => ['$substr' => ['$getTime', 0, 16] ]
+			]];
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time], 'minu' => ['$eq' => '0']] ];
+
+			break;
+	}
+
+	$pipe_group  =   [ '$group' => [
+		'_id' => '$group_time',
+		'avg_temp' => ['$avg' => '$temp'],
+		'avg_humi' => ['$avg' => '$humi'],
+		'avg_co'   => ['$avg' => '$co'],
+		'avg_nh'   => ['$avg' => '$nh']
+	] ];
+
+	$pipeline = [ $pipe_addfield, $pipe_match, $pipe_group, $pipe_sort ];
+
+	$result = get_aggregate_data("kokofarm1", "sensorData", $pipeline);
+
+	$chart_temp = array();
+	$chart_humi = array();
+	$chart_co2 = array();
+	$chart_nh3 = array();
+
+	$table = array();
+
+	// 차트데이터로 변환
+	for($i=0; $i<count($result); $i++){
+		$val = $result[$i];
+
+		$chart_temp[] = array(
+			"시간" => $val->_id . ":00",
+			"온도" => $val->avg_temp,
+		);
+
+		$chart_humi[] = array(
+			"시간" => $val->_id . ":00",
+			"습도" => $val->avg_humi,
+		);
+
+		$chart_co2[] = array(
+			"시간" => $val->_id . ":00",
+			"이산화탄소" => $val->avg_co,
+		);
+
+		$chart_nh3[] = array(
+			"시간" => $val->getTime . ":00",
+			"암모니아" => $val->avg_nh,
+		);
+
+		$table[] = array(
+			"f1" => $val->_id . ":00",
+			"f2" => $val->avg_temp,
+			"f3" => $val->avg_humi,
+			"f4" => $val->avg_co,
+			"f5" => $val->avg_nh,
+		);
+	}
+
+	$ret["chart_temp"] = $chart_temp;
+	$ret["chart_humi"] = $chart_humi;
+	$ret["chart_co2"] = $chart_co2;
+	$ret["chart_nh3"] = $chart_nh3;
+	
 	$ret["table"] = $table;
 
 	return $ret;
