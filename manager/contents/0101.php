@@ -2,6 +2,16 @@
 include_once("../inc/top.php");
 ?>
 
+<style>
+#cameraIcon {
+	position:absolute;
+	max-width:100%; max-height:100%;
+	width:auto; height:auto;
+	margin:auto;
+	top:0; bottom:0; left:0; right:0;
+}
+</style>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
