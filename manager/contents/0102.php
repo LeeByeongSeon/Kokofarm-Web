@@ -281,15 +281,16 @@ include_once("../inc/bottom.php")
 
 	$("#search_form [name=search_inout]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
 		let inout = $("#search_form [name=search_inout] option:selected").val();
+
 		switch(inout){
 			default:
-				$("#search_list").html(list_combo["all"]);
+				$("#search_form [name=search_list]").html(list_combo["all"]);
 				break;
 			case "입추":
-				$("#search_list").html(list_combo["in"]);
+				$("#search_form [name=search_list]").html(list_combo["in"]);
 				break;
 			case "출하":
-				$("#search_list").html(list_combo["out"]);
+				$("#search_form [name=search_list]").html(list_combo["out"]);
 				break;
 
 		}

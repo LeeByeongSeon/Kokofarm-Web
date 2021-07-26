@@ -1,8 +1,8 @@
 <?
 	include_once("../../common/php_module/common_func.php");
 
-	$mgrID = check_str($_REQUEST["mgrID"]);
-	$mgrPW = check_str($_REQUEST["mgrPW"]);
+	$mgrID = isset($_REQUEST["mgrID"]) ? $_REQUEST["mgrID"] : "";
+	$mgrPW = isset($_REQUEST["mgrPW"]) ? $_REQUEST["mgrPW"] : "";
 	
 	// 관리자 정보 확인
 	$select_query = "SELECT * FROM manager WHERE mgrID = \"" .$mgrID. "\" AND mgrPW = \"" .$mgrPW. "\"";
@@ -16,8 +16,8 @@
 	$add_url = "?mgrID=" .$mgrID. "&mgrPW=" .$mgrPW;
 
 	if(count($init_data) > 0){
-		$_SESSION["mgrID"]=$mgrID;
-		$_SESSION["mgrPW"]=$mgrPW;
+		$_SESSION["mgrID"] = $mgrID;
+		$_SESSION["mgrPW"] = $mgrPW;
 	
 	} else { // 데이터가 없거나 계정이 존재하지않는 경우 오류페이지로 이동
 		echo("<script>location.replace('./error.php')</script>");

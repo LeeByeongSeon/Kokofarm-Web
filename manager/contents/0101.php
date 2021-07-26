@@ -1,5 +1,8 @@
 <?
 include_once("../inc/top.php");
+
+$mgrID = $_SESSION["mgrID"];
+$mgrPW = $_SESSION["mgrPW"];
 ?>
 
 <style>
@@ -215,9 +218,10 @@ include_once("../inc/bottom.php")
 
 	//클릭했을때
 	$('#farm_list_table').on('click-cell.bs.table', function (e, field, value, row) {
+		
 		if(field != "f_no"){
 			let inout = $("#search_form [name=search_inout]").val();
-			location.href = "0102.php?inout=" + inout + "&code=" + row.f_code + "&name=" + row.f_name;
+			location.href = "0102.php?mgrID=<?=$mgrID?>&mgrPW=<?=$mgrPW?>&inout=" + inout + "&code=" + row.f_code + "&name=" + row.f_name;
 		}
 	});
 
