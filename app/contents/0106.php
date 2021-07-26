@@ -86,7 +86,7 @@ include_once("../inc/top.php")
 <!--일령별 환경센서 변화 -->
 <div class="row">
 	<div class="col-xs-12" style="margin-top:-10px">
-		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
@@ -98,7 +98,7 @@ include_once("../inc/top.php")
 					</button>
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 
 				<div class="widget-body-toolbar">
 					<div id="sensor_btn_group" class="btn-group">

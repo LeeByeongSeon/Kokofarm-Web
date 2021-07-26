@@ -3,12 +3,27 @@
 
 	$mgrID = check_str($_REQUEST["mgrID"]);
 	$mgrPW = check_str($_REQUEST["mgrPW"]);
+	
+	// 관리자 정보 확인
+	$select_query = "SELECT * FROM manager WHERE mgrID = \"" .$mgrID. "\" AND mgrPW = \"" .$mgrPW. "\"";
 
-	if(!empty($mgrID)) {
-		
+	$init_data = get_select_data($select_query);
+	
+	// url 체크
+	$curr_url = $_SERVER["PHP_SELF"];
+	$splited_url = explode("/", $curr_url);
+	$depth_1_url = $splited_url[sizeof($splited_url) - 1];
+	$add_url = "?mgrID=" .$mgrID. "&mgrPW=" .$mgrPW;
+
+	if(count($init_data) > 0){
+		$_SESSION["mgrID"]=$mgrID;
+		$_SESSION["mgrPW"]=$mgrPW;
+	
+	} else { // 데이터가 없거나 계정이 존재하지않는 경우 오류페이지로 이동
+		echo("<script>location.replace('./error.php')</script>");
 	}
 	
-	//메뉴 구성
+	// 메뉴 구성
 	$menu_struct = array(
 		array("0101.php", "농장별 장치현황"),
 		array("0102.php", "농장별 세부현황"),
@@ -16,15 +31,11 @@
 		array("0104.php", "재산출 요청 관리"),
 		array("1001.php", "설정")
 	);
-
-	$curr_url = $_SERVER["PHP_SELF"];
-	$splited_url = explode("/", $curr_url);
-	$depth_1_url = $splited_url[sizeof($splited_url) - 1];
-	$add_url = "?mgrID=$mgrID&mgrPW=$mgrPW";
+	
 
 	// 상단 메뉴 html 동적 생성
-    $top_menu_html = "";
-    foreach($menu_struct as $value){
+	$top_menu_html = "";
+	foreach($menu_struct as $value){
 		for($i=0; $i<=count($menu_struct)-1; $i++){
 			if($menu_struct[$i][0]==$value[0]){
 				if($depth_1_url==$menu_struct[$i][0]){
@@ -36,14 +47,13 @@
 			}
 		}
 	}
-	
 ?>
 
 <!DOCTYPE html>
 
 <html lang="en-us" class="smart-style-6">
 <head>
-	<title>KOKOFARM RENEWAL</title>
+	<title>꼬꼬팜 :: KOKOFARM4</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -53,8 +63,6 @@
 	<script src="../../common/library/jquery/jquery.min.js"></script>						<!-- jQuery -->
 	<script src="../../common/library/jquery/jquery-ui-1.10.3.min.js"></script>				<!-- jQuery UI-->
 	<script src="../../common/library/bootstrap/bootstrap.min.js"></script>					<!-- BOOTSTRAP JS -->
-	<script src="../../common/library/smartwidgets/jarvis.widget.min.js"></script>			<!-- JARVIS WIDGETS -->
-	<script src="../../common/library/plugin/sparkline/jquery.sparkline.min.js"></script>	<!-- SPARKLINES -->
 	
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
@@ -79,22 +87,13 @@
 	<script src="../../common/library/amchart/serial.js" type="text/javascript"></script>
 	<script src="../../common/library/amchart/lang/ko.js" type="text/javascript"></script>
 
-	<!-- myDefined JS-->
-	<script src="../../common/library/my_define/my_define.js"></script>
-	<link rel="stylesheet" type="text/css" href="../../common/library/my_define/my_define.css">
-
 	<!--Template CSS-->
 	<link rel="stylesheet" media="screen, print" href="../../common/library/vendors/vendors.bundle.css">
 	<link rel="stylesheet" media="screen, print" href="../../common/library/app/app.bundle.css">
-	<link rel="stylesheet" type="text/css" href="../../common/library/pages/homepage.css">
-	<link rel="stylesheet" type="text/css" href="../../common/library/pages/forms.css">
-	<link rel="stylesheet" type="text/css" href="../../common/library/pages/buttons.css">
 
 	<!-- date & time picker-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_datepicker/datepicker.css">
 	<link rel="stylesheet" href="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.css">
-	<script src="../../common/library/bootstrap_datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-	<script src="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.js" type="text/javascript"></script>
 
 	<!--BOOTSTRAP Table-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_table/bootstrap-table.css"/>

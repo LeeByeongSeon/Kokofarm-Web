@@ -2,6 +2,16 @@
 include_once("../inc/top.php");
 ?>
 
+<style>
+#cameraIcon {
+	position:absolute;
+	max-width:100%; max-height:100%;
+	width:auto; height:auto;
+	margin:auto;
+	top:0; bottom:0; left:0; right:0;
+}
+</style>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
@@ -10,7 +20,7 @@ include_once("../inc/top.php");
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-home text-success"></i>&nbsp;&nbsp;전국 농장 센서 현황&nbsp;</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 						<select class="form-control w-auto" name="search_inout">

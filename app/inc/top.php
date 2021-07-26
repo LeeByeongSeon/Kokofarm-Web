@@ -56,6 +56,7 @@
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
 		// 오류 페이지로 이동
+		echo("<script>location.replace('./error.php')</script>");
 	}
 	
 	//메뉴 구성
@@ -92,7 +93,7 @@
 
 <html lang="en-us" class="smart-style-6">
 <head>
-	<title>KOKOFARM RENEWAL</title>
+	<title>꼬꼬팜 :: KOKOFARM4</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -102,8 +103,6 @@
 	<script src="../../common/library/jquery/jquery.min.js"></script>						<!-- jQuery -->
 	<script src="../../common/library/jquery/jquery-ui-1.10.3.min.js"></script>				<!-- jQuery UI-->
 	<script src="../../common/library/bootstrap/bootstrap.min.js"></script>					<!-- BOOTSTRAP JS -->
-	<script src="../../common/library/smartwidgets/jarvis.widget.min.js"></script>			<!-- JARVIS WIDGETS -->
-	<script src="../../common/library/plugin/sparkline/jquery.sparkline.min.js"></script>	<!-- SPARKLINES -->
 	
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
@@ -128,22 +127,13 @@
 	<script src="../../common/library/amchart/serial.js" type="text/javascript"></script>
 	<script src="../../common/library/amchart/lang/ko.js" type="text/javascript"></script>
 
-	<!-- myDefined JS-->
-	<script src="../../common/library/my_define/my_define.js"></script>
-	<link rel="stylesheet" type="text/css" href="../../common/library/my_define/my_define.css">
-
 	<!--Template CSS-->
 	<link rel="stylesheet" media="screen, print" href="../../common/library/vendors/vendors.bundle.css">
 	<link rel="stylesheet" media="screen, print" href="../../common/library/app/app.bundle.css">
-	<link rel="stylesheet" type="text/css" href="../../common/library/pages/homepage.css">
-	<link rel="stylesheet" type="text/css" href="../../common/library/pages/forms.css">
-	<link rel="stylesheet" type="text/css" href="../../common/library/pages/buttons.css">
 
 	<!-- date & time picker-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_datepicker/datepicker.css">
 	<link rel="stylesheet" href="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.css">
-	<script src="../../common/library/bootstrap_datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-	<script src="../../common/library/bootstrap_clockpicker/bootstrap-clockpicker.js" type="text/javascript"></script>
 
 	<!--BOOTSTRAP Table-->
 	<link rel="stylesheet" href="../../common/library/bootstrap_table/bootstrap-table.css"/>

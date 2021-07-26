@@ -512,12 +512,14 @@ function show_loading(stat){
 		'top':obj_top,'left':obj_left,'width':obj_width,'height':obj_height,'position':'fixed','z-index':'9999','background':'gray',opacity:0.5
 	});
 
-	let ing_left = (obj_width-340)/2;
-	let img_top = (obj_height-252)/2;
-	$("#loadingCircleImage").css({
-		'margin-left':ing_left,'margin-top':img_top
-	});
+    //loading_img css
+    let img_post = 'relative';          //position
+	let img_left = (obj_width-340)/2;   //left
+	let img_top = (obj_height-252)/2;   //top
 
+	$("#loading_img").css({
+		'position':img_post,'left':img_left,'top':img_top
+	});
 		
 	switch(stat){
 		case "show":

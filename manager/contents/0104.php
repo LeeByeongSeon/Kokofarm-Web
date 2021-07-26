@@ -16,7 +16,7 @@ $stat_combo_json = make_jqgrid_combo($query, "cName1");
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-clipboard text-success"></i>&nbsp;&nbsp;재산출 요청 현황&nbsp;</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow no-padding" style="border-radius: 0 0 10px 10px;">
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 						<?=$stat_combo?>&nbsp;&nbsp;
