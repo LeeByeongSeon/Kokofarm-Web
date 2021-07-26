@@ -119,7 +119,7 @@
 							&nbsp;<span class="badge badge-secondary">manager</span>
 						</div>  
 					</div>
-					<div class="d-table-cell h-100 w-100 align-middle">
+					<div class="d-table-cell h-100 w-25 align-middle">
 						<div class="sa-header-menu">
 							<div class="d-flex align-items-center w-100">
                     
