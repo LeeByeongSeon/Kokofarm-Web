@@ -10,7 +10,7 @@ include_once("../inc/top.php");
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-home text-success"></i>&nbsp;&nbsp;전국 농장 센서 현황&nbsp;</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 						<select class="form-control w-auto" name="search_inout">

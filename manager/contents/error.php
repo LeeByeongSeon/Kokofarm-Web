@@ -1,53 +1,3 @@
-<?
-	include_once("../../common/php_module/common_func.php");
-
-	$mgrID = check_str($_REQUEST["mgrID"]);
-	$mgrPW = check_str($_REQUEST["mgrPW"]);
-	
-	// 관리자 정보 확인
-	$select_query = "SELECT * FROM manager WHERE mgrID = \"" .$mgrID. "\" AND mgrPW = \"" .$mgrPW. "\"";
-
-	$init_data = get_select_data($select_query);
-	
-	// url 체크
-	$curr_url = $_SERVER["PHP_SELF"];
-	$splited_url = explode("/", $curr_url);
-	$depth_1_url = $splited_url[sizeof($splited_url) - 1];
-	$add_url = "?mgrID=" .$mgrID. "&mgrPW=" .$mgrPW;
-
-	if(count($init_data) > 0){
-		$_SESSION["mgrID"]=$mgrID;
-		$_SESSION["mgrPW"]=$mgrPW;
-	
-	} else { // 데이터가 없거나 계정이 존재하지않는 경우 오류페이지로 이동
-		echo("<script>location.replace('./error.php')</script>");
-	}
-	
-	// 메뉴 구성
-	$menu_struct = array(
-		array("0101.php", "농장별 장치현황"),
-		array("0102.php", "농장별 세부현황"),
-		array("0103.php", "농장별 출하내역"),
-		array("0104.php", "재산출 요청 관리"),
-		array("1001.php", "설정")
-	);
-	
-
-	// 상단 메뉴 html 동적 생성
-	$top_menu_html = "";
-	foreach($menu_struct as $value){
-		for($i=0; $i<=count($menu_struct)-1; $i++){
-			if($menu_struct[$i][0]==$value[0]){
-				if($depth_1_url==$menu_struct[$i][0]){
-					$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\">".$menu_struct[$i][1]."</a></li>"; //userID,userPW 임시
-				}
-				else{
-					$top_menu_html .= "<li class=''><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\">".$menu_struct[$i][1]."</a></li>";
-				}
-			}
-		}
-	}
-?>
 
 <!DOCTYPE html>
 
@@ -117,46 +67,11 @@
 </style>
 </head>
 
-<body class="smart-style-6 sa-fixed-header">
+<body class="smart-style-6">
 
 	<div class="sa-wrapper">
 
-		<header class="sa-page-header">
-			<div class="sa-header-container h-100">
-				<div class="d-table d-table-fixed h-100 w-100">
-					<div class="sa-logo-space d-table-cell h-100">
-						<div class="flex-row d-flex align-items-center h-100">
-							<img alt="KOKOFARM" src="../images/logo.png" class="sa-logo img-responsive">
-							&nbsp;<span class="badge badge-secondary">manager</span>
-						</div>  
-					</div>
-					<div class="d-table-cell h-100 w-100 align-middle">
-						<div class="sa-header-menu">
-							<div class="d-flex align-items-center w-100">
-                    
-								<div class="ml-auto sa-header-right-area">
-							
-									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder"></span></button>
-			
-								</div>
-							
-							</div>          
-						</div>
-					</div>
-				</div>
-			</div>
-		</header>
-
 		<div class="sa-page-body">
-
-			<!--오른쪽 상세메뉴-->
-			<div class="sa-aside-left" style="width:40%; background-color: whitesmoke; z-index: 100;">
-				<div class="sa-left-menu-outer">
-					<ul class="metismenu sa-left-menu" id="menu1">
-						<?=$top_menu_html?>
-					</ul>
-				</div>
-			</div>
 		
 			<div class="sa-content-wrapper" style="margin:0">
         
@@ -164,3 +79,64 @@
 
 					<div class="d-flex w-100">
 						<section id="widget-grid" class="w-100">
+
+                            <div class="text-center" style="margin-top:15rem;">
+                                <!-- <code>Login Error :(</code><br><br> -->
+                                <h1 class="error-text shake animated font-weight-bold text-danger"> <img class="img-reponsive" src="../images/logo.png" style="width: 20rem"> <em class="fa fa-warning"></em></h1>
+                                <br><br><h5 class="font-weight-bold m-0"> 존재하지않는 계정입니다.</h5><br><h6 class="font-weight-bold m-0"> 관리자에게 문의 바랍니다.</h6>
+                            </div>
+
+                        </section>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	<!--Modal Alert-->
+	<div id="modal_alert" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="modal_alert_title" class="modal-title float-right">Modal title</h4>
+					<button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div id="modal_alert_body" class="modal-body">
+					<p>One fine body…</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+				</div>
+			</div><!--modal-content -->
+		</div><!--modal-dialog -->
+	</div><!--modal -->
+
+	<!--Modal Confirm-->
+	<div id="modal_confirm" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_confirm_title" class="modal-title float-right">Modal title</h4>
+                    <button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div id="modal_confirm_body" class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_confirm_ok">확인</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_confirm_cancle">취소</button>
+                </div>
+            </div><!--modal-content -->
+        </div><!--modal-dialog -->
+    </div><!--modal -->
+
+</body>
+</html>
+
+<script src="../../common/library/vendors/vendors.bundle.js"></script>
+<script src="../../common/library/app/app.bundle.js"></script>
+
+<!--BOOTSTRAP Table-->
+<script src="../../common/library/bootstrap_table/bootstrap-table.js"></script>

@@ -11,7 +11,7 @@ include_once("../inc/top.php")
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-files-o text-warning"></i>&nbsp;&nbsp;지난 출하내역</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow no-padding" style="border-radius: 0 0 10px 10px;">
 				<div class="widget-body-toolbar no-padding">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 						<input class="form-control w-auto" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="15">&nbsp;&nbsp;
@@ -55,7 +55,7 @@ include_once("../inc/top.php")
 					</button>
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 				<div class="row">
 					<div id="allday_weight_chart" style="height:260px;"></div>
 				</div>
@@ -96,9 +96,9 @@ include_once("../inc/top.php")
 					</button>
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body shadow no-padding" style="border-radius: 0 0 10px 10px;">
 
-				<div class="widget-body-toolbar no-padding">
+				<div class="widget-body-toolbar">
 					<div id="allday_btn_group" class="btn-group">
 						<button type="button" class="btn btn-default" onClick="get_sensor(cmCode,'온도','INOUTDAY');">
 							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온도

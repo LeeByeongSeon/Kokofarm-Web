@@ -56,6 +56,7 @@
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
 		// 오류 페이지로 이동
+		echo("<script>location.replace('./error.php')</script>");
 	}
 	
 	//메뉴 구성
