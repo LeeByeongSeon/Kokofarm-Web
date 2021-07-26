@@ -857,4 +857,92 @@ function get_sensor_history($code, $type){
 	return $ret;
 }
 
+function get_test($code, $type){
+	$ret = array();
+
+	$id = explode("_", $code)[1];
+	$farmID = substr($id, 0, 6);
+	$dongID = substr($id, 6);
+
+	$select_query = "SELECT *, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS interm FROM comein_master WHERE cmCode = \"" .$code. "\""; 
+	$comein_data = get_select_data($select_query)[0];
+
+	$start_time = $comein_data["cmIndate"];
+	$end_time = $comein_data["cmOutdate"] == "" ? date("Y-m-d H:i:s") : $comein_data["cmOutdate"];
+	$order = 1;
+
+	$pipe_sort  =   [ '$sort' => ['getTime' => $order] ];
+
+	switch($type){
+		case "get_all":
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time] ] ];
+
+			break;
+
+		case "get_today":
+			$start_time = $comein_data["interm"] > 1 ? substr(date("Y-m-d H:i:s"), 0, 10) . " 00:00:00" : substr($start_time, 0, 15) . "0:00";
+			$end_time = substr($end_time, 0, 15) . "0:00";
+			$pipe_match =   [ '$match' => ['farmID' => $farmID, 'dongID' => $dongID, 'getTime' => ['$gte' => $start_time, '$lte' => $end_time] ] ];
+
+			break;
+	}
+
+	$pipe_project = [ '$project' => [
+		'farmID' => 1, 'dongID' => 1, 'getTiem' => 1, 'temp' => 1, 'humi' => 1, 'co' => 1, 'no' => 1
+	]];
+
+	$pipeline = [ $pipe_match, $pipe_sort, $pipe_project ];
+
+	$result = get_aggregate_data("kokofarm3", "sensorData", $pipeline);
+
+	$chart_temp = array();
+	$chart_humi = array();
+	$chart_co2 = array();
+	$chart_nh3 = array();
+
+	$table = array();
+
+	// 차트데이터로 변환
+	for($i=0; $i<count($result); $i++){
+		$val = $result[$i];
+
+		$chart_temp[] = array(
+			"시간" => $val->getTime,
+			"온도" => $val->temp,
+		);
+
+		$chart_humi[] = array(
+			"시간" => $val->getTime,
+			"습도" => $val->humi,
+		);
+
+		$chart_co2[] = array(
+			"시간" => $val->getTime,
+			"이산화탄소" => $val->co,
+		);
+
+		$chart_nh3[] = array(
+			"시간" => $val->getTime,
+			"암모니아" => $val->no,
+		);
+
+		$table[] = array(
+			"f1" => $val->getTime,
+			"f2" => $val->temp,
+			"f3" => $val->humi,
+			"f4" => $val->co,
+			"f5" => $val->nh,
+		);
+	}
+
+	$ret["chart_temp"] = $chart_temp;
+	$ret["chart_humi"] = $chart_humi;
+	$ret["chart_co2"] = $chart_co2;
+	$ret["chart_nh3"] = $chart_nh3;
+	
+	$ret["table"] = $table;
+
+	return $ret;
+}
+
 ?>
