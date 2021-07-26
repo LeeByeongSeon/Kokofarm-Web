@@ -15,8 +15,6 @@ switch($oper){
         if(isset($_REQUEST["search_inout"])){
             $search_inout = check_str($_REQUEST["search_inout"]);
             switch($search_inout){
-                case "전체":
-                    break;
                 case "입추":
                     $append_query .= " AND beStatus != 'O'";
                     break;

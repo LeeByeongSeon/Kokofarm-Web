@@ -1,5 +1,53 @@
 <?
 include_once("../inc/top.php");
+
+$inout = isset($_REQUEST["inout"]) ? $_REQUEST["inout"] : "입추";
+$code = isset($_REQUEST["code"]) ? $_REQUEST["code"] : "";
+$name = isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
+
+$list_query = "SELECT be.beStatus, be.beComeinCode, fd.fdName FROM buffer_sensor_status AS be 
+				LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid ORDER BY fdName ASC";
+
+$result = get_select_data($list_query);
+
+$list_combo = array();
+
+// 입출하 상태에 따라 콤보박스 생성
+foreach($result as $row){
+	$option = "<option value=\"" . $row["fdName"] . "\" comein_code=\"" . $row["beComeinCode"] . "\" " .($row["fdName"] == $name ? "selected" : ""). ">" . $row["fdName"] . "</option>";
+	
+	if($row["beStatus"] == "O"){
+		$list_combo["out"] .= $option;
+	}
+	else{
+		$list_combo["in"] .= $option;
+	}
+
+	$list_combo["all"] .= $option;
+}
+
+$view_list_combo = "<select class=\"form-control w-auto\" name=\"search_list\">";
+switch($inout){
+	case "":
+		$view_list_combo .= $list_combo["all"];
+		break;
+	case "입추":
+		$view_list_combo .= $list_combo["in"];
+		break;
+	case "출하":
+		$view_list_combo .= $list_combo["out"];
+		break;
+}
+$view_list_combo .= "</select>";		// 처음에 출력될 콤보
+
+$list_combo = json_encode($list_combo);	// javascript 에서 활용할 콤보 배열
+
+$inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
+					<option value='' " .($inout == "" ? "selected" : ""). ">전체</option>
+					<option value='입추' " .($inout == "입추" ? "selected" : ""). ">입추</option>
+					<option value='출하' " .($inout == "출하" ? "selected" : ""). ">출하</option>
+				</select>";
+
 ?>
 
 <div class="row">
@@ -8,16 +56,9 @@ include_once("../inc/top.php");
 			<div class="widget-body" style="padding:0.5rem; min-height: 0;">
 				<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 					<span class="font-weight-bold text-primary"><i class="fa fa-home"></i>&nbsp;&nbsp;농장 검색 : </span>&nbsp;&nbsp;
-					<!--임시 select-->
-					<select class="form-control w-auto">
-						<option>전체</option>
-						<option>입추</option>
-						<option>출하</option>
-					</select>&nbsp;&nbsp;
-					<select class="form-control w-auto">
-						<option>고산 1농 - 1동</option>
-					</select>&nbsp;&nbsp;
-					<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-check"></span>&nbsp;&nbsp;확인</button>&nbsp;&nbsp;
+					<?=$inout_combo?>&nbsp;&nbsp;
+					<?=$view_list_combo?>
+					<!-- <button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-check"></span>&nbsp;&nbsp;확인</button>&nbsp;&nbsp; -->
 				</form>
 			</div>	
 		</div>
@@ -25,7 +66,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--실시간 평균-->
-<div class="row">
+<div class="row" id="row_summary" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0 0">
@@ -37,8 +78,8 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
 				<div class="col-xs-4 float-left text-center">
-					<img class="p-2 img-reponsive henImage" src="../images/hen-scale1.png">
-					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_in_term"></span>일 </h1></div>
+					<img class="p-2 img-reponsive henImage">
+					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-4">
 					<h1 class="font-weight-bold text-danger text-center" style="margin-top: 20%" id="summary_avg_weight"></h1>
@@ -59,7 +100,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--예측평체-->
-<div class="row avg_weight">
+<div class="row" id="row_avg_esti">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0;">
@@ -81,7 +122,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--현재 센서별 평균정보-->	
-<div class="row">
+<div class="row" id="row_cell_avg">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
@@ -92,21 +133,21 @@ include_once("../inc/top.php");
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:1rem">
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/temp.png" style="width: 1rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">온도(℃)<br><span id="curr_avg_temp" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">온도(℃)<br><span id="summary_avg_temp" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/drop.png" style="width: 4rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">습도(％)<br><span id="curr_avg_humi" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">습도(％)<br><span id="summary_avg_humi" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/co2.png" style="width: 4rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">이산화탄소(ppm)<br><span id="curr_avg_co2" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">이산화탄소(ppm)<br><span id="summary_avg_co2" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/nh3.png" style="width: 5rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding" style="text-align:right">암모니아(ppm)<br><span id="curr_avg_nh3" style="font-size:28px">0</span></div>
+					<div class="col-xs-9 no-padding" style="text-align:right">암모니아(ppm)<br><span id="summary_avg_nh3" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div>
 				</div>
 			</div>
@@ -125,7 +166,7 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body shadow pt-3" style="border-radius: 0 0 10px 10px; padding:1rem; height: 250px">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center"><img src="../images/feed-04.png" style="width: 8rem;"><br>
+					<div class="col-xs-12 text-center"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
 						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
 					</div>
 				</div>
@@ -206,7 +247,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--IP 카메라-->
-<div class="row">
+<div class="row" id="row_camera_view" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0 0">
@@ -224,3 +265,114 @@ include_once("../inc/top.php");
 <?
 include_once("../inc/bottom.php")
 ?>
+
+<script language="javascript">
+
+	var comein_code = "";
+	var list_combo = "";
+
+	$(document).ready(function(){
+
+		list_combo = <?=$list_combo?>;
+		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
+		get_dong_data(comein_code);
+
+	});
+
+	$("#search_form [name=search_inout]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+		let inout = $("#search_form [name=search_inout] option:selected").val();
+		switch(inout){
+			default:
+				$("#search_list").html(list_combo["all"]);
+				break;
+			case "입추":
+				$("#search_list").html(list_combo["in"]);
+				break;
+			case "출하":
+				$("#search_list").html(list_combo["out"]);
+				break;
+
+		}
+	});
+
+	$("#search_form [name=search_list]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
+
+		get_dong_data(comein_code);
+	});
+
+	function get_dong_data(comein_code){
+
+		let data_arr = {};
+		data_arr["oper"] = "get_buffer";
+		data_arr["cmCode"] = comein_code;	//등록코드
+
+		$.ajax({
+			url:'0102_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+
+				$("#row_feed_water").hide();
+				$("#row_outsensor").hide();
+
+				if(data.beStatus != "O"){
+
+					$("#row_summary").show();
+					$("#row_avg_esti").show();
+					$("#row_cell_avg").show();
+
+					//일령
+					let interm = data.summary.summary_interm;
+
+					//일령기간별 이미지
+					if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png"); }
+					if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png"); }
+					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); }
+
+					//각 요약정보[summary]
+					$.each(data.summary, function(key, val){	$("#" + key).html(val); });
+
+					//어제평균중량 산출 시간 표현
+					let prev_date = data.summary.summary_day_inc1;
+					prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
+					$("#summary_day_inc1").html(prev_date);
+
+					// 급이, 급수, 외기 창 표시할지 선택
+					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
+					if(data.extra.hasOwnProperty("extra_curr_feed")){
+						
+						let per = data.extra.extra_feed_percent;
+						per = parseInt(per);
+						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
+						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
+						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
+						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
+						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
+
+						$("#row_feed_water").show();
+					}
+					if(data.extra.hasOwnProperty("extra_out_temp")){
+						$("#row_outsensor").show();
+					}
+
+				}
+				else{
+					$("#row_summary").hide();
+					$("#row_avg_esti").hide();
+					$("#row_cell_avg").hide();
+				}
+				
+				//카메라
+				$("#camera_zone").html(data.camera_zone);
+
+			},
+			error: function(request,status,error){
+				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+			}
+		});
+	}
+
+</script>

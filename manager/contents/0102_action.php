@@ -1,7 +1,7 @@
 <?
 
-	include_once("../../common/php_module/common_func.php");
-
+include_once("../../common/php_module/common_func.php");
+	
 	$response = array();
 
 	$oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
@@ -132,6 +132,8 @@
 				"summary_avg_nh3"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgNh3"] + corr_nh3),	/*현재 암모니아 센서 평균*/
 			);
 			$response["summary"] = $summary;
+
+			$response["beStatus"] = $buffer_data[0]["beStatus"];
 
 			$extra = array();
 			if($buffer_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면

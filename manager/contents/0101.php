@@ -203,5 +203,13 @@ include_once("../inc/bottom.php")
 		//$("#cameraDIV").attr("src",data.cameraURL);
 	};
 
+	//클릭했을때
+	$('#farm_list_table').on('click-cell.bs.table', function (e, field, value, row) {
+		if(field != "f_no"){
+			let inout = $("#search_form [name=search_inout]").val();
+			location.href = "0102.php?inout=" + inout + "&code=" + row.f_code + "&name=" + row.f_name;
+		}
+	});
+
 
 </script>

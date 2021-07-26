@@ -5,6 +5,12 @@ session_start();
 include_once("../../common/php_module/mysql_conn.php");   	//Mysql
 include_once("../../common/php_module/mongo_conn.php");	//mongo
 
+define("corr_devi", 1.28);	//표준편차보정=>초기화는 *1임(곱하기)
+define("corr_temp", -1.2);	//저울-온도보정
+define("corr_humi", 7);		//저울-습도보정
+define("corr_co2", 0);		//저울-CO2보정
+define("corr_nh3", 0);		//저울-NH3보정
+
 // set_iot_cell 데이터 삽입용
 // function cell_all(){
 // 	$query = "SELECT * FROM farm_detail";
