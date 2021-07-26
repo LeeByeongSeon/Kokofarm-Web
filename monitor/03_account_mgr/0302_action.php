@@ -76,7 +76,7 @@ switch($oper){
 			$insert_map = array();
 			$insert_map["scFarmid"] = $farmID;
 			$insert_map["scDongid"] = $dongID;
-			$insert_map["scPort"] = "150" + $dongID;
+			$insert_map["scPort"] = "150" . $dongID;
 			$insert_map["scUrl"] = "/stw-cgi/video.cgi?msubmenu=snapshot&action=view&Resolution=640x480";
 			$insert_map["scId"] = "admin";
 			$insert_map["scPw"] = "kokofarm5561";

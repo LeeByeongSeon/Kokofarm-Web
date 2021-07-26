@@ -499,6 +499,36 @@ function del_cookie(name){
 	document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;path=/';
 };
 
+// 로딩 ui 띄우기
+function show_loading(stat){
+	let window_obj = $(window);
+	let obj_top = 0;
+	let obj_left = 0;
+
+	let obj_width = window_obj.width();
+	let obj_height = window_obj.height();
+
+	$("#loading_circle").css({
+		'top':obj_top,'left':obj_left,'width':obj_width,'height':obj_height,'position':'fixed','z-index':'9999','background':'gray',opacity:0.5
+	});
+
+	let ing_left = (obj_width-340)/2;
+	let img_top = (obj_height-252)/2;
+	$("#loadingCircleImage").css({
+		'margin-left':ing_left,'margin-top':img_top
+	});
+
+		
+	switch(stat){
+		case "show":
+			$("#loading_circle").fadeIn();
+			break;
+		case "hide":
+			$("#loading_circle").fadeOut();
+			break;
+	}
+};
+
 
 // am chart 관련---------------------------------------------------------------------
 /* 차트 형태 별 그래프 데이터 리턴
@@ -691,4 +721,52 @@ function zoom_chart(chart) {
     } catch (error) {
         
     }
+};
+
+var open_window;
+var open_url = "";
+
+// 카메라 선택 시 팝업창 띄움
+function camera_popup(name, img_url){
+
+    let pop_width = 1024;
+    let pop_height = 800;
+
+    let pop_left = Math.ceil(( window.screen.width - pop_width ) / 2);
+    let pop_top = Math.ceil(( window.screen.height - pop_height ) / 2);
+
+    let options = "width=" + pop_width + ", height=" + pop_height + ", left=" + pop_left + ", top=" + pop_top
+
+    open_url = img_url;
+    open_window = window.open("camera_popup.php?title=" + name, "camera_popup", options);
+};
+
+// 카메라 이미지 불러오기 팝업창에서 실행
+function camera_load(img_obj){
+    // 팝업창 닫히면 
+    open_window.onbeforeunload = function(){
+        img_obj.onload = function(){"";};
+        img_obj.setAttribute("src", "");
+    };   
+
+    // 이미지가 로드되면
+    img_obj.onload = function(){
+        img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
+    };
+
+    // 이미지 로드 중 에러 발생시
+    img_obj.onerror = function(){
+        img_obj.setAttribute("src", "../images/noimage.jpg");
+        img_obj.onload = function(){"";};
+    };
+
+    // 첫 이미지 로드
+    img_obj.setAttribute("src", open_url + "&date=" + (new Date()).getTime());
+};
+
+function camera_close(img_obj){
+    img_obj.setAttribute("src", "../images/noimage.jpg");
+    img_obj.onload = function(){"";};
+
+    open_window.close();
 };

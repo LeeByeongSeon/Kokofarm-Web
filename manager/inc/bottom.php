@@ -44,6 +44,9 @@
         </div><!--modal-dialog -->
     </div><!--modal -->
 
+	<!----Loading Circle-->
+	<div id="loading_circle" style="display:none;"><ul id="loading_img"><img src="../images/loading_circle.gif"></ul></div>
+
 </body>
 </html>
 

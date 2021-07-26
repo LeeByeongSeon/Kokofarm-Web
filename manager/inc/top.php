@@ -1,10 +1,11 @@
 <?
 	include_once("../../common/php_module/common_func.php");
 
-	$mgrID = check_str($_REQUEST["magrID"]);
-	$mgrPW = check_str($_REQUEST["magrPW"]);
+	$mgrID = check_str($_REQUEST["mgrID"]);
+	$mgrPW = check_str($_REQUEST["mgrPW"]);
 
 	if(!empty($mgrID)) {
+		
 	}
 	
 	//메뉴 구성
