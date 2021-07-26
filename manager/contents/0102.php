@@ -50,6 +50,16 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 
 ?>
 
+<style>
+#cameraIcon {
+	position:absolute;
+	max-width:100%; max-height:100%;
+	width:auto; height:auto;
+	margin:auto;
+	top:0; bottom:0; left:0; right:0;
+}
+</style>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
@@ -79,7 +89,7 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
 				<div class="col-xs-4 float-left text-center">
 					<img class="p-2 img-reponsive henImage">
-					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
+					<div class="p-2 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-4">
 					<h1 class="font-weight-bold text-danger text-center" style="margin-top: 20%" id="summary_avg_weight"></h1>

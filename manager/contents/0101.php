@@ -31,7 +31,7 @@ $mgrPW = $_SESSION["mgrPW"];
                             <option value='입추' selected>입추</option>
                             <option value='출하'>출하</option>
                         </select>&nbsp;&nbsp;
-						<input class="form-control w-auto" type="text" name="search_name" maxlength="15" placeholder=" 농장명, 농장ID" size="20">&nbsp;&nbsp;
+						<input class="form-control w-auto" type="text" name="search_name" maxlength="15" placeholder=" 농장명, 농장ID" size="15">&nbsp;&nbsp;
 						<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;&nbsp;
 						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
 					</form>
