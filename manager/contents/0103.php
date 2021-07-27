@@ -8,10 +8,10 @@ include_once("../inc/top.php")
 		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-files-o text-warning"></i>&nbsp;&nbsp;지난 출하내역</h2>	
+					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;지난 출하내역</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow no-padding" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
 				<div class="widget-body-toolbar no-padding">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 						<input class="form-control w-auto" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="15">&nbsp;&nbsp;
@@ -19,17 +19,16 @@ include_once("../inc/top.php")
 						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
 					</form>
                 </div>
-				<table id="chk_out_table" data-page-list="[]" data-toggle="table" data-pagination='true' data-page-size='5' style="font-size:14px">
+				<table id="come_out_table" data-page-list="[]" data-toggle="table" data-pagination='true' data-page-size='5' style="font-size:14px">
 					<thead>
 						<tr>
 						<th data-field='f1' data-align="center">번호</th>
-						<th data-field='f2' data-align="center" data-visible="false">cmCode</th>
+						<th data-field='f2' data-align="center" data-visible="false">code</th>
 						<th data-field='f3' data-align="center" data-visible="false">농장ID</th>
 						<th data-field='f4' data-align="center" data-visible="false">동ID</th>
 						<th data-field='f5' data-align="center" data-sortable="true">동명</th>
 						<th data-field='f6' data-align="center" data-sortable="true">입추일자</th>
 						<th data-field='f7' data-align="center">출하일자</th>
-						<th data-field='f8' data-align="center" data-visible="false">생존수</th>
 						</tr>
 					</thead>
 
@@ -40,86 +39,87 @@ include_once("../inc/top.php")
 </div><!--row--->
 
 
-<!--일령별 평균중량 변화추이 -->
 <div class="row">
 	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header>
+		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 10px 10px 0 0">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
+					<h2 class="font-weight-bold text-primary"><i class="fa fa-file-text-o text-success"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
 				</div>
-				<div class="widget-toolbar ml-auto">
-					<button type="button" class="btn btn-default"><span class="fa fa-file-excel-o"></span> Excel</button>&nbsp;&nbsp;
-					<button id="toggle_weight_btn" type="button" class="btn btn-default">
-						<span class="fa fa-plus"> </span>
-					</button>
+
+				<div class="widget-toolbar ml-auto" style="height: 25px; line-height: 25px; margin-top: 0.3rem;">
+					<div class="form-inline">
+						<div class="btn-group no-margin">
+							<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_history('day')">일령별</button>
+							<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
+							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_history('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
+						</div>
+					</div>
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
-				<div class="row">
-					<div id="allday_weight_chart" style="height:260px;"></div>
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			
+				<div class="col-xs-12">
+					<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
 				</div>
-				<div id="toggle_weight_div" class="row fadeInDown animated d-none">
-					<div class="col-xs-12">
-						<table id="allday_weight_table" data-toggle="table" style="font-size:14px">
-							<thead>
-								<tr>
-								<th data-field='f1' data-align="center" data-sortable="true">일령<br>(Day)</th>
-								<th data-field='f2' data-align="center">일령별<br>날짜</th>
-								<th data-field='f3' data-align="center">권고<br>중량(g)</th>
-								<th data-field='f4' data-align="center">평균<br>중량(g)</th>
-								<th data-field='f5' data-align="center">표준<br>편차</th>
-								<th data-field='f6' data-align="center">변이<br>계수</th>
-								</tr>
-							</thead>
-						</table>
-					</div><!--col-xs-12-->
-				</div><!--row-->
 
-			</div><!--widget-body-->
-		</div><!--widget-->
-	</div><!--col-xs-12-->
-</div><!--row-->
+				<div class="col-xs-12" id="avg_weight_table_div" style="display:none;">
+					<table id="avg_weight_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+						<thead>
+							<tr>
+								<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
+								<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
+								<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
+								<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
 
 <!--일령별 환경센서 변화 -->
 <div class="row">
-	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+	<div class="col-xs-12" style="margin-top:-10px">
+		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto">
-					<button type="button" class="btn btn-default"><span class="fa fa-file-excel-o"></span> Excel</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-default"><span class="fa fa-table"></span> Excel</button>&nbsp;&nbsp;
 					<button id="toggle_sensor_btn" type="button" class="btn btn-default">
 						<span class="fa fa-plus"> </span>
 					</button>
 				</div>
 			</header>
-			<div class="widget-body shadow no-padding" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 
 				<div class="widget-body-toolbar">
-					<div id="allday_btn_group" class="btn-group">
-						<button type="button" class="btn btn-default" onClick="get_sensor(cmCode,'온도','INOUTDAY');">
+					<div id="sensor_btn_group" class="btn-group">
+						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_temp');">
 							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온도
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor(cmCode,'습도','INOUTDAY');">
+						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_humi');">
 							<i class="fa fa-tint"></i>&nbsp;&nbsp;습도
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor(cmCode,'CO2','INOUTDAY');">
-							<i class="fa fa-cloud"></i>&nbsp;&nbsp;이산화탄소
+						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_co2');">
+							<i class="fa fa-warning"></i>&nbsp;&nbsp;이산화탄소
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor(cmCode,'NH3','INOUTDAY');">
-							<i class="fa fa-warning"></i>&nbsp;&nbsp;암모니아
+						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_nh3');">
+							<i class="fa fa-ambulance"></i>&nbsp;&nbsp;암모니아
 						</button>
 					</div>
 				</div><!--widget-body-toolbar-->
 
 				<div class="row">
-					<div id="inoutday_sensor_chart" style="height:300px"></div>
+					<div id="daily_sensor_chart" style="height:300px"></div>
 				</div>
 
-				<div id="toggle_sensor_div" class="row fadeInDown animated d-none">
+				<div id="toggle_sensor_div" class="row fadeInDown animated" style="display:none">
 					<div class="col-xs-12">
 						<table id="inoutday_sensor_table" data-toggle="table" style="font-size:14px">
 							<thead>
@@ -146,5 +146,122 @@ include_once("../inc/bottom.php")
 ?>
 
 <script language="javascript">
+
+	var select_code = "";
+	var sensor_chart_data = null;
+
+	$(document).ready(function(){
+
+		get_history("");
+	});
+
+	function get_history(search){
+		let data_arr = {};
+		data_arr["oper"] = "get_history";	
+		data_arr["search"] = search;
+		
+		$.ajax({
+			url:'0103_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+				$("#come_out_table").bootstrapTable('load', data.come_out_table);
+			}
+		});
+	};
+
+	// 검색, 취소, 엑셀 버튼 이벤트
+	function search_action(action){
+
+		switch(action){
+			case "search":
+				let search = $("#search_form [name=search_name]").val();
+				get_history(search);
+				break;
+
+			case "cancle":
+				//초기화
+				$("#search_form").each(function() {	this.reset();  });
+				break;
+		}
+	};
+
+	$('#come_out_table').on('click-row.bs.table', function (e, rowData, $element) {
+		$('.success').removeClass('success');
+		$($element).addClass('success');
+
+		select_code = rowData.f2;
+
+		//$("#selectDongName").text(rowData.f5);
+
+		//일령별 평균중량 정보 가져오기
+		get_avg_history("day");
+
+		//일령별 센서정보 가져오기
+		$("#sensor_btn_group > button.btn:first").addClass("active");
+		$("#sensor_btn_group > button.btn:first").trigger('click');
+	});
+
+	function get_avg_history(comm){
+		let data_arr = {};
+		data_arr["oper"] = "get_avg_history";	
+		data_arr["cmCode"] = select_code;	//등록코드
+		data_arr['comm']   = "view";
+
+		switch(comm){
+			case "day":
+				$("#btn_excel_avg").attr("selection", "day");
+				break;
+			case "time":
+				$("#btn_excel_avg").attr("selection", "time");
+				break;
+			case "excel":
+				data_arr['comm'] = "excel";
+				break;
+		}
+
+		data_arr['term'] = $("#btn_excel_avg").attr("selection");
+		
+		$.ajax({
+			url:'0103_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data) {
+				$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table); 
+				draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12, "hh");
+			}
+		});
+	};
+
+	function get_sensor_history(chart_name){
+		// let data_arr = {};
+		// data_arr["oper"]   = "get_sensor_history";
+		// data_arr["cmCode"] = select_code;
+
+		// console.log("call : " + get_now_time());
+
+		// $.ajax({
+		// 	url:'0103_action.php',
+		// 	type:'post',
+		// 	cache:false,
+		// 	data:data_arr,
+		// 	dataType:'json',
+		// 	success: function(data){
+		// 		console.log("recv : " + get_now_time());
+		// 		sensor_chart_data = data;
+
+		// 		console.log(data);
+
+		// 		//draw_select_chart("daily_sensor_chart", data[chart_name], "영역차트", "Y", "N", 12, "hh");
+		// 	},
+		// 	complete: function(){
+		// 		console.log("complete");
+		// 	}
+		// });
+	};
 
 </script>

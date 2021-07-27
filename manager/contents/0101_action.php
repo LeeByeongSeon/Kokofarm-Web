@@ -253,7 +253,7 @@ switch($oper){
             $farm_list_table[] = array(
                 'f_no'          => $idx + 1,
                 'f_name'		=> $row["fdName"],
-                'f_interm'	    => $row["interm"],
+                'f_interm'	    => $row["beStatus"] != "O" ? $row["interm"] : "출하",
                 'f_error'		=> $row["device_error"],  
                 'f_network'     => $row["beNetwork"],
                 'f_sensor'		=> $row["siSensorDate"],

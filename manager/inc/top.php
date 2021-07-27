@@ -29,9 +29,8 @@
 		array("0102.php", "농장별 세부현황"),
 		array("0103.php", "농장별 출하내역"),
 		array("0104.php", "재산출 요청 관리"),
-		array("1001.php", "설정")
+		//array("1001.php", "설정")
 	);
-	
 
 	// 상단 메뉴 html 동적 생성
 	$top_menu_html = "";
