@@ -68,7 +68,12 @@
 		$("#top_select").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
 			load_data();
 		});
-
+		
+		// $(document).click(function(e){
+		// 	if(!$(e.target).is('.sa-aside-left > *')){
+		// 		alert('제발');
+		// 	}
+		// });
 	});
 
 	// 데이터를 불러옴
@@ -111,7 +116,7 @@
 		// 출하 상태 확인
 		//$("#top_status_info").hide();
 
-		let notice = "<span class='font-xs text-secondary'> ※ 해당 상태가 지속된다면 관리자에게 문의 바랍니다.</span>";
+		let notice = "<span class='font-xs text-secondary'> ※해당 상태가 지속되면 관리자에게 문의 바랍니다.</span>";
 
 		switch(top_be_status){
 			case "O": //출하

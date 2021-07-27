@@ -687,7 +687,7 @@ select.form-control-sm:not([size]):not([multiple]),
 
 .card-header {
   border-radius: 0 !important;
-  border: 1px solid #c3c3c3;
+  /* border: 1px solid #c3c3c3; */
   background: #fcfcfc;
   font-size: 1.15385rem;
   color: inherit;
@@ -702,9 +702,9 @@ select.form-control-sm:not([size]):not([multiple]),
 .card:last-child .card-body {
   border-bottom: 1px solid #c3c3c3; }
 
-.card-body {
+/* .card-body {
   border-left: 1px solid #c3c3c3;
-  border-right: 1px solid #c3c3c3; }
+  border-right: 1px solid #c3c3c3; } */
 
 .smart-accordion .card-header .fa {
   color: #a90329; }

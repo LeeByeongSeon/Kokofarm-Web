@@ -88,8 +88,8 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			</header>
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
 				<div class="col-xs-4 float-left text-center">
-					<img class="p-2 img-reponsive henImage">
-					<div class="p-2 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
+					<img class="img-reponsive henImage no-padding">
+					<div class="carousel-caption henInterm"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-4">
 					<h1 class="font-weight-bold text-danger text-center" style="margin-top: 20%" id="summary_avg_weight"></h1>
@@ -339,9 +339,9 @@ include_once("../inc/bottom.php")
 					let interm = data.summary.summary_interm;
 
 					//일령기간별 이미지
-					if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png"); }
-					if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png"); }
-					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); }
+					if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");  $(".henInterm").addClass("p-4");}
+					if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");  $(".henInterm").addClass("p-3");}
+					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); $(".henInterm").addClass("p-2"); }
 
 					//각 요약정보[summary]
 					$.each(data.summary, function(key, val){	$("#" + key).html(val); });

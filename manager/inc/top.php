@@ -139,7 +139,7 @@
 		<div class="sa-page-body">
 
 			<!--오른쪽 상세메뉴-->
-			<div class="sa-aside-left" style="width:40%; background-color: whitesmoke; z-index: 100;">
+			<div class="sa-aside-left" style="width: 45%; z-index: 100; position: fixed; background-color: whitesmoke;">
 				<div class="sa-left-menu-outer">
 					<ul class="metismenu sa-left-menu" id="menu1">
 						<?=$top_menu_html?>

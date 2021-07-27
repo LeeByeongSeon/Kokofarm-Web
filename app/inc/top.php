@@ -67,7 +67,6 @@
 	if($exist_out){ $menu_struct[] = array("0104.php", "외기환경"); }
 	$menu_struct[] = array("0105.php", "재산출 요청");
 	$menu_struct[] = array("0106.php", "출하내역");
-	$menu_struct[] = array("1001.php", "설정");
 
 	// 상단 메뉴 html 동적 생성
     $top_menu_html = "";
@@ -159,13 +158,13 @@
 							&nbsp;&nbsp;&nbsp;<?=$farm_name?>
 						</div>  
 					</div>
-					<div class="d-table-cell h-100 w-100 align-middle">
+					<div class="d-table-cell h-100 w-25 align-middle">
 						<div class="sa-header-menu">
 							<div class="d-flex align-items-center w-100">
                     
 								<div class="ml-auto sa-header-right-area">
 							
-									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder"></span></button>
+									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle btn-menu" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder"></span></button>
 			
 								</div>
 							
@@ -179,8 +178,6 @@
 		<div class="sa-page-body">
 
 			<!--오른쪽 상세메뉴-->
-			
-			<div class="left-menu-bg col-xs-12 w-100 h-100" style="display: none; background: rgba(0, 0, 0, 0.5)"></div>
 			<div class="sa-aside-left bg-color-whitesmoke" style="width: 35%; z-index: 100; position: fixed; background-color: whitesmoke;">
 				<div class="sa-left-menu-outer">
 					<ul class="metismenu sa-left-menu" id="menu1">
@@ -188,6 +185,7 @@
 					</ul>
 				</div>
 			</div>
+			
 		
 			<div class="sa-content-wrapper" style="margin:0">
         
