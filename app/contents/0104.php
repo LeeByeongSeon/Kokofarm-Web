@@ -23,8 +23,8 @@ include_once("../inc/top.php")
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/nh3.png" style="width: 5rem;"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">암모니아(ppm)<br><span id="extra_out_nh3" style="font-size:28px">0</span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/nh3.png" style="width: 5rem;"><br><span></span></div>
+					<div class="col-xs-9 no-padding text-right">암모니아(ppm)<br><span id="extra_out_nh3" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
@@ -33,18 +33,18 @@ include_once("../inc/top.php")
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/pm10.png" style="width: 10rem;"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">미세먼지(㎍/㎥)<br><span id="extra_out_dust" style="font-size:28px">0</span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/pm10.png" style="width: 5rem;"><br><span></span></div>
+					<div class="col-xs-9 no-padding text-right">미세먼지(㎍/㎥)<br><span id="extra_out_dust" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/pm2.5.png" style="width: 10rem;"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">초미세먼지(㎍/㎥)<br><span id="extra_out_udust" style="font-size:28px">0</span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/pm2.5.png" style="width: 5rem;"><br><span></span></div>
+					<div class="col-xs-9 no-padding text-right">초미세먼지(㎍/㎥)<br><span id="extra_out_udust" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/wind-direction.png" style="width: 6rem;"><br><span></span></div>
-					<div class="col-xs-9 no-padding text-right">풍향<br><span id="extra_out_direction" style="font-size:28px">0</span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/wind-direction.png" style="width: 3.5rem;"><br><span></span></div>
+					<div class="col-xs-9 no-padding text-right">풍향<br><span id="extra_out_direction" style="font-size:25px">0</span></div>
 					<div style="clear:both"></div>
 				</div>
 				<div class="col-xs-6">
@@ -68,17 +68,17 @@ include_once("../inc/top.php")
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 				<div class="widget-body-toolbar">
 					<div class="btn-group">
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_temp_humi', 'today');">
-							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온/습도
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_temp_humi', 'today');">
+							<i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;온/습도
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_gas', 'today');">
-							<i class="fa fa-warning"></i>&nbsp;&nbsp;악취
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_gas', 'today');">
+							<i class="fa fa-warning text-warning"></i>&nbsp;&nbsp;악취
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_dust', 'today');">
-							<i class="fa fa-cloud"></i>&nbsp;&nbsp;미세먼지
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_dust', 'today');">
+							<i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;미세먼지
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_wind', 'today');">
-							<i class="fa fa-flag"></i>&nbsp;&nbsp;풍향/풍속
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_wind', 'today');">
+							<i class="fa fa-flag text-primary"></i>&nbsp;&nbsp;풍향/풍속
 						</button>
 					</div>
 				</div>
@@ -99,17 +99,17 @@ include_once("../inc/top.php")
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
 			<div class="widget-body-toolbar">
 					<div class="btn-group">
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_temp_humi', 'daily');">
-							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온/습도
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_temp_humi', 'daily');">
+							<i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;온/습도
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_gas', 'daily');">
-							<i class="fa fa-warning"></i>&nbsp;&nbsp;악취
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_gas', 'daily');">
+							<i class="fa fa-warning text-warning"></i>&nbsp;&nbsp;악취
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_dust', 'daily');">
-							<i class="fa fa-cloud"></i>&nbsp;&nbsp;미세먼지
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_dust', 'daily');">
+							<i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;미세먼지
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor('chart_wind', 'daily');">
-							<i class="fa fa-flag"></i>&nbsp;&nbsp;풍향/풍속
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_wind', 'daily');">
+							<i class="fa fa-flag text-primary"></i>&nbsp;&nbsp;풍향/풍속
 						</button>
 					</div>
 				</div>

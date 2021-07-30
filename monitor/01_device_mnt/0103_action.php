@@ -1,6 +1,15 @@
 <?
 include_once("../../common/php_module/common_func.php");
 
+$mgr_id    = $_SESSION["mgr_id"];
+$mgr_name  = $_SESSION["mgr_name"];
+$mgr_type  = $_SESSION["mgr_type"];
+$mgr_group = $_SESSION["mgr_group"];
+
+if(strlen($mgr_id)<=3 || strlen($mgr_name)<=3 || strlen($mgr_type)<=3 || strlen($mgr_group)<=3){
+    echo ("<script>location.href='../00_login/index.php'</script>");
+}
+
 $response = array();
 
 // 어떤 작업인지 가져옴

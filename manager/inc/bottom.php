@@ -55,3 +55,14 @@
 
 <!--BOOTSTRAP Table-->
 <script src="../../common/library/bootstrap_table/bootstrap-table.js"></script>
+
+<script>
+	$(document).ready(function(){
+		// 상세메뉴 열렸을때 상세메뉴 제외 영역 클릭 시 닫힘
+		$('.sa-page-body').children().not('.sa-aside-left').click(function(e){
+			if($('body').hasClass('sa-hidden-menu')){
+				$('body').removeClass('sa-hidden-menu');
+			}
+		});
+	});
+</script>

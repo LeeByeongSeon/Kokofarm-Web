@@ -4,7 +4,7 @@ include_once("../inc/top.php");
 ?>
 <!--농장 계정 관리-->
 	<article class="col-xl-12 no-padding">
-		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;장치 요약 현황</h2>	
@@ -61,20 +61,20 @@ include_once("../inc/bottom.php");
 				{label: "입출하코드", 		name: "cmCode",				hidden:true 	},
 				{label: "농장ID", 			name: "cmFarmid",			hidden:true 	},
 				{label: "동ID", 			name: "cmDongid",			hidden:true 	},
-				{label: "농장명",			name: "fdName",				align:'left',		},
+				{label: "농장명",			name: "fdName",				align:'center',		},
 				{label: "일령",				name: "days",				align:'center',		width:"50%"},
-				{label: "축종",				name: "cmIntype",			align:'center',		width:"60%"},
+				{label: "축종",				name: "cmIntype",			align:'center',		width:"80%"},
 				{label: "저울연결",	 		name: "siSensorDate",		align:'center',		},
-				{label: "온도(℃)", 			name: "siTemp",				align:'center',		sortable:false},
+				{label: "온도(℃)", 		   name: "siTemp",			   align:'center',	   sortable:false},
 				{label: "습도(%)",			name: "siHumi",				align:'center',		sortable:false},
 				{label: "CO2(ppm)",	 		name: "siCo2",				align:'center',		sortable:false},
 				{label: "NH3(ppm)", 		name: "siNh3",				align:'center',		sortable:false},
-				{label: "환경경보",		 	name: "warning",			align:'center',		},
+				{label: "환경경보",		 	name: "warning",			align:'center',		width:"90%"},
 				{label: "평균중량(권고대비)",name: "beAvgWeight",		align:'center',		},
-				{label: "네트워크",			name: "beNetwork",			align:'center',		},
+				{label: "네트워크",			name: "beNetwork",			align:'center',		width:"90%"},
 				{label: "PLC 제어",		 	name: "bpDeviceDate",		align:'center',		},
 				{label: "PLC 환경",		 	name: "bpSensorDate",		align:'center',		},
-				{label: "급이/급수",		 name: "sfFeedDate",		align:'center',		},
+				{label: "급이/급수",		name: "sfFeedDate",			align:'center',		},
 				{label: "외기환경",		 	name: "soSensorDate",		align:'center',		},
 			],
 			onSelectRow: function(id){		  },

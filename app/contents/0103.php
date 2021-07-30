@@ -18,20 +18,20 @@ include_once("../inc/top.php")
 					</div>
 				</div>
 				<div class="col-xs-4" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-right">일일 급이량<br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">일일 급이량(㎏)<br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-xs-4" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-right">전일 급이량<br><span id="extra_prev_feed" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">전일 급이량(㎏)<br><span id="extra_prev_feed" style="font-size:28px">0</span></div>
 				</div>
 				<div style="clear:both"></div><hr style="margin-top:0px">
 				<div class="col-xs-4 no-padding" style="margin-top: 10px">
 					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
 				</div>
 				<div class="col-xs-4" style="margin-top: 10px">
-					<div class="col-xs-12 text-right">일일 급수량<br><span id="extra_curr_water" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">일일 급수량(L)<br><span id="extra_curr_water" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-xs-4" style="margin-top: 10px">
-					<div class="col-xs-12 text-right">전일 급수량<br><span id="extra_prev_water" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 text-right">전일 급수량(L)<br><span id="extra_prev_water" style="font-size:28px">0</span></div>
 				</div>
 			</div>
 		</div>

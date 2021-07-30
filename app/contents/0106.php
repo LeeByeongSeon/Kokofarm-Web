@@ -52,10 +52,10 @@ include_once("../inc/top.php")
 				<div class="widget-toolbar ml-auto" style="height: 25px; line-height: 25px; margin-top: 0.3rem;">
 					<div class="form-inline">
 						<div class="btn-group no-margin">
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_history('day')">일령별</button>
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_history('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
+							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('day')">일령별</button>
+							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary btn-sm" style="padding:0.1rem 0.2rem;" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
+							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
 						</div>
 					</div>
 				</div>
@@ -92,7 +92,7 @@ include_once("../inc/top.php")
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto">
-					<button type="button" class="btn btn-default"><span class="fa fa-table"></span> Excel</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-default"><span class="fa fa-file-excel-o"></span> Excel</button>&nbsp;&nbsp;
 					<button id="toggle_sensor_btn" type="button" class="btn btn-default">
 						<span class="fa fa-plus"> </span>
 					</button>
@@ -102,17 +102,17 @@ include_once("../inc/top.php")
 
 				<div class="widget-body-toolbar">
 					<div id="sensor_btn_group" class="btn-group">
-						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_temp');">
-							<i class="fa fa-sun-o"></i>&nbsp;&nbsp;온도
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_temp');">
+							<i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;온도
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_humi');">
-							<i class="fa fa-tint"></i>&nbsp;&nbsp;습도
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_humi');">
+							<i class="fa fa-tint text-primary"></i>&nbsp;&nbsp;습도
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_co2');">
-							<i class="fa fa-warning"></i>&nbsp;&nbsp;이산화탄소
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_co2');">
+							<i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;이산화탄소
 						</button>
-						<button type="button" class="btn btn-default" onClick="get_sensor_history('chart_nh3');">
-							<i class="fa fa-ambulance"></i>&nbsp;&nbsp;암모니아
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_nh3');">
+							<i class="fa fa-warning text-danger"></i>&nbsp;&nbsp;암모니아
 						</button>
 					</div>
 				</div><!--widget-body-toolbar-->

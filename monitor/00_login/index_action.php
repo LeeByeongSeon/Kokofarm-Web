@@ -12,16 +12,16 @@ switch($oper){
 		$query = "SELECT * FROM manager WHERE mgrID = \"" .$id. "\" AND mgrPW = \"" .$pw. "\";";
 		$result = get_select_data($query);
 
-		$mgr_id 	 =	$result[0]["mgrID"];
-		$mgr_pw   =	$result[0]["mgrPW"];
-		$mgr_name =	$result[0]["mgrName"];
-		$mgr_type =	$result[0]["mgrType"];
+		$mgr_id    = $result[0]["mgrID"];
+		$mgr_pw    = $result[0]["mgrPW"];
+		$mgr_name  = $result[0]["mgrName"];
+		$mgr_type  = $result[0]["mgrType"];
         $mgr_group = $result[0]["mgrGroupName"];
 
 		if($mgr_id != "" && $mgr_pw != "" && $mgr_type != "" && $mgr_group != ""){
-			$_SESSION["mgr_id"] = $mgr_id;
-			$_SESSION["mgr_name"] = $mgr_name;
-			$_SESSION["mgr_type"] = $mgr_type;
+			$_SESSION["mgr_id"]    = $mgr_id;
+			$_SESSION["mgr_name"]  = $mgr_name;
+			$_SESSION["mgr_type"]  = $mgr_type;
             $_SESSION["mgr_group"] = $mgr_group;
 
 			//계정권한에 따라 분기
@@ -41,8 +41,7 @@ switch($oper){
 					$response["url"] = "../01_device_mnt/0101.php";
 					break;
 			}
-		}
-		else{
+		} else {
 				$response["msg"]="error";
 				$response["url"]="";
 		}
@@ -52,9 +51,10 @@ switch($oper){
 		break;
 
 	case "logout":
-		unset($_SESSION["jatech_mgrID"]);
-		unset($_SESSION["jatech_mgrName"]);
-		unset($_SESSION["jatech_mgrType"]);
+		unset($_SESSION["mgr_id"]);
+		unset($_SESSION["mgr_name"]);
+		unset($_SESSION["mgr_type"]);
+		unset($_SESSION["mgr_group"]);
 		echo "<script>location.replace('../00_login/index.php');</script>";
 		break;
 }

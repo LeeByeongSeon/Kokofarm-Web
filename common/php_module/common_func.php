@@ -315,25 +315,25 @@ param
 - title : 엑셀 파일 제목
 - option : 검색 조건
 */
-function convert_excel($data, $field_data, $title, $option){
+function convert_excel($data, $field_data, $title, $option, $ret=false){
 	$row_len = count($data);
 	$colspan = count($field_data) - 1;
-	
-	$html="<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
-			<html>
-				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><head>
-					<style> table th {background:#A0B3B3;font-weight:normal; text-align:center; color:white;} </style>
-				<body style='border:solid 0.1pt #CCCCCC;font-size:14px'>
-					<table table border='1' style='width:100%;font-size:14px'>
-						<tr><th>출력일시</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . date('Y-m-d H:i:s') . "</td></tr>
-						<tr><th>메 뉴 명</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . $title . "</td></tr>
-						<tr><th>검색조건</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . $option . "</td></tr>
-					</table>
-					<br><br>";
+
+	$html  = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>";
+	$html .= "<html>";
+	$html .= "<head><meta http-equiv='Content-Type' content='application/vnd.ms-excel; charset=utf-8;'></head>";
+	$html .= "<style> #excel_table th {background:#A0B3B3; text-align:center; color:white;} </style>";
+	$html .= "<body style='border:solid 0.1pt #CCCCCC; font-size:14px'>";
+	$html .= "<table id='excel_table' border='1' style='width:100%; font-size:14px'>";
+	$html .= "<tr><th>출력일시</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . date('Y-m-d H:i:s') . "</td></tr>";
+	$html .= "<tr><th>메 뉴 명</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . $title . "</td></tr>";
+	$html .= "<tr><th>검색조건</th><td style=\"mso-number-format:'\@'\" colspan='" . $colspan . "'>" . $option . "</td></tr>";
+	$html .= "</table>";
+	$html .= "<br><br>";
 
 	if($row_len > 0){
 		//헤더출력
-		$html .="<table table border='1' style='width:100%; font-size:14px;'>";
+		$html .="<table border='1' style='width:100%; font-size:14px;'>";
 		$html .="<tr>";
 			foreach($field_data as $key => $val){
 				$html .="<th>" . $val[0] . "</th>";
@@ -344,7 +344,7 @@ function convert_excel($data, $field_data, $title, $option){
 		$num = 0;
 		foreach($data as $row){
 			$num++;
-			$html .="<tr><td>" . $num . "</td>";
+			$html .="<tr><th>" . $num . "</th>";
 
 			$contents = "";
 			for($i=1; $i<=$colspan; $i++){
@@ -359,7 +359,7 @@ function convert_excel($data, $field_data, $title, $option){
 				else{
 					switch($field_type){
 						case "INT":
-							$contents .= "<td style=\"text-align:" . $field_align . "\">" . number_format($field_val) .  "</td>";
+							$contents .= "<td style='text-align:" . $field_align . "'>" . number_format($field_val) .  "</td>";
 							break;
 						case "STR":
 							$contents .= "<td style=\"text-align:" . $field_align . ";mso-number-format:'\@'\">" . $field_val .  "</td>";
@@ -375,7 +375,13 @@ function convert_excel($data, $field_data, $title, $option){
 
 		$html .="</table></body></html>";
 	}
-	echo $html;
+	if($ret){
+		echo $html;
+	}
+	else{
+		return $html;
+	}
+	
 }
 
 // 일단 사용안되지만 유지

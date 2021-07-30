@@ -53,7 +53,7 @@
 									<tr><td><h1 class="font-weight-bold text-orange">로그인 <small> [육계 - 생육관제 V3.0]</small></h1></td></tr>
 									<tr><td><input class="form-control mb-2" type="text"     name="id" placeholder=" 아이디"   maxlength="20" size="20"></td></tr>
 									<tr><td><input class="form-control mb-2" type="password" name="pw" placeholder=" 비밀번호" maxlength="20" size="20"></td></tr>
-									<tr><td><button class="btn btn-success w-100 mb-2" id="btn_login" type="submit"><i class="fa fa-key"></i>&nbsp;로그인</button></td></tr>
+									<tr><td><button class="btn btn-success w-100 mb-2" id="btn_login" type="submit"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;로그인&nbsp;&nbsp;</button></td></tr>
 									<tr><td><a class="text-secondary" href="http://kokofarm.co.kr" target="_blank"><i class="fa fa-angle-double-right"></i> kokoFarm 홈페이지</a></td></tr>
 								</table>
 							</div>

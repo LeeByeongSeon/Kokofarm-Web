@@ -2,6 +2,15 @@
 
 include_once("../../common/php_module/common_func.php");
 
+$mgr_id    = $_SESSION["mgr_id"];
+$mgr_name  = $_SESSION["mgr_name"];
+$mgr_type  = $_SESSION["mgr_type"];
+$mgr_group = $_SESSION["mgr_group"];
+
+if(strlen($mgr_id)<=3 || strlen($mgr_name)<=3 || strlen($mgr_type)<=3 || strlen($mgr_group)<=3){
+    echo ("<script>location.href='../00_login/index.php'</script>");
+}
+
 $response = array();
 
 // 어떤 작업인지 가져옴
@@ -126,12 +135,12 @@ switch($oper){
                     case "sfWaterDate":
                     case "soSensorDate":
                         if(empty($val) || $val == "2000-01-01 00:00:00"){
-                            $row[$key] = "<button type='button' class='btn btn-secondary btn-sm'> &nbsp;&nbsp;-&nbsp;&nbsp; </button>";
+                            $row[$key] = "<span  class='badge badge-pill badge-light text-secondary'> &nbsp;&nbsp;-&nbsp;&nbsp; </span>";
                         }
                         else{
                             $diff = get_date_diff($val, $now);
                             $conv_diff = conv_second_to_read($diff);
-                            $row[$key] = "<button type='button' class='btn btn-" . ($diff > 180 ? "warning" : "primary") . " btn-sm'>" . $conv_diff . "</button>";
+                            $row[$key] = "<span  class='badge badge-pill badge-" . ($diff > 180 ? "warning" : "primary") . " btn-sm' disabled>" . $conv_diff . "</span>";
                         }
                         break;
 
@@ -210,12 +219,12 @@ switch($oper){
                         }
                         
                         $out = strlen($out) > 2 ? substr($out, 3) : strlen($out);
-                        $row[$key] = "<button type='button' class='btn btn-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "&nbsp;&nbsp;O&nbsp;&nbsp;" : $out) . "</button>";
+                        $row[$key] = "<span class='badge badge-pill badge-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "O" : $out) . "</span>";
                         break;
                     
                     // 네트워크
                     case "beNetwork":
-                        $row[$key] = "<button type='button' class='btn btn-" . ($val < 80 ? "primary" : "warning") . " btn-sm'>" . $val . "ms</button>";
+                        $row[$key] = "<span class='badge badge-pill badge-" . ($val < 80 ? "primary" : "warning") . " btn-sm'>" . $val . "ms</span>";
                         break;
                 }
             }
@@ -234,7 +243,7 @@ switch($oper){
             // 경보로 소팅시 사용
             $warn_level_map["" . $idx] = $level;
 
-            $row["warning"] = "<button type='button' class='btn btn-" . $level_map[$level-1]["class"] . " btn-sm'>" . $level_map[$level-1]["info"] . "</button>";
+            $row["warning"] = "<span class='badge badge-pill badge-" . $level_map[$level-1]["class"] . " btn-sm'>" . $level_map[$level-1]["info"] . "</span>";
 
             $temp["print_data"][] = $row;
         }

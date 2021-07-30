@@ -772,3 +772,31 @@ function camera_close(img_obj){
 
     open_window.close();
 };
+
+function table_to_excel(tte_html, tte_title){
+
+	//alert(tte_html);
+
+
+    if(tte_html != null && tte_html != ""){
+
+		//form object 생성
+		let $form = $("<form></form>");
+			$form.attr("action","./table_to_excel.php");
+			$form.attr("method","post");
+			$form.attr("target","excel_download_iframe");
+			$form.appendTo('body');
+
+		let send_html  = $("<input type='hidden' value='" + tte_html + "' name='table_html'>");
+		let send_title = $("<input type='hidden' value='" + tte_title + "' name='table_title'>");
+
+		$form.append(send_html).append(send_title);
+
+		console.log($form.html());
+
+		$form.submit();
+	}
+	else {
+		alert("tte_html Null");
+	}
+};

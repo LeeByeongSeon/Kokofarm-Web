@@ -3,6 +3,15 @@
 include_once("../../common/php_module/common_func.php");
 include_once("../../common/php_module/socket_func.php");
 
+$mgr_id    = $_SESSION["mgr_id"];
+$mgr_name  = $_SESSION["mgr_name"];
+$mgr_type  = $_SESSION["mgr_type"];
+$mgr_group = $_SESSION["mgr_group"];
+
+if(strlen($mgr_id)<=3 || strlen($mgr_name)<=3 || strlen($mgr_type)<=3 || strlen($mgr_group)<=3){
+    echo ("<script>location.href='../00_login/index.php'</script>");
+}
+
 $response = array();
 
 // 어떤 작업인지 가져옴
@@ -64,34 +73,36 @@ switch($oper){
             
             case "excel":
                 $title = $farmID . "_" . $dongID . "_평균중량";
-
-                header("Content-Type: application/vnd.ms-excel");
-                header("Expires: 0");
-                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("content-disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
-
+				
                 $field_data = array(
                     /*농가 정보*/
-                    array("번호",       "No", "INT", "center"),
-                    array("농장ID",     "awFarmid", "STR", "center"),
-                    array("동ID",       "awDongid", "STR", "center"),
-                    array("산출시간",   "awDate", "STR", "center"),
-                    array("예측중량",   "awWeight", "STR", "center"),
-                    array("권고중량",   "refWeight", "STR", "center"),
-                    array("표준편차",   "awDevi", "STR", "center"),
-                    array("변이계수",   "awVc", "STR", "center"),
-                    array("+1 예측",    "awEstiT1", "STR", "center"),
-                    array("+2 예측",    "awEstiT2", "STR", "center"),
-                    array("+3 예측",    "awEstiT3", "STR", "center"),
-                    array("일령",       "awDays", "STR", "center"),
-                    array("정규분포",   "awNdis", "STR", "left"),
+                    array("번호", "No", "INT", "center"),
+                    array("농장ID", "awFarmid", "STR", "center"),
+                    array("동ID", "awDongid", "STR", "center"),
+                    array("산출시간", "awDate", "STR", "center"),
+                    array("예측중량", "awWeight", "STR", "center"),
+                    array("권고중량", "refWeight", "STR", "center"),
+                    array("표준편차", "awDevi", "STR", "center"),
+                    array("변이계수", "awVc", "STR", "center"),
+                    array("+1 예측", "awEstiT1", "STR", "center"),
+                    array("+2 예측", "awEstiT2", "STR", "center"),
+                    array("+3 예측", "awEstiT3", "STR", "center"),
+                    array("일령", "awDays", "STR", "center"),
+                    array("정규분포", "awNdis", "STR", "left"),
                 );
 
-                //echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
-                convert_excel(get_select_data($avg_history["query"]), $field_data, $title, $code);
-                break;
-        }
+				// echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
+				$excel_result = convert_excel(get_select_data($avg_history["query"]), $field_data, $title, $code, false);
 
+				var_dump($excel_result);
+
+				$response["excel_result"] = $excel_result;
+				$response["excel_title"]  = $title; 
+				
+				echo json_encode($response);
+
+				break;
+        }
 		break;
 
     case "get_error_history":          //오류이력 - 추후에 입추기간만 가져오게 변경
@@ -298,10 +309,12 @@ switch($oper){
 
                 $title = $farmID . "_" . $dongID . "_rawdata_" . $_REQUEST["type"];
 
-                header("Content-Type: application/vnd.ms-excel");
+                header("Content-Type: application/vnd.ms-excel; charset=UTF-8");
                 header("Expires: 0");
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("content-disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
+                header("Pragma: public");
+                header("Content-Disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
+                header("Content-Description: PHP4 Generated Data");
 
                 $field_data = array();
                 $field_data[] = array("번호", "No", "INT", "center");
@@ -362,6 +375,27 @@ switch($oper){
         // $summary_data["summary_outdate"] = $row["cmOutdate"];
 
         $response["summary_data"] = $summary_data;
+
+		// 일일 / 전일 급이 급수
+        $extra = array();
+
+		if($select_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
+			$extra["extra_curr_feed"]  = $select_data[0]["sfDailyFeed"];
+			$extra["extra_prev_feed"]  = $select_data[0]["sfPrevFeed"];
+			$extra["extra_curr_water"] = $select_data[0]["sfDailyWater"];
+			$extra["extra_prev_water"] = $select_data[0]["sfPrevWater"];
+
+			// 남은 사료빈 용량 확인
+			$feed_max = $select_data[0]["sfFeedMax"];
+			$curr_feed = $select_data[0]["sfFeed"];
+
+			$percent = $curr_feed / $feed_max;
+
+			$percent = round($percent * 100);
+
+			$extra["extra_feed_percent"] = $percent . "%";
+        }
+		$response["extra"] = $extra;
 
         $buffer_data = array();         // 버퍼 데이터 테이블 표시
         $cell_control_data = array();        // 조회 및 설정 테이블 표시

@@ -1,6 +1,15 @@
 <?
 	include_once("../../common/php_module/common_func.php");
 
+	$mgr_id    = $_SESSION["mgr_id"];
+	$mgr_name  = $_SESSION["mgr_name"];
+	$mgr_type  = $_SESSION["mgr_type"];
+	$mgr_group = $_SESSION["mgr_group"];
+	
+	if(strlen($mgr_id)<=3 || strlen($mgr_name)<=3 || strlen($mgr_type)<=3 || strlen($mgr_group)<=3){
+		echo ("<script>location.href='../00_login/index.php'</script>");
+	}
+	
 	//메뉴 구성
 	$menu_struct = array(
 		//장치 현황
@@ -186,7 +195,8 @@
 							<div class="d-flex align-items-center w-100">
 								<div class="ml-auto sa-header-right-area">
 									<div class="form-inline">
-										<a class="btn-sm" href="../index.php" title="logout" role="button" style="color:white; background-color:#568a89;"><i class="fa fa-sign-out fa-lg"> Logout</i></a>
+										<span class="text-white"><i class="glyphicon glyphicon-user"></i></i>&nbsp;&nbsp;<?=$mgr_name?> - <?=$mgr_type?></span>&nbsp;&nbsp;&nbsp;&nbsp;
+										<a class="btn-sm" href="../00_login/index_action.php?oper=logout" title="logout" role="button" style="color:white;"> Logout <i class="glyphicon glyphicon-log-out"></i></a>
 									</div>
 								</div>
 							</div>          
@@ -203,8 +213,30 @@
 			<!-- 메뉴바 -->
 			<div class="sa-aside-left">
 				<div class="sa-left-menu-outer">
-					<ul class="metismenu sa-left-menu" id="menu1">
+					<!-- 상단메뉴 ul -->
+					<ul class="metismenu sa-left-menu float-left" id="menu1">
 						<?=$top_menu_html?>
+					</ul>
+					<!-- 오류표시 ul -->
+					<ul class="metismenu sa-left-menu sa-sparks float-right" style="margin-top: revert;">
+						<li class="sparks-info">
+							<h5>
+								<div id="clockDate">오늘 : 2021-07-28</div>
+								<span id="clockTime" class="text-teal"><i class="fa fa-clock-o"></i>&nbsp;11:20:45</span>
+							</h5>
+						</li>
+						<li class="sparks-info">
+							<h5> 입추(수) <span class="text-blue"><i class="fa fa-plus-square"></i>&nbsp;<?=number_format($inSU)?></span></h5>
+						</li>
+						<li class="sparks-info">
+							<h5> 폐사(수) <span class="text-red"><i class="fa fa-minus-square"></i>&nbsp;<?=number_format($deathSU)?></span></h5>
+						</li>
+						<li class="sparks-info">
+							<h5> 생존(수) <span class="text-green-dark"><i class="fa fa-pencil-square"></i>&nbsp;<?=number_format($remainSU)?></span></h5>
+						</li>
+						<li class="sparks-info">
+							<h5> 입추동(수) <span class="text-blue-dark"><i class="fa fa-home"></i>&nbsp;<?=number_format($inCntSU)?></span></h5>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -213,7 +245,7 @@
       		<div class="sa-content-wrapper">
         
 				<div class="sa-content">
-					<div class="d-flex w-100 home-header">
+					<div class="d-flex w-75 home-header">
 
 						<!--화면 Title-->
 						<div>

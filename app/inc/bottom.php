@@ -68,12 +68,14 @@
 		$("#top_select").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
 			load_data();
 		});
-		
-		// $(document).click(function(e){
-		// 	if(!$(e.target).is('.sa-aside-left > *')){
-		// 		alert('제발');
-		// 	}
-		// });
+
+		// 상세메뉴 열렸을때 상세메뉴 제외 영역 클릭 시 닫힘
+		$('.sa-page-body').children().not('.sa-aside-left').click(function(e){
+			if($('body').hasClass('sa-hidden-menu')){
+				$('body').removeClass('sa-hidden-menu');
+			}
+		});
+
 	});
 
 	// 데이터를 불러옴
@@ -101,7 +103,7 @@
 				request_info = "재산출 요청 승인 후 산출 대기 <i class='fa fa-spinner fa-pulse'></i>";
 				break;
 			case "W":		//대기
-				request_info = "산출 대기 중.. <i class='fa fa-spinner fa-pulse'></i>";
+				request_info = "산출 대기 중... <i class='fa fa-spinner fa-pulse'></i>";
 				break;
 			case "C":		//산출중
 				request_info = "산출 중... <i class='fa fa-spinner fa-pulse'></i>";

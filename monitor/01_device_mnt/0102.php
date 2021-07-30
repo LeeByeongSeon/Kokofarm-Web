@@ -26,7 +26,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 <article class="col-xl-10 float-right">
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-green-dark" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-grey-dark" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;요약 정보</h2>	
@@ -82,7 +82,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 		</div>
 
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-red" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-red-light" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;&nbsp;이슈사항</h2>	
@@ -92,30 +92,30 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<div class="col-xs-7 float-left mt-4 pr-4 pl-0" style="border-right: 2px dotted #ddd">
 						<div class="row">
 							<div class="col-xs-7 h-50 float-left">
-								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feed-04.png" style="width: 8rem;"><div class="carousel-caption"><h5 class="font-weight-bold text-secondary">50%<h5></div></div>
-								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급이량</span><br><span class="font-xl">123.1Kg</span></div>
+								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feed-04.png" id="feed_img" style="width: 8rem;"><div class="carousel-caption"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">50%<h5></div></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급이량(㎏)</span><br><span class="font-xl" id="extra_curr_feed">0</span></div>
 							</div>
 							<div class="col-xs-5 h-50 float-right">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급이량</span><br><span class="font-xl">123.1Kg</span></div>
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급이량(㎏)</span><br><span class="font-xl" id="extra_prev_feed">0</span></div>
 							</div>
 						</div>
 						<div class="row mt-3">
 							<div class="col-xs-7 h-50 float-left">
 								<div class="col-xs-7 pt-4 pb-0 px-0 h-75 text-center"><img src="../images/water-02.png" style="width: 5rem;"></div>
-								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급수량</span><br><span class="font-xl">123.1L</span></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">0</span></div>
 							</div>
 							<div class="col-xs-5 h-50 float-right">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량</span><br><span class="font-xl">123.1L</span></div>
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량(L)</span><br><span class="font-xl" id="extra_prev_water">0</span></div>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-5 float-right mt-1">
 						<div class="col-xs-12 h-100 no-padding">
 							<ul class="list-group">
-								<li class="list-group-item"><div class="alert alert-danger m-0"> <i class="fa fa-gears fa-spin"></i> 재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert alert-danger m-0"> <i class="fa fa-spinner"></i> 재산출 요청 중</div></li>
 								<li class="list-group-item"><div class="alert alert-danger m-0"> <i class="fa fa-warning"></i> 결함 진행사항 존재</div></li>
-								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #455a64; border-color: #568a89;"> <i class="fa fa-spinner fa-pulse"></i> 재산출 요청 중</div></li>
-								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #568a89; border-color: #455a64;"> <i class="fa fa-rotate-right fa-spin"></i> 재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #455a64; border-color: #568a89;"> <i class="fa fa-spinner"></i> 재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #568a89; border-color: #455a64;"> <i class="fa fa-spinner"></i> 재산출 요청 중</div></li>
 							</ul>
 						</div>
 					</div>
@@ -653,6 +653,19 @@ include_once("../inc/bottom.php");
 					$('#device_buffer_table').bootstrapTable('load', data.buffer_data); //data-toggle="table" 하지않으면 Update 불가
 					
 					$('#cell_control_table').bootstrapTable('load', data.cell_control_data);
+					
+					// 급이, 급수, 외기 창 표시할지 선택
+					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
+					if(data.extra.hasOwnProperty("extra_curr_feed")){
+						
+						let per = data.extra.extra_feed_percent;
+						per = parseInt(per);
+						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
+						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
+						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
+						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
+						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
+					}
 				}
 			});
 		}
@@ -680,11 +693,30 @@ include_once("../inc/bottom.php");
 			}
 
 			data_arr['term'] = $("#btn_excel_avg").attr("selection");
+
 			
 			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
-					$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table); 
-					draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12);
+					
+					switch(data_arr['comm']){
+						case "view":
+
+							draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12);
+
+							$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table);
+
+							break;
+						case "excel":
+
+							// let excel_table = document.write(data.excel_result);
+							let excel_table = data.excel_result;
+							let excel_title = data.excel_title;
+
+							table_to_excel(excel_table, excel_title);
+							//alert("아아ㅏㅏㅏㅏㅏㅏ");
+							break;
+					}
+
 				}
 			});
 		}

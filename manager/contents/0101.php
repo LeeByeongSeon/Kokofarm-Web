@@ -23,7 +23,7 @@ $mgrPW = $_SESSION["mgrPW"];
 					<h2 class="font-weight-bold text-primary"><i class="fa fa-home text-success"></i>&nbsp;&nbsp;전국 농장 센서 현황&nbsp;</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; ">
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 						<select class="form-control w-auto" name="search_inout">
@@ -44,8 +44,8 @@ $mgrPW = $_SESSION["mgrPW"];
 						<tr>
 							<th data-field='f_no'		data-align="center" data-visible='false'>No</th>
 							<th data-field='f_interm'	data-align="center" >일령</th>
-							<th data-field='f_name'		data-align="center" data-sortable="true" data-width="120">농장명</th>
-							<th data-field='f_error'	data-align="center" data-sortable="true">오류(수)</th>
+							<th data-field='f_name'		data-align="center" data-sortable="true" data-width="150">농장명</th>
+							<th data-field='f_error'	data-align="center" data-sortable="true" data-width="20">오류(수)</th>
 							<th data-field='f_sensor'	data-align="center" >저울</th>
 							<th data-field='f_network'	data-align="center" >통신</th>
 							<th data-field='f_code'		data-align="center" data-visible='false'>f_code</th>
