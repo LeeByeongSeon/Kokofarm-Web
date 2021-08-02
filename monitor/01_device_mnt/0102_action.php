@@ -72,13 +72,15 @@ switch($oper){
                 break;
             
             case "excel":
-                $title = $farmID . "_" . $dongID . "_평균중량";
+                $excel_title = date('Ymd_His') . "_" . $avg_history["name"] . "_평균중량.xls";
 				
                 $field_data = array(
                     /*농가 정보*/
                     array("번호", "No", "INT", "center"),
                     array("농장ID", "awFarmid", "STR", "center"),
                     array("동ID", "awDongid", "STR", "center"),
+                    array("농장명", "fdName", "STR", "center"),
+                    array("일령", "awDays", "STR", "center"),
                     array("산출시간", "awDate", "STR", "center"),
                     array("예측중량", "awWeight", "STR", "center"),
                     array("권고중량", "refWeight", "STR", "center"),
@@ -87,17 +89,14 @@ switch($oper){
                     array("+1 예측", "awEstiT1", "STR", "center"),
                     array("+2 예측", "awEstiT2", "STR", "center"),
                     array("+3 예측", "awEstiT3", "STR", "center"),
-                    array("일령", "awDays", "STR", "center"),
-                    array("정규분포", "awNdis", "STR", "left"),
+                    //array("정규분포", "awNdis", "STR", "left"),
                 );
 
 				// echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
-				$excel_result = convert_excel(get_select_data($avg_history["query"]), $field_data, $title, $code, false);
-
-				var_dump($excel_result);
-
-				$response["excel_result"] = $excel_result;
-				$response["excel_title"]  = $title; 
+				$excel_html = convert_excel(get_select_data($avg_history["query"]), $field_data, $excel_title, $code, false);
+                
+                $response["excel_title"]  = $excel_title; 
+				$response["excel_html"] = $excel_html;
 				
 				echo json_encode($response);
 

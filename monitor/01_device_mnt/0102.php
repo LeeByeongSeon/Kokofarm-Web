@@ -707,13 +707,10 @@ include_once("../inc/bottom.php");
 
 							break;
 						case "excel":
-
-							// let excel_table = document.write(data.excel_result);
-							let excel_table = data.excel_result;
+							let excel_html = data.excel_html;
 							let excel_title = data.excel_title;
 
-							table_to_excel(excel_table, excel_title);
-							//alert("아아ㅏㅏㅏㅏㅏㅏ");
+							table_to_excel(excel_title, excel_html);
 							break;
 					}
 

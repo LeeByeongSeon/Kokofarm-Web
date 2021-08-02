@@ -163,7 +163,8 @@ function get_avg_history($comein_code, $term, $type){
 			break;
 	}
 
-	$select_query = "SELECT cm.cmCode, DATEDIFF(aw.awDate, cm.cmIndate) + 1 AS days, aw.*, c.cName3 AS refWeight FROM comein_master AS cm 
+	$select_query = "SELECT cm.cmCode, DATEDIFF(aw.awDate, cm.cmIndate) + 1 AS days, aw.*, c.cName3 AS refWeight, fd.fdName FROM comein_master AS cm 
+						JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
                         JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " . $term_query . $type_query ." 
                         LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
                         WHERE cm.cmCode = \"" .$comein_code. "\" ORDER BY aw.awDate ASC";
@@ -207,6 +208,7 @@ function get_avg_history($comein_code, $term, $type){
 		);
 	}
 
+	$ret["name"] = $select_data[0]["fdName"];
 	$ret["query"] = $select_query;
 	$ret["chart"] = $chart;
 	$ret["increase"] = $increase;

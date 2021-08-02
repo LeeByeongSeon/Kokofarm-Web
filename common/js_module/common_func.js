@@ -773,30 +773,29 @@ function camera_close(img_obj){
     open_window.close();
 };
 
-function table_to_excel(tte_html, tte_title){
+function table_to_excel(title, html){
+    let data_type = "data:application/vnd.ms-excel";
+    let ua = window.navigator.userAgent;
+    let is_ie = ua.indexOf("MSIE");
+    let file_name = title;
 
-	//alert(tte_html);
+    if (is_ie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        if (window.navigator.msSaveBlob) {
+            let blob = new Blob([html], {
+                type: "application/csv;charset=utf-8;"
+            });
+            navigator.msSaveBlob(blob, file_name);
+        }
 
-
-    if(tte_html != null && tte_html != ""){
-
-		//form object 생성
-		let $form = $("<form></form>");
-			$form.attr("action","./table_to_excel.php");
-			$form.attr("method","post");
-			$form.attr("target","excel_download_iframe");
-			$form.appendTo('body');
-
-		let send_html  = $("<input type='hidden' value='" + tte_html + "' name='table_html'>");
-		let send_title = $("<input type='hidden' value='" + tte_title + "' name='table_title'>");
-
-		$form.append(send_html).append(send_title);
-
-		console.log($form.html());
-
-		$form.submit();
-	}
-	else {
-		alert("tte_html Null");
-	}
+    } else {
+        let blob = new Blob([html], {
+            type: "application/csv;charset=utf-8;"
+        });
+        let elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = file_name;
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
 };
