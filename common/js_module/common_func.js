@@ -773,6 +773,7 @@ function camera_close(img_obj){
     open_window.close();
 };
 
+// 엑셀파일 다운로드
 function table_to_excel(title, html){
     let data_type = "data:application/vnd.ms-excel";
     let ua = window.navigator.userAgent;
