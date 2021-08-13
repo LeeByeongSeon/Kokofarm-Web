@@ -18,7 +18,7 @@ include_once("../inc/top.php")
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/drop.png"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/humi.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">습도(％)<br><span id="extra_out_humi" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>

@@ -89,7 +89,7 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
 				<div class="col-xs-4 float-left text-center">
 					<img class="img-reponsive henImage no-padding">
-					<div class="carousel-caption henInterm"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
+					<div class="carousel-caption henInterm" style="text-shadow: none;"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-4">
 					<h1 class="font-weight-bold text-danger text-center" style="margin-top: 20%" id="summary_avg_weight"></h1>
@@ -177,7 +177,7 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<div class="widget-body shadow pt-3" style="border-radius: 0 0 10px 10px; padding:1rem; height: 250px">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
 					<div class="col-xs-12 text-center"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+						<div class="carousel-caption" style="text-shadow: none;"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
 					</div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
