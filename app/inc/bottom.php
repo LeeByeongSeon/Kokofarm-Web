@@ -76,19 +76,37 @@
 			}
 		});
 
+		// $("#top_select li a").on("click", function(e){
+		// 	e.preventDefault();
+		// 	$("#top_select li").removeClass("active");
+		// 	$($(this).prop("href")).show(); 
+		// 	$(this).closest("li").addClass("active");
+		// });
+
 	});
 
 	// 데이터를 불러옴
 	function load_data(){
-		let option = $("#top_select option:selected");
-		top_code = $(option).val();
-		top_avg = $(option).attr("beAvgWeight");
-		top_time = $(option).attr("beAvgWeightDate");
-		top_interm = $(option).attr("interm");
-		top_rc_status = $(option).attr("rcStatus");
-		top_be_status = $(option).attr("beStatus");
-		top_name = $(option).html();
+		// let option = $("#top_select option:selected");
+		// top_code = $(option).val();
+		// top_avg = $(option).attr("beAvgWeight");
+		// top_time = $(option).attr("beAvgWeightDate");
+		// top_interm = $(option).attr("interm");
+		// top_rc_status = $(option).attr("rcStatus");
+		// top_be_status = $(option).attr("beStatus");
+		// top_name = $(option).html();
 
+		let option 	  = $("#top_select li a");
+		top_code 	  = option.attr("data-code");
+		top_avg 	  = option.attr("data-beavgweight");
+		top_time 	  = option.attr("data-beavgweightdate");
+		top_interm 	  = option.attr("data-interm");
+		top_rc_status = option.attr("data-rcstatus");
+		top_be_status = option.attr("data-bestatus");
+		top_name 	  = option.attr("data-name");
+
+		// alert(top_code+" / "+top_avg+" / "+top_time+" / "+top_interm+" / "+top_rc_status+" / "+top_be_status+" / "+top_name);
+		
 		$("#top_interm").html(top_interm);
 		$("#top_avg").html(top_avg);
 
@@ -139,7 +157,7 @@
 				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 오류 발생 시간 : ");
 				$("#top_last_time").html(top_time);
 				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
-				$("#top_last_avg").html(avg + "g");
+				$("#top_last_avg").html(top_avg + "g");
 				$("#top_notice").html(notice);
 				break;
 

@@ -43,19 +43,19 @@
 			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; min-height:0;">
 				<div class="row">
 					<div class="col-sm-3" style="border-right:1px solid #C2C2C2">
-						<div class="col-sm-4 no-padding text-center"><img src="../images/icon-07.png"><br><span id="curr_avg_temp_alert"></span></div>
+						<div class="col-sm-4 no-padding text-center"><img src="../images/temp.png"><br><span id="curr_avg_temp_alert"></span></div>
 						<div class="col-sm-8 no-padding text-right"><span style="font-size:18px">온도</span><br><span id="summary_avg_temp" style="font-size:28px">0</span>(℃)</div>
 					</div>
 					<div class="col-sm-3" style="border-right:1px solid #C2C2C2">
-						<div class="col-sm-4 no-padding text-center"><img src="../images/icon-10.png"><br><span id="curr_avg_humi_alert"></span></div>
+						<div class="col-sm-4 no-padding text-center"><img src="../images/drop.png"><br><span id="curr_avg_humi_alert"></span></div>
 						<div class="col-sm-8 no-padding text-right"><span style="font-size:18px">습도</span><br><span id="summary_avg_humi" style="font-size:28px">0</span>(％)</div>
 					</div>
 					<div class="col-sm-3" style="border-right:1px solid #C2C2C2">
-						<div class="col-sm-4 no-padding text-center"><img src="../images/icon-08.png"><br><span id="curr_avg_co2_alert"></span></div>
+						<div class="col-sm-4 no-padding text-center"><img src="../images/co2.png"><br><span id="curr_avg_co2_alert"></span></div>
 						<div class="col-sm-8 no-padding text-right"><span style="font-size:18px">이산화탄소</span><br><span id="summary_avg_co2" style="font-size:28px">0</span>(ppm)</div>
 					</div>
 					<div class="col-sm-3">
-						<div class="col-sm-4 no-padding text-center"><img src="../images/icon-09.png"><br><span id="curr_avg_nh3_alert"></span></div>
+						<div class="col-sm-4 no-padding text-center"><img src="../images/nh3.png"><br><span id="curr_avg_nh3_alert"></span></div>
 						<div class="col-sm-8 no-padding text-right"><span style="font-size:18px">암모니아</span><br><span id="summary_avg_nh3" style="font-size:28px">0</span>(ppm)</div>
 					</div>
 				</div><!--row-->

@@ -89,7 +89,12 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 				<div class="widget-body" style="height: 275px;">
-					<div class="col-xs-7 float-left mt-4 pr-4 pl-0" style="border-right: 2px dotted #ddd">
+					<!--급이 / 급수가 없으면 나타날 div-->
+					<div class="col-xs-7 float-left pr-4 pl-0 feed_none_div" style="height: -webkit-fill-available; display: none;">
+						<h1 class='font-weight-bold m-auto'><i class='glyphicon glyphicon-remove-sign text-danger'></i> 표시할 데이터가 없습니다.</h1>
+					</div>
+
+					<div class="col-xs-7 float-left mt-4 pr-4 pl-0 feed_info_div" style="border-right: 2px dotted #ddd">
 						<div class="row">
 							<div class="col-xs-7 h-50 float-left">
 								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feed-04.png" id="feed_img" style="width: 8rem;"><div class="carousel-caption"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">50%<h5></div></div>
@@ -262,10 +267,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 
 					<div class="widget-toolbar ml-auto">
-						<div class="form-inline">
-							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="avg_search('excel')"><span class="fa fa-search"></span>&nbsp;&nbsp;조회</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="avg_search('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
-						</div>
+						<button type="button" class="btn btn-success btn-sm mt-0" style="padding:0.2rem 0.4rem;" onClick="get_error_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
 					</div>
 				</header>
 					
@@ -537,10 +539,10 @@ include_once("../inc/bottom.php");
 
 	// 로우데이터가 로드된적이 있는지 확인
 	var is_load = {};
-	is_load["cell"] = false;
-	is_load["plc"] = false;
-	is_load["dev"] = false;
-	is_load["ext"] = false;
+		is_load["cell"] = false;
+		is_load["plc"] = false;
+		is_load["dev"] = false;
+		is_load["ext"] = false;
 
 	var init_id = "<?=$init_id?>";
 
@@ -556,8 +558,8 @@ include_once("../inc/bottom.php");
 		$("#raw_data_search_form [name=search_sdate]").datepicker({format:"yyyy-mm-dd", language: "kr", autoclose: true});		//로우데이터 검색 시작일
 		$("#raw_data_search_form [name=search_edate]").datepicker({format:"yyyy-mm-dd", language: "kr", autoclose: true});		//로우데이터 검색 종료일
 
-		$("#raw_data_search_form [name=search_stime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});			//로우데이터 검색 시작시간
-		$("#raw_data_search_form [name=search_etime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});			//로우데이터 검색 종료시간
+		$("#raw_data_search_form [name=search_stime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});		//로우데이터 검색 시작시간
+		$("#raw_data_search_form [name=search_etime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});		//로우데이터 검색 종료시간
 	});
 
 	// 데이터 불러오기
@@ -653,18 +655,28 @@ include_once("../inc/bottom.php");
 					$('#device_buffer_table').bootstrapTable('load', data.buffer_data); //data-toggle="table" 하지않으면 Update 불가
 					
 					$('#cell_control_table').bootstrapTable('load', data.cell_control_data);
-					
+				
 					// 급이, 급수, 외기 창 표시할지 선택
 					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
 					if(data.extra.hasOwnProperty("extra_curr_feed")){
 						
-						let per = data.extra.extra_feed_percent;
-						per = parseInt(per);
-						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
-						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
-						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
-						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
-						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
+							let per = data.extra.extra_feed_percent;
+								per = parseInt(per);
+							if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
+							if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
+							if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
+							if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
+							if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
+					};
+					
+					// 급이, 급수 데이터 없으면 나타날 div -> class='feed_none_div' removeClass로 d- 관련 없애줘야 display none 이 먹힘
+					if(data.extra != null && data.extra != ""){
+						$(".feed_none_div").css("display", "none").removeClass("d-flex align-items-center");
+						$(".feed_info_div").css("display", "block");
+					}
+					else {
+						$(".feed_none_div").css("display", "block").addClass("d-flex align-items-center");
+						$(".feed_info_div").css("display", "none");
 					}
 				}
 			});
@@ -720,14 +732,40 @@ include_once("../inc/bottom.php");
 	};
 
 	// 오류이력 불러오기
-	function get_error_data(){
+	function get_error_data(sub_comm){
 		if(code != null && code != ""){			// "" or null 체크
 			var data_arr = {}; 
 			data_arr['oper'] = "get_error_history";
 			data_arr['code'] = code;
+
+			switch(sub_comm){
+				default:
+					data_arr['comm'] = "view";
+					break;
+				case "excel":
+					data_arr['comm'] = "excel";
+					break;
+			}
+
 			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
-					$('#error_history_table').bootstrapTable('load', data.error_history_data); 
+					switch(data_arr['comm']){
+						case "view":
+
+							$('#error_history_table').bootstrapTable('load', data.error_history_data);
+
+							break;
+
+						case "excel":
+							let excel_title = data.error_excel_title;
+							let excel_html  = data.error_excel_html;
+							
+							// alert(excel_html);
+							table_to_excel(excel_title,excel_html);
+
+							break;
+
+					}
 				}
 			});
 		}
@@ -754,12 +792,12 @@ include_once("../inc/bottom.php");
 
 		if(code != null && code != ""){			// "" or null 체크
 			var data_arr = {}; 
-			data_arr['oper'] = "get_raw_data";
-			data_arr['code'] = code;
-			data_arr['type'] = type;
-			data_arr['action'] = action;
-			data_arr['search_map'] = search_map;
-			data_arr['indate'] = indate;
+				data_arr['oper'] = "get_raw_data";
+				data_arr['code'] = code;
+				data_arr['type'] = type;
+				data_arr['action'] = action;
+				data_arr['search_map'] = search_map;
+				data_arr['indate'] = indate;
 
 			$.ajax({url:'0102_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {

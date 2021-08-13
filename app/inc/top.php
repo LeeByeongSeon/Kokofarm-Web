@@ -15,13 +15,16 @@
                     LEFT JOIN set_outsensor AS so ON so.soFarmid = fd.fdFarmid AND so.soDongid = fd.fdDongid 
 					WHERE f.fID = \"" .$userID. "\" AND f.fPW = \"" .$userPW. "\"";
 
+	//var_dump($select_query);
 	$init_data = get_select_data($select_query);
 
+	$code = $init_data[0]['beComeinCode'];
+	
 	// url 체크
 	$curr_url = $_SERVER["PHP_SELF"];
 	$splited_url = explode("/", $curr_url);
 	$depth_1_url = $splited_url[sizeof($splited_url) - 1];
-	$add_url = "?userID=" .$userID. "&userPW=" .$userPW ;
+	$add_url = "?userID=" .$userID. "&userPW=" .$userPW;
 
 	// 메뉴창에 급이, 외기 표시 조정 변수
 	$exist_feed = false;
@@ -31,7 +34,7 @@
 		$select_html = "";
 
 		foreach($init_data as $val){
-			
+
 			// 페이지 따라 존재하는 동만 셀렉트에 표현
 			$test = $val["fdFarmid"];
 			switch($depth_1_url){
@@ -45,10 +48,35 @@
 
 			if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
 
-			$select_html .= "<option id='dong_item' value=\"" . $val["beComeinCode"] . "\" ";
-			$select_html .= "rcStatus=\"" . $val["rcStatus"] . "\", interm=\"" . $val["interm"] . "\", beAvgWeightDate=\"" . $val["beAvgWeightDate"] . "\", ";
-			$select_html .= "beAvgWeight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", beStatus=\"" . $val["beStatus"] . "\">" . $val["fdName"];
-			$select_html .= "</option>";
+			// $dong_struct = array();
+			// $dong_struct[] = array($val['fdName'], $val['beStatus']);
+
+			// print_r($dong_struct);
+			
+			// $select_html .= "<li role='presentation' class=''><a value=\"" . $val["beComeinCode"] . "\"";
+			// $select_html .= "rcStatus=\"" . $val["rcStatus"] . "\", interm=\"" . $val["interm"] . "\", beAvgWeightDate=\"" . $val["beAvgWeightDate"] . "\", ";
+			// $select_html .= "beAvgWeight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", beStatus=\"" . $val["beStatus"] . "\">" . $val["fdName"];
+			// $select_html .= "</a></li>";
+
+			// $add_url = "?userID=" .$userID. "&userPW=" .$userPW ."&cmCode=".$val['beComeinCode'];
+
+			// print_r($add_url);
+
+			switch($val['beStatus']){
+				case "default":
+					$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
+					$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
+					$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-primary'>". $val['interm']."</span>";
+					$select_html .= "</a></li>";
+					break;
+
+				case "O":
+					$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
+					$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
+					$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-secondary'>출하</span>";
+					$select_html .= "</a></li>";
+					break;
+			}
 
 			if($val["fdFarmid"] == $val["sfFarmid"]){ $exist_feed = true; }
 			if($val["fdFarmid"] == $val["soFarmid"]){ $exist_out = true; }
@@ -56,7 +84,7 @@
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
 		// 오류 페이지로 이동
-		echo("<script>location.replace('./error.php')</script>");
+		// echo("<script>location.replace('./error.php')</script>");
 	}
 	
 	//메뉴 구성
@@ -74,7 +102,7 @@
 		for($i=0; $i<=count($menu_struct)-1; $i++){
 			if($menu_struct[$i][0]==$value[0]){
 				if($depth_1_url==$menu_struct[$i][0]){
-					$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\">".$menu_struct[$i][1]."</a></li>"; //userID,userPW 임시
+					$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\" style='color: #07298c;'>".$menu_struct[$i][1]."</a></li>"; //userID,userPW 임시
 				}
 				else{
 					$top_menu_html .= "<li class=''><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\">".$menu_struct[$i][1]."</a></li>";
@@ -84,7 +112,7 @@
 	}
 
 	// 농장 이름 선택 시 요약 화면으로 복귀
-	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-white font-weight-normal' style='margin:0; font-size:18px; line-height:initial;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
+	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-default font-weight-bold' style='margin:0; font-size:18px; line-height:initial;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
 	
 ?>
 
@@ -145,11 +173,12 @@
 </style>
 </head>
 
-<body class="smart-style-6 sa-fixed-header">
+<body class="smart-style-6 sa-fixed-header bg-white">
 
 	<div class="sa-wrapper">
 
-		<header class="sa-page-header">
+		<!-- <header class="sa-page-header bg-orange" style="background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover;"> -->
+		<header class="sa-page-header" style="background-color: whitesmoke;">
 			<div class="sa-header-container h-100">
 				<div class="d-table d-table-fixed h-100 w-100">
 					<div class="sa-logo-space d-table-cell h-100">
@@ -164,7 +193,7 @@
                     
 								<div class="ml-auto sa-header-right-area">
 							
-									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle btn-menu" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder"></span></button>
+									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle btn-menu" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder text-primary"></span></button>
 			
 								</div>
 							
@@ -185,22 +214,24 @@
 					</ul>
 				</div>
 			</div>
-			
 		
 			<div class="sa-content-wrapper" style="margin:0">
         
 				<div class="sa-content no-padding">
-					
-					<nav class="navbar navbar-expand-lg navbar-light bg-light form-group">
+
+					<nav class="navbar bg-light no-padding" style="overflow-x: scroll; white-space: nowrap; min-height: 0; justify-content: start;">
+						<ul class="nav nav-pills d-flex flex-nowrap" id="top_select">
+							<?=$select_html?>
+						</ul>
+					</nav>
+		
+				<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light form-group">
 						<div class="navbar-collapse">
 							<ul class="navbar-nav justify-content-between" style="flex-direction: row">
 								<li class="nav-item dropdown">
-									<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 138.64px;">
-									</div> -->
-									<select class="form-control form-control-lg text-secondary mt-1" id="top_select" aria-label="dong select">
-										<?=$select_html?>
+									<select class="form-control form-control-lg text-secondary mt-1" id="top_select" aria-label="dong select">	
+												
 									</select>
-
 								</li>
 								<li class="nav-item">
 									<a class="nav-link w-100 text-center font-md mb-2" style="cursor: default;" href="#">일령 - <span id="top_interm"></span>일</a>
@@ -210,7 +241,7 @@
 								</li>
 							</ul>
 						</div>
-					</nav>
+					</nav> -->
 
 					<div class="d-flex w-100">
 						<section id="widget-grid" class="w-100">

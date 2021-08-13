@@ -99,13 +99,13 @@
 				//"top_interm"			=> $curr_interm,
 				//"top_avg"				=> sprintf('%0.1f', $curr_weight)."g",
 
-				"summary_indate"    	=> substr($buffer_data[0]["cmIndate"], 0, 10),		/*입추일자*/ 
+				"summary_indate"    	=> substr($buffer_data[0]["cmIndate"], 0, 10),	/*입추일자*/ 
 				"summary_interm"    	=> $curr_interm,								/*현재 일령*/ 
-				"summary_intype"    	=> $buffer_data[0]["cmIntype"]." - ",				/*입추형식-육계,토종계,삼계,산란계*/
-				"summary_insu"      	=> $buffer_data[0]["cmInsu"],						/*입추수량*/
+				"summary_intype"    	=> $buffer_data[0]["cmIntype"]." - ",			/*입추형식-육계,토종계,삼계,산란계*/
+				"summary_insu"      	=> $buffer_data[0]["cmInsu"],					/*입추수량*/
 				"summary_avg_weight"	=> sprintf('%0.1f', $curr_weight)."g",			/*실시간 평균중량*/
-				"summary_devi"      	=> sprintf('%0.1f', $curr_devi * corr_devi),		/*실시간 표준편차*/
-				"summary_vc"        	=> sprintf('%0.1f', $buffer_data[0]["beVc"]),		/*실시간 변이계수*/
+				"summary_devi"      	=> sprintf('%0.1f', $curr_devi * corr_devi),	/*실시간 표준편차*/
+				"summary_vc"        	=> sprintf('%0.1f', $buffer_data[0]["beVc"]),	/*실시간 변이계수*/
 
 				"summary_min_avg_weight"	=>  $curr_min_weight,						/*실시간 min 평체*/
 				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight)."g",		/*실시간 평균중량*/

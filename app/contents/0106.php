@@ -5,7 +5,7 @@ include_once("../inc/top.php")
 <!--제목--->
 <div class="row" id="row_none" style="display:none;">
 	<div class="col-xs-12">
-		<div class="well text-center shadow">
+		<div class="well text-center">
 			<h3 class="font-weight-bold">지난 출하내역 <span class="text-danger"><strong id="select_dong_name">없음</strong></span></h3>
 		</div><!--well-->
 	</div><!--col-xs-12-->
@@ -15,12 +15,12 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header>
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;지난 출하내역</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;지난 출하내역</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; padding:0.5rem">
 				<table id="come_out_table" data-page-list="[]" data-toggle="table" data-pagination='true' data-page-size='5' style="font-size:14px">
 					<thead>
 						<tr>
@@ -60,7 +60,7 @@ include_once("../inc/top.php")
 					</div>
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body" style="border-radius: 0 0 10px 10px; padding:0.5rem">
 			
 				<div class="col-xs-12">
 					<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
@@ -98,7 +98,7 @@ include_once("../inc/top.php")
 					</button>
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body" style="border-radius: 0 0 10px 10px;">
 
 				<div class="widget-body-toolbar">
 					<div id="sensor_btn_group" class="btn-group">

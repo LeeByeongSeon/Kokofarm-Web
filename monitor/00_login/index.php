@@ -35,6 +35,13 @@
 
 	<!--common-->
 	<script src="../../common/js_module/common_func.js"></script>
+<style>
+	@media screen and (max-width:767px){
+		.logo_img{
+			margin: auto;
+		}
+	}
+</style>
 </head>
 <body>
 
@@ -44,15 +51,15 @@
 				<div class="d-flex flex-column-reverse w-100 h-50 align-items-center">
 					<div class="row w-100 justify-content-center">
 						<div class="d-flex col-xl-5 bg-white no-padding fadeIn animated align-items-center" style="border-radius: 20px">
-							<div class="col-xl-5 col-xs-12 no-padding d-none d-xl-block">
+							<div class="col-xl-5 no-padding d-none d-xl-block">
 								<img class="img-reponsive" src="../images/img_expected01.jpg" style="border-radius: 20px 0 0 20px;">
 								<!-- <div class="carousel-caption"><img src="./images/logo.png" style="padding-bottom: 50px; margin-left: 50px;"></div> -->
 							</div>
 							<div class="col-xl-7 p-3" id="login_form">
 								<table class="w-75 m-auto">
 									<tr><td><h1 class="font-weight-bold text-orange">로그인 <small> [육계 - 생육관제 V3.0]</small></h1></td></tr>
-									<tr><td><input class="form-control mb-2" type="text"     name="id" placeholder=" 아이디"   maxlength="20" size="20"></td></tr>
-									<tr><td><input class="form-control mb-2" type="password" name="pw" placeholder=" 비밀번호" maxlength="20" size="20"></td></tr>
+									<tr><td><input class="form-control mb-2" type="text"     name="id" placeholder=" 아이디"   maxlength="20" size="20" onkeyup="login_enter()"></td></tr>
+									<tr><td><input class="form-control mb-2" type="password" name="pw" placeholder=" 비밀번호" maxlength="20" size="20" onkeyup="login_enter()"></td></tr>
 									<tr><td><button class="btn btn-success w-100 mb-2" id="btn_login" type="submit"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;로그인&nbsp;&nbsp;</button></td></tr>
 									<tr><td><a class="text-secondary" href="http://kokofarm.co.kr" target="_blank"><i class="fa fa-angle-double-right"></i> kokoFarm 홈페이지</a></td></tr>
 								</table>
@@ -61,7 +68,7 @@
 					</div>
 					<div class="row w-100 justify-content-center">
 						<div class="col-xl-5 no-padding">
-							<div class="img-reponsive"><img src="../images/logo.png"></div>
+							<img class="img-reponsive logo_img" src="../images/logo.png">
 						</div>
 					</div>
 				</div>
@@ -132,5 +139,35 @@
 			return false;
 		});
 	});
+
+	// enter 누르고 로그인
+	function login_enter(){
+		if(window.event.keyCode == 13){
+			var data_arr = {}; 
+			data_arr['oper'] = "login";
+			data_arr['id'] = $("#login_form [name=id]").val();
+			data_arr['pw'] = $("#login_form [name=pw]").val();
+
+			$.ajax({url:'index_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
+				success: function(data) {
+					switch(data.msg){
+						default:
+							popup_alert("오류", "통신오류입니다.<br>다시 시도해 주시기 바랍니다");
+							break;
+						case "error":
+							$("#login_form [name=id]").val("");
+							$("#login_form [name=pw]").val("");
+							popup_alert("오류","아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
+							break;
+
+						case "ok":
+							window.location = data.url;
+							break;
+					}
+				}
+			});
+			return false;
+		}
+	}
 
 </script>

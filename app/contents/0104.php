@@ -6,49 +6,49 @@ include_once("../inc/top.php")
 <div class="row" id="row_outsensor">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 10px 10px 0 0">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary sensor"><i class="fa fa-info-circle text-warning"></i>&nbsp;&nbsp;외기환경 센서 정보</h2>	
+					<h2 class="font-weight-bold text-white sensor"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;외기환경 센서 정보</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:1rem">
+			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; padding:1rem">
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center text-danger"><img src="../images/temp.png" style="width: 1rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center text-danger"><img src="../images/temp.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">온도(℃)<br><span id="extra_out_temp" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/drop.png" style="width: 4rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/drop.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">습도(％)<br><span id="extra_out_humi" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/nh3.png" style="width: 5rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/nh3.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">암모니아(ppm)<br><span id="extra_out_nh3" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/h2s.png" style="width: 5rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/h2s.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">황화수소(ppm)<br><span id="extra_out_h2s" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/pm10.png" style="width: 5rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/pm10.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">미세먼지(㎍/㎥)<br><span id="extra_out_dust" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/pm2.5.png" style="width: 5rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/pm2.5.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">초미세먼지(㎍/㎥)<br><span id="extra_out_udust" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div><hr style="margin-top:0px">
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/wind-direction.png" style="width: 3.5rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/wind-direction.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">풍향<br><span id="extra_out_direction" style="font-size:25px">0</span></div>
 					<div style="clear:both"></div>
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-3 no-padding text-center"><img src="../images/wind.png" style="width: 3.5rem;"><br><span></span></div>
+					<div class="col-xs-3 no-padding text-center"><img src="../images/wind.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right">풍속(m/s)<br><span id="extra_out_wind" style="font-size:28px">0</span></div>
 					<div style="clear:both"></div>
 				</div>
@@ -60,12 +60,12 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 10px 10px 0 0">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;오늘 외기환경 변화</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;오늘 외기환경 변화</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
 				<div class="widget-body-toolbar">
 					<div class="btn-group">
 						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_temp_humi', 'today');">
@@ -91,12 +91,12 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 10px 10px 0 0">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 외기환경 변화</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;일령별 외기환경 변화</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
 			<div class="widget-body-toolbar">
 					<div class="btn-group">
 						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor('chart_temp_humi', 'daily');">
