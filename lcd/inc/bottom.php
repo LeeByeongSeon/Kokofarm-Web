@@ -44,49 +44,46 @@
 	var progress_interval;
 	var progress_cnt = 0;
 
+	var top_code = "<?=$farm_code?>";
+	var top_avg = "<?=$farm_avg?>";
+	var top_time = "<?=$farm_avg_time?>";
+	var top_interm = "<?=$farm_interm?>";
+	var top_rc_status = "<?=$request_status?>";
+	var top_be_status = "<?=$farm_status?>";
+	var top_name = "<?=$farm_name?>";
+	var top_lat = "<?=$farm_lat?>";
+	var top_lng = "<?=$farm_lng?>";
+
 	$(document).ready(function(){
 
-		//Timer
-		clearInterval(progress_interval);
-			progress_interval=setInterval(function(){
+		load_data();
+
+		progress_interval = setInterval(function(){
+			$("#clock_now").html(get_now_datetime());
+
 			progress_cnt++;
-			if(progress_cnt >= 60){ progress_cnt=0; load_data(); } // load_data 실행(임시)
-			else{ var update_per = parseInt(progress_cnt/60*100); $("#state_bar").css('width', update_per + "%"); $("#state_bar").html(update_per + "%"); $("#state_bar").parent().attr("data-original-title",update_per + "%"); }
-		},1000);
+			if(progress_cnt >= 60){ 
+				progress_cnt = 0; 
+				location.reload();		// 새로고침
+			}
+			else{ 
+				let update_per = parseInt(progress_cnt/60*100); 
+				$("#state_bar").css('width', update_per + "%"); 
+				$("#state_bar").html(update_per + "%"); 
+				$("#state_bar").parent().attr("data-original-title", update_per + "%");
+			}
+		}, 1000);
 
-		get_weather(lat,lon);
-		curr_clock();
-
-		//일령
-		let interm = <?=$farm_interm?>;
+		get_weather(top_lat, top_lng);
 
 		//일령기간별 이미지
-		if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");  $(".henInterm").addClass("p-4");}
-		if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");  $(".henInterm").addClass("p-3");}
-		if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); $(".henInterm").addClass("p-3"); }
+		if(top_interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");  $(".henInterm").addClass("p-4");}
+		if(top_interm >= 11 && top_interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");  $(".henInterm").addClass("p-3");}
+		if(top_interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); $(".henInterm").addClass("p-3"); }
 	});
-
-	var top_code = "";
-	var top_avg = "";
-	var top_time = "";
-	var top_interm = "";
-	var top_rc_status = "";
-	var top_be_status = "";
-	var top_name = "";
 
 	// 데이터를 불러옴
 	function load_data(){
-
-		loading_circle("on");loading_circle("off");
-
-		let option = $("#top_input");
-		top_code = $(option).val();
-		top_avg = $(option).attr("beAvgWeight");
-		top_time = $(option).attr("beAvgWeightDate");
-		top_interm = $(option).attr("interm");
-		top_rc_status = $(option).attr("rcStatus");
-		top_be_status = $(option).attr("beStatus");
-		top_name = $(option).html();
 
 		// 재산출 요청 존재 확인
 		let request_info = "";
@@ -106,9 +103,8 @@
 				break;
 		}
 
+		$("#top_request_info").html(request_info);
 		if(request_info != ""){
-			$("#row_avg_esti").hide();
-			$("#top_request_info").html(request_info);
 			$("#top_request_row").show();
 		}
 
@@ -117,7 +113,7 @@
 		switch(top_be_status){
 			case "O": //출하
 				
-				$("#top_status_info").removeClass('d-none');	// d-none -> display: none 과 동일, 해당 클래스를 지워야함
+				//$("#top_status_info").removeClass('d-none');	// d-none -> display: none 과 동일, 해당 클래스를 지워야함
 				$("#top_status_msg").html("<h1 class='font-weight-bold text-center text-secondary no-margin'>현재 <span class='text-danger' style='font-size:28px'> '출하 상태' </span>입니다</h1>").show();
 				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 최종 출하 시간 : ");
 				$("#top_last_time").html(top_time);
@@ -128,7 +124,6 @@
 			
 			case "E": //에러
 
-				$("#top_status_info").removeClass('d-none');
 				$("#top_status_msg").html("<h1 class='font-weight-bold text-center text-secondary no-margin'>현재 <span class='text-danger' style='font-size:28px'> '통신 오류 상태' </span> 입니다</h1>").show();
 				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 오류 발생 시간 : ");
 				$("#top_last_time").html(top_time);
@@ -139,7 +134,6 @@
 
 			case "W": //출하 대기
 				
-				$("#top_status_info").removeClass('d-none');
 				$("#top_status_msg").html("<h1 class='font-weight-bold text-center text-secondary no-margin'> 현재 <span class='text-danger' style='font-size:28px'> '출하 대기 상태' </span> 입니다</h1>").show();
 				$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 저울 분리 시간 : ");
 				$("#top_last_time").html(top_time);
@@ -148,16 +142,17 @@
 				$("#top_notice").html(notice);
 				break;
 		}
-		get_dong_data();		// 각 페이지 별로 선언 필요
+
+		$("#top_status_info").show();
+
+		get_data();		// 각 페이지 별로 선언 필요
 	};
 
 	// gps 날씨 데이터 가져오기
-	var lat = "<?=$farm_lat?>";
-	var lon = "<?=$farm_lng?>";
-	function get_weather(lat,lon){	// lat, lon 으로 구글 날씨 api
+	function get_weather(lat, lon){	// lat, lon 으로 구글 날씨 api
 		if(lat != "" && lon != ""){	// null 체크
 			let weather_api_key = "eebc730442c4127c56dfa7c7a4dca2ee";
-			let url = "http://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon="+ lon +"&appid="+weather_api_key;
+			let url = "http://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon="+ lon +"&appid=" + weather_api_key;
 			$.ajax({ url: url, dataType:"json",
 				success:function(data){
 					let temp = parseFloat(data.main.temp - 273.15).toFixed(1);
@@ -171,12 +166,6 @@
 				}
 			});
 		};
-	};
-
-	// 현재 시간
-	function curr_clock(){
-		$("#clock_now").html(get_now_datetime());
-		let t = setTimeout(curr_clock, 1000);
 	};
 
 	// 로딩 이미지

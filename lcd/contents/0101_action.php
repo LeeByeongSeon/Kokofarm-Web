@@ -217,14 +217,8 @@
 		case "get_avg_weight":
 
 			$avg_history = get_avg_history($cmCode, $_REQUEST["term"], "all");
-
-			switch($_REQUEST["comm"]){
-				case "view":
-					$response["avg_weight_chart"] = $avg_history["chart"];
+			$response["avg_weight_chart"] = $avg_history["chart"];
 					
-					echo json_encode($response);
-
-					break;
-			};
+			echo json_encode($response);
 	}
 ?>

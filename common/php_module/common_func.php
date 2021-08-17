@@ -11,25 +11,6 @@ define("corr_humi", 7);		//저울-습도보정
 define("corr_co2", 0);		//저울-CO2보정
 define("corr_nh3", 0);		//저울-NH3보정
 
-// set_iot_cell 데이터 삽입용
-// function cell_all(){
-// 	$query = "SELECT * FROM farm_detail";
-
-// 	$farm_arr = get_select_data($query);
-// 	foreach($farm_arr as $row){
-// 		$insert_map = array();
-// 		$insert_map["siFarmid"] = $row["fdFarmid"];
-// 		$insert_map["siDongid"] = $row["fdDongid"];
-
-// 		$now = date('Y-m-d H:i:s');
-// 		$insert_map["siDate"] = $now;
-// 		for($i=1; $i<=3; $i++){
-// 			$insert_map["siCellid"] = sprintf('%02d', $i);
-// 			run_sql_insert("set_iot_cell", $insert_map);
-// 		}
-// 	}
-// }
-
 function buffer_code(){
 	$query = "SELECT cmFarmid, cmDongid, MAX(cmCode) AS maxCode FROM comein_master GROUP BY cmFarmid, cmDongid";
 

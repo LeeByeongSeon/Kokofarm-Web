@@ -1,8 +1,8 @@
 <?
 	include_once("../../common/php_module/common_func.php");
 
-	$farmID = $_REQUEST["farmID"];
-	$dongID = $_REQUEST["dongID"];
+	$farmID = check_str($_REQUEST["farmID"]);
+	$dongID = check_str($_REQUEST["dongID"]);
 
 	// 농장 정보 확인
 	$select_query = "SELECT fd.*, cm.*, be.*, rc.rcStatus, sf.sfFarmid, so.soFarmid, 
@@ -16,84 +16,62 @@
 
 	$init_data = get_select_data($select_query);
 
-	$farm_code   = $init_data[0]['cmCode']; 
-	$farm_name   = $init_data[0]['fdName'];  // 농장 이름
-	$farm_interm = $init_data[0]['interm'];  // 농장 일령
-	$indate = $init_data[0]['cmIndate'];	 // 농장 입추일
-	$in = explode("_", $indate)[0];
-	$farm_indate = substr($in, 0, 10);
-	$farm_devi = sprintf('%0.1f',$init_data[0]['beDevi']);	 	// 표준편차
-	$farm_vc   = sprintf('%0.1f',$init_data[0]['beVc']);		// 변이계수
-	$farm_avg  = sprintf('%0.1f',$init_data[0]['beAvgWeight']); // 평균중량
-	$farm_lat  = $init_data[0]['fdGpslat'];  // GPSlat
-	$farm_lng  = $init_data[0]['fdGpslng'];	 // GPSlng
-	$farm_status = $init_data[0]['beStatus'];
-
-	//현재 URL 확인 및 메뉴출력
-	$curr_url	= $_SERVER["PHP_SELF"];
-	$arr_url	= explode("/",$curr_url);
-	$depth1_url = $arr_url[sizeof($arr_url)-2];
-	$depth2_url = $arr_url[sizeof($arr_url)-1];
-	$add_url 	= "?farmID=".$farmID."&dongID=".$dongID;
-
 	// 메뉴창에 급이, 외기 표시 조정 변수
 	$exist_feed = false;
 	$exist_out  = false;
 	
 	if(count($init_data) > 0){		// 데이터가 있으면
-		$data_html = "";
 
-		foreach($init_data as $val){
-			
-			// 페이지 따라 존재하는 동만 셀렉트에 표현
-			$test = $val["fdFarmid"];
-			switch($depth_1_url){
-				case "0103.php":
-					$test = $val["sfFarmid"];
-					break;
-				case "0104.php":
-					$test = $val["soFarmid"];
-					break;
-			}
+		$farm_code   = $init_data[0]['cmCode']; 
+		$farm_name   = $init_data[0]['fdName'];  // 농장 이름
+		$farm_interm = $init_data[0]['interm'];  // 농장 일령
+		$indate = $init_data[0]['cmIndate'];	 // 농장 입추일
 
-			if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
+		$farm_indate = substr($in, 0, 10);
+		$farm_devi = sprintf('%0.1f',$init_data[0]['beDevi']);	 	// 표준편차
+		$farm_vc   = sprintf('%0.1f',$init_data[0]['beVc']);		// 변이계수
+		$farm_avg  = sprintf('%0.1f',$init_data[0]['beAvgWeight']); // 평균중량
+		$farm_avg_time  = $init_data[0]['beAvgWeightDate']; // 평균중량 산출 시간
+		$farm_lat  = $init_data[0]['fdGpslat'];  // GPSlat
+		$farm_lng  = $init_data[0]['fdGpslng'];	 // GPSlng
+		$farm_status = $init_data[0]['beStatus'];
+		$request_status = $init_data[0]['rcStatus'];
 
-			$data_html .= "<input type='hidden' id='top_input' value=\"" . $val["beComeinCode"] . "\" ";
-			$data_html .= "rcStatus=\"" . $val["rcStatus"] . "\", interm=\"" . $val["interm"] . "\", beAvgWeightDate=\"" . $val["beAvgWeightDate"] . "\", ";
-			$data_html .= "beAvgWeight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", beStatus=\"" . $val["beStatus"] . "\">" . $val["fdName"];
-			$data_html .= ">";
+		//현재 URL 확인 및 메뉴출력
+		$curr_url	= $_SERVER["PHP_SELF"];
+		$arr_url	= explode("/",$curr_url);
+		$depth1_url = $arr_url[sizeof($arr_url)-2];
+		$depth2_url = $arr_url[sizeof($arr_url)-1];
+		$add_url 	= "?farmID=".$farmID."&dongID=".$dongID;
 
-			if($val["fdFarmid"] == $val["sfFarmid"]){ $exist_feed = true; }
-			if($val["fdFarmid"] == $val["soFarmid"]){ $exist_out = true; }
+		if($init_data[0]["fdFarmid"] == $init_data[0]["sfFarmid"]){ $exist_feed = true; }
+		if($init_data[0]["fdFarmid"] == $init_data[0]["soFarmid"]){ $exist_out = true; }
+
+		//메뉴 구성
+		$menu_struct = array();
+		$menu_struct[] = array("0101.php".$add_url, "요약현황", "icon-01.png");
+		$menu_struct[] = array("0102.php".$add_url, "IoT저울", "icon-02.png");
+		if($exist_feed){ $menu_struct[] = array("0103.php".$add_url, "급이/급수", "icon-04.png"); }
+		if($exist_out){ $menu_struct[] = array("0104.php".$add_url, "외기환경", "icon-03.png"); }
+		$menu_struct[] = array("0105.php".$add_url, "재산출 요청", "icon-05.png");
+		
+		// 상단 메뉴 html 동적 생성
+		$top_menu_html = "";
+		foreach($menu_struct as $menu){
+
+			$top_menu_html .= "<li style='border-radius:10px; width: 150px;'>
+					<a href='" . $menu[0]. "' class='" .($depth1_url == $menu[0] ? "active" : ""). " font-lg font-weight-bold text-secondary'>
+						<img src='../images/" . $menu[2]. "' style='width: 150px'>
+						<div class='text-center' style='position: absolute; top: 110px; width:150px'>" .$menu[1]. "</div>
+					</a></li>" ; 
 		}
+		
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
 		// 오류 페이지로 이동
 		echo("<script>location.replace('./error.php')</script>");
 	}
-
-	//메뉴 구성
-	$menu_struct = array();
-	$menu_struct[] = array("0101.php".$add_url, "요약현황", "icon-01.png");
-	$menu_struct[] = array("0102.php".$add_url, "IoT저울", "icon-02.png");
-	if($exist_feed){ $menu_struct[] = array("0103.php".$add_url, "급이/급수", "icon-04.png"); }
-	if($exist_out){ $menu_struct[] = array("0104.php".$add_url, "외기환경", "icon-03.png"); }
-	$menu_struct[] = array("0105.php".$add_url, "재산출 요청", "icon-05.png");
 	
-	// 상단 메뉴 html 동적 생성
-	$top_menu_html = "";
-	foreach($menu_struct as $value){
-		for($i=0; $i<=count($menu_struct)-1; $i++){
-			if($menu_struct[$i][0]==$value[0]){
-				if($depth_1_url==$menu_struct[$i][0]){
-					$top_menu_html .= "<li style='border-radius:10px; width: 150px;'><a href='" . $menu_struct[$i][0]. "' class='active font-lg font-weight-bold text-secondary'><img src='../images/" . $menu_struct[$i][2]. "' style='width: 150px'><div class='text-center' style='position: absolute; top: 110px; width:150px'>" .$menu_struct[$i][1]. "</div></a></li>" ; //userID,userPW 임시
-				}
-				else{
-					$top_menu_html .= "<li style='border-radius:10px; width: 150px;'><a href='" . $menu_struct[$i][0]. "' class=' font-lg font-weight-bold text-secondary'><img src='../images/" . $menu_struct[$i][2] . "' style='width: 150px'><div class='text-center' style='position: absolute; top: 110px; width:150px'>" . $menu_struct[$i][1] . "</div></a></li>";
-				}
-			}
-		}
-	}
 ?>
 
 <!DOCTYPE html>
@@ -155,10 +133,6 @@
 </head>
 
 <body class="sa-fixed-header">
-
-	<!--현재페이지(?) 데이터-->
-	<?=$data_html?>
-
 	<div class="sa-wrapper">
 
 		<header class="sa-page-header shadow-none" style="border: 0; background-color: white;">
@@ -171,8 +145,8 @@
 						</div>
 					</div>
 					<div class="d-table-cell h-100" style="width:20%; vertical-align: bottom;">
-						<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom" style="margin-bottom: 4%">
-							<div id="state_bar" class="progress-bar bg-primary" role="progressbar" style="width: 55%">55 %</div>
+						<div class="progress progress-striped active" rel="tooltip" data-original-title="0%" data-placement="bottom" style="margin-bottom: 4%">
+							<div id="state_bar" class="progress-bar bg-primary" role="progressbar" style="width: 0%">0 %</div>
 						</div>
 					</div>
 					<div class="d-table-cell h-100" style="width:40%">

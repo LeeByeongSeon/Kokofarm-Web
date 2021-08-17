@@ -2,7 +2,7 @@
 	include_once("../inc/top.php");
 ?>
 
-<!--1일차/2이라/3일자 중량-->
+<!--1일차/2일차/3일자 중량-->
 <div class="row" id="row_avg_esti" style="margin-top:-25px">
 	<div class="col-sm-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
@@ -65,35 +65,6 @@
 	</div><!--col-sm-12-->
 </div><!--row-->
 
-<!--1번/2번/3번 저울 , 급이/급수 있으면 급이/급수 보이게--->
-<div class="row" id="row_cell_data" style="margin-top:-25px;">
-	<div class="col-sm-12 no-padding">
-		<div class="jarviswidget jarviswidget-color-light" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
-				<h2 class="text-white font-weight-bold">현재 센서상태</h2>
-			</header>
-			<div class="widget-body p-1" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
-				<div class="row">
-					<div class="col-sm-12">
-						<table id="cell_status_table" data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:18px">
-							<thead>
-								<tr>
-									<th data-field='f1' data-visible="true">저울</th>
-									<th data-field='f2' data-visible="true">중량</th>
-									<th data-field='f3' data-visible="true">온도</th>
-									<th data-field='f4' data-visible="true">습도</th>
-									<th data-field='f5' data-visible="true">CO2</th>
-									<th data-field='f6' data-visible="true">NH3</th>
-								</tr>
-							</thead>
-						</table>
-					</div><!--col-xs-12-->
-				</div><!--row-->
-			</div><!--widget-body-->
-		</div><!--widget-->
-	</div><!--col-xs-12-->
-</div><!--row-->
-
 <!--일일 급이 / 급수량-->
 <div class="row" id="row_feed_water" style="margin-top:-25px; display: none;">
 	<div class="col-sm-12 no-padding">
@@ -126,25 +97,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-
-<!--평균중량 변화추이 Chart 외기 있으면 외기-->
-<div class="row" id="row_avg_weight" style="margin-top:-25px;">
-	<div class="col-sm-12 no-padding">
-		<div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
-				<h2 class="text-white font-weight-bold">일령별 평균중량 변화추이</h2>
-				<!-- <div class="widget-toolbar">
-					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
-						<div id="state_bar" class="progress-bar bg-warning" role="progressbar" style="width: 55%">55 %</div>
-					</div>
-				</div> -->
-			</header>
-			<div class="widget-body" style="border-radius: 0 0 10px 10px; border : 4px solid #E6E6E6; border-top: 0;">
-				<div id="avg_weight_chart"></div>
-			</div><!--widget-body-->
-		</div><!--widget-->
 	</div>
 </div>
 
@@ -203,28 +155,65 @@
 	</div>
 </div>
 
+<!--1번/2번/3번 저울 , 급이/급수 있으면 급이/급수 보이게--->
+<div class="row" id="row_cell_data" style="margin-top:-25px;">
+	<div class="col-sm-12 no-padding">
+		<div class="jarviswidget jarviswidget-color-light" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+				<h2 class="text-white font-weight-bold">현재 센서상태</h2>
+			</header>
+			<div class="widget-body p-1" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
+				<div class="row">
+					<div class="col-sm-12">
+						<table id="cell_status_table" data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:18px">
+							<thead>
+								<tr>
+									<th data-field='f1' data-visible="true">저울</th>
+									<th data-field='f2' data-visible="true">중량</th>
+									<th data-field='f3' data-visible="true">온도</th>
+									<th data-field='f4' data-visible="true">습도</th>
+									<th data-field='f5' data-visible="true">CO2</th>
+									<th data-field='f6' data-visible="true">NH3</th>
+								</tr>
+							</thead>
+						</table>
+					</div><!--col-xs-12-->
+				</div><!--row-->
+			</div><!--widget-body-->
+		</div><!--widget-->
+	</div><!--col-xs-12-->
+</div><!--row-->
+
+<!--평균중량 변화추이 Chart 외기 있으면 외기-->
+<div class="row" id="row_avg_weight" style="margin-top:-25px;">
+	<div class="col-sm-12 no-padding">
+		<div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+				<h2 class="text-white font-weight-bold">일령별 평균중량 변화추이</h2>
+				<!-- <div class="widget-toolbar">
+					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
+						<div id="state_bar" class="progress-bar bg-warning" role="progressbar" style="width: 55%">55 %</div>
+					</div>
+				</div> -->
+			</header>
+			<div class="widget-body" style="border-radius: 0 0 10px 10px; border : 4px solid #E6E6E6; border-top: 0;">
+				<div id="avg_weight_chart"></div>
+			</div><!--widget-body-->
+		</div><!--widget-->
+	</div>
+</div>
+
 <?
 	include_once("../inc/bottom.php");
 ?>
 
 <script language="javascript">
-	
-	$(document).ready(function(){
 
-		load_data();
-		get_cell_data();
-		//get_dong_data();
-		get_avg_data();
-
-	});
-
-	function get_dong_data(){
-
-		let cmCode = "<?=$farm_code?>";
+	function get_data(){
 
 		let data_arr = {};
-			data_arr["oper"] = "get_buffer"; 
-			data_arr["cmCode"] = cmCode;	 //등록코드
+		data_arr["oper"] = "get_buffer"; 
+		data_arr["cmCode"] = top_code;	 //등록코드
 		
 		$.ajax({
 			url:'0101_action.php',
@@ -237,17 +226,16 @@
 				$("#row_feed_water").hide(); // 급이급수
 				$("#row_outsensor").hide();  // 외기환경
 
-				if(top_be_status != "O"){	// 출하일때
+				if(top_be_status != "O"){	// 출하가 아닌 경우
 
-					//$("#row_avg_esti").show(); // 예측평체
-					//$("#row_cell_avg").show(); // 환경센서
+					get_cell_data();
 
 					//각 요약정보[summary]
 					$.each(data.summary, function(key, val){	$("#" + key).html(val); });
 
 					//어제평균중량 산출 시간 표현
 					let prev_date = data.summary.summary_day_inc1;
-						prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
+					prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
 					$("#summary_day_inc1").html(prev_date);
 
 					// 급이/급수 데이터가 있으면 [1,2,3 저울 데이터 hide] [급이/급수 show]
@@ -255,7 +243,7 @@
 					if(data.extra.hasOwnProperty("extra_curr_feed")){
 						
 						let per = data.extra.extra_feed_percent;
-							per = parseInt(per);
+						per = parseInt(per);
 						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
 						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
 						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
@@ -263,7 +251,11 @@
 						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
 
 						$("#row_feed_water").show(); // 급이급수
-						$("#row_cell_data").hide();  // 1,2,3 저울 데이터
+						$("#row_avg_weight").hide();
+						//$("#row_cell_data").hide();  // 1,2,3 저울 데이터
+					}
+					else{
+						get_avg_data();
 					}
 
 					// 외기환경데이터가 있으면 [평균중량 변화추이 hide] [외기환경 show]
@@ -308,10 +300,9 @@
 	function get_avg_data(){
 		
 		let data_arr = {}; 
-			data_arr['oper']   = "get_avg_weight"
-			data_arr["cmCode"] = top_code;	//등록코드
-			data_arr['comm']   = "view";
-			data_arr['term']   = "day";
+		data_arr['oper']   = "get_avg_weight"
+		data_arr["cmCode"] = top_code;	//등록코드
+		data_arr['term']   = "day";
 		
 		$.ajax({
 			url:'0101_action.php',
