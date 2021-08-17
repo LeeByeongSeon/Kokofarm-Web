@@ -10390,7 +10390,8 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
     color: #568a89;
     font-weight: 700; }
     .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a:before {
-      color: #455a64; }
+      /* color: #455a64;  */
+      color: #07298c;}
   .smart-style-6 .sa-aside-left .sa-left-menu > li > a {
     /*text-transform: uppercase;*/
     padding-top: 12px;

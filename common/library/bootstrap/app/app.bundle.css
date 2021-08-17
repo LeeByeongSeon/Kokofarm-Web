@@ -33,7 +33,7 @@ h1, h2, h4, h5 {
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
-  /* font-family: "Open Sans", Arial, Helvetica, Sans-Serif;*/}
+  font-family: "Open Sans", Arial, Helvetica, Sans-Serif;}
 
 h1 {
   letter-spacing: -0.07692rem;
@@ -2227,7 +2227,7 @@ article.sortable-grid {
     height: 32px;
     float: left;
     position: relative;
-    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: Arial, Helvetica, sans-serif;
     border-left: 1px solid rgba(0, 0, 0, 0.09); }
     .jarviswidget-ctrls .button-icon:hover {
       background-color: rgba(0, 0, 0, 0.05); }
@@ -5739,7 +5739,7 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  /* font-family: "Open Sans", Arial, Helvetica, Sans-Serif; */
+  font-family: "Open Sans", Arial, Helvetica, Sans-Serif;
   line-height: 1.42857; }
 
 a:hover {
@@ -6798,7 +6798,7 @@ hr.simple {
   padding: 0;
   line-height: 1.15385rem;
   font-size: 0.76923rem;
-  /* font-family: Trebuchet,Arial,sans-serif; */
+  font-family: Trebuchet,Arial,sans-serif;
   font-weight: 700;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -9434,7 +9434,7 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   color: #bbb; }
 
 .smart-style-4 {
-  /* font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
  }
   .smart-style-4 .sa-header-right-area .sa-user-dropdown {
     display: block; }
@@ -10287,7 +10287,7 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
     border-color: rgba(255, 255, 255, 0.15); } }
 
 .smart-style-6 {
-  /* font-family: RobotoDraft,Roboto,sans-serif; */
+  font-family: RobotoDraft,Roboto,sans-serif;
   -webkit-font-smoothing: antialiased;
   background: #edecec; }
   .smart-style-6 .sa-page-body {

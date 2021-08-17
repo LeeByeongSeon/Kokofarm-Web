@@ -45,7 +45,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 								<div class="col-md-12 no-padding">
 									<div class="col-md-4 no-padding text-center">
 										<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png">
-										<div class="carousel-caption"><h2 class="p-2 no-margin font-weight-bold"> <span id="summary_days"></span>일 </h2></div>
+										<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-2 no-margin font-weight-bold"> <span id="summary_days"></span>일 </h2></div>
 									</div>
 									<div class="col-md-8 no-padding">
 										<div class="text-center font-weight-bold"><h1 class="text-center font-weight-bold no-margin no-padding"><small class="font-weight-bold">평균중량</small><br><span class="text-danger" id="summary_avg"></span></h1></div>
@@ -97,7 +97,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<div class="col-xs-7 float-left mt-4 pr-4 pl-0 feed_info_div" style="border-right: 2px dotted #ddd">
 						<div class="row">
 							<div class="col-xs-7 h-50 float-left">
-								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feed-04.png" id="feed_img" style="width: 8rem;"><div class="carousel-caption"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">50%<h5></div></div>
+								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feed-04.png" id="feed_img" style="width: 8rem;"><div class="carousel-caption" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">50%<h5></div></div>
 								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급이량(㎏)</span><br><span class="font-xl" id="extra_curr_feed">0</span></div>
 							</div>
 							<div class="col-xs-5 h-50 float-right">

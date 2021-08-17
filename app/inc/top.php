@@ -217,7 +217,7 @@
 		
 			<div class="sa-content-wrapper" style="margin:0">
         
-				<div class="sa-content no-padding">
+				<div class="sa-content p-2">
 
 					<nav class="navbar bg-light no-padding" style="overflow-x: scroll; white-space: nowrap; min-height: 0; justify-content: start;">
 						<ul class="nav nav-pills d-flex flex-nowrap" id="top_select">
