@@ -82,7 +82,7 @@
 
                             <div class="text-center" style="margin-top:15rem;">
                                 <!-- <code>Login Error :(</code><br><br> -->
-                                <h1 class="error-text shake animated font-weight-bold text-danger"> <img class="img-reponsive" src="../images/logo.png" style="width: 20rem"> <em class="fa fa-warning"></em></h1>
+                                <h1 class="error-text shake animated font-weight-bold text-danger"> <img class="img-reponsive" src="./images/logo2.png" style="width: 20rem"> <em class="fa fa-warning"></em></h1>
                                 <br><br><h5 class="font-weight-bold m-0"> 존재하지않는 계정입니다.</h5><br><h6 class="font-weight-bold m-0"> 관리자에게 문의 바랍니다.</h6>
                             </div>
 

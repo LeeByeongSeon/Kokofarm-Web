@@ -69,7 +69,7 @@
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
 		// 오류 페이지로 이동
-		echo("<script>location.replace('./error.php')</script>");
+		echo("<script>location.replace('../error.php')</script>");
 	}
 	
 ?>
@@ -178,7 +178,7 @@
 					<div class="d-flex w-100">
 						<section id="widget-grid" class="w-100">
 
-							<div class="container-fluid" style="margin-top:160px">
+							<div class="container-fluid" style="margin-top:180px">
 
 								<!--알람 메시지--->
 								<div class="row mb-5" id="top_request_row" style="margin-top:-30px; display:none;">
@@ -190,7 +190,7 @@
 								</div>
 
 								<!--출하상태 표시 div-->
-								<div class="row mb-5 d-none" id="top_status_info" style="margin-top:-25px;">
+								<div class="row mb-5 d-none" id="top_status_info" style="margin-top:-30px;">
 									<div class="col-sm-12 no-padding">
 										<div class="card" style="border-radius: 15px; border: 4px solid #E6E6E6;">
 											<div class="card-header font-weight-bold text-primary pl-2" style="border-radius: 15px 15px 0 0;"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
