@@ -128,11 +128,7 @@ include_once("../inc/bottom.php")
 	var today_data = null;
 	var daily_data = null;
 
-	$(document).ready(function(){
-		load_data();
-	});
-
-	function get_dong_data(){
+	function get_data(){
 		get_buffer();
 		get_all();
 		get_today();

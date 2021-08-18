@@ -27,7 +27,7 @@
 		$farm_interm = $init_data[0]['interm'];  // 농장 일령
 		$indate = $init_data[0]['cmIndate'];	 // 농장 입추일
 
-		$farm_indate = substr($in, 0, 10);
+		$farm_indate = substr($indate, 0, 10);
 		$farm_devi = sprintf('%0.1f',$init_data[0]['beDevi']);	 	// 표준편차
 		$farm_vc   = sprintf('%0.1f',$init_data[0]['beVc']);		// 변이계수
 		$farm_avg  = sprintf('%0.1f',$init_data[0]['beAvgWeight']); // 평균중량

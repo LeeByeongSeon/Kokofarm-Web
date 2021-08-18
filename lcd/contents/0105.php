@@ -128,11 +128,7 @@ include_once("../inc/bottom.php")
 	var comein_indate = "";
 	var comein_insu = "";
 
-	$(document).ready(function(){
-		load_data();
-	});
-
-	function get_dong_data(){
+	function get_data(){
 
 		// 입추상태인 경우에만 표시
 		if(top_be_status == "O"){
@@ -164,7 +160,6 @@ include_once("../inc/bottom.php")
 				comein_indate = data.comein_data["cmIndate"];
 				comein_insu = data.comein_data["cmInsu"];
 
-				// 기존 (수정 전)데이터 가져옴
 				$("#request_form [name=change_intype]").val(comein_intype).prop("selected", true);
 				$("#request_form [name=change_insu]").val(comein_insu);
 
@@ -351,6 +346,7 @@ include_once("../inc/bottom.php")
 		}
 
 		// 에러 확인 완료 후 적용될 값이 있으면 confirm창 출력
+
 		if(msg.length < 1){
 			view_alarm("request_alarm", "수정하여 적용할 값이 존재하지 않습니다</label>");
 			return;
@@ -390,7 +386,7 @@ include_once("../inc/bottom.php")
 								//$("#change_insu").val(data.change_insu);	//입추수만 변경
 
 								if(data.ok){
-									$("#btn_home").click();
+									location.reload();		// 새로고침
 								}
 							}
 						});

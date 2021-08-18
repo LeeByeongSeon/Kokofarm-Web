@@ -268,6 +268,8 @@
 				else{
 					$("#row_avg_esti").hide(); // 예측평체
 					$("#row_cell_avg").hide(); // 환경센서
+					$("#row_cell_data").hide();
+					$("#row_avg_weight").hide(); // 평균중량
 				}
 
 			},

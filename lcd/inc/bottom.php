@@ -1,25 +1,39 @@
-							<div class="modal" id="modalPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<!--Modal Alert-->
+							<div id="modal_alert" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
 								<div class="modal-dialog">
-									<div class="modal-content" style="padding:15px">
-
-										<div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-											<header>
-												<span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
-												<h2 id="modal_title"></h2>
-											</header>
-											<div class="widget-body">
-												<div id="modal_msg" style="width:100%;text-align:center;font-size:20px">
-
-												</div>
-											</div><!--widget-body-->
-										</div><!--widget-->
-										<div style="text-align:right;margin-top:-10px">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 id="modal_alert_title" class="modal-title float-right">Modal title</h4>
+											<button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+										</div>
+										<div id="modal_alert_body" class="modal-body">
+											<p>One fine body…</p>
+										</div>
+										<div class="modal-footer">
 											<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
 										</div>
+									</div><!--modal-content -->
+								</div><!--modal-dialog -->
+							</div><!--modal -->
 
-									</div><!-- /.modal-content -->
-								</div><!-- /.modal-dialog -->
-							</div><!-- /.modal -->
+							<!--Modal Confirm-->
+							<div id="modal_confirm" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 id="modal_confirm_title" class="modal-title float-right">Modal title</h4>
+											<button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+										</div>
+										<div id="modal_confirm_body" class="modal-body">
+											<p>One fine body…</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_confirm_ok">확인</button>
+											<button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_confirm_cancle">취소</button>
+										</div>
+									</div><!--modal-content -->
+								</div><!--modal-dialog -->
+							</div><!--modal -->
 
 							<!----Loading Circle-->
 							<div id="loading_circle" style="display:none;"><ul id="loading_circle_image"><img src="../images/loading_circle.gif"></ul></div>
@@ -110,6 +124,7 @@
 
 		let notice = "<span class='font-lg text-secondary'> ※해당 상태가 지속되면 관리자에게 문의 바랍니다.&nbsp;&nbsp;</span>";
 
+		$("#top_status_info").addClass('d-none');
 		switch(top_be_status){
 			case "O": //출하
 				
@@ -120,6 +135,8 @@
 				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
 				$("#top_last_avg").html(top_avg + "g");
 				$("#top_notice").html(notice);
+
+				$("#top_status_info").removeClass('d-none');
 				break;
 			
 			case "E": //에러
@@ -130,6 +147,8 @@
 				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
 				$("#top_last_avg").html(top_avg + "g");
 				$("#top_notice").html(notice);
+
+				$("#top_status_info").removeClass('d-none');
 				break;
 
 			case "W": //출하 대기
@@ -140,10 +159,10 @@
 				$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
 				$("#top_last_avg").html(top_avg + "g");
 				$("#top_notice").html(notice);
+
+				$("#top_status_info").removeClass('d-none');
 				break;
 		}
-
-		$("#top_status_info").show();
 
 		get_data();		// 각 페이지 별로 선언 필요
 	};
@@ -159,7 +178,7 @@
 					let humi = data.main.humidity;
 					let win_speed = data.wind.speed;
 					let icon = data.weather[0].icon;
-					$("#weather_icon").attr("src","https://openweathermap.org/img/w/"+icon+".png");
+					$("#weather_icon").attr("src", "https://openweathermap.org/img/w/"+icon+".png");
 					$("#weather_temp").html(temp);
 					$("#weather_humi").html(humi);
 					$("#weather_wind").html(win_speed);
