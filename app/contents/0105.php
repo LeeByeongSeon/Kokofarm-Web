@@ -126,11 +126,7 @@ include_once("../inc/bottom.php")
 	var comein_intype = "";
 	var comein_indate = "";
 	var comein_insu = "";
-
-	$(document).ready(function(){
-		load_data();
-	});
-
+	
 	function get_dong_data(){
 
 		// 입추상태인 경우에만 표시

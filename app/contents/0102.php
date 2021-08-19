@@ -93,10 +93,6 @@ include_once("../inc/bottom.php")
 
 <script language="javascript">
 
-	$(document).ready(function(){
-		load_data();
-	});
-
 	function get_dong_data(){
 		get_cell_data();
 		get_avg_data("day");

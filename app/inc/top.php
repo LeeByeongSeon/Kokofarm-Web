@@ -15,7 +15,6 @@
                     LEFT JOIN set_outsensor AS so ON so.soFarmid = fd.fdFarmid AND so.soDongid = fd.fdDongid 
 					WHERE f.fID = \"" .$userID. "\" AND f.fPW = \"" .$userPW. "\"";
 
-	//var_dump($select_query);
 	$init_data = get_select_data($select_query);
 
 	$code = $init_data[0]['beComeinCode'];
@@ -48,9 +47,9 @@
 
 			if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
 
-			$select_html .= "<li role='presentation' class='active border'><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
-			$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
-			$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ;
+			$select_html .= "<li role='presentation' class='border'><a href='javascript:void(0)' data-code='" . $val["beComeinCode"] . "' ";
+			$select_html .= "data-rcstatus='" . $val["rcStatus"] . "', data-interm='" . $val["interm"] . "', data-beavgweightdate='" . $val["beAvgWeightDate"] . "', ";
+			$select_html .= "data-beavgweight='" . sprintf('%0.1f', $val["beAvgWeight"]) . "', data-bestatus='" . $val["beStatus"] . "' data-name='" . $val["fdName"] . "'>" . $val["fdName"] ;
 			$select_html .= $val['beStatus'] == "O" ? "<span class='badge badge-secondary'>출하</span>" : " <span class='badge badge-primary'>". $val['interm']. "일</span>";
 			$select_html .= "</a></li>";
 
@@ -88,7 +87,7 @@
 	}
 
 	// 농장 이름 선택 시 요약 화면으로 복귀
-	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-default font-weight-bold' style='margin:0; font-size:18px; line-height:initial;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fdName"]."</a>";
+	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-default font-weight-bold' style='margin:0; font-size:18px; line-height:initial;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
 	
 ?>
 

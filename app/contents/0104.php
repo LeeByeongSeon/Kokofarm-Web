@@ -128,10 +128,6 @@ include_once("../inc/bottom.php")
 	var today_data = null;
 	var daily_data = null;
 
-	$(document).ready(function(){
-		load_data();
-	});
-
 	function get_dong_data(){
 		get_buffer();
 		get_all();
@@ -189,7 +185,7 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 				today_data = data;
-				draw_select_chart("today_outsensor_chart", data.chart_temp_humi, "세로-Bar", "Y", "N", 12, "mm");
+				draw_select_chart("today_outsensor_chart", data.chart_temp_humi, "세로-Bar", "Y", "N", 12, "hh");
 			}
 		});
 	};
@@ -209,7 +205,7 @@ include_once("../inc/bottom.php")
 		}
 
 		if(use_data != null){
-			draw_select_chart(use_div, use_data[chart_name], "세로-Bar", "Y", "N", 12, "mm");
+			draw_select_chart(use_div, use_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
 		}
 	}
 

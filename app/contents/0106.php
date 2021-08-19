@@ -93,9 +93,9 @@ include_once("../inc/top.php")
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<button type="button" class="btn btn-default"><span class="fa fa-file-excel-o"></span> Excel</button>&nbsp;&nbsp;
-					<button id="toggle_sensor_btn" type="button" class="btn btn-default">
+					<!-- <button id="toggle_sensor_btn" type="button" class="btn btn-default">
 						<span class="fa fa-plus"> </span>
-					</button>
+					</button> -->
 				</div>
 			</header>
 			<div class="widget-body" style="border-radius: 0 0 10px 10px;">
@@ -117,11 +117,13 @@ include_once("../inc/top.php")
 					</div>
 				</div><!--widget-body-toolbar-->
 
-				<div class="row">
+				<!-- <div class="row">
 					<div id="daily_sensor_chart" style="height:300px"></div>
-				</div>
+				</div> -->
 
-				<div id="toggle_sensor_div" class="row fadeInDown animated" style="display:none">
+				<div id="daily_sensor_chart" style="height:300px"></div>
+
+				<!-- <div id="toggle_sensor_div" class="row fadeInDown animated" style="display:none">
 					<div class="col-xs-12">
 						<table id="inoutday_sensor_table" data-toggle="table" style="font-size:14px">
 							<thead>
@@ -135,8 +137,8 @@ include_once("../inc/top.php")
 							</thead>
 
 						</table>
-					</div><!--col-xs-12-->
-				</div><!--row-->
+					</div>
+				</div> -->
 
 			</div><!--widget-body-->
 		</div><!--widget-->
@@ -153,7 +155,6 @@ include_once("../inc/bottom.php")
 	var sensor_chart_data = null;
 
 	$(document).ready(function(){
-		load_data();
 
 		$("#top_status_info").hide();
 	});
@@ -191,7 +192,7 @@ include_once("../inc/bottom.php")
 		get_avg_history("day");
 
 		//일령별 센서정보 가져오기
-		$("#sensor_btn_group > button.btn:first").addClass("active");
+		//$("#sensor_btn_group > button.btn:first").addClass("active");
 		$("#sensor_btn_group > button.btn:first").trigger('click');
 	});
 
@@ -223,27 +224,38 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data) {
 				$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table); 
+				console.log(data.avg_weight_chart[0]);
 				draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12, "hh");
 			}
 		});
 	};
 
 	function get_sensor_history(chart_name){
-		// let data_arr = {};
-		// data_arr["oper"]   = "get_sensor_history";
-		// data_arr["cmCode"] = select_code;
 
-		// $.ajax({
-		// 	url:'0106_action.php',
-		// 	type:'post',
-		// 	cache:false,
-		// 	data:data_arr,
-		// 	dataType:'json',
-		// 	success: function(data){
-		// 		sensor_chart_data = data;
-		// 		draw_select_chart("daily_sensor_chart", data[chart_name], "영역차트", "Y", "N", 12, "hh");
-		// 	}
-		// });
+		if(sensor_chart_data == null){
+			let data_arr = {};
+			data_arr["oper"]   = "get_sensor_history";
+			data_arr["cmCode"] = select_code;
+
+			$.ajax({
+				url:'0106_action.php',
+				type:'post',
+				cache:false,
+				data:data_arr,
+				dataType:'json',
+				success: function(data){
+					sensor_chart_data = data;
+					draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
+					//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
+					//draw_bar_line_chart("daily_sensor_chart", sensor_chart_data[chart_name], "N", "N", 12);
+				}
+			});
+		}
+		else{
+			//draw_bar_line_chart("daily_sensor_chart", sensor_chart_data[chart_name], "N", "N", 12);
+			//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
+			draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
+		}
 	};
 
 </script>

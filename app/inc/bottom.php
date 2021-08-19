@@ -63,9 +63,21 @@
 	var top_be_status = "";
 	var top_name = "";
 
+	var curr_item;
+	var prev_item;
+
 	$(document).ready(function(){
 
-		$("#top_select li a").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
+		$("#top_select li").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
+
+			prev_item = curr_item;
+			curr_item = this;
+
+			if((prev_item != null) && (prev_item != curr_item)){
+				$(prev_item).removeClass("active");
+			}
+
+			$(curr_item).addClass("active");
 			load_data();
 		});
 
@@ -75,6 +87,11 @@
 				$('body').removeClass('sa-hidden-menu');
 			}
 		});
+
+		// 처음 시작 시 강제 클릭
+		if(curr_item == null){
+			$("#top_select li").first().click();
+		}
 
 	});
 
@@ -89,7 +106,7 @@
 		// top_be_status = $(option).attr("beStatus");
 		// top_name = $(option).html();
 
-		let option 	  = $("#top_select li a");
+		let option 	  = $(curr_item).children("a");
 		top_code 	  = option.attr("data-code");
 		top_avg 	  = option.attr("data-beavgweight");
 		top_time 	  = option.attr("data-beavgweightdate");
@@ -97,6 +114,8 @@
 		top_rc_status = option.attr("data-rcstatus");
 		top_be_status = option.attr("data-bestatus");
 		top_name 	  = option.attr("data-name");
+
+		$("#btn_home").html(top_name);
 
 		//alert(top_code+" / "+top_avg+" / "+top_time+" / "+top_interm+" / "+top_rc_status+" / "+top_be_status+" / "+top_name);
 		
