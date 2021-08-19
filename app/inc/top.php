@@ -62,21 +62,27 @@
 
 			// print_r($add_url);
 
-			switch($val['beStatus']){
-				case "default":
-					$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
-					$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
-					$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-primary'>". $val['interm']."</span>";
-					$select_html .= "</a></li>";
-					break;
+			$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
+			$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
+			$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ;
+			$select_html .= $val['beStatus'] == "O" ? "<span class='badge badge-secondary'>출하</span>" : " <span class='badge badge-primary'>". $val['interm']. "일</span>";
+			$select_html .= "</a></li>";
 
-				case "O":
-					$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
-					$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
-					$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-secondary'>출하</span>";
-					$select_html .= "</a></li>";
-					break;
-			}
+			// switch($val['beStatus']){
+			// 	default:
+			// 		$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
+			// 		$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
+			// 		$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-primary'>". $val['interm']."</span>";
+			// 		$select_html .= "</a></li>";
+			// 		break;
+
+			// 	case "O":
+			// 		$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
+			// 		$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
+			// 		$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-secondary'>출하</span>";
+			// 		$select_html .= "</a></li>";
+			// 		break;
+			// }
 
 			if($val["fdFarmid"] == $val["sfFarmid"]){ $exist_feed = true; }
 			if($val["fdFarmid"] == $val["soFarmid"]){ $exist_out = true; }
@@ -84,7 +90,7 @@
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
 		// 오류 페이지로 이동
-		// echo("<script>location.replace('./error.php')</script>");
+		echo("<script>location.replace('./error.php')</script>");
 	}
 	
 	//메뉴 구성
