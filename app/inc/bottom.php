@@ -65,7 +65,7 @@
 
 	$(document).ready(function(){
 
-		$("#top_select").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+		$("#top_select li a").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
 			load_data();
 		});
 
@@ -75,13 +75,6 @@
 				$('body').removeClass('sa-hidden-menu');
 			}
 		});
-
-		// $("#top_select li a").on("click", function(e){
-		// 	e.preventDefault();
-		// 	$("#top_select li").removeClass("active");
-		// 	$($(this).prop("href")).show(); 
-		// 	$(this).closest("li").addClass("active");
-		// });
 
 	});
 
@@ -105,7 +98,7 @@
 		top_be_status = option.attr("data-bestatus");
 		top_name 	  = option.attr("data-name");
 
-		// alert(top_code+" / "+top_avg+" / "+top_time+" / "+top_interm+" / "+top_rc_status+" / "+top_be_status+" / "+top_name);
+		//alert(top_code+" / "+top_avg+" / "+top_time+" / "+top_interm+" / "+top_rc_status+" / "+top_be_status+" / "+top_name);
 		
 		$("#top_interm").html(top_interm);
 		$("#top_avg").html(top_avg);

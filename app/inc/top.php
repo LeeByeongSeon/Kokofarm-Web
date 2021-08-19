@@ -48,41 +48,11 @@
 
 			if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
 
-			// $dong_struct = array();
-			// $dong_struct[] = array($val['fdName'], $val['beStatus']);
-
-			// print_r($dong_struct);
-			
-			// $select_html .= "<li role='presentation' class=''><a value=\"" . $val["beComeinCode"] . "\"";
-			// $select_html .= "rcStatus=\"" . $val["rcStatus"] . "\", interm=\"" . $val["interm"] . "\", beAvgWeightDate=\"" . $val["beAvgWeightDate"] . "\", ";
-			// $select_html .= "beAvgWeight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", beStatus=\"" . $val["beStatus"] . "\">" . $val["fdName"];
-			// $select_html .= "</a></li>";
-
-			// $add_url = "?userID=" .$userID. "&userPW=" .$userPW ."&cmCode=".$val['beComeinCode'];
-
-			// print_r($add_url);
-
-			$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
+			$select_html .= "<li role='presentation' class='active border'><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
 			$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
 			$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ;
 			$select_html .= $val['beStatus'] == "O" ? "<span class='badge badge-secondary'>출하</span>" : " <span class='badge badge-primary'>". $val['interm']. "일</span>";
 			$select_html .= "</a></li>";
-
-			// switch($val['beStatus']){
-			// 	default:
-			// 		$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
-			// 		$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
-			// 		$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-primary'>". $val['interm']."</span>";
-			// 		$select_html .= "</a></li>";
-			// 		break;
-
-			// 	case "O":
-			// 		$select_html .= "<li role='presentation' class='border '><a href='javascript:void(0)' onClick=\" location.href='0101.php".$add_url."'\" data-code=\"" . $val["beComeinCode"] . "\" ";
-			// 		$select_html .= "data-rcstatus=\"" . $val["rcStatus"] . "\", data-interm=\"" . $val["interm"] . "\", data-beavgweightdate=\"" . $val["beAvgWeightDate"] . "\", ";
-			// 		$select_html .= "data-beavgweight=\"" . sprintf('%0.1f', $val["beAvgWeight"]) . "\", data-bestatus=\"" . $val["beStatus"] . "\" data-name=\"" . $val["fdName"] . "\">" . $val["fdName"] ." <span class='badge badge-secondary'>출하</span>";
-			// 		$select_html .= "</a></li>";
-			// 		break;
-			// }
 
 			if($val["fdFarmid"] == $val["sfFarmid"]){ $exist_feed = true; }
 			if($val["fdFarmid"] == $val["soFarmid"]){ $exist_out = true; }
@@ -118,7 +88,7 @@
 	}
 
 	// 농장 이름 선택 시 요약 화면으로 복귀
-	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-default font-weight-bold' style='margin:0; font-size:18px; line-height:initial;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
+	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-default font-weight-bold' style='margin:0; font-size:18px; line-height:initial;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fdName"]."</a>";
 	
 ?>
 
@@ -221,15 +191,15 @@
 				</div>
 			</div>
 		
-			<div class="sa-content-wrapper" style="margin:0">
+			<div class="sa-content-wrapper m-0">
         
-				<div class="sa-content p-2">
+				<nav class="navbar bg-light no-padding m-0 top_nav" style="overflow-x: scroll; white-space: nowrap; min-height: 0; justify-content: start;">
+					<ul class="nav nav-pills d-flex flex-nowrap" id="top_select">
+						<?=$select_html?>
+					</ul>
+				</nav>
 
-					<nav class="navbar bg-light no-padding" style="overflow-x: scroll; white-space: nowrap; min-height: 0; justify-content: start;">
-						<ul class="nav nav-pills d-flex flex-nowrap" id="top_select">
-							<?=$select_html?>
-						</ul>
-					</nav>
+				<div class="sa-content p-2">
 		
 				<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light form-group">
 						<div class="navbar-collapse">

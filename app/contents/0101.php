@@ -19,7 +19,7 @@ include_once("../inc/top.php");
 			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;실시간 평균&nbsp;
-						<span class="font-sm badge badge-warning"> <span id="summary_intype"></span> <span id="summary_insu"></span> </span>
+						<span class="font-sm badge bg-orange"> <span id="summary_intype"></span> <span id="summary_insu"></span> </span>
 					</h2>	
 				</div>
 			</header>
@@ -28,7 +28,7 @@ include_once("../inc/top.php");
 					<img class="p-2 img-reponsive henImage">
 					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
-				<div class="col-xs-4 text-center" style="margin-top: 5%">
+				<div class="col-xs-4 text-center" style="margin-top: 4%">
 					<p><span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 28px" id="summary_avg_weight"></span></p>
 					<span class="font-weight-bold text-secondary" style="font-size:18px;">입추일<br><span id="summary_indate"> - </span></span>
 				</div>
@@ -53,15 +53,15 @@ include_once("../inc/top.php");
 			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-calendar"></i>&nbsp;&nbsp;예측평체&nbsp;
-					<span class="font-sm badge badge-warning">16일령 이후 표시</span>
+					<span class="font-sm badge bg-orange">16일령 이후 표시</span>
 				</h2>	
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
+			<div class="widget-body p-2" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
 				<div class="d-flex flex-row justify-content-around">
-					<div class="p-3 text-center"><span style="font-size: 18px;">어제 </span><span style="font-size: 18px;" id="summary_day_term1"></span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 18px;" id="summary_day_inc1"></span></div>
-					<div class="p-3 text-center"><span style="font-size: 18px;">내일 </span><span style="font-size: 18px;" id="summary_day_term2"></span><p><span style="font-size: 23px;" class="text-success" id="summary_day_2"></span></p><span style="font-size: 18px;" id="summary_day_inc2"></span></div>
-					<div class="p-3 text-center"><span style="font-size: 18px;">모레 </span><span style="font-size: 18px;" id="summary_day_term3"></span><p><span style="font-size: 23px;" class="text-info" id="summary_day_3"></span></p><span style="font-size: 18px;" id="summary_day_inc3"></span></div>
+					<div class="p-3 text-center border-right"><span style="font-size: 18px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 18px;" id="summary_day_inc1"></span></div>
+					<div class="p-3 text-center border-right"><span style="font-size: 18px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 23px;" class="text-success" id="summary_day_2"></span></p><span style="font-size: 18px;" id="summary_day_inc2"></span></div>
+					<div class="p-3 text-center"><span style="font-size: 18px;">모레 (<span id="summary_day_term3"></span>)</span><p><span style="font-size: 23px;" class="text-info" id="summary_day_3"></span></p><span style="font-size: 18px;" id="summary_day_inc3"></span></div>
 				</div>
 			</div>
 		</div>
