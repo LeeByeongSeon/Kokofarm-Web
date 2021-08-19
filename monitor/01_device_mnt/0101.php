@@ -9,8 +9,12 @@ include_once("../inc/top.php");
 				<div class="widget-header">	
 					<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;장치 요약 현황</h2>	
 				</div>
+				<div class="widget-toolbar">
+					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
+						<div id="state_bar" class="progress-bar bg-warning" role="progressbar" style="width: 55%">55 %</div>
+					</div>
+				</div>
 			</header>
-				
 			<div class="widget-body">
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
@@ -36,8 +40,25 @@ include_once("../inc/bottom.php");
 
 <script language="javascript">
 	$(document).ready(function(){
-
 		get_grid_data();
+		
+		var progress_interval;
+		var progress_cnt = 0;
+		
+		progress_interval = setInterval(function(){
+
+			progress_cnt++;
+			if(progress_cnt >= 60){ 
+				progress_cnt = 0; 
+				$("#jqgrid").trigger("reloadGrid");
+			}
+			else{ 
+				let update_per = parseInt(progress_cnt/60*100); 
+				$("#state_bar").css('width', update_per + "%"); 
+				$("#state_bar").html(update_per + "%"); 
+				$("#state_bar").parent().attr("data-original-title", update_per + "%");
+			}
+		}, 1000);
 	});
 
 	function get_grid_data(){

@@ -117,10 +117,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<div class="col-xs-5 float-right mt-1">
 						<div class="col-xs-12 h-100 no-padding">
 							<ul class="list-group">
-								<li class="list-group-item"><div class="alert alert-danger m-0"> <i class="fa fa-spinner"></i> 재산출 요청 중</div></li>
-								<li class="list-group-item"><div class="alert alert-danger m-0"> <i class="fa fa-warning"></i> 결함 진행사항 존재</div></li>
-								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #455a64; border-color: #568a89;"> <i class="fa fa-spinner"></i> 재산출 요청 중</div></li>
-								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #568a89; border-color: #455a64;"> <i class="fa fa-spinner"></i> 재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert alert-danger m-0">재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert alert-danger m-0">결함 진행사항 존재</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #455a64; border-color: #568a89;">재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #568a89; border-color: #455a64;">재산출 요청 중</div></li>
 							</ul>
 						</div>
 					</div>

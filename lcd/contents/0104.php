@@ -202,11 +202,12 @@ include_once("../inc/bottom.php")
 				use_div = "daily_outsensor_chart";
 				use_data = daily_data;
 				break;
-		}
+		};
 
 		if(use_data != null){
 			draw_select_chart(use_div, use_data[chart_name], "세로-Bar", "Y", "N", 12, "mm");
-		}
+		};
+
 	}
 
 

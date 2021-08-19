@@ -84,6 +84,8 @@ include_once("../inc/bottom.php");
 				},
 				{label: "사육규모",	name: "fdScale",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "주소",		name: "fdAddr",		align:'center',		editable:true, editrules:{ required: true} },
+				{label: "위도",		name: "fdGpslat",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "경도",		name: "fdGpslng",	align:'center',		editable:true, editrules:{ required: true} },
 				{label: "pk", 		name: "pk",			hidden:true },
 			],
 			onSelectRow: function(id){		  },

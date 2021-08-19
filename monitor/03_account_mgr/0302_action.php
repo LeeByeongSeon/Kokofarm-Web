@@ -60,6 +60,8 @@ switch($oper){
 			$insert_map["fdType"] 	= check_str($_REQUEST["fdType"]);
 			$insert_map["fdScale"] 	= check_str($_REQUEST["fdScale"]);
 			$insert_map["fdAddr"] 	= check_str($_REQUEST["fdAddr"]);
+			$insert_map["fdGpslat"] = check_str($_REQUEST["fdGpslat"]);
+			$insert_map["fdGpslng"] = check_str($_REQUEST["fdGpslng"]);
 
 			run_sql_insert("farm_detail", $insert_map);
 
@@ -104,11 +106,13 @@ switch($oper){
 
 		$update_map = array();
 
-		$update_map["fdName"]  = check_str($_REQUEST["fdName"]);
-		$update_map["fdTel"]   = check_str($_REQUEST["fdTel"]);
-		$update_map["fdType"]  = check_str($_REQUEST["fdType"]);
-		$update_map["fdScale"] = check_str($_REQUEST["fdScale"]);
-		$update_map["fdAddr"]  = check_str($_REQUEST["fdAddr"]);
+		$update_map["fdName"]   = check_str($_REQUEST["fdName"]);
+		$update_map["fdTel"]    = check_str($_REQUEST["fdTel"]);
+		$update_map["fdType"]   = check_str($_REQUEST["fdType"]);
+		$update_map["fdScale"]  = check_str($_REQUEST["fdScale"]);
+		$update_map["fdAddr"]   = check_str($_REQUEST["fdAddr"]);
+		$update_map["fdGpslat"] = check_str($_REQUEST["fdGpslat"]);
+		$update_map["fdGpslng"] = check_str($_REQUEST["fdGpslng"]);
 
 		$where_query = "fdFarmid = \"" .$farmID. "\" AND fdDongid = \"" .$dongID. "\"";
 
@@ -181,6 +185,8 @@ switch($oper){
 			array("생계구분", "fdType", "STR", "center"),
 			array("사육규모", "fdScale", "STR", "center"),
 			array("주소", "fdAddr", "STR", "center"),
+			array("Gpslat", "fdGpslat", "STR", "center"),
+			array("Gpslng", "fdGpslng", "STR", "center"),
 		);
 
 		convert_excel(get_select_data($select_query), $field_data, $title, $append_query);
