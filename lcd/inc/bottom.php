@@ -71,7 +71,7 @@
 	$(document).ready(function(){
 
 		load_data();
-
+		
 		progress_interval = setInterval(function(){
 			$("#clock_now").html(get_now_datetime());
 
