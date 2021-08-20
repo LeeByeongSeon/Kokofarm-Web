@@ -16,14 +16,14 @@ include_once("../inc/top.php");
 <div class="row" id="row_summary" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border-bottom: 0; background-color: #0c6ad0;">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;실시간 평균&nbsp;
 						<span class="font-sm badge bg-orange"> <span id="summary_intype"></span> <span id="summary_insu"></span> </span>
 					</h2>	
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-4 float-left text-center">
 					<img class="p-2 img-reponsive henImage">
 					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
@@ -50,14 +50,14 @@ include_once("../inc/top.php");
 <div class="row" id="row_avg_esti">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border-bottom: 0; background-color: #0c6ad0;">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-calendar"></i>&nbsp;&nbsp;예측평체&nbsp;
 					<span class="font-sm badge bg-orange">16일령 이후 표시</span>
 				</h2>	
 				</div>
 			</header>
-			<div class="widget-body p-2" style="border-radius: 0px 0px 15px 15px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="d-flex flex-row justify-content-around">
 					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
 					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 23px;" class="text-green" id="summary_day_2"></span></p><i class="fa fa-plus"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
@@ -72,12 +72,12 @@ include_once("../inc/top.php");
 <div class="row" id="row_cell_avg">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border-bottom: 0; background-color: #0c6ad0;">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white sensor"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;현재 저울 센서별 평균정보</h2>	
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #eee; border-top: 0; padding:1rem;">
+			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding" style="text-align:center"><img src="../images/temp.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding" style="text-align:right"><span style="font-size:15px">온도</span>(℃)<br><span id="summary_avg_temp" style="font-size:28px">0</span></div>
@@ -106,12 +106,12 @@ include_once("../inc/top.php");
 <div class="row" id="row_feed_water" style="display: none;">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border-bottom: 0; background-color: #0c6ad0;">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;급이 및 급수 정보</h2>	
 				</div>
 			</header>
-			<div class="widget-body pt-3" style="border-radius: 0px 0px 15px 15px; border : 4px solid #eee; border-top: 0; padding:1rem; height: 250px">
+			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem; height: 250px">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
 					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
 						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
@@ -142,12 +142,12 @@ include_once("../inc/top.php");
 <div class="row" id="row_outsensor" style="display: none;">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border-bottom: 0; background-color: #0c6ad0;">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white sensor"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;외기환경 센서 정보</h2>	
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #eee; border-top: 0; padding:1rem">
+			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem">
 				<div class="col-xs-6">
 					<div class="col-xs-3 no-padding text-center text-danger"><img src="../images/temp.png"><br><span></span></div>
 					<div class="col-xs-9 no-padding text-right"><span style="font-size:15px">온도</span>(℃)<br><span id="extra_out_temp" style="font-size:28px">0</span></div>
@@ -197,12 +197,12 @@ include_once("../inc/top.php");
 <div class="row" id="row_camera_view" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border-bottom: 0; background-color: #0c6ad0;">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-camera"></i>&nbsp;&nbsp;IP 카메라</h2>	
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #eee; border-top: 0; padding:1rem" id="camera_zone">
+			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem" id="camera_zone">
 
 			</div>
 		</div>
