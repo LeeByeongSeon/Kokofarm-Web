@@ -87,8 +87,7 @@ include_once("../../common/php_module/common_func.php");
             break;
 
         case "get_sensor_history":
-            //$result = get_sensor_history($code, "get_all");
-            $result = get_test($code, "get_all");
+            $result = get_cell_history($code, "get_all");
 
             $response["chart_temp"] = $result["chart_temp"];
             $response["chart_humi"] = $result["chart_humi"];

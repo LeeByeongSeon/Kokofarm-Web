@@ -115,9 +115,7 @@ include_once("../inc/top.php")
 					</div>
 				</div><!--widget-body-toolbar-->
 
-				<div class="row">
-					<div id="daily_sensor_chart" style="height:300px"></div>
-				</div>
+				<div id="daily_sensor_chart" style="height:300px"></div>
 
 				<div id="toggle_sensor_div" class="row fadeInDown animated" style="display:none">
 					<div class="col-xs-12">
@@ -200,7 +198,7 @@ include_once("../inc/bottom.php")
 		get_avg_history("day");
 
 		//일령별 센서정보 가져오기
-		$("#sensor_btn_group > button.btn:first").addClass("active");
+		//$("#sensor_btn_group > button.btn:first").addClass("active");
 		$("#sensor_btn_group > button.btn:first").trigger('click');
 	});
 
@@ -238,30 +236,31 @@ include_once("../inc/bottom.php")
 	};
 
 	function get_sensor_history(chart_name){
-		// let data_arr = {};
-		// data_arr["oper"]   = "get_sensor_history";
-		// data_arr["cmCode"] = select_code;
 
-		// console.log("call : " + get_now_time());
+		if(sensor_chart_data == null){
+			let data_arr = {};
+			data_arr["oper"]   = "get_sensor_history";
+			data_arr["cmCode"] = select_code;
 
-		// $.ajax({
-		// 	url:'0103_action.php',
-		// 	type:'post',
-		// 	cache:false,
-		// 	data:data_arr,
-		// 	dataType:'json',
-		// 	success: function(data){
-		// 		console.log("recv : " + get_now_time());
-		// 		sensor_chart_data = data;
-
-		// 		console.log(data);
-
-		// 		//draw_select_chart("daily_sensor_chart", data[chart_name], "영역차트", "Y", "N", 12, "hh");
-		// 	},
-		// 	complete: function(){
-		// 		console.log("complete");
-		// 	}
-		// });
+			$.ajax({
+				url:'0103_action.php',
+				type:'post',
+				cache:false,
+				data:data_arr,
+				dataType:'json',
+				success: function(data){
+					sensor_chart_data = data;
+					draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
+					//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
+					//draw_bar_line_chart("daily_sensor_chart", sensor_chart_data[chart_name], "N", "N", 12);
+				}
+			});
+		}
+		else{
+			//draw_bar_line_chart("daily_sensor_chart", sensor_chart_data[chart_name], "N", "N", 12);
+			//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
+			draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
+		}
 	};
 
 </script>
