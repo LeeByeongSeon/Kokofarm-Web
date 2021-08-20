@@ -14,7 +14,7 @@ include_once("../inc/top.php")
 <!---출하목록--->
 <div class="row">
 	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;지난 출하내역</h2>	
@@ -43,12 +43,11 @@ include_once("../inc/top.php")
 
 <div class="row">
 	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 10px 10px 0 0">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-file-text-o text-success"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
 				</div>
-
 				<div class="widget-toolbar ml-auto" style="height: 25px; line-height: 25px; margin-top: 0.3rem;">
 					<div class="form-inline">
 						<div class="btn-group no-margin">
@@ -60,7 +59,7 @@ include_once("../inc/top.php")
 					</div>
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; padding:0.5rem">
 			
 				<div class="col-xs-12">
 					<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
@@ -85,11 +84,11 @@ include_once("../inc/top.php")
 
 <!--일령별 환경센서 변화 -->
 <div class="row">
-	<div class="col-xs-12" style="margin-top:-10px">
-		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header>
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<button type="button" class="btn btn-default"><span class="fa fa-file-excel-o"></span> Excel</button>&nbsp;&nbsp;
@@ -98,7 +97,7 @@ include_once("../inc/top.php")
 					</button> -->
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
 
 				<div class="widget-body-toolbar">
 					<div id="sensor_btn_group" class="btn-group">

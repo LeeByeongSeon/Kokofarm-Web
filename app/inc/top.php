@@ -47,7 +47,7 @@
 
 			if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
 
-			$select_html .= "<li role='presentation' class='border'><a href='javascript:void(0)' data-code='" . $val["beComeinCode"] . "' ";
+			$select_html .= "<li role='presentation' class='border font-weight-bold'><a href='javascript:void(0)' data-code='" . $val["beComeinCode"] . "' ";
 			$select_html .= "data-rcstatus='" . $val["rcStatus"] . "', data-interm='" . $val["interm"] . "', data-beavgweightdate='" . $val["beAvgWeightDate"] . "', ";
 			$select_html .= "data-beavgweight='" . sprintf('%0.1f', $val["beAvgWeight"]) . "', data-bestatus='" . $val["beStatus"] . "' data-name='" . $val["fdName"] . "'>" . $val["fdName"] ;
 			$select_html .= $val['beStatus'] == "O" ? "<span class='badge badge-secondary'>출하</span>" : " <span class='badge badge-primary'>". $val['interm']. "일</span>";
@@ -87,7 +87,7 @@
 	}
 
 	// 농장 이름 선택 시 요약 화면으로 복귀
-	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='text-default font-weight-bold' style='margin:0; font-size:18px; line-height:initial;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
+	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='font-weight-bold' style='margin:0; font-size:18px; line-height:initial; color: #0c6ad0;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
 	
 ?>
 
@@ -168,7 +168,7 @@
                     
 								<div class="ml-auto sa-header-right-area">
 							
-									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle btn-menu" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder text-primary"></span></button>
+									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle btn-menu" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder" style="color: #0c6ad0;"></span></button>
 			
 								</div>
 							

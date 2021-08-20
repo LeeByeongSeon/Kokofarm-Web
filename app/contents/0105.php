@@ -9,7 +9,7 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 	
 <div class="row" id="row_request_form" style="display:none;">
 	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;재산출 요청</h2>	
