@@ -48,22 +48,20 @@ include_once("../inc/top.php")
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
 				</div>
-				<div class="widget-header ml-auto">
-					<div class="btn-group m-1">
-						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('day')">일령별</button>
-						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-xs btn-warning" style="height: 25px" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
-					</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('day')">일령별</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="convert_excel('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-primary" style="height: 25px" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-plus"></span></button>
 				</div>
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 
-				<div class="col-xs-12">
-					<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
+				<div class="col-xs-12 no-padding">
+					<div id="avg_weight_chart" style="height:300px; width:100%;"></div>
 				</div>
 
-				<div class="col-xs-12" id="avg_weight_table_div" style="display:none;">
+				<div class="col-xs-12 no-padding" id="avg_weight_table_div" style="display:none;">
 					<table id="avg_weight_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" data-sort-name="f2" data-sort-order="desc" style="font-size:14px">
 						<thead>
 							<tr>
@@ -88,11 +86,11 @@ include_once("../inc/top.php")
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
 				</div>
-				<div class="widget-toolbar ml-auto">
+				<!-- <div class="widget-toolbar ml-auto">
 					<div class="btn-group">
 						<button type="button" class="btn btn-xs btn-default" style="height: 25px"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
 					</div>
-				</div>
+				</div> -->
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; border-top: 0;">
 
@@ -252,6 +250,12 @@ include_once("../inc/bottom.php")
 			//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
 			draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
 		}
+	};
+
+	function convert_excel(title, table_id){
+		title = select_name + "_" + select_code + "_" + title;
+
+		send_excel_android(title, table_id);
 	};
 
 </script>

@@ -38,7 +38,7 @@
 		for($i=0; $i<=count($menu_struct)-1; $i++){
 			if($menu_struct[$i][0]==$value[0]){
 				if($depth_1_url==$menu_struct[$i][0]){
-					$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\">".$menu_struct[$i][1]."</a></li>"; //userID,userPW 임시
+					$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\" style='color: #494949;'>".$menu_struct[$i][1]."</a></li>"; //userID,userPW 임시
 				}
 				else{
 					$top_menu_html .= "<li class=''><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\">".$menu_struct[$i][1]."</a></li>";
@@ -105,17 +105,17 @@
 </style>
 </head>
 
-<body class="smart-style-6 sa-fixed-header">
+<body class="smart-style-6 sa-fixed-header" style="background-color: whitesmoke">
 
 	<div class="sa-wrapper">
 
-		<header class="sa-page-header">
+		<header class="sa-page-header" style="background-color: whitesmoke;">
 			<div class="sa-header-container h-100">
 				<div class="d-table d-table-fixed h-100 w-100">
 					<div class="sa-logo-space d-table-cell h-100">
 						<div class="flex-row d-flex align-items-center h-100">
 							<img alt="KOKOFARM" src="../images/logo.png" class="sa-logo img-responsive">
-							&nbsp;<span class="badge badge-secondary">manager</span>
+							&nbsp;<span class="badge bg-orange" style="margin-top: 3.5%">manager</span>
 						</div>  
 					</div>
 					<div class="d-table-cell h-100 w-25 align-middle">
@@ -124,7 +124,7 @@
                     
 								<div class="ml-auto sa-header-right-area">
 							
-									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder"></span></button>
+									<button class="btn btn-default sa-btn-icon sa-sidebar-hidden-toggle" onclick="SAtoggleClass(this, 'body', 'sa-hidden-menu')" type="button"><span class="fa fa-reorder" style="color: #0c6ad0;"></span></button>
 			
 								</div>
 							
@@ -138,7 +138,7 @@
 		<div class="sa-page-body">
 
 			<!--오른쪽 상세메뉴-->
-			<div class="sa-aside-left" style="width: 45%; z-index: 100; position: fixed; background-color: whitesmoke;">
+			<div class="sa-aside-left bg-color-whitesmoke" style="width: 45%; z-index: 100; position: fixed; background-color: whitesmoke;">
 				<div class="sa-left-menu-outer">
 					<ul class="metismenu sa-left-menu" id="menu1">
 						<?=$top_menu_html?>
@@ -146,9 +146,9 @@
 				</div>
 			</div>
 		
-			<div class="sa-content-wrapper" style="margin:0">
+			<div class="sa-content-wrapper m-0">
         
-				<div class="sa-content no-padding">
+				<div class="sa-content p-2">
 
 					<div class="d-flex w-100">
 						<section id="widget-grid" class="w-100">

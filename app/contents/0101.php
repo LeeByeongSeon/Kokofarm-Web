@@ -17,9 +17,9 @@ include_once("../inc/top.php");
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
-				<div class="widget-header">	
+				<div class="widget-header" style="max-width: 90%;">	
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;실시간 평균&nbsp;
-						<span class="font-sm badge bg-orange"> <span id="summary_intype"></span> <span id="summary_insu"></span> </span>
+						<span class="font-sm badge bg-orange"> <span id="summary_intype"></span><span id="summary_insu"></span>&nbsp;[ 입추일 <span id="summary_indate"> - </span> ]</span>
 					</h2>	
 				</div>
 			</header>
@@ -28,9 +28,9 @@ include_once("../inc/top.php");
 					<img class="p-2 img-reponsive henImage">
 					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
-				<div class="col-xs-4 text-center" style="margin-top: 4%">
-					<p><span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 32px" id="summary_avg_weight"></span></p>
-					<span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span>
+				<div class="col-xs-4 text-center" style="margin-top: 10%">
+					<p><span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 48px" id="summary_avg_weight"></span></p>
+					<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
 				</div>
 				<div class="col-xs-4 float-right text-center" style="margin-top: 5%">
 					<span class="font-weight-bold text-secondary" style="font-size: 18px">표준편차<br><span id="summary_devi"></span></span><br>
@@ -38,7 +38,7 @@ include_once("../inc/top.php");
 				</div>
 				<div class="col-xs-12 d-flex flex-row justify-content-around no-padding">
 					<div class="p-3 text-center"><span class="text-secondary" style="font-size: 18px;">최소중량</span><br><span style="font-size: 23px" id="summary_min_avg_weight"></span></div>
-					<div class="p-3 text-center"><span class="text-secondary" style="font-size: 18px;">평균중량</span><br><span style="font-size: 23px" id="summary_curr_avg_weight"></span></div>
+					<div class="p-3 text-center"><span class="text-secondary" style="font-size: 18px;">현재평체</span><br><span style="font-size: 23px" id="summary_curr_avg_weight"></span></div>
 					<div class="p-3 text-center"><span class="text-secondary" style="font-size: 18px;">최대중량</span><br><span style="font-size: 23px" id="summary_max_abg_weight"></span></div>
 				</div>
 			</div>	
@@ -59,9 +59,9 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="d-flex flex-row justify-content-around">
-					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
-					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
-					<div class="col-xs-4 p-3 text-center"><span style="font-size: 13px;">모레 (<span id="summary_day_term3"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
+					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
+					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
+					<div class="col-xs-4 p-3 text-center"><span style="font-size: 13px;">모레 (<span id="summary_day_term3"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
 				</div>
 			</div>
 		</div>
@@ -107,27 +107,34 @@ include_once("../inc/top.php");
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;급이 및 급수 정보</h2>	
 				</div>
-			</header>
-			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem; height: 250px">
-				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 20px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">일일 급이량</span>(kg)<br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
+			</header>
+			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
+				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
+					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-04.png" style="width: 7rem;"><br>
+						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+					</div>
+					<div class="col-xs-12 text-center no-padding"><span>사료잔량 550Kg</span></div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 20px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급이량</span>(kg)<br><span id="extra_prev_feed" style="font-size:28px">0</span></div>
+				<div class="col-xs-4 no-padding" style="margin-top: 25px">
+					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">일일 급이량</span>(Kg)<br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
+				</div>
+				<div class="col-xs-4 no-padding" style="margin-top: 25px">
+					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급이량</span>(Kg)<br><span id="extra_prev_feed" style="font-size:28px">0</span></div>
 				</div>
 				<div style="clear:both"></div><hr style="margin-top:0px">
 				<div class="col-xs-4 no-padding" style="margin-top: 5px">
 					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
+					<div class="col-xs-12 text-center no-padding"><span>시간당 급수 90L</span></div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 10px">
+				<div class="col-xs-4 no-padding" style="margin-top: 15px">
 					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">일일 급수량</span>(L)<br><span id="extra_curr_water" style="font-size:28px">0</span></div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 10px">
+				<div class="col-xs-4 no-padding" style="margin-top: 15px">
 					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급수량</span>(L)<br><span id="extra_prev_water" style="font-size:28px">0</span></div>
 				</div>
 			</div>
@@ -142,6 +149,11 @@ include_once("../inc/top.php");
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white sensor"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;외기환경 센서 정보</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+					</div>
 				</div>
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">

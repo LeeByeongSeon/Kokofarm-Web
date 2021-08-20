@@ -46,12 +46,10 @@ include_once("../inc/top.php")
 					</div>
 				</div> -->
 				<div class="widget-toolbar ml-auto">
-					<div class="btn-group m-1">
-						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_data('day')">일령별</button>
-						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_data('time')">시간별</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-xs btn-warning" style="height: 25px" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
-					</div>
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_data('day')">일령별</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_data('time')">시간별</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="convert_excel('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-primary" style="height: 25px" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-plus"></span></button>
 				</div>
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">

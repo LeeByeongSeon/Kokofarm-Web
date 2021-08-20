@@ -5,14 +5,14 @@ include_once("../inc/top.php")
 <!---출하목록--->
 <div class="row">
 	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header>
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;지난 출하내역</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;지난 출하내역</h2>	
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
-				<div class="widget-body-toolbar no-padding">
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
 						<input class="form-control w-auto" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="15">&nbsp;&nbsp;
 						<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;&nbsp;
@@ -41,31 +41,26 @@ include_once("../inc/top.php")
 
 <div class="row">
 	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 10px 10px 0 0">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-file-text-o text-success"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
 				</div>
-
-				<div class="widget-toolbar ml-auto" style="height: 25px; line-height: 25px; margin-top: 0.3rem;">
-					<div class="form-inline">
-						<div class="btn-group no-margin">
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('day')">일령별</button>
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" style="padding:0.1rem 0.2rem;" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="convert_excel('평균중량', 'avg_weight_table')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
-						</div>
-					</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('day')">일령별</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="convert_excel('평균중량', 'avg_weight_table')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-xs btn-primary" style="height: 25px" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-plus"></span></button>
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px; padding:0.5rem">
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 			
 				<div class="col-xs-12">
-					<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
+					<div id="avg_weight_chart" style="height:300px; width:100%;"></div>
 				</div>
 
 				<div class="col-xs-12" id="avg_weight_table_div" style="display:none;">
-					<table id="avg_weight_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+					<table id="avg_weight_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" data-sort-name="f2" data-sort-order="desc" style="font-size:14px">
 						<thead>
 							<tr>
 								<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
@@ -84,19 +79,19 @@ include_once("../inc/top.php")
 <!--일령별 환경센서 변화 -->
 <div class="row">
 	<div class="col-xs-12" style="margin-top:-10px">
-		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header>
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-primary"><i class="fa fa-bar-chart-o text-warning"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto">
-					<button type="button" class="btn btn-default"><span class="fa fa-file-excel-o"></span> Excel</button>&nbsp;&nbsp;
-					<button id="toggle_sensor_btn" type="button" class="btn btn-default">
-						<span class="fa fa-plus"> </span>
-					</button>
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
+				<!-- <button id="toggle_sensor_btn" type="button" class="btn btn-default">
+					<span class="fa fa-plus"> </span>
+				</button> -->
 				</div>
 			</header>
-			<div class="widget-body shadow" style="border-radius: 0 0 10px 10px;">
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 
 				<div class="widget-body-toolbar">
 					<div id="sensor_btn_group" class="btn-group">
@@ -117,7 +112,7 @@ include_once("../inc/top.php")
 
 				<div id="daily_sensor_chart" style="height:300px"></div>
 
-				<div id="toggle_sensor_div" class="row fadeInDown animated" style="display:none">
+				<!-- <div id="toggle_sensor_div" class="row fadeInDown animated" style="display:none">
 					<div class="col-xs-12">
 						<table id="inoutday_sensor_table" data-toggle="table" style="font-size:14px">
 							<thead>
@@ -131,8 +126,8 @@ include_once("../inc/top.php")
 							</thead>
 
 						</table>
-					</div><!--col-xs-12-->
-				</div><!--row-->
+					</div>
+				</div> -->
 
 			</div><!--widget-body-->
 		</div><!--widget-->
