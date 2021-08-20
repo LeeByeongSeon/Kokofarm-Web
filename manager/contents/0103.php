@@ -53,7 +53,7 @@ include_once("../inc/top.php")
 							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('day')">일령별</button>
 							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
 							<button type="button" class="btn btn-primary btn-sm" style="padding:0.1rem 0.2rem;" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
+							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="convert_excel('평균중량', 'avg_weight_table')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
 						</div>
 					</div>
 				</div>
@@ -146,6 +146,7 @@ include_once("../inc/bottom.php")
 <script language="javascript">
 
 	var select_code = "";
+	var select_name = "";
 	var sensor_chart_data = null;
 
 	$(document).ready(function(){
@@ -191,7 +192,7 @@ include_once("../inc/bottom.php")
 		$($element).addClass('success');
 
 		select_code = rowData.f2;
-
+		select_name = rowData.f5;
 		//$("#selectDongName").text(rowData.f5);
 
 		//일령별 평균중량 정보 가져오기
@@ -215,9 +216,9 @@ include_once("../inc/bottom.php")
 			case "time":
 				$("#btn_excel_avg").attr("selection", "time");
 				break;
-			case "excel":
-				data_arr['comm'] = "excel";
-				break;
+			// case "excel":
+			// 	data_arr['comm'] = "excel";
+			// 	break;
 		}
 
 		data_arr['term'] = $("#btn_excel_avg").attr("selection");
@@ -261,6 +262,12 @@ include_once("../inc/bottom.php")
 			//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
 			draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
 		}
+	};
+
+	function convert_excel(title, table_id){
+		title = select_name + "_" + select_code + "_" + title;
+
+		send_excel_android(title, table_id);
 	};
 
 </script>

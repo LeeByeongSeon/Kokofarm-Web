@@ -800,3 +800,18 @@ function table_to_excel(title, html){
         document.body.removeChild(elem);
     }
 };
+
+// 엑셀 데이터 안드로이드 전송
+function send_excel_android(title, table_id){
+	let date_time = get_now_datetime();
+
+	let clone = $("#" + table_id).bootstrapTable("getData", "");
+	let json_data = JSON.stringify(clone);
+
+	let header = new Array();	//Execel Header
+	$("#" + table_id).find("th").each(function(key, val){ 
+		header.push( $.trim($(this).text()) );
+	});
+	
+	window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
+}
