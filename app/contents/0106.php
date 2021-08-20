@@ -64,7 +64,7 @@ include_once("../inc/top.php")
 				</div>
 
 				<div class="col-xs-12" id="avg_weight_table_div" style="display:none;">
-					<table id="avg_weight_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+					<table id="avg_weight_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" data-sort-name="f2" data-sort-order="desc" style="font-size:14px">
 						<thead>
 							<tr>
 								<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>

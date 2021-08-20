@@ -28,10 +28,10 @@ include_once("../inc/top.php")
 					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 10px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:18px">일일 급수량</span>(L)<br><span id="extra_curr_water" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 no-padding text-right"><span style="font-size:18px">일일 급수량</span>(L)&nbsp;&nbsp;<br><span id="extra_curr_water" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 10px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:18px">전일 급수량</span>(L)<br><span id="extra_prev_water" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 no-padding text-right"><span style="font-size:18px">전일 급수량</span>(L)&nbsp;&nbsp;<br><span id="extra_prev_water" style="font-size:28px">0</span></div>
 				</div>
 			</div>
 		</div>
