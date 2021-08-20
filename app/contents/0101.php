@@ -23,23 +23,24 @@ include_once("../inc/top.php");
 					</h2>	
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
-				<div class="col-xs-4 float-left text-center">
-					<img class="p-2 img-reponsive henImage">
-					<div class="p-4 carousel-caption"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div class="col-xs-3 float-left text-center pt-4">
+					<img class="img-reponsive henImage">
+					<div class="carousel-caption henInterm"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
-				<div class="col-xs-4 text-center" style="margin-top: 10%">
-					<p><span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 48px" id="summary_avg_weight"></span></p>
+				<div class="col-xs-6 text-center no-padding" style="margin-top: 7%">
+					<span class="font-weight-bold text-danger" style="font-size: 18px">실시간 평균중량</span>
+					<span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 48px" id="summary_avg_weight"></span>
 					<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
 				</div>
-				<div class="col-xs-4 float-right text-center" style="margin-top: 5%">
+				<div class="col-xs-3 float-right text-center p-1" style="margin-top: 5%">
 					<span class="font-weight-bold text-secondary" style="font-size: 18px">표준편차<br><span id="summary_devi"></span></span><br>
 					<span class="font-weight-bold text-secondary" style="font-size: 18px">변이계수<br><span id="summary_vc"></span></span>
 				</div>
 				<div class="col-xs-12 d-flex flex-row justify-content-around no-padding">
-					<div class="p-3 text-center"><span class="text-secondary" style="font-size: 18px;">최소중량</span><br><span style="font-size: 23px" id="summary_min_avg_weight"></span></div>
-					<div class="p-3 text-center"><span class="text-secondary" style="font-size: 18px;">현재평체</span><br><span style="font-size: 23px" id="summary_curr_avg_weight"></span></div>
-					<div class="p-3 text-center"><span class="text-secondary" style="font-size: 18px;">최대중량</span><br><span style="font-size: 23px" id="summary_max_abg_weight"></span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최소중량</span><br><span style="font-size: 23px" id="summary_min_avg_weight"></span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">현재평체</span><br><span style="font-size: 23px" id="summary_curr_avg_weight"></span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대중량</span><br><span style="font-size: 23px" id="summary_max_abg_weight"></span></div>
 				</div>
 			</div>	
 		</div>
@@ -243,9 +244,12 @@ include_once("../inc/bottom.php")
 					let interm = data.summary.summary_interm;
 
 					//일령기간별 이미지
-					if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png"); }
-					if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png"); }
-					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); }
+					// if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");  $(".henInterm").addClass("p-4");}
+					// if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");  $(".henInterm").addClass("p-2");}
+					// if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); $(".henInterm").addClass("p-2"); }
+					if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");}
+					if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");}
+					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png");}
 
 					//각 요약정보[summary]
 					$.each(data.summary, function(key, val){	$("#" + key).html(val); });

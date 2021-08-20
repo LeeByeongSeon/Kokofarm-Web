@@ -99,25 +99,25 @@ include_once("../../common/php_module/common_func.php");
 				//"top_interm"			=> $curr_interm,
 				//"top_avg"				=> sprintf('%0.1f', $curr_weight)."g",
 
-				"summary_indate"    	=> substr($buffer_data[0]["cmIndate"], 0, 10),		/*입추일자*/ 
+				"summary_indate"    	=> substr($buffer_data[0]["cmIndate"], 0, 10),	/*입추일자*/ 
 				"summary_interm"    	=> $curr_interm,								/*현재 일령*/ 
-				"summary_intype"    	=> $buffer_data[0]["cmIntype"]." - ",				/*입추형식-육계,토종계,삼계,산란계*/
-				"summary_insu"      	=> $buffer_data[0]["cmInsu"],						/*입추수량*/
-				"summary_avg_weight"	=> sprintf('%0.1f', $curr_weight)."g",			/*실시간 평균중량*/
-				"summary_devi"      	=> sprintf('%0.1f', $curr_devi * corr_devi),		/*실시간 표준편차*/
-				"summary_vc"        	=> sprintf('%0.1f', $buffer_data[0]["beVc"]),		/*실시간 변이계수*/
+				"summary_intype"    	=> $buffer_data[0]["cmIntype"]." - ",			/*입추형식-육계,토종계,삼계,산란계*/
+				"summary_insu"      	=> $buffer_data[0]["cmInsu"]." 수",				/*입추수량*/
+				"summary_avg_weight"	=> sprintf('%0.1f', $curr_weight),				/*실시간 평균중량*/
+				"summary_devi"      	=> sprintf('%0.1f', $curr_devi * corr_devi),	/*실시간 표준편차*/
+				"summary_vc"        	=> sprintf('%0.1f', $buffer_data[0]["beVc"]),	/*실시간 변이계수*/
 
 				"summary_min_avg_weight"	=>  $curr_min_weight,						/*실시간 min 평체*/
-				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight)."g",		/*실시간 평균중량*/
+				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight),			/*실시간 평균중량*/
 				"summary_max_abg_weight"	=>  $curr_max_weight,						/*실시간 max 평체*/
 
 				"summary_day_term1"		=>  ($curr_interm - 1)."일령",					/*어제 일령*/
 				"summary_day_term2"		=>  ($curr_interm + 1)."일령",					/*내일 일령*/
 				"summary_day_term3"		=>  ($curr_interm + 2)."일령",					/*모레 일령*/
 
-				"summary_day_1"			=>  sprintf('%0.1f', $prev_weight)."g",			/*어제 예측평체*/
-				"summary_day_2"			=>  sprintf('%0.1f', $prev_esti2)."g",			/*내일 예측평체*/
-				"summary_day_3"			=>  sprintf('%0.1f', $prev_esti3)."g",			/*모레 예측평체*/
+				"summary_day_1"			=>  sprintf('%0.1f', $prev_weight),				/*어제 예측평체*/
+				"summary_day_2"			=>  sprintf('%0.1f', $prev_esti2),				/*내일 예측평체*/
+				"summary_day_3"			=>  sprintf('%0.1f', $prev_esti3),				/*모레 예측평체*/
 
 				"summary_day_inc1"		=> $prev_date,									/*어제 마지막 평균중량 산출 시간*/
 				"summary_day_inc2"		=> sprintf('%0.1f', $prev_avg_inc_2),			/*2일차 중량증가량*/
