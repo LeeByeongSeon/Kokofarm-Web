@@ -77,7 +77,7 @@
 		for($i=0; $i<=count($menu_struct)-1; $i++){
 			if($menu_struct[$i][0]==$value[0]){
 				if($depth_1_url==$menu_struct[$i][0]){
-					$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\" style='color: #07298c;'>".$menu_struct[$i][1]."</a></li>"; //userID,userPW 임시
+					$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\" style='color: #494949;'>".$menu_struct[$i][1]."</a></li>"; //userID,userPW 임시
 				}
 				else{
 					$top_menu_html .= "<li class=''><a href='javascript:void(0)' onClick=\" location.href='".$menu_struct[$i][0]."".$add_url."'\">".$menu_struct[$i][1]."</a></li>";
@@ -148,7 +148,7 @@
 </style>
 </head>
 
-<body class="smart-style-6 sa-fixed-header bg-white">
+<body class="smart-style-6 sa-fixed-header" style="background-color: whitesmoke">
 
 	<div class="sa-wrapper">
 

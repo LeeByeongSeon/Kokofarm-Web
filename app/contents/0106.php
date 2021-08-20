@@ -15,12 +15,12 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;지난 출하내역</h2>	
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; padding:0.5rem">
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<table id="come_out_table" data-page-list="[]" data-toggle="table" data-pagination='true' data-page-size='5' style="font-size:14px">
 					<thead>
 						<tr>
@@ -44,23 +44,21 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;일령별 평균중량</h2>	
 				</div>
-				<div class="widget-toolbar ml-auto" style="height: 25px; line-height: 25px; margin-top: 0.3rem;">
-					<div class="form-inline">
-						<div class="btn-group no-margin">
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('day')">일령별</button>
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" style="padding:0.1rem 0.2rem;" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-default btn-sm" style="padding:0.1rem 0.2rem;" onClick="get_avg_history('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
-						</div>
+				<div class="widget-header ml-auto">
+					<div class="btn-group m-1">
+						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('day')">일령별</button>
+						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('time')">시간별</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-xs btn-warning" style="height: 25px" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-table"></span>&nbsp;&nbsp;표 출력</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
 					</div>
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; padding:0.5rem">
-			
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+
 				<div class="col-xs-12">
 					<div id="avg_weight_chart" style="height:400px; width:100%;"></div>
 				</div>
@@ -86,18 +84,17 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;일령별 환경센서</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto">
-					<button type="button" class="btn btn-default"><span class="fa fa-file-excel-o"></span> Excel</button>&nbsp;&nbsp;
-					<!-- <button id="toggle_sensor_btn" type="button" class="btn btn-default">
-						<span class="fa fa-plus"> </span>
-					</button> -->
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-default" style="height: 25px"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
+					</div>
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; border-top: 0;">
 
 				<div class="widget-body-toolbar">
 					<div id="sensor_btn_group" class="btn-group">
