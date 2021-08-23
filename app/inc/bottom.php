@@ -64,7 +64,7 @@
         </div><!--modal-dialog -->
     </div><!--modal -->
 
-	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 2%; right: 3%; display:none;"><span class="fa fa-arrow-up font-weight-bold"></span></a>
+	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 6%; right: 3%; display:none;"><span class="fa fa-arrow-up font-weight-bold"></span></a>
 	
 </body>
 </html>
@@ -120,7 +120,12 @@
 		});
 
 		// 상세메뉴 열렸을때 상세메뉴 제외 영역 클릭 시 닫힘
-		$('.sa-page-body').children().not('.sa-aside-left').click(function(e){
+		$('.sa-page-body').children().not('.sa-aside-left').on("mouseover", function(e){
+			if($('body').hasClass('sa-hidden-menu')){
+				$('body').removeClass('sa-hidden-menu');
+			}
+		});
+		$(window).on("scroll", function(){ 
 			if($('body').hasClass('sa-hidden-menu')){
 				$('body').removeClass('sa-hidden-menu');
 			}

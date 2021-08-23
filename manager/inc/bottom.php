@@ -102,5 +102,11 @@
 				$('body').removeClass('sa-hidden-menu');
 			}
 		});
+		$(window).on("scroll", function(){ 
+			if($('body').hasClass('sa-hidden-menu')){
+				$('body').removeClass('sa-hidden-menu');
+			}
+		});
+		
 	});
 </script>
