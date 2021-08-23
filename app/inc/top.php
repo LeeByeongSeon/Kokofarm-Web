@@ -35,17 +35,17 @@
 		foreach($init_data as $val){
 
 			// 페이지 따라 존재하는 동만 셀렉트에 표현
-			$test = $val["fdFarmid"];
-			switch($depth_1_url){
-				case "0103.php":
-					$test = $val["sfFarmid"];
-					break;
-				case "0104.php":
-					$test = $val["soFarmid"];
-					break;
-			}
+			// $test = $val["fdFarmid"];
+			// switch($depth_1_url){
+			// 	case "0103.php":
+			// 		$test = $val["sfFarmid"];
+			// 		break;
+			// 	case "0104.php":
+			// 		$test = $val["soFarmid"];
+			// 		break;
+			// }
 
-			if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
+			// if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
 
 			$select_html .= "<li role='presentation' class='border font-weight-bold' style='height: 60px;'><a href='javascript:void(0)' style='height: -webkit-fill-available; font-size: 18px; padding-top:17px;' data-code='" . $val["beComeinCode"] . "' ";
 			$select_html .= "data-rcstatus='" . $val["rcStatus"] . "', data-interm='" . $val["interm"] . "', data-beavgweightdate='" . $val["beAvgWeightDate"] . "', ";
@@ -53,8 +53,10 @@
 			$select_html .= $val['beStatus'] == "O" ? "<span class='badge badge-secondary'>출하</span>" : " <span class='badge badge-primary'>". $val['interm']. "일</span>";
 			$select_html .= "</a></li>";
 
-			if($val["fdFarmid"] == $val["sfFarmid"]){ $exist_feed = true; }
-			if($val["fdFarmid"] == $val["soFarmid"]){ $exist_out = true; }
+			// if($val["fdFarmid"] == $val["sfFarmid"]){ $exist_feed = true; }
+			// if($val["fdFarmid"] == $val["soFarmid"]){ $exist_out = true; }
+			$exist_feed = true;
+			$exist_out = true; 
 		}
 	}
 	else{		// 데이터 없으면, 계정이 존재하지 않는 경우
