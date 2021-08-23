@@ -2144,7 +2144,7 @@ article.sortable-grid {
  */
 .jarviswidget > header {
   align-items: center;
-  height: 34px;
+  height: 40px;
   /* make sure ".jarviswidget-loader" is also the same height or it will flicker during collapse */
   padding: 0;
   display: -webkit-flex;
@@ -2188,9 +2188,9 @@ article.sortable-grid {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 14px;
+    font-size: 15px;
     margin: 0;
-    line-height: 32px;
+    line-height: 36px;
     font-weight: normal;
     margin-left: 10px;
     letter-spacing: 0; }
@@ -2893,7 +2893,7 @@ body.nooverflow {
 .widget-toolbar {
   width: auto;
   height: 32px;
-  line-height: 32px;
+  line-height: 36px;
   position: relative;
   border-left: 1px solid rgba(0, 0, 0, 0.09);
   cursor: pointer;

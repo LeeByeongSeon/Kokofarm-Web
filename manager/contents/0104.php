@@ -13,7 +13,7 @@ $stat_combo_json = make_jqgrid_combo($query, "cName1");
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white"><i class="fa fa-clipboard"></i>&nbsp;&nbsp;재산출 요청 현황&nbsp;</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-clipboard"></i>&nbsp;재산출 요청 현황&nbsp;</h2>	
 				</div>
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
