@@ -19,6 +19,9 @@
 			$to_day = date("Y-m-d");
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
+			$day_plus_1 = date("Y-m-d", strtotime("+1 Days"));
+			$day_plus_2 = date("Y-m-d", strtotime("+2 Days"));
+
 			// 버퍼 및 입추정보, 카메라 데이터
 			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, so.*, fd.fdName, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
 						JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid 
@@ -110,6 +113,10 @@
 				"summary_min_avg_weight"	=>  $curr_min_weight,						/*실시간 min 평체*/
 				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight),			/*실시간 평균중량*/
 				"summary_max_abg_weight"	=>  $curr_max_weight,						/*실시간 max 평체*/
+
+				"summary_date_term1"		=>  substr($yester_day, 5),					/*어제 일령*/
+				"summary_date_term2"		=>  substr($day_plus_1, 5),					/*내일 일령*/
+				"summary_date_term3"		=>  substr($day_plus_2, 5),					/*모레 일령*/
 
 				"summary_day_term1"		=>  ($curr_interm - 1)."일령",					/*어제 일령*/
 				"summary_day_term2"		=>  ($curr_interm + 1)."일령",					/*내일 일령*/

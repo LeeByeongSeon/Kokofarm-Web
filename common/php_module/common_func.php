@@ -564,10 +564,15 @@ function get_feed_history($code, $type){
 		$chart_feed_stack = array();
 		$chart_water_stack = array();
 
+		$chart_feed_daily = array();
+		$chart_water_daily = array();
+
 		$feed_stack = 0;
 		$water_stack = 0;
 
 		$table = array();
+
+		$day_map = array();
 
 		foreach($history_data as $val){
 
@@ -576,6 +581,10 @@ function get_feed_history($code, $type){
 			$sensor_date = $val["shDate"];
 			$feed = $json->feed_feed;
 			$water = $json->feed_water;
+			
+			$date = substr($sensor_date, 0, 10);
+			$day_map[$date]["feed"] = isset($day_map[$date]["feed"]) ? $day_map[$date]["feed"] + $feed : $feed;
+			$day_map[$date]["water"] = isset($day_map[$date]["water"]) ? $day_map[$date]["water"] + $water : $water;
 
 			$chart_feed[] = array(
 				"시간" => $sensor_date,
@@ -606,10 +615,23 @@ function get_feed_history($code, $type){
 			);
 		}
 
+		foreach($day_map as $key => $val){
+			$chart_feed_daily[] = array(
+				"시간" => $key,
+				"급이량" => $val["feed"],
+			);
+			$chart_water_daily[] = array(
+				"시간" => $key,
+				"급수량" => $val["water"],
+			);
+		}
+
 		$ret["chart_feed"] = $chart_feed;
 		$ret["chart_water"] = $chart_water;
 		$ret["chart_feed_stack"] = $chart_feed_stack;
 		$ret["chart_water_stack"] = $chart_water_stack;
+		$ret["chart_feed_daily"] = $chart_feed_daily;
+		$ret["chart_water_daily"] = $chart_water_daily;
 		$ret["table"] = $table;
 	}
 
