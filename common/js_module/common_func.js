@@ -728,6 +728,8 @@ function zoom_chart(chart) {
 var open_window;
 var open_url = "";
 
+var now_zoom = 1;
+
 // 카메라 선택 시 팝업창 띄움
 function camera_popup(name, img_url){
 
@@ -743,13 +745,44 @@ function camera_popup(name, img_url){
     open_window = window.open("camera_popup.php?title=" + name, "camera_popup", options);
 };
 
+function zoom(comm){
+    switch(comm){
+        case "+":
+            now_zoom += now_zoom <= 4.9 ? 0.1 : 0;
+            break;
+
+        case "-":
+            now_zoom -= now_zoom >= 0.6 ? 0.1 : 0;
+            break;
+    }
+
+    document.getElementById("modal_camera").style.transform = "scale("+ now_zoom +", "+ now_zoom +")";
+};
+
+function camera_modal(title, img_url){
+
+    open_url = img_url;
+    let img_obj = document.getElementById("modal_camera_img");
+    camera_load(img_obj);
+
+    $("#modal_camera_title").html(title);					//modal title
+	$("#modal_camera").modal('show');					//modal open
+};
+
+function camera_modal_close(){
+    let img_obj = document.getElementById("modal_camera_img");
+    camera_close(img_obj);
+
+    $("#modal_camera").modal('hide');
+}
+
 // 카메라 이미지 불러오기 팝업창에서 실행
 function camera_load(img_obj){
     // 팝업창 닫히면 
-    open_window.onbeforeunload = function(){
-        img_obj.onload = function(){"";};
-        img_obj.setAttribute("src", "");
-    };   
+    // open_window.onbeforeunload = function(){
+    //     img_obj.onload = function(){"";};
+    //     img_obj.setAttribute("src", "");
+    // };   
 
     // 이미지가 로드되면
     img_obj.onload = function(){
@@ -770,7 +803,7 @@ function camera_close(img_obj){
     img_obj.setAttribute("src", "../images/noimage.jpg");
     img_obj.onload = function(){"";};
 
-    open_window.close();
+    //open_window.close();
 };
 
 // 엑셀파일 다운로드

@@ -19,7 +19,8 @@ include_once("../inc/top.php");
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header" style="max-width: 90%;">	
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;실시간 평균&nbsp;
-						<span class="font-sm badge bg-orange">입추일 <span id="summary_indate"> - </span> <span id="summary_intype"></span><span id="summary_insu"></span></span>
+						<span class="font-sm badge bg-orange">입추일 <span id="summary_indate"> - </span> </span>&nbsp;&nbsp;
+						<span class="font-sm badge bg-orange"><span id="summary_intype"></span><span id="summary_insu"></span></span>
 					</h2>	
 				</div>
 			</header>
@@ -29,7 +30,7 @@ include_once("../inc/top.php");
 					<div class="carousel-caption henInterm"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-6 text-center no-padding" style="margin-top: 7%">
-					<span class="font-weight-bold text-danger" style="font-size: 18px">실시간 평균중량</span>
+					<span class="font-weight-bold text-danger" style="font-size: 18px">실시간 평균중량</span><br>
 					<span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 48px" id="summary_avg_weight"></span>
 					<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
 				</div>
@@ -60,9 +61,9 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="d-flex flex-row justify-content-around">
-					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
-					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
-					<div class="col-xs-4 p-3 text-center"><span style="font-size: 13px;">모레 (<span id="summary_day_term3"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
+					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;"><span id="summary_date_term1"></span>(<span id="summary_day_term1"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
+					<div class="col-xs-4 p-3 text-center border-right"><span style="font-size: 13px;"><span id="summary_date_term2"></span>(<span id="summary_day_term2"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
+					<div class="col-xs-4 p-3 text-center"><span style="font-size: 13px;"><span id="summary_date_term3"></span>(<span id="summary_day_term3"></span>)</span><p><span style="font-size: 28px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
 				</div>
 			</div>
 		</div>
@@ -110,7 +111,7 @@ include_once("../inc/top.php");
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -153,7 +154,7 @@ include_once("../inc/top.php");
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -216,6 +217,15 @@ include_once("../inc/bottom.php")
 ?>
 
 <script language="javascript">
+
+	$(document).ready(function(){
+
+		$(".btn_display_toggle").off("click").on("click", function(){
+
+			$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
+			$(this).parents(".jarviswidget").children(".widget-body").toggle();
+		});
+	});
 
 	function get_dong_data(){
 		

@@ -98,7 +98,7 @@
 	<title>꼬꼬팜 :: KOKOFARM4</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes">
   	<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,500,700">-->
   	<link rel="stylesheet" href="../../common/library/fonts/font.css"> <!--Google fonts-->
 	

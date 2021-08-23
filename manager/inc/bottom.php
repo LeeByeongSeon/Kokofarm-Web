@@ -44,6 +44,26 @@
         </div><!--modal-dialog -->
     </div><!--modal -->
 
+	<!--Modal Camera-->
+	<div id="modal_camera" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_camera_title" class="modal-title float-right">Modal title</h4>
+                    <button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div id="modal_camera_body" class="modal-body">
+					<img class="img-responsive" id="modal_camera_img" src="../images/noimage.jpg" style="opacity: 1.0; filter: alpha(opacity=100); margin:auto">
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-primary" id="modal_camera_plus" onClick="zoom('+')">확대</button>
+					<button type="button" class="btn btn-primary" id="modal_camera_minus" onClick="zoom('-')">축소</button> -->
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_camera_cancle" onClick="camera_modal_close()">닫기</button>
+                </div>
+            </div><!--modal-content -->
+        </div><!--modal-dialog -->
+    </div><!--modal -->
+
 	<!----Loading Circle-->
 	<div id="loading_circle" style="display:none;"><ul id="loading_img"><img src="../images/loading_circle.gif"></ul></div>
 

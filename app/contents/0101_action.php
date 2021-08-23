@@ -199,7 +199,7 @@
 			$img_url = "../../common/php_module/camera_func.php?ip=" .$buffer_data[0]["beIPaddr"]. "&port=" .$buffer_data[0]["scPort"]. "&url=" .urlencode($buffer_data[0]["scUrl"]). "&id=" .$buffer_data[0]["scId"]. "&pw=" .$buffer_data[0]["scPw"];
 			
 			$camera_zone = "<img src='".$img_url."' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
-							<img id='cameraIcon' src='../images/play.png' class='fadeIn animated' onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">";
+							<img id='cameraIcon' src='../images/play.png' class='fadeIn animated' onClick=\"camera_modal('" .$name. "','" .$img_url. "'); \">";
 			
 			$response["camera_zone"] = $camera_zone;
 
