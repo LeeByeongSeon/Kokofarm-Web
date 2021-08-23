@@ -80,9 +80,10 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
-				<div class="widget-header" style="max-width: 90%;">	
+				<div class="widget-header" style="max-width: 100%;">	
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;실시간 평균&nbsp;
-						<span class="font-sm badge bg-orange">입추일 <span id="summary_indate"> - </span> <span id="summary_intype"></span><span id="summary_insu"></span></span>
+						<span class="font-sm badge bg-orange">입추일 <span id="summary_indate"> - </span></span>
+						<span class="font-sm badge bg-orange"><span id="summary_intype"></span><span id="summary_insu"></span></span>
 					</h2>	
 				</div>
 			</header>
@@ -175,7 +176,7 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem; height: 250px">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
 					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">100%</h3></div>
 					</div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 20px">
