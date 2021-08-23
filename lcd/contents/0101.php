@@ -81,7 +81,7 @@
 					</div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">일일 급이량</span><br><span id="extra_curr_feed" style="font-size:28px">0</span>(㎏)</div>
+					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">오늘 급이량</span><br><span id="extra_curr_feed" style="font-size:28px">0</span>(㎏)</div>
 				</div>
 				<div class="col-sm-2 no-padding" style="border-right:1px solid #C2C2C2">
 					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">전일 급이량</span><br><span id="extra_prev_feed" style="font-size:28px">0</span>(㎏)</div>
@@ -90,7 +90,7 @@
 					<div class="col-sm-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">일일 급수량</span><br><span id="extra_curr_water" style="font-size:28px">0</span>(L)</div>
+					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">오늘 급수량</span><br><span id="extra_curr_water" style="font-size:28px">0</span>(L)</div>
 				</div>
 				<div class="col-sm-2 no-padding">
 					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">전일 급수량</span><br><span id="extra_prev_water" style="font-size:28px">0</span>(L)</div>

@@ -517,8 +517,8 @@ textarea.form-control {
   background-image: -o-linear-gradient(top, #f2f2f2 0, #fafafa 100%);
   background-image: -linear-gradient(top, #f2f2f2 0, #fafafa 100%); }
 
-.table th, .table td {
-  padding: 0.61538rem 0.76923rem; }
+/* .table th, .table td {
+  padding: 0.61538rem 0.76923rem; } */
 
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #f9f8f9; }

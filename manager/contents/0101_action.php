@@ -107,8 +107,8 @@ switch($oper){
             $row["warning"] = "";               // 환경 경보
 
             // 최소중량 최대중량
-            $row["min_weight"] = $row["beAvgWeight"] - $row["beDevi"];
-            $row["max_weight"] = $row["beAvgWeight"] + $row["beDevi"];
+            $row["min_weight"] = sprintf("%0.1f", $row["beAvgWeight"] - $row["beDevi"]);
+            $row["max_weight"] = sprintf("%0.1f", $row["beAvgWeight"] + $row["beDevi"]);
 
             foreach($row as $key => $val){
                 switch($key){
@@ -214,7 +214,7 @@ switch($oper){
                         }
                         
                         $out = strlen($out) > 2 ? substr($out, 3) : strlen($out);
-                        $row[$key] = "<button type='button' class='btn btn-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "&nbsp;&nbsp;O&nbsp;&nbsp;" : $out) . "</button>";
+                        $row[$key] = "<button type='button' class='btn btn-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "&nbsp;O&nbsp;" : $out) . "</button>";
                         break;
                     
                     // 네트워크

@@ -98,7 +98,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="row">
 							<div class="col-xs-7 h-50 float-left">
 								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feed-04.png" id="feed_img" style="width: 8rem;"><div class="carousel-caption" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">50%<h5></div></div>
-								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급이량(㎏)</span><br><span class="font-xl" id="extra_curr_feed">0</span></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급이량(㎏)</span><br><span class="font-xl" id="extra_curr_feed">0</span></div>
 							</div>
 							<div class="col-xs-5 h-50 float-right">
 								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급이량(㎏)</span><br><span class="font-xl" id="extra_prev_feed">0</span></div>
@@ -107,7 +107,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="row mt-3">
 							<div class="col-xs-7 h-50 float-left">
 								<div class="col-xs-7 pt-4 pb-0 px-0 h-75 text-center"><img src="../images/water-02.png" style="width: 5rem;"></div>
-								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">일일 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">0</span></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">0</span></div>
 							</div>
 							<div class="col-xs-5 h-50 float-right">
 								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량(L)</span><br><span class="font-xl" id="extra_prev_water">0</span></div>
