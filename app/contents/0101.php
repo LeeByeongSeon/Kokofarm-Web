@@ -39,9 +39,9 @@ include_once("../inc/top.php");
 					<span class="font-weight-bold text-secondary" style="font-size: 18px">변이계수<br><span id="summary_vc"></span></span>
 				</div>
 				<div class="col-xs-12 d-flex flex-row justify-content-around no-padding">
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최소중량</span><br><span style="font-size: 23px" id="summary_min_avg_weight"></span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최소평체</span><br><span style="font-size: 23px" id="summary_min_avg_weight"></span></div>
 					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">현재평체</span><br><span style="font-size: 23px" id="summary_curr_avg_weight"></span></div>
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대중량</span><br><span style="font-size: 23px" id="summary_max_abg_weight"></span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대평체</span><br><span style="font-size: 23px" id="summary_max_abg_weight"></span></div>
 				</div>
 			</div>	
 		</div>
@@ -102,7 +102,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--일일 급이 / 급수량-->
-<div class="row" id="row_feed_water" style="display: none;">
+<div class="row" id="row_feed_water">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
@@ -117,10 +117,10 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-04.png" style="width: 7rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">100%</h3></div>
+					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-00.png" style="width: 7rem;"><br>
+						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
 					</div>
-					<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span></span></div>
+					<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(Kg)</span></div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 25px">
 					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">일일 급이량</span>(Kg)<br><span id="extra_curr_feed" style="font-size:28px">-</span></div>
@@ -131,13 +131,13 @@ include_once("../inc/top.php");
 				<div style="clear:both"></div><hr style="margin-top:0px">
 				<div class="col-xs-4 no-padding" style="margin-top: 5px">
 					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
-					<div class="col-xs-12 text-center no-padding"><span>시간당 급수 <span id="extra_water_per_hour">-</span></span></div>
+					<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 15px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">일일 급수량</span>(L)<br><span id="extra_curr_water" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">일일 급수량</span>(L)<br><span id="extra_curr_water" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 15px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급수량</span>(L)<br><span id="extra_prev_water" style="font-size:28px">0</span></div>
+					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급수량</span>(L)<br><span id="extra_prev_water" style="font-size:28px">-</span></div>
 				</div>
 			</div>
 		</div>
@@ -145,7 +145,7 @@ include_once("../inc/top.php");
 </div>
 
 <!--현재 외기환경 센서 정보-->
-<div class="row" id="row_outsensor" style="display: none;">
+<div class="row" id="row_outsensor">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
@@ -154,42 +154,42 @@ include_once("../inc/top.php");
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
-			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; display: none;">
 				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding text-center text-danger"><img src="../images/temp.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">온도</span>(℃)<br><span id="extra_out_temp" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">온도</span>(℃)<br><span id="extra_out_temp" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/humi.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">습도</span>(％)<br><span id="extra_out_humi" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">습도</span>(％)<br><span id="extra_out_humi" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/nh3.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="extra_out_nh3" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="extra_out_nh3" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/h2s.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">황화수소</span>(ppm)<br><span id="extra_out_h2s" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">황화수소</span>(ppm)<br><span id="extra_out_h2s" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/pm10.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">미세먼지</span>(㎍/㎥)<br><span id="extra_out_dust" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">미세먼지</span>(㎍/㎥)<br><span id="extra_out_dust" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/pm2.5.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">초미세먼지</span>(㎍/㎥)<br><span id="extra_out_udust" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">초미세먼지</span>(㎍/㎥)<br><span id="extra_out_udust" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-right">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/wind-direction.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍향</span><br><span id="extra_out_direction" style="font-size:25px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍향</span><br><span id="extra_out_direction" style="font-size:25px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/wind.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍속</span>(m/s)<br><span id="extra_out_wind" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍속</span>(m/s)<br><span id="extra_out_wind" style="font-size:28px">-</span></div>
 				</div>
 			</div>
 		</div>
@@ -241,8 +241,8 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 
-				$("#row_feed_water").hide();
-				$("#row_outsensor").hide();
+				// $("#row_feed_water").hide();
+				// $("#row_outsensor").hide();
 
 				if(top_be_status != "O"){
 
@@ -281,10 +281,15 @@ include_once("../inc/bottom.php")
 						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
 						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
 
-						$("#row_feed_water").show();
+						//$("#row_feed_water").show();
+						$("#row_feed_water").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						$("#row_feed_water").find(".widget-body").show();
 					}
 					if(data.extra.hasOwnProperty("extra_out_temp")){
-						$("#row_outsensor").show();
+						//$("#row_outsensor").show();
+
+						$("#row_outsensor").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						$("#row_outsensor").find(".widget-body").show();
 					}
 
 				}
@@ -292,6 +297,8 @@ include_once("../inc/bottom.php")
 					$("#row_summary").hide();
 					$("#row_avg_esti").hide();
 					$("#row_cell_avg").hide();
+					$("#row_feed_water").hide();
+					$("#row_outsensor").hide();
 				}
 				
 				//카메라
