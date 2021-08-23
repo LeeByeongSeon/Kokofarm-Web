@@ -82,7 +82,7 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header" style="max-width: 100%;">	
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;실시간 평균&nbsp;
-						<span class="font-sm badge bg-orange">입추일 <span id="summary_indate"> - </span></span>
+						<span class="font-sm badge bg-orange">입추 <span id="summary_indate"> - </span></span>
 						<span class="font-sm badge bg-orange"><span id="summary_intype"></span><span id="summary_insu"></span></span>
 					</h2>	
 				</div>
