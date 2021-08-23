@@ -18,7 +18,7 @@ include_once("../inc/top.php")
 					</div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-right"><span style="font-size: 15px">일일<br>급이량(㎏)</span><br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급이량(㎏)</span><br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-sm-2 no-padding" style="border-right:1px solid #C2C2C2">
 					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급이량(㎏)</span><br><span id="extra_prev_feed" style="font-size:28px">0</span></div>
@@ -27,7 +27,7 @@ include_once("../inc/top.php")
 					<div class="col-sm-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-right"><span style="font-size: 15px">일일<br>급수량(L)</span><br><span id="extra_curr_water" style="font-size:28px">0</span></div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급수량(L)</span><br><span id="extra_curr_water" style="font-size:28px">0</span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
 					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급수량(L)</span><br><span id="extra_prev_water" style="font-size:28px">0</span></div>

@@ -24,6 +24,7 @@ $mgrPW = $_SESSION["mgrPW"];
 				</div>
 			</header>
 			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">
 						<select class="form-control w-auto" name="search_inout">
@@ -35,24 +36,25 @@ $mgrPW = $_SESSION["mgrPW"];
 						<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-search"></span>&nbsp;검색</button>&nbsp;
 						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;취소</button>
 					</form>
+					
 				</div>
 
 				<table id="farm_list_table" class="table table-bordered table-hover"
 							data-detail-view="true" data-detail-formatter="get_detail_info" 
-							data-page-list="[]" data-toggle="table" style="font-size:14px;cursor:pointer">
+							data-page-list="[]" data-toggle="table" style="font-size:14px; cursor:pointer">
 					<thead>
 						<tr>
-							<th data-field='f_no'		data-align="center" data-visible='false'>No</th>
-							<th data-field='f_interm'	data-align="center" >일령</th>
-							<th data-field='f_name'		data-align="center" data-sortable="true" data-width="150">농장명</th>
-							<th data-field='f_error'	data-align="center" data-sortable="true" data-width="20">오류(수)</th>
-							<th data-field='f_sensor'	data-align="center" >저울</th>
-							<th data-field='f_network'	data-align="center" >통신</th>
-							<th data-field='f_code'		data-align="center" data-visible='false'>f_code</th>
+							<th data-field='f_no'		 data-cell-style="css_padding" data-align="center" data-visible='false'>No</th>
+							<th data-field='f_interm'	 data-cell-style="css_padding" data-align="center" >일령</th>
+							<th data-field='f_name'		 data-cell-style="css_padding" data-align="center" data-sortable="true">농장명</th>
+							<th data-field='f_error'	 data-cell-style="css_padding" data-align="center" data-sortable="true">오류(수)</th>
+							<th data-field='f_sensor'	 data-cell-style="css_padding" data-align="center" >저울</th>
+							<th data-field='f_network'	 data-cell-style="css_padding" data-align="center" >통신</th>
+							<th data-field='f_code'		 data-cell-style="css_padding" data-align="center" data-visible='false'>f_code</th>
 						</tr>
 					</thead>
 				</table>
-
+				
 			</div>	
 		</div>
 	</div>
@@ -124,29 +126,38 @@ include_once("../inc/bottom.php")
 
 		html += "	<div style='padding-top:10px;padding-bottom:10px'>";																																																			
 		html += "			<!---농장정보---->";
-		html += "			<div class='alert alert-info' role='alert'>";
-		html += "				<i class='fa fa-info-circle'></i>&nbsp;&nbsp;<strong>농장정보</strong>";
+		html += "			<div class='alert alert-primary m-1' role='alert'>";
+		html += "				<i class='fa fa-info-circle'></i>&nbsp;<strong>농장정보</strong>";
 		html += "			</div>";
-		html += "			<p>농장 : " + data["fdName"] + " [" + data["beFarmid"] + "]</p>";
-		html += "			<p>주소 : " + data["fdAddr"] + "</p>";
-		html += "			<p>전화 : " + data["fdTel"] + "</p>";
+		html += "			<table style='border: 0; width: -webkit-fill-available'>";
+		html += "				<tr>";
+		html += "					<td>농장 </td><td>" + data["fdName"] + " [" + data["beFarmid"] + "]</td>";
+		html += "				</tr>"
+		html += "				<tr>";
+		html += "					<td>주소 </td><td>" + data["fdAddr"] + "</td>";
+		html += "				</tr>"
+		html += "				<tr>";
+		html += "					<td>전화 </td><td>" + data["fdTel"] + "</td>";
+		html += "				</tr>"
+		html += "			</table>";
+		html += "			<br>";
 
 		if(data["beStatus"] != "O"){		// 입추
 
 			html += "			<!---평균중량---->";
-			html += "			<div class='alert alert-success' role='alert'>";
-			html += "				<i class='fa fa-info-circle'></i>&nbsp;&nbsp;<strong>평균중량(보정전)</strong>";
+			html += "			<div class='alert alert-success m-1' role='alert'>";
+			html += "				<i class='fa fa-info-circle'></i>&nbsp;<strong>평균중량</strong>";
 			html += "			</div>";
 			html += "			<div class='row'>";
 			html += "				<div class='col-xs-12'>";
-			html += "					<div class='well'>";
+			html += "					<div class='well p-1'>";
 			html += "						<div class='col-xs-6 no-padding' style='text-align:center'>";
 			html += "							<p style='font-size:18px'>" + data["interm"] + "일령</p>";
-			html += "							입추일 : " +  data["cmIndate"].substr(0, 10) + "";
+			html += "							입추일 : <br>" +  data["cmIndate"].substr(0, 10) + "";
 			html += "						</div>";
 			html += "						<div class='col-xs-6 no-padding' style='text-align:center'>";
 			html += "							<p style='font-size:18px'>" + data["beAvgWeight"] + "</p>";
-			html += "							산출시간 : " + data["beAvgWeightDate"] + "";
+			html += "							산출시간 : <br>" + data["beAvgWeightDate"] + "";
 			html += "						</div>";
 			html += "						<div style='clear:both'></div>";
 			html += "					</div><!--well-->";
@@ -172,8 +183,8 @@ include_once("../inc/bottom.php")
 			html += "			</div><!--row-->";
 			html += "			<br>";
 
-			html += "			<div class='alert alert-info' role='alert'>";
-			html += "				<i class='fa-fw fa fa-warning'></i>&nbsp;&nbsp;<strong>저울 데이터</strong>";
+			html += "			<div class='alert alert-primary m-1' role='alert'>";
+			html += "				<i class='fa-fw fa fa-warning'></i>&nbsp;<strong>저울 데이터</strong>";
 			html += "			</div>";
 			html += "			<table class='table table-bordered' style='font-size:12px;text-align:center'>";
 			html += "			<tr style='background:#F6F6F6'> <td>구분</td><td>시간</td><td>온도</td><td>습도</td><td>CO2</td><td>NH3</td><td>중량</td> </tr>";
@@ -199,7 +210,7 @@ include_once("../inc/bottom.php")
 
 		}
 
-		html += "			<div class='alert alert-info' role='alert'>";
+		html += "			<div class='alert alert-primary m-1' role='alert'>";
 		html += "				<i class='fa-fw fa fa-camera'></i>&nbsp;&nbsp;<strong>IP 카메라</strong>";
 		html += "			</div>";
 		html += "			<div class='col-xs-12 no-padding'>";
@@ -225,5 +236,13 @@ include_once("../inc/bottom.php")
 		}
 	});
 
+	// 테이블 패딩 조정
+	function css_padding(value, row, index){
+		return {
+			css: {
+				padding: '1px'
+			}
+		}
+	};
 
 </script>

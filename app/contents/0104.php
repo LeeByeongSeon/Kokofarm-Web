@@ -14,35 +14,35 @@ include_once("../inc/top.php")
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding"><img src="../images/temp.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">온도(℃)<br><span id="extra_out_temp" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">온도(℃)<br><span id="extra_out_temp" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding"><img src="../images/humi.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">습도(％)<br><span id="extra_out_humi" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">습도(％)<br><span id="extra_out_humi" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding"><img src="../images/nh3.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">암모니아(ppm)<br><span id="extra_out_nh3" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">암모니아(ppm)<br><span id="extra_out_nh3" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding"><img src="../images/h2s.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">황화수소(ppm)<br><span id="extra_out_h2s" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">황화수소(ppm)<br><span id="extra_out_h2s" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding"><img src="../images/pm10.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">미세먼지(㎍/㎥)<br><span id="extra_out_dust" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">미세먼지<br><span id="extra_out_dust" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding"><img src="../images/pm2.5.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">초미세먼지(㎍/㎥)<br><span id="extra_out_udust" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">초미세먼지<br><span id="extra_out_udust" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-right">
 					<div class="col-xs-4 no-padding"><img src="../images/wind-direction.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">풍향<br><span id="extra_out_direction" style="font-size:25px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">풍향<br><span id="extra_out_direction" style="font-size:25px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2">
 					<div class="col-xs-4 no-padding"><img src="../images/wind.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right">풍속(m/s)<br><span id="extra_out_wind" style="font-size:28px">0</span></div>
+					<div class="col-xs-8 no-padding text-right">풍속(m/s)<br><span id="extra_out_wind" style="font-size:28px">-</span></div>
 				</div>
 			</div>
 		</div>

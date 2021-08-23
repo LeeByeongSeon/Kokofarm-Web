@@ -114,8 +114,8 @@
 				<div class="d-table d-table-fixed h-100 w-100">
 					<div class="sa-logo-space d-table-cell h-100">
 						<div class="flex-row d-flex align-items-center h-100">
-							<img alt="KOKOFARM" src="../images/logo.png" class="sa-logo img-responsive">
-							&nbsp;<span class="badge bg-orange" style="margin-top: 3.5%">manager</span>
+							<a href="javascript:void(0)" onClick="location.href='0101.php<?=$add_url?>'"><img alt="KOKOFARM" src="../images/logo.png" class="sa-logo img-responsive"></a>&nbsp;
+							<span class="badge bg-orange" style="margin-top: 3.5%">manager</span>
 						</div>  
 					</div>
 					<div class="d-table-cell h-100 w-25 align-middle">
@@ -148,7 +148,7 @@
 		
 			<div class="sa-content-wrapper m-0">
         
-				<div class="sa-content p-2">
+				<div class="sa-content p-1">
 
 					<div class="d-flex w-100">
 						<section id="widget-grid" class="w-100">

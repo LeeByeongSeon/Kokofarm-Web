@@ -64,6 +64,8 @@
         </div><!--modal-dialog -->
     </div><!--modal -->
 
+	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 2%; right: 3%; display:none;"><span class="fa fa-arrow-up font-weight-bold"></span></a>
+	
 </body>
 </html>
 
@@ -87,6 +89,22 @@
 	var prev_item;
 
 	$(document).ready(function(){
+
+		// TOP버튼
+		$(window).scroll(function(){
+			if($(this).scrollTop() > 50) {
+				$('#scroll_top_btn').fadeIn();
+			}
+			else{
+				$('#scroll_top_btn').fadeOut();
+			}
+		});
+		$('#scroll_top_btn').click(function(){
+			$('#scroll_top_btn').hide();
+			$('body,html').animate({scrollTop: 0}, 800);
+			return false;
+		});
+		//$('#scroll_top_btn').show();
 
 		$("#top_select li").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
 
