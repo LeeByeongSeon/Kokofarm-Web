@@ -254,7 +254,7 @@
 
 	// 실제 웹소켓 전송 부
 	function send_packet($send){
-		$host = "192.168.0.70";
+		$host = "192.168.0.80";
 		$port = 3300;
 
 		$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("error : create fail");

@@ -9,7 +9,7 @@
 					IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
 					JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
 					JOIN buffer_sensor_status AS be ON be.beFarmid = fd.fdFarmid AND be.beDongid = fd.fdDongid 
-					JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
+					LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 					LEFT JOIN request_calculate AS rc ON rc.rcCode = be.beComeinCode AND rcStatus IN ('R', 'A', 'W', 'C') 
 					LEFT JOIN set_feeder AS sf ON sf.sfFarmid = fd.fdFarmid AND sf.sfDongid = fd.fdDongid 
                     LEFT JOIN set_outsensor AS so ON so.soFarmid = fd.fdFarmid AND so.soDongid = fd.fdDongid 
