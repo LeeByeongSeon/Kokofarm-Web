@@ -117,7 +117,7 @@ include_once("../inc/top.php");
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
 					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-04.png" style="width: 7rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">100%</h3></div>
 					</div>
 					<div class="col-xs-12 text-center no-padding"><span>사료잔량 550Kg</span></div>
 				</div>
