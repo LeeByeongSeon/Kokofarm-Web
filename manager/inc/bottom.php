@@ -67,7 +67,7 @@
 
 	<!----Loading Circle-->
 	<div id="loading_circle" style="display:none;"><ul id="loading_img"><img src="../images/loading_circle.gif"></ul></div>
-	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 2%; right: 3%; display:none;"><span class="fa fa-arrow-up font-weight-bold"></span></a>
+	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 6%; right: 3%; display:none;"><span class="fa fa-arrow-up font-weight-bold"></span></a>
 </body>
 </html>
 
