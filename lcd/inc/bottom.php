@@ -47,11 +47,11 @@
 	</body>
 </html>
 
-<script src="../../common/library/vendors/vendors.bundle.js"></script>
-<script src="../../common/library/app/app.bundle.js"></script>
+<script src="../common/library/vendors/vendors.bundle.js"></script>
+<script src="../common/library/app/app.bundle.js"></script>
 
 <!--BOOTSTRAP Table-->
-<script src="../../common/library/bootstrap_table/bootstrap-table.js"></script>
+<script src="../common/library/bootstrap_table/bootstrap-table.js"></script>
 
 <script language="javascript">
 
