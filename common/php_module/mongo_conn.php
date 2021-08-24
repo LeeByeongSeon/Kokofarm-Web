@@ -54,8 +54,11 @@ class mongo_conn{
             $mongo_pass	= $config_arr["mongo_pass"];
             $mongo_name	= $config_arr["mongo_name"];
 
+            //var_dump("mongodb://" .$mongo_user. ":" .$mongo_pass. "@" .$mongo_host. "/" .$mongo_name);
+
             // 실제 db 연결
-            $this->mongo_manager = new MongoDB\Driver\Manager("mongodb://" .$mongo_user. ":" .$mongo_pass. "@127.0.0.1:27017/" .$mongo_name);
+           // $this->mongo_manager = new MongoDB\Driver\Manager("mongodb://" .$mongo_user. ":" .$mongo_pass. "@127.0.0.1:27017/" .$mongo_name);
+            $this->mongo_manager = new MongoDB\Driver\Manager("mongodb://" .$mongo_user. ":" .$mongo_pass. "@" .$mongo_host. "/" .$mongo_name);
         }
     }
 
