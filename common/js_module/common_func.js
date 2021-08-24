@@ -52,7 +52,7 @@ function call_tree_view(search, work, in_out = "none"){
     data_map['oper'] = "get_tree";
     data_map['search'] = search;
 
-    $.ajax({url:'../../common/php_module/common_action.php', data:data_map, cache:false, type:'post', dataType:'json',
+    $.ajax({url:'../common/php_module/common_action.php', data:data_map, cache:false, type:'post', dataType:'json',
         success: function(data) {
 
             tree_html += "<ul role='tree'>\n";

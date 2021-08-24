@@ -93,8 +93,8 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 					<div class="carousel-caption henInterm"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
 				</div>
 				<div class="col-xs-6 text-center no-padding" style="margin-top: 7%">
-					<span class="font-weight-bold text-danger" style="font-size: 18px">실시간 평균중량</span>
-					<span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 48px" id="summary_avg_weight"></span>
+					<span class="font-weight-bold text-danger" style="font-size: 17px">실시간 평균중량</span>
+					<span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 47px" id="summary_avg_weight"></span>
 					<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
 				</div>
 				<div class="col-xs-3 float-right text-center p-1" style="margin-top: 5%">
@@ -124,9 +124,9 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="d-flex flex-row justify-content-around">
-					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 13px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
-					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 13px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
-					<div class="col-xs-4 p-2 text-center"><span style="font-size: 13px;">모레 (<span id="summary_day_term3"></span>)</span><p><span style="font-size: 23px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
+					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
+					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
+					<div class="col-xs-4 p-2 text-center"><span style="font-size: 14px;">모레 (<span id="summary_day_term3"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
 				</div>
 			</div>
 		</div>

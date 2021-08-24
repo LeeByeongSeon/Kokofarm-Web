@@ -1,7 +1,7 @@
 <?
 
-include_once("../../common/php_module/common_func.php");
-include_once("../../common/php_module/socket_func.php");
+include_once("../common/php_module/common_func.php");
+include_once("../common/php_module/socket_func.php");
 
 $mgr_id    = $_SESSION["mgr_id"];
 $mgr_name  = $_SESSION["mgr_name"];
@@ -389,7 +389,7 @@ switch($oper){
         $summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
 
         //카메라
-        $img_url = "../../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
+        $img_url = "../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
         $summary_data["summary_camera"] = "<img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
                                         <img id='cameraIcon' src='../images/play.png' class='fadeIn animated' onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">";
 

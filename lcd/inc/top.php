@@ -218,7 +218,7 @@
 									<div class="col-sm-6 no-padding">
 										<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 											<div class="widget-body" style="border-radius: 15px; border: 4px solid #E6E6E6; width: 380px; height: 136.5px;">
-												<div class="col-sm-4 float-left text-center no-padding">
+												<div class="col-sm-4 float-left text-center px-0 pt-2">
 													<img class="img-reponsive henImage no-padding" src="../images/hen-scale1.png">
 													<div class="carousel-caption henInterm" style="text-shadow: none;"><h1 class="font-weight-bold text-white"><?=$farm_interm?>일</h1></div>
 												</div>

@@ -1,6 +1,6 @@
 <?
-	include_once("../../common/common_func.php");
-	include_once("../../common/common_mongodb.php");
+	include_once("../common/common_func.php");
+	include_once("../common/common_mongodb.php");
 
 	$response=array();	//응답 JSON array
 

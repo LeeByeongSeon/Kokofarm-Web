@@ -1,7 +1,7 @@
 <?
 include_once("../inc/top.php");
 
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 // 그룹명 콤보박스
 $gName_query = "SELECT cGroup FROM codeinfo";

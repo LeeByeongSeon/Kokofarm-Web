@@ -90,10 +90,16 @@
 
 		get_weather(top_lat, top_lng);
 
+		// //일령기간별 이미지
+		// if(top_interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");  $(".henInterm").addClass("p-4");}
+		// if(top_interm >= 11 && top_interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");  $(".henInterm").addClass("p-3");}
+		// if(top_interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); $(".henInterm").addClass("p-3"); }
+		
 		//일령기간별 이미지
-		if(top_interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");  $(".henInterm").addClass("p-4");}
-		if(top_interm >= 11 && top_interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");  $(".henInterm").addClass("p-3");}
-		if(top_interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); $(".henInterm").addClass("p-3"); }
+		if(top_interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");}
+		if(top_interm >= 11 && top_interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");}
+		if(top_interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png");}
+
 	});
 
 	// 데이터를 불러옴

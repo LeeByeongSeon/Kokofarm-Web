@@ -66,7 +66,7 @@ class mongo_conn{
     private function get_config(){
         $config_arr = array();
 
-        $fp = fopen("../../common/php_module/mongo_info.cfg", "r");
+        $fp = fopen("../common/php_module/mongo_info.cfg", "r");
         $tmp = fgets($fp); $posi = strpos($tmp,";"); $config_arr["mongo_host"] = trim(substr($tmp,0,$posi));
         $tmp = fgets($fp); $posi = strpos($tmp,";"); $config_arr["mongo_user"] = trim(substr($tmp,0,$posi));
         $tmp = fgets($fp); $posi = strpos($tmp,";"); $config_arr["mongo_pass"] = trim(substr($tmp,0,$posi));

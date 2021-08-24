@@ -2,8 +2,8 @@
 
 session_start();
 
-include_once("../../common/php_module/mysql_conn.php");   	//Mysql
-include_once("../../common/php_module/mongo_conn.php");	//mongo
+include_once("../common/php_module/mysql_conn.php");   	//Mysql
+include_once("../common/php_module/mongo_conn.php");	//mongo
 
 define("corr_devi", 1.28);	//표준편차보정=>초기화는 *1임(곱하기)
 define("corr_temp", -1.2);	//저울-온도보정

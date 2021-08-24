@@ -1,5 +1,5 @@
 <?
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 $response = array();
 $oper = check_str($_REQUEST["oper"]);
