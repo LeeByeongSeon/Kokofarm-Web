@@ -97,7 +97,7 @@
 
 <html lang="en-us" class="smart-style-6">
 <head>
-	<title>꼬꼬팜 :: KOKOFARM4</title>
+	<title>KOKOFARM APP</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes">
