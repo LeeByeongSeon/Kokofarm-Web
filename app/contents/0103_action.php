@@ -14,16 +14,24 @@ include_once("../../common/php_module/common_func.php");
 
 		switch($oper){
 			case "get_buffer":
-				$select_sql = "SELECT * FROM set_feeder WHERE sfFarmid = \"" .$farmID. "\" AND sfDongid = \"" .$dongID. "\"";
+				$now = date("Y-m-d H:i:s");
+				$select_sql = "SELECT * FROM set_feeder AS sf
+							LEFT JOIN sensor_history AS sh ON sh.shFarmid = sf.sfFarmid AND sh.shDongid = sf.sfDongid AND sfDate = \"" . substr($now, 0, 13) . ":00:00\" 
+							WHERE sfFarmid = \"" .$farmID. "\" AND sfDongid = \"" .$dongID. "\"";
 
 				$select_data = get_select_data($select_sql);
 
 				$extra = array();
 				if(count($select_data) > 0){		// 외기 데이터가 있으면
+
 					$extra["extra_curr_feed"] = $select_data[0]["sfDailyFeed"];
 					$extra["extra_prev_feed"] = $select_data[0]["sfPrevFeed"];
 					$extra["extra_curr_water"] = $select_data[0]["sfDailyWater"];
 					$extra["extra_prev_water"] = $select_data[0]["sfPrevWater"];
+					$extra["extra_feed_remain"] = $select_data[0]["sfFeed"];
+
+					$feed_json = json_decode($select_data[0]["shFeedData"]);
+					$extra["extra_water_per_hour"] = $feed_json->feed_water;
 
 					// 남은 사료빈 용량 확인
 					$feed_max = $select_data[0]["sfFeedMax"];
