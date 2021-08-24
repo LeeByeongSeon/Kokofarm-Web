@@ -193,6 +193,7 @@
 
 		let notice = "<span class='font-xs text-secondary'> ※해당 상태가 지속되면 관리자에게 문의 바랍니다.</span>";
 
+		$("#top_status_info").addClass('d-none');
 		switch(top_be_status){
 			case "O": //출하
 				
