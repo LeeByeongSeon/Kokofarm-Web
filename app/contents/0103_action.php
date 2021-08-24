@@ -16,7 +16,7 @@ include_once("../common/php_module/common_func.php");
 			case "get_buffer":
 				$now = date("Y-m-d H:i:s");
 				$select_sql = "SELECT * FROM set_feeder AS sf
-							LEFT JOIN sensor_history AS sh ON sh.shFarmid = sf.sfFarmid AND sh.shDongid = sf.sfDongid AND sfDate = \"" . substr($now, 0, 13) . ":00:00\" 
+							LEFT JOIN sensor_history AS sh ON sh.shFarmid = sf.sfFarmid AND sh.shDongid = sf.sfDongid AND shDate = \"" . substr($now, 0, 13) . ":00:00\" 
 							WHERE sfFarmid = \"" .$farmID. "\" AND sfDongid = \"" .$dongID. "\"";
 
 				$select_data = get_select_data($select_sql);
