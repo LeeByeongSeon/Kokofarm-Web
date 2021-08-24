@@ -1,7 +1,7 @@
 <?
 include_once("../inc/top.php");
 
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 // 생계구분 콤보박스
 $type_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"생계구분\"";

@@ -1,7 +1,7 @@
 <?
 include_once("../inc/top.php");
 
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 // 계열회사 콤보박스
 $query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"계열회사명\"";

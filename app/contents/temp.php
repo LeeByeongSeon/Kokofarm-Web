@@ -3,7 +3,7 @@
 <form id="redirec_form" action="0101.php" method="post">
 
 <?
-	include_once("../../common/php_module/common_func.php");
+	include_once("../common/php_module/common_func.php");
 
 	$key = check_str($_REQUEST["key"]);
 	$id = "kk0000";

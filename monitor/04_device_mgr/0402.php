@@ -1,7 +1,7 @@
 <?
 include_once("../inc/top.php");
 
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 // 동 선택 콤보박스
 $dong_combo_json = make_jqgrid_combo_num(32);

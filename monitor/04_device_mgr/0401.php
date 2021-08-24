@@ -1,6 +1,6 @@
 <?
 include_once("../inc/top.php");
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 // 동 선택 콤보박스
 $dong_combo_json = make_jqgrid_combo_num(32);
@@ -11,7 +11,7 @@ $init_dong = isset($_REQUEST["dongID"]) ? $_REQUEST["dongID"] : "";
 
 $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : ""; 
 
-include_once("../../common/php_module/socket_func.php");
+include_once("../common/php_module/socket_func.php");
 //var_dump(cell_zero_set("KF0011", "01", "01"));
 //var_dump(cell_sensor_info("KF0018", "01", "01"));
 

@@ -1,6 +1,6 @@
 <?
 
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 $response = array();
 
@@ -243,7 +243,7 @@ switch($oper){
             //$temp["print_data"][] = $row;
 
 
-            $img_url = "../../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
+            $img_url = "../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
 			
 			$camera_html = "<img src='".$img_url."' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
 							<img id='cameraIcon' src='../images/play.png' class='fadeIn animated' onClick=\"camera_popup('" .$row["fdName"]. "','" .$img_url. "'); \">";

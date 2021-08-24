@@ -2,7 +2,7 @@
 
 <html lang="en-us" class="smart-style-6">
 <head>
-	<title>KOKOFARM RENEWAL</title>
+	<title>KOKOFARM LCD</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -97,8 +97,8 @@
 </body>
 </html>
 
-<script src="../../common/library/vendors/vendors.bundle.js"></script>
-<script src="../../common/library/app/app.bundle.js"></script>
+<script src="../common/library/vendors/vendors.bundle.js"></script>
+<script src="../common/library/app/app.bundle.js"></script>
 
 <!--BOOTSTRAP Table-->
-<script src="../../common/library/bootstrap_table/bootstrap-table.js"></script>
+<script src="../common/library/bootstrap_table/bootstrap-table.js"></script>

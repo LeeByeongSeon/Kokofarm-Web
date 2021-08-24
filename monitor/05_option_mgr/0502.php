@@ -1,7 +1,7 @@
 <?
 include_once("../inc/top.php");
 
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 // PLC유닛 콤보박스
 $pUnit_query = "SELECT suAddr FROM set_plc_unitid";

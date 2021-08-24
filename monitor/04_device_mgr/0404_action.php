@@ -1,6 +1,6 @@
 <?
 
-include_once("../../common/php_module/common_func.php");
+include_once("../common/php_module/common_func.php");
 
 $mgr_id    = $_SESSION["mgr_id"];
 $mgr_name  = $_SESSION["mgr_name"];

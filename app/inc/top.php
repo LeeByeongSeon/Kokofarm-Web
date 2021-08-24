@@ -47,7 +47,7 @@
 
 			// if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
 
-			$select_html .= "<li role='presentation' class='border font-weight-bold' style='height: 60px;'><a href='javascript:void(0)' style='height: -webkit-fill-available; font-size: 18px; padding-top:17px;' data-code='" . $val["beComeinCode"] . "' ";
+			$select_html .= "<li role='presentation' class='border font-weight-bold' style='height: 60px;'><a href='javascript:void(0)' style='height: -webkit-fill-available; font-size: 17px; padding-top:17px;' data-code='" . $val["beComeinCode"] . "' ";
 			$select_html .= "data-rcstatus='" . $val["rcStatus"] . "', data-interm='" . $val["interm"] . "', data-beavgweightdate='" . $val["beAvgWeightDate"] . "', ";
 			$select_html .= "data-beavgweight='" . sprintf('%0.1f', $val["beAvgWeight"]) . "', data-bestatus='" . $val["beStatus"] . "' data-name='" . $val["fdName"] . "'>" . $val["fdName"] ;
 			$select_html .= $val['beStatus'] == "O" ? "<span class='badge badge-secondary'>출하</span>" : " <span class='badge badge-primary'>". $val['interm']. "일</span>";
@@ -97,7 +97,7 @@
 
 <html lang="en-us" class="smart-style-6">
 <head>
-	<title>꼬꼬팜 :: KOKOFARM4</title>
+	<title>KOKOFARM APP</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes">
