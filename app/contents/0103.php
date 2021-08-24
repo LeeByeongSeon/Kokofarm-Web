@@ -13,10 +13,10 @@ include_once("../inc/top.php")
 			</header>
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-04.png" style="width: 7rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">100%</h3></div>
+					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-00.png" style="width: 7rem;"><br>
+						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
 					</div>
-					<div class="col-xs-12 text-center no-padding"><span style="font-size:15px">사료잔량 550Kg</span></div>
+					<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(Kg)</span></div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 25px">
 					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">오늘 급이량</span>(Kg)<br><span id="extra_curr_feed" style="font-size:28px">-</span></div>
@@ -27,7 +27,7 @@ include_once("../inc/top.php")
 				<div style="clear:both"></div><hr style="margin-top:0px">
 				<div class="col-xs-4 no-padding" style="margin-top: 5px">
 					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
-					<div class="col-xs-12 text-center no-padding"><span style="font-size:15px">시간당 급수 90L</span></div>
+					<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
 				</div>
 				<div class="col-xs-4 no-padding" style="margin-top: 15px">
 					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">오늘 급수량</span>(L)<br><span id="extra_curr_water" style="font-size:28px">-</span></div>
