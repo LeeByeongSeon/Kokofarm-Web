@@ -15,7 +15,8 @@ include_once("../common/php_module/common_func.php");
 
 	switch($oper){
 		case "get_buffer":
-		
+			
+			$now = date("Y-m-d H:i:s");
 			$to_day = date("Y-m-d");
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
@@ -26,6 +27,7 @@ include_once("../common/php_module/common_func.php");
 						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid 
 						LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
 						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
+						LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND shDate = \"" . substr($now, 0, 13) . ":00:00\" 
 						WHERE cmCode = \"" .$cmCode. "\"";
 
 						//LEFT JOIN request_calculate AS rc ON rc.rcCode = \"" .$cmCode. "\" 
@@ -137,10 +139,15 @@ include_once("../common/php_module/common_func.php");
 
 			$extra = array();
 			if($buffer_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
+
 				$extra["extra_curr_feed"] = $buffer_data[0]["sfDailyFeed"];
 				$extra["extra_prev_feed"] = $buffer_data[0]["sfPrevFeed"];
 				$extra["extra_curr_water"] = $buffer_data[0]["sfDailyWater"];
 				$extra["extra_prev_water"] = $buffer_data[0]["sfPrevWater"];
+				$extra["extra_feed_remain"] = $buffer_data[0]["sfFeed"];
+
+				$feed_json = json_decode($buffer_data[0]["shFeedData"]);
+				$extra["extra_water_per_hour"] = $feed_json->feed_water;
 
 				// 남은 사료빈 용량 확인
 				$feed_max = $buffer_data[0]["sfFeedMax"];

@@ -70,17 +70,17 @@
 
 			switch($userType){
 				case "ADMIN": //관리자 모드
-					$query = "SELECT fName, spFarmid, spDongid, spGroupName, spURL, spPORT, spPW 
+					$query = "SELECT fName, fGroupName, spFarmid, spDongid, spURL, spPORT, spPW 
 							 FROM farm, set_plc 
 							 WHERE fFarmid = spFarmid AND (fName LIKE \"%" . $farmName . "%\" OR spFarmid LIKE \"%" . $farmName . "%\") ORDER BY fName, spDongid";
 					break;
 				case "FARM": //농장모드
-					$query = "SELECT  fName,spFarmid,spDongid,spGroupName,spURL,spPORT,spPW
-							 FROM farm,set_plc
-							 WHERE fFarmid=spFarmid AND fFarmid=\"$farmID\" ORDER BY spDongID";
+					$query = "SELECT  fName, fGroupName, spFarmid, spDongid, spURL, spPORT, spPW
+							 FROM farm, set_plc
+							 WHERE fFarmid = spFarmid AND fFarmid = \"" .$farmID. "\" ORDER BY spDongid";
 					break;
 			}
-			$get_data = multiFindData($query,localDB_Conn);
+			$get_data = get_select_data($query);
 
 			if(count($get_data)>0){
 				$tmp=array();

@@ -69,7 +69,7 @@
 
 			switch($userType){
 				case "ADMIN": //관리자 모드
-					$query="SELECT f.fName, fdFarmid, fdDongid, fdGroupName 
+					$query="SELECT f.fName, f.fGroupName, fdFarmid, fdDongid 
 							FROM farm_detail 
 							JOIN farm AS f ON fdFarmid = f.fFarmid 
 							WHERE fdFarmid LIKE '%" . $farmName . "%' 
@@ -78,12 +78,12 @@
 					break;
 				case "FARM": //농장모드
 					if($farmID == "KF0013"){
-						$query="SELECT f.fName, fdFarmid, fdDongid, fdGroupName FROM farm_detail 
+						$query = "SELECT f.fName, f.fGroupName, fdFarmid, fdDongid FROM farm_detail 
 							JOIN farm AS f ON fdFarmid = f.fFarmid
 							WHERE RIGHT(fdFarmid, 4) BETWEEN '0011' AND '0013' ORDER BY fdFarmid, fdDongid;";
 					}
 					else{
-						$query="SELECT f.fName, fdFarmid, fdDongid, fdGroupName FROM farm_detail 
+						$query = "SELECT f.fName, f.fGroupName, fdFarmid, fdDongid FROM farm_detail 
 							JOIN farm AS f ON fdFarmid = f.fFarmid
 							WHERE fdFarmid = '" . $farmID . "' ORDER BY fdDongid;";
 					}

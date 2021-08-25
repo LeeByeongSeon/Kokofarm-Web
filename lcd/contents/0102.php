@@ -80,11 +80,11 @@ include_once("../inc/top.php")
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white">오늘 증체중량</h2>	
 				</div>
-				<div class="widget-toolbar">
+				<!-- <div class="widget-toolbar">
 					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
 						<div id="state_bar" class="progress-bar bg-warning" role="progressbar" style="width: 55%">55 %</div>
 					</div>
-				</div>
+				</div> -->
 			</header>
 			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
 				<div class="col-sm-12">
