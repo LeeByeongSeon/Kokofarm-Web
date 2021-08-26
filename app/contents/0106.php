@@ -51,7 +51,7 @@ include_once("../inc/top.php")
 				<div class="widget-toolbar ml-auto">
 					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('day')">일령별</button>
 					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="get_avg_history('time')">시간별</button>
-					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="convert_excel('excel')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="convert_excel('평균중량', 'avg_weight_table')" selection="day" id="btn_excel_avg"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
 					<button type="button" class="btn btn-xs btn-light text-primary" style="height: 25px" onClick="$('#avg_weight_table_div').toggle(400)"><span class="fa fa-plus"></span></button>
 				</div>
 			</header>
@@ -253,7 +253,7 @@ include_once("../inc/bottom.php")
 	};
 
 	function convert_excel(title, table_id){
-		title = select_name + "_" + select_code + "_" + title;
+		title = top_name + "_" + top_code + "_" + title;
 
 		send_excel_android(title, table_id);
 	};

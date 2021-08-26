@@ -209,6 +209,8 @@
 
 			$name = $buffer_data[0]["fdName"];
 
+			// 테스트농장 카메라 임시조치
+			if($buffer_data[0]["beIPaddr"] == "220.124.186.151"){ $buffer_data[0]["beIPaddr"] = "221.159.10.251";}
 			$img_url = "../common/php_module/camera_func.php?ip=" .$buffer_data[0]["beIPaddr"]. "&port=" .$buffer_data[0]["scPort"]. "&url=" .urlencode($buffer_data[0]["scUrl"]). "&id=" .$buffer_data[0]["scId"]. "&pw=" .$buffer_data[0]["scPw"];
 			
 			$camera_zone = "<img src='".$img_url."' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
