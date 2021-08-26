@@ -1,7 +1,7 @@
 <?
 
-include_once("../common/php_module/common_func.php");
-	
+	include_once("../common/php_module/common_func.php");
+
 	$response = array();
 
 	$oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
@@ -17,11 +17,14 @@ include_once("../common/php_module/common_func.php");
 		case "get_buffer":
 			
 			$now = date("Y-m-d H:i:s");
-			$to_day = date("Y-m-d");
+			$to_day = substr($now, 0, 10);
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
+			$day_plus_1 = date("Y-m-d", strtotime("+1 Days"));
+			$day_plus_2 = date("Y-m-d", strtotime("+2 Days"));
+
 			// 버퍼 및 입추정보, 카메라 데이터
-			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, so.*, fd.fdName, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
+			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, so.*, fd.fdName, sh.shFeedData, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
 						JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid 
 						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid 
 						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid 
@@ -54,11 +57,11 @@ include_once("../common/php_module/common_func.php");
 			$posi = count($aw_data) - 1;
 
 			if($posi > -1){			// 어제 또는 오늘 데이터가 존재하는 경우
-				$prev_weight = $aw_data[$posi]["awWeight"];	 //어제 평균중량
-				$prev_esti1  = $aw_data[$posi]["awEstiT1"];	 //어제 +1 예측
-				$prev_esti2  = $aw_data[$posi]["awEstiT2"];	 //어제 +2 예측
-				$prev_esti3  = $aw_data[$posi]["awEstiT3"];	 //어제 +3 예측
-				$prev_date   = $aw_data[$posi]["awDate"];	 //어제 마지막 산출 시간
+				$prev_weight = sprintf('%0.1f', $aw_data[$posi]["awWeight"]);	 //어제 평균중량
+				$prev_esti1  = sprintf('%0.1f', $aw_data[$posi]["awEstiT1"]);	 //어제 +1 예측
+				$prev_esti2  = sprintf('%0.1f', $aw_data[$posi]["awEstiT2"]);	 //어제 +2 예측
+				$prev_esti3  = sprintf('%0.1f', $aw_data[$posi]["awEstiT3"]);	 //어제 +3 예측
+				$prev_date   = sprintf('%0.1f', $aw_data[$posi]["awDate"]);	 //어제 마지막 산출 시간
 			}
 			else{					// 없는 경우
 				$prev_weight = 0.0;	 //어제 평균중량
@@ -69,18 +72,18 @@ include_once("../common/php_module/common_func.php");
 			}
 
 			if($curr_interm > 15){
-				$prev_avg_inc_2 = $prev_esti2 - $prev_esti1;
-				$prev_avg_inc_3 = $prev_esti3 - $prev_esti2;
+				$prev_avg_inc_2 = sprintf('%0.1f', $prev_esti2 - $prev_esti1);
+				$prev_avg_inc_3 = sprintf('%0.1f', $prev_esti3 - $prev_esti2);
 
 				if($curr_weight < $prev_weight){
 					$curr_weight = $prev_weight;
 				}
 			}
 			else{
-				$prev_weight = "0.0";
-				$prev_esti1  = "0.0";
-				$prev_esti2  = "0.0";
-				$prev_esti3  = "0.0";
+				$prev_weight = "-";
+				$prev_esti1  = "-";
+				$prev_esti2  = "-";
+				$prev_esti3  = "-";
 
 				$prev_avg_inc_2 = "0.0";
 				$prev_avg_inc_3 = "0.0";
@@ -113,17 +116,21 @@ include_once("../common/php_module/common_func.php");
 				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight),			/*실시간 평균중량*/
 				"summary_max_abg_weight"	=>  $curr_max_weight,						/*실시간 max 평체*/
 
+				"summary_date_term1"		=>  substr($yester_day, 5),					/*어제 날짜*/
+				"summary_date_term2"		=>  substr($day_plus_1, 5),					/*내일 날짜*/
+				"summary_date_term3"		=>  substr($day_plus_2, 5),					/*모레 날짜*/
+
 				"summary_day_term1"		=>  ($curr_interm - 1)."일령",					/*어제 일령*/
 				"summary_day_term2"		=>  ($curr_interm + 1)."일령",					/*내일 일령*/
 				"summary_day_term3"		=>  ($curr_interm + 2)."일령",					/*모레 일령*/
 
-				"summary_day_1"			=>  sprintf('%0.1f', $prev_weight),				/*어제 예측평체*/
-				"summary_day_2"			=>  sprintf('%0.1f', $prev_esti2),				/*내일 예측평체*/
-				"summary_day_3"			=>  sprintf('%0.1f', $prev_esti3),				/*모레 예측평체*/
+				"summary_day_1"			=>  $prev_weight,				/*어제 예측평체*/
+				"summary_day_2"			=>  $prev_esti2,				/*내일 예측평체*/
+				"summary_day_3"			=>  $prev_esti3,				/*모레 예측평체*/
 
 				"summary_day_inc1"		=> $prev_date,									/*어제 마지막 평균중량 산출 시간*/
-				"summary_day_inc2"		=> sprintf('%0.1f', $prev_avg_inc_2),			/*2일차 중량증가량*/
-				"summary_day_inc3"		=> sprintf('%0.1f', $prev_avg_inc_3),			/*1일차 중량증가량*/
+				"summary_day_inc2"		=> $prev_avg_inc_2,			/*2일차 중량증가량*/
+				"summary_day_inc3"		=> $prev_avg_inc_3,			/*1일차 중량증가량*/
 
 				"summary_day_water"		=> $daily_water."L",							/*일일 급수량*/
 				"summary_day_feed"		=> $daily_feed."Kg",							/*일일 급이량*/
@@ -135,11 +142,8 @@ include_once("../common/php_module/common_func.php");
 			);
 			$response["summary"] = $summary;
 
-			$response["beStatus"] = $buffer_data[0]["beStatus"];
-
 			$extra = array();
 			if($buffer_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
-
 				$extra["extra_curr_feed"] = $buffer_data[0]["sfDailyFeed"];
 				$extra["extra_prev_feed"] = $buffer_data[0]["sfPrevFeed"];
 				$extra["extra_curr_water"] = $buffer_data[0]["sfDailyWater"];
@@ -174,28 +178,28 @@ include_once("../common/php_module/common_func.php");
 				switch($direction){
 					case 0:
 					case 360:
-						$direction = "북풍";
+						$direction = "북";
 						break;
 					case 45:
-						$direction = "북동풍";
+						$direction = "북동";
 						break;
 					case 90:
-						$direction = "동풍";
+						$direction = "동";
 						break;
 					case 135:
-						$direction = "남동풍";
+						$direction = "남동";
 						break;
 					case 180:
-						$direction = "남풍";
+						$direction = "남";
 						break;
 					case 225:
-						$direction = "남서풍";
+						$direction = "남서";
 						break;
 					case 270:
-						$direction = "서풍";
+						$direction = "서";
 						break;
 					case 315:
-						$direction = "북서풍";
+						$direction = "북서";
 						break;
 				}
 				$extra["extra_out_direction"] = $direction;

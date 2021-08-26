@@ -24,15 +24,19 @@ include_once("../common/php_module/common_func.php");
 					$extra["extra_prev_feed"] = $select_data[0]["sfPrevFeed"];
 					$extra["extra_curr_water"] = $select_data[0]["sfDailyWater"];
 					$extra["extra_prev_water"] = $select_data[0]["sfPrevWater"];
+					$extra["extra_feed_remain"] = $select_data[0]["sfFeed"];
 
+					$feed_json = json_decode($select_data[0]["shFeedData"]);
+					$extra["extra_water_per_hour"] = $feed_json->feed_water;
+	
 					// 남은 사료빈 용량 확인
 					$feed_max = $select_data[0]["sfFeedMax"];
 					$curr_feed = $select_data[0]["sfFeed"];
-
+	
 					$percent = $curr_feed / $feed_max;
-
+	
 					$percent = round($percent * 100);
-
+	
 					$extra["extra_feed_percent"] = $percent . "%";
 				}
 

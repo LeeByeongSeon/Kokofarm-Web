@@ -2144,7 +2144,7 @@ article.sortable-grid {
  */
 .jarviswidget > header {
   align-items: center;
-  height: 40px;
+  height: 35px;
   /* make sure ".jarviswidget-loader" is also the same height or it will flicker during collapse */
   padding: 0;
   display: -webkit-flex;
@@ -2190,7 +2190,7 @@ article.sortable-grid {
     text-overflow: ellipsis;
     font-size: 15px;
     margin: 0;
-    line-height: 36px;
+    line-height: 40px;
     font-weight: normal;
     margin-left: 10px;
     letter-spacing: 0; }
@@ -2893,7 +2893,7 @@ body.nooverflow {
 .widget-toolbar {
   width: auto;
   height: 32px;
-  line-height: 36px;
+  line-height: 40px;
   position: relative;
   border-left: 1px solid rgba(0, 0, 0, 0.09);
   cursor: pointer;
@@ -10514,6 +10514,7 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .text-blue-dark {
     color: #1565C0 !important; }
   .smart-style-6 .jarviswidget > header {
+	height: auto;
     box-shadow: none;
     border-bottom: 0; }
   .smart-style-6 .nav-tabs .nav-link.active:hover,

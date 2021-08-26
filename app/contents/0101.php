@@ -24,10 +24,10 @@ include_once("../inc/top.php");
 					</h2>	
 				</div>
 			</header>
-			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body p-1" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-3 float-left text-center px-1 pt-4">
 					<img class="img-reponsive henImage">
-					<div class="carousel-caption henInterm"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
+					<div class="carousel-caption henInterm"><span class="font-weight-bold" style="font-size: 25px"> <span id="summary_interm"></span>일 </span></div>
 				</div>
 				<div class="col-xs-6 text-center no-padding" style="margin-top: 7%">
 					<span class="font-weight-bold text-danger" style="font-size: 17px">실시간 평균중량</span><br>
@@ -82,19 +82,19 @@ include_once("../inc/top.php");
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/temp.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">온도</span>(℃)<br><span id="summary_avg_temp" style="font-size:28px">-</span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">온도</span>(℃)<br><span id="summary_avg_temp" style="font-size:27px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/humi.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">습도</span>(％)<br><span id="summary_avg_humi" style="font-size:28px">-</span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">습도</span>(％)<br><span id="summary_avg_humi" style="font-size:27px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-right">
 					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/co2.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:13px">이산화탄소</span>(ppm)<br><span id="summary_avg_co2" style="font-size:28px">-</span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:13px">이산화탄소</span>(ppm)<br><span id="summary_avg_co2" style="font-size:27px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2">
 					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/nh3.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="summary_avg_nh3" style="font-size:28px">-</span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="summary_avg_nh3" style="font-size:27px">-</span></div>
 				</div>
 			</div>
 		</div>

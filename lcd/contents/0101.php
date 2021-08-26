@@ -12,17 +12,17 @@
 			<div class="widget-body p-2" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
 				<div class="row">
 					<div class="col-sm-4">
-						<div class="alert alert-secondary text-center mb-3 font-lg" style="border-radius: 10px; border: 0;" role="alert"><span class="widget-icon"></span>어제 산출&nbsp;(<span id="summary_day_term1"></span>)</div>
+						<div class="alert alert-secondary text-center mb-3 font-lg" style="border-radius: 10px; border: 0;" role="alert"><span id="summary_date_term1"></span>&nbsp;(<span id="summary_day_term1"></span>)</div>
 						<div class="text-center" style="font-size:28px;margin-top:-10px"><span id="summary_day_1">0</span>&nbsp;g</div>
 						<div class="text-center" style="font-size:18px;color:gray"> <span id="summary_day_inc1">0</span></div>
 					</div>
 					<div class="col-sm-4" style="border-left:1px solid #EEEEEE;border-right:1px solid #EEEEEE">
-						<div class="alert alert-primary text-center mb-3 font-lg" style="border-radius: 10px; border: 0;" role="alert"><span class="widget-icon"></span> 내일 예측&nbsp;(<span id="summary_day_term2"></span>)</div>
+						<div class="alert alert-primary text-center mb-3 font-lg" style="border-radius: 10px; border: 0;" role="alert"><span id="summary_date_term2"></span>&nbsp;(<span id="summary_day_term2"></span>)</div>
 						<div class="text-center" style="font-size:28px;margin-top:-10px"><span id="summary_day_2">0</span>&nbsp;g</div>
 						<div class="text-center" style="font-size:18px;color:gray"><span class="widget-icon"> <i class="fa fa-plus text-primary"></i> </span> <span id="summary_day_inc2">0</span></div>
 					</div>
 					<div class="col-sm-4">
-						<div class="alert alert-info text-center mb-3 font-lg" style="border-radius: 10px; border: 0;" role="alert"><span class="widget-icon"></span> 모레 예측&nbsp;(<span id="summary_day_term3"></span>)</div>
+						<div class="alert alert-info text-center mb-3 font-lg" style="border-radius: 10px; border: 0;" role="alert"><span id="summary_date_term3"></span>&nbsp;(<span id="summary_day_term3"></span>)</div>
 						<div class="text-center" style="font-size:28px;margin-top:-10px"><span id="summary_day_3">0</span>&nbsp;g</div>
 						<div class="text-center" style="font-size:18px;color:gray"><span class="widget-icon"> <i class="fa fa-plus text-primary"></i> </span> <span id="summary_day_inc3">0</span></div>
 					</div>
@@ -66,34 +66,36 @@
 </div><!--row-->
 
 <!--일일 급이 / 급수량-->
-<div class="row" id="row_feed_water" style="margin-top:-25px; display: none;">
-	<div class="col-sm-12 no-padding">
+<div class="row" id="row_feed_water">
+	<div class="col-sm-12 no-padding" style="margin-top:-25px;">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white feeder">급이 및 급수 정보</h2>	
 				</div>
 			</header>
-			<div class="widget-body pt-3 d-flex align-items-center" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;padding:1rem;">
+			<div class="widget-body pt-3" style="border-radius: 0 0 15px 15px; padding:1rem;">
 				<div class="col-sm-2 no-padding">
 					<div class="col-sm-12 text-center"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
-						<div class="carousel-caption" style="text-shadow: none;"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+						<div class="carousel-caption" style="text-shadow: none;"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
 					</div>
+					<div class="col-sm-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(Kg)</span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">오늘 급이량</span><br><span id="extra_curr_feed" style="font-size:28px">0</span>(㎏)</div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급이량(㎏)</span><br><span id="extra_curr_feed" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-sm-2 no-padding" style="border-right:1px solid #C2C2C2">
-					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">전일 급이량</span><br><span id="extra_prev_feed" style="font-size:28px">0</span>(㎏)</div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급이량(㎏)</span><br><span id="extra_prev_feed" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-sm-2 no-padding" style="margin-top: 2px">
 					<div class="col-sm-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
+					<div class="col-sm-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">오늘 급수량</span><br><span id="extra_curr_water" style="font-size:28px">0</span>(L)</div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급수량(L)</span><br><span id="extra_curr_water" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-center no-padding"><span style="font-size: 18px">전일 급수량</span><br><span id="extra_prev_water" style="font-size:28px">0</span>(L)</div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급수량(L)</span><br><span id="extra_prev_water" style="font-size:28px">-</span></div>
 				</div>
 			</div>
 		</div>
@@ -190,11 +192,6 @@
 		<div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<h2 class="text-white font-weight-bold">일령별 평균중량 변화추이</h2>
-				<!-- <div class="widget-toolbar">
-					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
-						<div id="state_bar" class="progress-bar bg-warning" role="progressbar" style="width: 55%">55 %</div>
-					</div>
-				</div> -->
 			</header>
 			<div class="widget-body" style="border-radius: 0 0 10px 10px; border : 4px solid #E6E6E6; border-top: 0;">
 				<div id="avg_weight_chart"></div>

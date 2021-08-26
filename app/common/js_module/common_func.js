@@ -42,7 +42,7 @@ param
 - search : 농장 검색 입력 string
 - work : 농장 버튼 클릭 시 실행할 함수
 */
-function call_tree_view(search, work, in_out = "none"){ 
+function call_tree_view(search, work, in_out = "none"){ //in_out = "none" -> 디폴트 값을 지정하면 IE 에서 오류 발생 
 
     $("#treeView").show();
 
@@ -542,13 +542,13 @@ param
 - is_label : Label 출력 여부
 - font_size : 차트의 출력되는 font size
 */
-function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label, font_size, period = "hh"){
+function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label, font_size, period = "hh"){	//
     if(chart_data.length <= 0){ return false; }
 
     let graph_json = [];
     let category = "";
     let graph_cnt = -1;
-    let graph_color = ["#3366CC","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#DC3912"];
+    // let graph_color = ["#3366CC","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#DC3912"];
     let circle_lastkey = "";
 
     for(key in chart_data[0]){
@@ -558,12 +558,12 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
         }
         else{
             var graph_obj = {};
-            graph_obj["title"] = key; 
-			graph_obj["valueField"] = key;
-			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
-			graph_obj["bullet"] = "round";						/*꼭지점*/
-			graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
-			graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
+            	graph_obj["title"] = key; 
+				graph_obj["valueField"] = key;
+				graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
+				graph_obj["bullet"] = "round";						/*꼭지점*/
+				graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+				graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 
             if(is_label === "Y"){
 				graph_obj["labelText"]="[[value]]";					/*값 출력*/

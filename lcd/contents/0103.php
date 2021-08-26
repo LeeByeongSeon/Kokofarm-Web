@@ -14,23 +14,25 @@ include_once("../inc/top.php")
 			<div class="widget-body pt-3" style="border-radius: 0 0 15px 15px; padding:1rem;">
 				<div class="col-sm-2 no-padding">
 					<div class="col-sm-12 text-center"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
-						<div class="carousel-caption" style="text-shadow: none;"><h3 class="font-weight-bold m-0 pt-4 text-secondary" id="extra_feed_percent">100%</h3></div>
+						<div class="carousel-caption" style="text-shadow: none;"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
 					</div>
+					<div class="col-sm-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(Kg)</span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급이량(㎏)</span><br><span id="extra_curr_feed" style="font-size:28px">0</span></div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급이량(㎏)</span><br><span id="extra_curr_feed" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-sm-2 no-padding" style="border-right:1px solid #C2C2C2">
-					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급이량(㎏)</span><br><span id="extra_prev_feed" style="font-size:28px">0</span></div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급이량(㎏)</span><br><span id="extra_prev_feed" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-sm-2 no-padding" style="margin-top: 2px">
 					<div class="col-sm-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
+					<div class="col-sm-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급수량(L)</span><br><span id="extra_curr_water" style="font-size:28px">0</span></div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">오늘<br>급수량(L)</span><br><span id="extra_curr_water" style="font-size:28px">-</span></div>
 				</div>
 				<div class="col-sm-2 no-padding">
-					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급수량(L)</span><br><span id="extra_prev_water" style="font-size:28px">0</span></div>
+					<div class="col-sm-12 text-right"><span style="font-size: 15px">전일<br>급수량(L)</span><br><span id="extra_prev_water" style="font-size:28px">-</span></div>
 				</div>
 			</div>
 		</div>

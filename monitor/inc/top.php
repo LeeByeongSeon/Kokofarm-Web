@@ -194,9 +194,9 @@
 						<div class="sa-header-menu">
 							<div class="d-flex align-items-center w-100">
 								<div class="ml-auto sa-header-right-area">
-									<div class="form-inline">
-										<span class="text-white"><i class="glyphicon glyphicon-user"></i></i>&nbsp;&nbsp;<?=$mgr_name?> - <?=$mgr_type?></span>&nbsp;&nbsp;&nbsp;&nbsp;
-										<a class="btn-sm" href="../00_login/index_action.php?oper=logout" title="logout" role="button" style="color:white;"> Logout <i class="glyphicon glyphicon-log-out"></i></a>
+									<div class="form-inline text-secondary">
+										<spa><i class="glyphicon glyphicon-user"></i></i>&nbsp;&nbsp;<?=$mgr_name?> - <?=$mgr_type?></span>&nbsp;&nbsp;&nbsp;&nbsp;
+										<a class="btn-sm text-secondary" href="../00_login/index_action.php?oper=logout" title="logout" role="button"> Logout <i class="glyphicon glyphicon-log-out"></i></a>
 									</div>
 								</div>
 							</div>          

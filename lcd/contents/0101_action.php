@@ -19,17 +19,20 @@
 			$to_day = date("Y-m-d");
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
+			$day_plus_1 = date("Y-m-d", strtotime("+1 Days"));
+			$day_plus_2 = date("Y-m-d", strtotime("+2 Days"));
+
 			// 버퍼 및 입추정보, 카메라 데이터
-			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, so.*, fd.fdName, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
+			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, so.*, fd.fdName, sh.shFeedData, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
 						JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid 
 						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid 
 						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid 
 						LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
-						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
-						LEFT JOIN set_iot_cell AS si ON si.siFarmid = cm.cmFarmid AND si.siDongid = cm.cmDongid
+						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
+						LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND shDate = \"" . substr($now, 0, 13) . ":00:00\" 
 						WHERE cmCode = \"" .$cmCode. "\"";
 
-						//LEFT JOIN request_calculate AS rc ON rc.rcCode = \"" .$cmCode. "\"
+						//LEFT JOIN request_calculate AS rc ON rc.rcCode = \"" .$cmCode. "\" 
 
 			$buffer_data = get_select_data($select_sql);
 
@@ -101,6 +104,10 @@
 				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight),			/*실시간 평균중량*/
 				"summary_max_abg_weight"	=>  $curr_max_weight,						/*실시간 max 평체*/
 
+				"summary_date_term1"		=>  substr($yester_day, 5),					/*어제 날짜*/
+				"summary_date_term2"		=>  substr($day_plus_1, 5),					/*내일 날짜*/
+				"summary_date_term3"		=>  substr($day_plus_2, 5),					/*모레 날짜*/
+
 				"summary_day_term1"		=>  ($curr_interm - 1)."일령",					/*어제 일령*/
 				"summary_day_term2"		=>  ($curr_interm + 1)."일령",					/*내일 일령*/
 				"summary_day_term3"		=>  ($curr_interm + 2)."일령",					/*모레 일령*/
@@ -131,6 +138,10 @@
 				$extra["extra_prev_feed"] = $buffer_data[0]["sfPrevFeed"];
 				$extra["extra_curr_water"] = $buffer_data[0]["sfDailyWater"];
 				$extra["extra_prev_water"] = $buffer_data[0]["sfPrevWater"];
+				$extra["extra_feed_remain"] = $buffer_data[0]["sfFeed"];
+
+				$feed_json = json_decode($buffer_data[0]["shFeedData"]);
+				$extra["extra_water_per_hour"] = $feed_json->feed_water;
 
 				// 남은 사료빈 용량 확인
 				$feed_max = $buffer_data[0]["sfFeedMax"];

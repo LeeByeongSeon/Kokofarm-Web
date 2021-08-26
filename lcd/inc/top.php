@@ -53,7 +53,7 @@
 		$menu_struct[] = array("0102.php".$add_url, "IoT저울", "icon-02.png");
 		if($exist_feed){ $menu_struct[] = array("0103.php".$add_url, "급이/급수", "icon-04.png"); }
 		if($exist_out){ $menu_struct[] = array("0104.php".$add_url, "외기환경", "icon-03.png"); }
-		$menu_struct[] = array("0105.php".$add_url, "재산출 요청", "icon-05.png");
+		$menu_struct[] = array("0105.php".$add_url, "사육정보 변경", "icon-05.png");
 		
 		// 상단 메뉴 html 동적 생성
 		$top_menu_html = "";

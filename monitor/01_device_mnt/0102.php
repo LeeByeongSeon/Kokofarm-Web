@@ -33,7 +33,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 
-				<div class="widget-body">
+				<div class="widget-body" style="height: 294.97px">
 
 					<div class="col-md-6 no-padding">
 						<div class="text-center text-secondary">
@@ -41,7 +41,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						</div>
 
 						<div>
-							<div class="well">
+							<div class="well p-2" style="margin-top: 5px">
 								<div class="col-md-12 no-padding">
 									<div class="col-md-4 no-padding text-center">
 										<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png">
@@ -72,7 +72,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						</div>
 					</div>
 
-					<div class="col-md-6" id="summary_camera">
+					<div class="col-md-6" id="summary_camera" style="padding-top:2%">
 						
 					</div>
 					
@@ -88,7 +88,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<h2><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;&nbsp;이슈사항</h2>	
 					</div>
 				</header>
-				<div class="widget-body" style="height: 275px;">
+				<div class="widget-body" style="height: 294.97px">
 					<!--급이 / 급수가 없으면 나타날 div-->
 					<div class="col-xs-7 float-left pr-4 pl-0 feed_none_div" style="height: -webkit-fill-available; display: none;">
 						<h1 class='font-weight-bold m-auto'><i class='glyphicon glyphicon-remove-sign text-danger'></i> 표시할 데이터가 없습니다.</h1>
@@ -114,7 +114,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-5 float-right mt-1">
+					<div class="col-xs-5 float-right mt-3">
 						<div class="col-xs-12 h-100 no-padding">
 							<ul class="list-group">
 								<li class="list-group-item"><div class="alert alert-danger m-0">재산출 요청 중</div></li>
@@ -140,7 +140,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 			
-				<div class="widget-body">
+				<div class="widget-body" style="height: 323.5px">
 					<table class="table table-bordered table-hover" style="text-align: center;">
 						<thead>
 							<tr style="height:38px">
@@ -193,8 +193,8 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 데이터</h2>	
 					</div>
 				</header>
-				<div class="widget-body">
-					<table id="device_buffer_table"  data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+				<div class="widget-body" style="height: 323.5px">
+					<table id="device_buffer_table"  data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px; height: 323.5px">
 						<thead>
 							<tr>
 								<th data-field='f1' data-visible="true" data-align="center" data-cell-style="del_padding">장치</th>
@@ -271,7 +271,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 					
-				<div class="widget-body">
+				<div class="widget-body" style="height:465px;">
 
 					<table id="error_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
@@ -301,50 +301,56 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 				</header>
 
 				<div class="widget-body" style="height: 245px;">
-					<table class="table table-bordered table-hover float-left text-center" style="width:300px; height:170px;">
-						<thead>
-							<td colspan="4"><button class="btn btn-primary" style="width:200px" id="gw_lookup">GW 냉각팬 조회</button></td>
-						</thead>
-						<tbody>
-							<tr>
-								<th>동작 온도</th>
-								<th>정지 온도</th>
-								<th>현재 온도</th>
-								<th>동작 상태</th>
-							</tr>
-							<tr>
-								<td id="gw_temp1">45</td>
-								<td id="gw_temp2">3</td>
-								<td>47</td>
-								<td>1</td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-primary">설정</button></td>
-								<td><button class="btn btn-primary">설정</button></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</tbody>
-					</table>
-					<table style="width:350px; text-align:center; float:right">
-						<thead>
-							<td><button class="btn btn-default" style="width:300px;" disabled>V 3.5.1</button></td>
-						</thead>
-						<tbody>
-							<tr>
-								<td><button class="btn btn-primary" style="width:300px;">펌웨어 버전 조회</button></td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-primary" style="width:300px;">펌웨어 업데이트</button></td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-primary" style="width:300px;">로그 데이터 삭제</button></td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-primary" style="width:300px;">GW 재부팅</button></td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="col-xl-12 no-padding">
+						<div class="col-xl-6 float-left">
+							<table class="table table-bordered table-hover text-center">
+								<thead>
+									<td colspan="4"><button class="btn btn-primary" style="width:200px" id="gw_lookup">GW 냉각팬 조회</button></td>
+								</thead>
+								<tbody>
+									<tr>
+										<th>동작 온도</th>
+										<th>정지 온도</th>
+										<th>현재 온도</th>
+										<th>동작 상태</th>
+									</tr>
+									<tr>
+										<td id="gw_temp1">45</td>
+										<td id="gw_temp2">3</td>
+										<td>47</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td><button class="btn btn-primary">설정</button></td>
+										<td><button class="btn btn-primary">설정</button></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-xl-6 float-right">
+							<table>
+								<thead>
+									<td><button class="btn btn-default" style="width:300px;" disabled>V 3.5.1</button></td>
+								</thead>
+								<tbody>
+									<tr>
+										<td><button class="btn btn-primary" style="width:300px;">펌웨어 버전 조회</button></td>
+									</tr>
+									<tr>
+										<td><button class="btn btn-primary" style="width:300px;">펌웨어 업데이트</button></td>
+									</tr>
+									<tr>
+										<td><button class="btn btn-primary" style="width:300px;">로그 데이터 삭제</button></td>
+									</tr>
+									<tr>
+										<td><button class="btn btn-primary" style="width:300px;">GW 재부팅</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 						
 			</div>
@@ -358,7 +364,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 				
-				<div class="widget-body">
+				<div class="widget-body" style="height: 245px">
 
 					<table id="cell_control_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>

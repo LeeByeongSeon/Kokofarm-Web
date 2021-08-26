@@ -518,7 +518,7 @@ switch($oper){
 
 
 function make_sub_table($header_arr, $body_arr){
-    $data_html = "<table class='table' style='text-align:center;'>";
+    $data_html = "<table class='table' style='text-align:center; height: -webkit-fill-available'>";
     $data_html .= "<thead> <tr> ";
 
     foreach($header_arr as $header){

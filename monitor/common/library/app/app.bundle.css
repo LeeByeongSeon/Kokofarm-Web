@@ -8602,7 +8602,8 @@ body.smart-style-0:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu .sa-sub-nav
 
 .sa-fixed-header .sa-page-header {
   border-bottom-color: rgba(0, 0, 0, 0.3);
-  box-shadow: -11px 12px 23px rgba(0, 0, 0, 0.1); }
+  /* box-shadow: -11px 12px 23px rgba(0, 0, 0, 0.1); */
+ }
 
 .sa-page-ribbon {
   background: #474544; }
@@ -10308,7 +10309,8 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
     padding-top: 15px; }
   .smart-style-6 .sa-page-header {
     /*background: #2196F3;*/
-    background: #455a64; }
+    /*background: #455a64;*/
+	background: #edecec;}
   .smart-style-6 .sa-ribbon-btn {
     display: none; }
   .smart-style-6 .sa-logo-link {
@@ -10387,11 +10389,12 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
     color: #868686;
     font-size: 1.3rem; }
   .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a {
-    color: #568a89;
+    color: #444444;
     font-weight: 700; }
     .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a:before {
       /* color: #455a64;  */
-      color: #0c6ad0;}
+      color: #0c6ad0;
+	}
   .smart-style-6 .sa-aside-left .sa-left-menu > li > a {
     /*text-transform: uppercase;*/
     padding-top: 12px;
@@ -10468,10 +10471,12 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
       overflow: visible; }
     .smart-style-6 .sa-menu-on-top .sa-left-menu .sa-sub-nav li a:after {
       display: none !important; }
-    .smart-style-6 .sa-menu-on-top .sa-left-menu .sa-sub-nav li.active > a,
+    .smart-style-6 .sa-menu-on-top .sa-left-menu .sa-sub-nav li.active > a{
+		color: #fff !important;
+		background: #2196F3 !important;}
     .smart-style-6 .sa-menu-on-top .sa-left-menu .sa-sub-nav li:hover > a,
     .smart-style-6 .sa-menu-on-top .sa-left-menu .sa-sub-nav li a:hover {
-      background: #2196F3 !important;
+      background: #04508c !important;
       color: #fff !important; }
     .smart-style-6 .sa-menu-on-top .sa-left-menu a:before {
       display: none; }
@@ -10660,7 +10665,7 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .page-link:focus, .smart-style-6 .page-link {
     color: #2196F3; }
   .smart-style-6 .sa-page-footer {
-    background-color: #455A64; }
+    background-color: #525252; }
     .smart-style-6 .sa-page-footer .text-blue-light {
       color: inherit !important; }
   .smart-style-6 .widget-toolbar,

@@ -4,7 +4,7 @@ include_once("../inc/top.php");
 include_once("../common/php_module/common_func.php");
 
 // 그룹명 콤보박스
-$gName_query = "SELECT cGroup FROM codeinfo";
+$gName_query = "SELECT DISTINCT(cGroup) FROM codeinfo";
 $gName_combo = make_combo_by_query($gName_query,"search_gName", "그룹명", "cGroup");
 $gName_combo_json = make_jqgrid_combo($gName_query, "cGroup");
 

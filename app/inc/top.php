@@ -47,7 +47,7 @@
 
 			// if($val["fdFarmid"] != $test){ continue; }		// 급이 급수 및 외기환경 페이지에서 존재하지 않는 동은 제외함
 
-			$select_html .= "<li role='presentation' class='border font-weight-bold' style='height: 60px;'><a href='javascript:void(0)' style='height: -webkit-fill-available; font-size: 17px; padding-top:17px;' data-code='" . $val["beComeinCode"] . "' ";
+			$select_html .= "<li role='presentation' class='border font-weight-bold' style='height: 45px;'><a href='javascript:void(0)' style='height: -webkit-fill-available; font-size: 20px; padding-top:10px;' data-code='" . $val["beComeinCode"] . "' ";
 			$select_html .= "data-rcstatus='" . $val["rcStatus"] . "', data-interm='" . $val["interm"] . "', data-beavgweightdate='" . $val["beAvgWeightDate"] . "', ";
 			$select_html .= "data-beavgweight='" . sprintf('%0.1f', $val["beAvgWeight"]) . "', data-bestatus='" . $val["beStatus"] . "' data-name='" . $val["fdName"] . "'>" . $val["fdName"] ;
 			$select_html .= $val['beStatus'] == "O" ? "<span class='badge badge-secondary'>출하</span>" : " <span class='badge badge-primary'>". $val['interm']. "일</span>";
@@ -70,7 +70,7 @@
 	$menu_struct[] = array("0102.php", "IoT저울");
 	if($exist_feed){ $menu_struct[] = array("0103.php", "급이/급수"); }
 	if($exist_out){ $menu_struct[] = array("0104.php", "외기환경"); }
-	$menu_struct[] = array("0105.php", "재산출 요청");
+	$menu_struct[] = array("0105.php", "사육정보 변경");
 	$menu_struct[] = array("0106.php", "출하내역");
 
 	// 상단 메뉴 html 동적 생성
@@ -105,8 +105,8 @@
   	<link rel="stylesheet" href="../common/library/fonts/font.css"> <!--Google fonts-->
 	
 	<script src="../common/library/jquery/jquery.min.js"></script>						<!-- jQuery -->
-	<script src="../common/library/jquery/jquery-ui-1.10.3.min.js"></script>				<!-- jQuery UI-->
-	<script src="../common/library/bootstrap/bootstrap.min.js"></script>					<!-- BOOTSTRAP JS -->
+	<script src="../common/library/jquery/jquery-ui-1.10.3.min.js"></script>			<!-- jQuery UI-->
+	<script src="../common/library/bootstrap/bootstrap.min.js"></script>				<!-- BOOTSTRAP JS -->
 	
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
@@ -123,8 +123,8 @@
 	
 	<!-- jQuery Grid -->
 	<script src="../common/library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     	<!--JQGrid-->
-	<script src="../common/library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  		<!--JQGrid:Language-->
-	<link rel="stylesheet" type="text/css" href="../common/library/jqgrid/ui.jqgrid-bootstrap.css">  	<!--JQGrid:CSS--->
+	<script src="../common/library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  	<!--JQGrid:Language-->
+	<link rel="stylesheet" type="text/css" href="../common/library/jqgrid/ui.jqgrid-bootstrap.css">  	<!--JQGrid:CSS-->
 
 	<!--amChart-->
 	<script src="../common/library/amchart/amcharts.js" type="text/javascript"></script>
@@ -184,7 +184,7 @@
 		<div class="sa-page-body">
 
 			<!--오른쪽 상세메뉴-->
-			<div class="sa-aside-left bg-color-whitesmoke" style="width: 35%; z-index: 100; position: fixed; background-color: whitesmoke;">
+			<div class="sa-aside-left bg-color-whitesmoke" style="width: 40%; z-index: 100; position: fixed; background-color: whitesmoke;">
 				<div class="sa-left-menu-outer">
 					<ul class="metismenu sa-left-menu" id="menu1">
 						<?=$top_menu_html?>

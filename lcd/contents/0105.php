@@ -12,7 +12,7 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white">재산출 요청</h2>	
+					<h2 class="font-weight-bold text-white">사육정보 변경</h2>	
 				</div>
 			</header>
 			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">

@@ -82,29 +82,29 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header" style="max-width: 100%;">	
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;실시간 평균&nbsp;
-						<span class="font-sm badge bg-orange">입추 <span id="summary_indate"> - </span></span>
+						<span class="font-sm badge bg-orange">입추 <span id="summary_indate"> - </span> </span>
 						<span class="font-sm badge bg-orange"><span id="summary_intype"></span><span id="summary_insu"></span></span>
 					</h2>	
 				</div>
 			</header>
-			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body p-1" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-3 float-left text-center px-1 pt-4">
 					<img class="img-reponsive henImage">
-					<div class="carousel-caption henInterm"><h1 class="font-weight-bold"> <span id="summary_interm"></span>일 </h1></div>
+					<div class="carousel-caption henInterm"><span class="font-weight-bold" style="font-size: 25px"> <span id="summary_interm"></span>일 </span></div>
 				</div>
 				<div class="col-xs-6 text-center no-padding" style="margin-top: 7%">
-					<span class="font-weight-bold text-danger" style="font-size: 17px">실시간 평균중량</span>
-					<span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 47px" id="summary_avg_weight"></span>
+					<span class="font-weight-bold text-danger" style="font-size: 17px">실시간 평균중량</span><br>
+					<span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 47px" id="summary_avg_weight">-</span>
 					<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
 				</div>
 				<div class="col-xs-3 float-right text-center p-1" style="margin-top: 5%">
-					<span class="font-weight-bold text-secondary" style="font-size: 18px">표준편차<br><span id="summary_devi">-</span></span><br>
-					<span class="font-weight-bold text-secondary" style="font-size: 18px">변이계수<br><span id="summary_vc">-</span></span>
+					<span class="font-weight-bold text-secondary" style="font-size: 18px">표준편차<br><span id="summary_devi"></span></span><br>
+					<span class="font-weight-bold text-secondary" style="font-size: 18px">변이계수<br><span id="summary_vc"></span></span>
 				</div>
 				<div class="col-xs-12 d-flex flex-row justify-content-around no-padding">
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최소중량</span><br><span style="font-size: 23px" id="summary_min_avg_weight">-</span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최소평체</span><br><span style="font-size: 23px" id="summary_min_avg_weight">-</span></div>
 					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">현재평체</span><br><span style="font-size: 23px" id="summary_curr_avg_weight">-</span></div>
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대중량</span><br><span style="font-size: 23px" id="summary_max_abg_weight">-</span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대평체</span><br><span style="font-size: 23px" id="summary_max_abg_weight">-</span></div>
 				</div>
 			</div>	
 		</div>
@@ -118,15 +118,15 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-calendar"></i>&nbsp;예측평체&nbsp;
-						<span class="badge bg-orange">16일령 이후 표시</span>
+						<span class="font-sm badge bg-orange">16일령 이후 표시</span>
 					</h2>	
 				</div>
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="d-flex flex-row justify-content-around">
-					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;">어제 (<span id="summary_day_term1"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
-					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;">내일 (<span id="summary_day_term2"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
-					<div class="col-xs-4 p-2 text-center"><span style="font-size: 14px;">모레 (<span id="summary_day_term3"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
+					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;"><span id="summary_date_term1"></span>(<span id="summary_day_term1"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
+					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;"><span id="summary_date_term2"></span>(<span id="summary_day_term2"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
+					<div class="col-xs-4 p-2 text-center"><span style="font-size: 14px;"><span id="summary_date_term3"></span>(<span id="summary_day_term3"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
 				</div>
 			</div>
 		</div>
