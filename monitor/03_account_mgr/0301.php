@@ -14,10 +14,10 @@ $dong_combo_json = make_jqgrid_combo_num(32);
 ?>
 <!--농장 계정 관리-->
 	<article class="col-xl-12 no-padding">
-		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;농장 계정 관리</h2>	
+					<h2><i class="fa fa-home"></i>&nbsp;농장 계정 관리</h2>	
 				</div>
 			</header>
 				
@@ -26,9 +26,9 @@ $dong_combo_json = make_jqgrid_combo_num(32);
 					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
 						<?=$group_combo?>&nbsp;&nbsp;
 						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
-						<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-success btn-sm" onClick="search_action('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search"></i></span>검색</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-danger btn-sm" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times"></i></span>취소</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="search_action('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 					</form>
 				</div>
 
@@ -146,9 +146,9 @@ include_once("../inc/bottom.php");
 	};
 
 	$("#search_form [name=search_name]").keyup(function(e){
-        if(e.keyCode == 13){
-            search_action("search");
-        }
-    });
+		if(e.keyCode == 13){
+			search_action("search");
+		}
+	});
 
 </script>

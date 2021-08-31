@@ -374,6 +374,7 @@ switch($oper){
                         LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
                         WHERE cmCode = '" .$code. "'
                         GROUP BY cm.cmCode, sc.scPort";
+		//var_dump($select_query);
 
         $select_data = get_select_data($select_query);
         $row = $select_data[0];
@@ -401,15 +402,15 @@ switch($oper){
 		// 일일 / 전일 급이 급수
         $extra = array();
 
-		if($select_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
-			$extra["extra_curr_feed"]  = $select_data[0]["sfDailyFeed"];
-			$extra["extra_prev_feed"]  = $select_data[0]["sfPrevFeed"];
-			$extra["extra_curr_water"] = $select_data[0]["sfDailyWater"];
-			$extra["extra_prev_water"] = $select_data[0]["sfPrevWater"];
+		if($row["sfFarmid"] != ""){		// 급이 데이터가 있으면
+			$extra["extra_curr_feed"]  = $row["sfDailyFeed"];
+			$extra["extra_prev_feed"]  = $row["sfPrevFeed"];
+			$extra["extra_curr_water"] = $row["sfDailyWater"];
+			$extra["extra_prev_water"] = $row["sfPrevWater"];
 
 			// 남은 사료빈 용량 확인
-			$feed_max = $select_data[0]["sfFeedMax"];
-			$curr_feed = $select_data[0]["sfFeed"];
+			$feed_max = $row["sfFeedMax"];
+			$curr_feed = $row["sfFeed"];
 
 			$percent = $curr_feed / $feed_max;
 
@@ -522,7 +523,7 @@ function make_sub_table($header_arr, $body_arr){
     $data_html .= "<thead> <tr> ";
 
     foreach($header_arr as $header){
-        $data_html .= "<th style='background-color:#568a89; color:#f8f9fa; padding:1px; font-weight:normal;'>" .$header. "</th>";
+        $data_html .= "<th style='background-color:#d89c58; color:#f8f9fa; padding:1px; font-weight:normal;'>" .$header. "</th>";
     }
 
     $data_html .= "</tr> </thead>";

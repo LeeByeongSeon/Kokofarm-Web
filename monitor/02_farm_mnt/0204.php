@@ -21,7 +21,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;출하이력</h2>	
+						<h2><i class="fa fa-file-text-o"></i>&nbsp;출하이력</h2>	
 					</div>
 				</header> 
 
@@ -41,24 +41,18 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 	<!--평균중량(표) & 오류이력-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-light no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량</h2>	
+						<h2><i class="fa fa-table"></i>&nbsp;평균중량</h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto">
 						<div class="form-inline">
-							<div class="btn-group">
-									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('day')">일령별</button>
-									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('time')">시간별</button>
-							</div>&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="$('#avg_weight_table_div').toggle(400)">
-								<span class="fa fa-table"></span>&nbsp;&nbsp;표 출력
-							</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg">
-								<span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀
-							</button>
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')">일령별</button>&nbsp;
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')">시간별</button>&nbsp;
+							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(400)"><span class="btn-label"><i class="fa fa-table"></i></span>표 출력</button>&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</div>
 					</div>
 				</header>
@@ -91,18 +85,17 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-orange no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;오류 이력</h2>	
+						<h2><i class="fa fa-file-text-o"></i>&nbsp;오류 이력</h2>	
 					</div>
 
-					<div class="widget-toolbar ml-auto">
+					<div class="widget-toolbar ml-auto" style="padding-top: 4px">
 						<div class="form-inline">
-							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="avg_search('excel')"><span class="fa fa-search"></span>&nbsp;&nbsp;조회</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="avg_search('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_error_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</div>
 					</div>
 				</header>
 					
-				<div class="widget-body">
+				<div class="widget-body" style="height:465px;">
 
 					<table id="error_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
@@ -126,7 +119,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-info  no-padding" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;실측 중량</h2>	
+						<h2><i class="fa fa-file-text-o"></i>&nbsp;실측 중량</h2>	
 					</div>
 				</header>
 
@@ -149,7 +142,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-info no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;&nbsp;재산출 기록</h2>	
+						<h2><i class="fa fa-check-square-o"></i>&nbsp;재산출 기록</h2>	
 					</div>
 				</header>
 
@@ -179,7 +172,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;로우데이터 확인</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;로우데이터 확인</h2>	
 					</div>
 				</header>
 
@@ -193,15 +186,15 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 							&nbsp;&nbsp; ~ &nbsp;&nbsp;
 							<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
 							<input class="form-control" type="text" name="search_etime" maxlength="5" placeholder="종료시간" size="7" />&nbsp;&nbsp;
-							LIMIT&nbsp;&nbsp;<input class="form-control" type="text" name="search_limit" placeholder="1~9999" size="7" />&nbsp;&nbsp;
+							LIMIT&nbsp;<input class="form-control" type="text" name="search_limit" placeholder="1~9999" size="7" />&nbsp;&nbsp;
 							<div class="form-check">
 								<input class="form-check-input" type="radio" name="search_order" id="order_1" value="1">오름차순&nbsp;
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="radio" name="search_order" id="order_2" value="-1" checked>내림차순&nbsp;&nbsp;
 							</div>
-							<button type="button" class="btn btn-primary btn-sm" onClick="search_raw_data('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;조회</button>&nbsp;
-							<button type="button" class="btn btn-success btn-sm" onClick="search_raw_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary btn-sm btn-labeled" onClick="search_raw_data('search')"><span class="btn-label"><i class="fa fa-search"></i></span>조회</button>&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="search_raw_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</form>
 						
 						<li class="nav-item ml-auto">
@@ -453,22 +446,78 @@ include_once("../inc/bottom.php");
 			
 			$.ajax({url:'0204_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
-					$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table); 
-					draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12);
+					// $('#avg_weight_table').bootstrapTable('load', data.avg_weight_table); 
+					// draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12);
+					
+					switch(data_arr['comm']){
+						case "view":
+
+							draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12);
+
+							$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table);
+
+							break;
+						case "excel":
+							let excel_html = data.excel_html;
+							let excel_title = data.excel_title;
+
+							table_to_excel(excel_title, excel_html);
+							break;
+					}
 				}
 			});
 		}
 	};
 
+	// // 오류이력 불러오기
+	// function get_error_data(){
+	// 	if(code != null && code != ""){			// "" or null 체크
+	// 		var data_arr = {}; 
+	// 		data_arr['oper'] = "get_error_history";
+	// 		data_arr['code'] = code;
+	// 		$.ajax({url:'0204_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
+	// 			success: function(data) {
+	// 				$('#error_history_table').bootstrapTable('load', data.error_history_data); 
+	// 			}
+	// 		});
+	// 	}
+	// };
+	
 	// 오류이력 불러오기
-	function get_error_data(){
+	function get_error_data(sub_comm){
 		if(code != null && code != ""){			// "" or null 체크
 			var data_arr = {}; 
 			data_arr['oper'] = "get_error_history";
 			data_arr['code'] = code;
+
+			switch(sub_comm){
+				default:
+					data_arr['comm'] = "view";
+					break;
+				case "excel":
+					data_arr['comm'] = "excel";
+					break;
+			}
+
 			$.ajax({url:'0204_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
-					$('#error_history_table').bootstrapTable('load', data.error_history_data); 
+					switch(data_arr['comm']){
+						case "view":
+
+							$('#error_history_table').bootstrapTable('load', data.error_history_data);
+
+							break;
+
+						case "excel":
+							let excel_title = data.error_excel_title;
+							let excel_html  = data.error_excel_html;
+							
+							// alert(excel_html);
+							table_to_excel(excel_title,excel_html);
+
+							break;
+
+					}
 				}
 			});
 		}

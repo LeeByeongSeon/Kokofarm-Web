@@ -69,7 +69,7 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 						<div class="input-group input-group-lg mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">입추 수</span>
 											<!-- pattern="\d*"을 추가해 IOS에서도 숫자키패드 사용할 수 있게함 -->
-							<input type="number" pattern="\d*" class="form-control" aria-label="입추 수" name="change_insu" min="0" max="99999" value="">
+							<input type="number" pattern="\d*" class="form-control" aria-label="입추 수" name="change_insu" min="0" max="99999">
 						</div>
 					</div>
 
@@ -106,7 +106,7 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 
 						<div class="col-sm-12 text-center no-padding" id="request_opt_alarm"></div>
 
-						<div class="col-sm-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding font-lg">※ 평균중량 재산출은 20일령 이후에 적용가능합니다.</label></div>
+						<div class="col-sm-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding font-lg">※ 평균중량 재산출은 20일령 이후에 입력가능합니다.</label></div>
 						<div class="col-sm-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding font-lg">※ 모든 변경사항은 관리자 승인 후에 적용됩니다.</label></div>
 						<div class="col-sm-12 text-right no-padding mb-3">
 							<button type="button" class="btn btn-primary btn-lg" id="request_ok">요청</button>

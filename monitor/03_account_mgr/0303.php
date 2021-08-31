@@ -16,7 +16,7 @@ $mgr_combo_json = make_jqgrid_combo($mgr_query, "cName1");
 ?>
 <!--관리자 계정 관리-->
 	<article class="col-xl-12 no-padding">
-		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;관리자 계정 관리</h2>	
@@ -26,13 +26,13 @@ $mgr_combo_json = make_jqgrid_combo($mgr_query, "cName1");
 			<div class="widget-body">
 
 				<div class="widget-body-toolbar">
-					<form id="searchFORM" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
+					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
 						<?=$group_combo?>&nbsp;&nbsp;
 						<?=$mgr_combo?>&nbsp;&nbsp;
 						<input class="form-control" type="text" name="searchName" maxlength="20" placeholder=" 농장명, 농장ID" size="15" >&nbsp;&nbsp;
-						<button type="button" class="btn btn-primary btn-sm" onClick="actionBtn('Search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-						<button type="button" class="btn btn-danger btn-sm" onClick="actionBtn('Search')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;
-						<button type="button" class="btn btn-success btn-sm" onClick="actionBtn('Search')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search"></i></span>검색</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-danger btn-sm" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times"></i></span>취소</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="search_action('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 					</form>
 				</div>
 
@@ -113,10 +113,43 @@ include_once("../inc/bottom.php");
 		);
 	};
 
-	// 엑셀버튼 클릭 이벤트
-	$("#btn_excel").on("click", function(){
-        $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
-		$("#jqgrid").jqGrid('excelExport', {url:'0303_action.php'});
-    });
+	// 검색, 취소, 엑셀 버튼 이벤트
+	function search_action(action){
+
+	var search_map = {};
+	$.each($("#search_form").serializeArray(), function(){ 
+		search_map[this.name] = this.value;
+	});
+
+	var search_data = JSON.stringify(search_map);	//form Data 전체를 받아 name과 value값을 JSON으로 변환(이때,"name" 과 "value"를 전송하지 않음
+	switch(action){
+		case "search":
+			$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+			break;
+
+		case "cancle":
+			//초기화
+			$("#search_form").each(function() {	this.reset();  });
+
+			//리로드
+			$.each($("#search_form").serializeArray(), function(){ 
+				search_map[this.name] = this.value; 
+			});
+			search_data = JSON.stringify(search_map);
+			$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
+			break;
+
+		case "excel":
+			$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}); //POST 형식의 parameter 추가
+			$("#jqgrid").jqGrid('excelExport', {url:'0303_action.php'});
+			break;
+		}
+	};
+
+	$("#search_form [name=search_name]").keyup(function(e){
+		if(e.keyCode == 13){
+			search_action("search");
+		}
+	});
 
 </script>

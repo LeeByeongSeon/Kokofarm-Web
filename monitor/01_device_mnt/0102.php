@@ -29,11 +29,11 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-grey-dark" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;요약 정보</h2>	
+						<h2><i class="fa fa-home"></i>&nbsp;요약 정보</h2>	
 					</div>
 				</header>
 
-				<div class="widget-body" style="height: 294.97px">
+				<div class="widget-body d-flex justify-content-between" style="height: 294.97px">
 
 					<div class="col-md-6 no-padding">
 						<div class="text-center text-secondary">
@@ -45,22 +45,22 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 								<div class="col-md-12 no-padding">
 									<div class="col-md-4 no-padding text-center">
 										<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png">
-										<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-2 no-margin font-weight-bold"> <span id="summary_days"></span>일 </h2></div>
+										<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-2 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
 									</div>
 									<div class="col-md-8 no-padding">
-										<div class="text-center font-weight-bold"><h1 class="text-center font-weight-bold no-margin no-padding"><small class="font-weight-bold">평균중량</small><br><span class="text-danger" id="summary_avg"></span></h1></div>
+										<div class="text-center font-weight-bold"><h1 class="text-center font-weight-bold no-margin no-padding"><small class="font-weight-bold">평균중량</small><br><span class="text-danger" id="summary_avg">-</span></h1></div>
 
-										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_devi">13.1</span></h6></div>
-										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_inc">40</span></h6></div>
+										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_devi">-</span></h6></div>
+										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_inc">-</span></h6></div>
 									</div>
 								</div>
 
 								<div class="col-md-12 no-padding">
 									<div class="col-md-4 no-padding">
-										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_type">육계 20000수 </span></h6></div>
+										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_type">육계 -수</span></h6></div>
 									</div>
 									<div class="col-md-8 no-padding">
-										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_comein">입추일자 : 2021-06-10 </span></h6></div>
+										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_comein">입추일자 : -</span></h6></div>
 
 										<div id="summary_indate" style="display:none;"></div>
 										<div id="summary_outdate" style="display:none;"></div>
@@ -85,7 +85,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-red-light" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;&nbsp;이슈사항</h2>	
+						<h2><i class="fa fa-exclamation-circle"></i>&nbsp;이슈사항</h2>	
 					</div>
 				</header>
 				<div class="widget-body" style="height: 294.97px">
@@ -98,19 +98,19 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="row">
 							<div class="col-xs-7 h-50 float-left">
 								<div class="col-xs-7 no-padding h-75 text-center"><img src="../images/feed-04.png" id="feed_img" style="width: 8rem;"><div class="carousel-caption" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">50%<h5></div></div>
-								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급이량(㎏)</span><br><span class="font-xl" id="extra_curr_feed">0</span></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급이량(㎏)</span><br><span class="font-xl" id="extra_curr_feed">-</span></div>
 							</div>
 							<div class="col-xs-5 h-50 float-right">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급이량(㎏)</span><br><span class="font-xl" id="extra_prev_feed">0</span></div>
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급이량(㎏)</span><br><span class="font-xl" id="extra_prev_feed">-</span></div>
 							</div>
 						</div>
 						<div class="row mt-3">
 							<div class="col-xs-7 h-50 float-left">
 								<div class="col-xs-7 pt-4 pb-0 px-0 h-75 text-center"><img src="../images/water-02.png" style="width: 5rem;"></div>
-								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">0</span></div>
+								<div class="col-xs-5 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">-</span></div>
 							</div>
 							<div class="col-xs-5 h-50 float-right">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량(L)</span><br><span class="font-xl" id="extra_prev_water">0</span></div>
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량(L)</span><br><span class="font-xl" id="extra_prev_water">-</span></div>
 							</div>
 						</div>
 					</div>
@@ -133,10 +133,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 	<!--장치현황-->
 	<div class="row">
 		<div class="col-xl-3">
-			<div class="jarviswidget jarviswidget-color-custom no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-grey-dark no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 현황</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;장치 현황</h2>	
 					</div>
 				</header>
 			
@@ -187,10 +187,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 		</div>
 
 		<div class="col-xl-9">
-			<div class="jarviswidget jarviswidget-color-custom no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-grey-dark no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;장치 데이터</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;장치 데이터</h2>	
 					</div>
 				</header>
 				<div class="widget-body" style="height: 323.5px">
@@ -213,24 +213,18 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 	<!--평균중량(표) & 오류이력-->
 	<div class="row">
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-light no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;평균중량</h2>	
+						<h2><i class="fa fa-table"></i>&nbsp;평균중량</h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto">
 						<div class="form-inline">
-							<div class="btn-group">
-									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('day')">일령별</button>
-									<button type="button" class="btn btn-default btn-sm" style="padding:0.2rem 0.4rem; margin-top:3px;" onClick="get_avg_data('time')">시간별</button>
-							</div>&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary btn-sm" style="padding:0.2rem 0.4rem;" onClick="$('#avg_weight_table_div').toggle(400)">
-								<span class="fa fa-table"></span>&nbsp;&nbsp;표 출력
-							</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-success btn-sm" style="padding:0.2rem 0.4rem;" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg">
-								<span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀
-							</button>
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')">일령별</button>&nbsp;
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')">시간별</button>&nbsp;
+							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(400)"><span class="btn-label"><i class="fa fa-table"></i></span>표 출력</button>&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</div>
 					</div>
 				</header>
@@ -263,11 +257,13 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-orange no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;오류 이력</h2>	
+						<h2><i class="fa fa-file-text-o"></i>&nbsp;오류 이력</h2>	
 					</div>
 
-					<div class="widget-toolbar ml-auto">
-						<button type="button" class="btn btn-success btn-sm mt-0" style="padding:0.2rem 0.4rem;" onClick="get_error_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>
+					<div class="widget-toolbar ml-auto" style="padding-top: 4px">
+						<div class="form-inline">
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_error_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+						</div>
 					</div>
 				</header>
 					
@@ -296,7 +292,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;GW 관리 (농장ID-동ID)</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;GW 관리 (농장ID-동ID)</h2>	
 					</div>
 				</header>
 
@@ -360,7 +356,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;IoT 저울 관리 (농장ID-동ID)</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;IoT 저울 관리 (농장ID-동ID)</h2>	
 					</div>
 				</header>
 				
@@ -390,13 +386,13 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;로우데이터 확인</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;로우데이터 확인</h2>	
 					</div>
 				</header>
 
 				<div class="widget-body">
 
-					<ul class="nav nav-tabs nav-tabs-right bordered" id="nav_raw_data" style="padding:5px;">&nbsp;&nbsp;
+					<ul class="nav nav-tabs nav-tabs-right bordered px-3" id="nav_raw_data">
 						<form id="raw_data_search_form" class="form-inline" onsubmit="return false;">
 							<span class="fa fa-clock-o"></span>&nbsp;조회범위&nbsp;&nbsp;
 							<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;
@@ -404,15 +400,15 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 							&nbsp;&nbsp; ~ &nbsp;&nbsp;
 							<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
 							<input class="form-control" type="text" name="search_etime" maxlength="5" placeholder="종료시간" size="7" />&nbsp;&nbsp;
-							LIMIT&nbsp;&nbsp;<input class="form-control" type="text" name="search_limit" placeholder="1~9999" size="7" />&nbsp;&nbsp;
+							LIMIT&nbsp;<input class="form-control" type="text" name="search_limit" placeholder="1~9999" size="7" />&nbsp;&nbsp;
 							<div class="form-check">
 								<input class="form-check-input" type="radio" name="search_order" id="order_1" value="1">오름차순&nbsp;
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="radio" name="search_order" id="order_2" value="-1" checked>내림차순&nbsp;&nbsp;
 							</div>
-							<button type="button" class="btn btn-primary btn-sm" onClick="search_raw_data('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;조회</button>&nbsp;
-							<button type="button" class="btn btn-success btn-sm" onClick="search_raw_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary btn-sm btn-labeled" onClick="search_raw_data('search')"><span class="btn-label"><i class="fa fa-search"></i></span>조회</button>&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="search_raw_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</form>
 						
 						<li class="nav-item ml-auto">
@@ -508,7 +504,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-info no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;&nbsp;재산출 기록</h2>	
+						<h2><i class="fa fa-check-square-o"></i>&nbsp;재산출 기록</h2>	
 					</div>
 				</header>
 

@@ -68,7 +68,7 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">입추 수</span>
-							<input type="text" class="form-control" aria-label="입추 수" name="change_insu" min="0" max="99999" value="">
+							<input type="number" pattern="\d*" class="form-control" aria-label="입추 수" name="change_insu" min="0" max="99999" value="">
 						</div>
 					</div>
 
@@ -100,12 +100,12 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">실측값</span>
-							<input type="text" class="form-control" name="measure_val" placeholder="실측중량" min="400" max="2500">
+							<input type="number" pattern="\d*" class="form-control" name="measure_val" placeholder="실측중량" min="400" max="2500">
 						</div>
 
 						<div class="col-xs-12 text-center no-padding" id="request_opt_alarm"></div>
 
-						<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 평균중량 재산출은 20일령 이후에 적용가능합니다.</label></div>
+						<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 평균중량 재산출은 20일령 이후에 입력가능합니다.</label></div>
 						<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 모든 변경사항은 관리자 승인 후에 적용됩니다.</label></div>
 						<div class="col-xs-12 text-right no-padding">
 							<button type="button" class="btn btn-primary" id="request_ok">요청</button>

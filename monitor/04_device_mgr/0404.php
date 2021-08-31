@@ -16,10 +16,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 <article class="col-xl-10 float-right">
 	<div class="row">
 		<div class="col-xl-7">
-			<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;급이센서 / 급수센서 관리</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;급이센서 / 급수센서 관리</h2>	
 					</div>
 				</header>
 					
@@ -36,14 +36,14 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 		</div>
 
 		<div class="col-xl-5">
-			<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;&nbsp;&nbsp;외기환경센서 관리</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;외기환경센서 관리</h2>	
 					</div>
-					<div class="widget-toolbar ml-auto">
+					<div class="widget-toolbar ml-auto" style="padding-top: 4px">
 						<div class="form-inline">
-							<button class="btn btn-default" style="padding:0.2rem 0.4rem; margin-top:3px" id="btn_excel"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;&nbsp;엑셀</button>
+							<button class="btn btn-secondary btn-sm btn-labeled" id="btn_excel"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</div>
 					</div>
 				</header>

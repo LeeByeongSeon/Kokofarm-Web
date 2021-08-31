@@ -13,13 +13,13 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;입출하 농장 수</h2>	
+					<h2><i class="fa fa-home"></i>&nbsp;입출하 농장 수</h2>	
 				</div>
 					
 				<div class="widget-toolbar ml-auto">
 					<div class="form-inline">
-						<button class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;농장별로 확인</button>&nbsp;&nbsp;&nbsp;
-						<button class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;동별로 확인</button>
+						<button class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;농장별로 확인</button>&nbsp;
+						<button class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;동별로 확인</button>
 					</div>
 				</div>
 			</header>
@@ -50,7 +50,7 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 		<div class="jarviswidget jarviswidget-color-grey-dark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;호수별 입추 수 (단위 : 1000마리)</h2>	
+					<h2><i class="fa fa-list"></i>&nbsp;호수별 입추 수 (단위 : 1000마리)</h2>	
 				</div>
 			</header>
 
@@ -128,9 +128,9 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				<div class="widget-toolbar ml-auto">
 					<!-- add: non-hidden - to disable auto hide -->
 					<div class="form-inline">
-						<a class="btn btn-default" href="javascript:void(0);" id="mt">Month</a>&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-default" href="javascript:void(0);" id="ag">Agenda</a>&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-default" href="javascript:void(0);" id="td">Today</a>&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-default" href="javascript:void(0);" id="mt">Month</a>&nbsp;
+						<a class="btn btn-default" href="javascript:void(0);" id="ag">Agenda</a>&nbsp;
+						<a class="btn btn-default" href="javascript:void(0);" id="td">Today</a>&nbsp;
 						<button class="btn bg-blue" id="openModalBtn"><i class="fa fa-plus"></i></button>
 					</div>
 				</div>
@@ -161,7 +161,7 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 		<div class="jarviswidget jarviswidget-color-green-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;농가 지도</h2>	
+					<h2><i class="fa fa-map-marker"></i>&nbsp;농가 지도</h2>	
 				</div>
 			</header>
 				

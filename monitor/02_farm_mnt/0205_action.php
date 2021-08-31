@@ -171,7 +171,7 @@ switch($oper){
 	case "excel":
 		$title = "재산출 요청 관리";
 
-		header("Content-Type: application/vnd.ms-excel");
+		header("Content-Type: application/vnd.ms-excel; charset=UTF-8;");
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header("content-disposition: attachment;filename=" . date('Ymd_His') . "_" . $title . ".xls");
@@ -228,7 +228,7 @@ switch($oper){
 			array("완료시간", "rcFinishDate", "STR", "center"),
 		);
 
-		convert_excel(get_select_data($select_query), $field_data, $title, $append_query);
+		convert_excel(get_select_data($select_query), $field_data, $title, $append_query, true);
 		break;
 
 	case "approve":

@@ -7,9 +7,15 @@ include_once("../inc/top.php");
 		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;장치 요약 현황</h2>	
+					<h2><i class="fa fa-home"></i>&nbsp;장치 요약 현황</h2>	
 				</div>
-				<div class="widget-toolbar">
+				<div class="widget-toolbar ml-auto" style="cursor: default">
+					<span class='badge bg-blue'>&nbsp;</span>&nbsp;정상&nbsp;
+					<span class='badge bg-green'>&nbsp;</span>&nbsp;경고&nbsp;
+					<span class='badge bg-yellow'>&nbsp;</span>&nbsp;주의&nbsp;
+					<span class='badge bg-red'>&nbsp;</span>&nbsp;위험
+				</div>
+				<div class="widget-toolbar" style="padding-top:2px;">
 					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
 						<div id="state_bar" class="progress-bar bg-warning" role="progressbar" style="width: 55%">55 %</div>
 					</div>
@@ -17,10 +23,10 @@ include_once("../inc/top.php");
 			</header>
 			<div class="widget-body">
 				<div class="widget-body-toolbar">
-					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
-						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;&nbsp;
-						<button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;&nbsp;
-						<button type="button" class="btn btn-danger btn-sm" onClick="search_action('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;&nbsp;
+					<form id="search_form" class="form-inline" onsubmit="return false;">
+						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;
+						<button type="button" class="btn btn-primary btn-sm btn-labeled" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search"></i></span>검색</button>&nbsp;
+						<button type="button" class="btn btn-danger btn-sm btn-labeled" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times"></i></span>취소</button>
 					</form>
 				</div>
 
@@ -143,10 +149,10 @@ include_once("../inc/bottom.php");
 				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
 				break;
 
-			case "excel":
-				$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}); //POST 형식의 parameter 추가
-				$("#jqgrid").jqGrid('excelExport', {url:'0101_action.php'});
-				break;
+			// case "excel":
+			// 	$("#jqgrid").jqGrid('setGridParam', {postData:{"search_data" : search_data}}); //POST 형식의 parameter 추가
+			// 	$("#jqgrid").jqGrid('excelExport', {url:'0101_action.php'});
+			// 	break;
 		}
 	};
 

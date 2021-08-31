@@ -25,10 +25,10 @@ $lst_combo_json = make_jqgrid_combo($query, "cName1");
 
 <!--재산출 요청 관리-->
 	<article class="col-xl-10 float-right">
-		<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;재산출 요청 관리</h2>	
+					<h2><i class="fa fa-list"></i>&nbsp;재산출 요청 관리</h2>	
 				</div>
 			</header>
 			
@@ -40,9 +40,9 @@ $lst_combo_json = make_jqgrid_combo($query, "cName1");
 						<?=$request_combo?>&nbsp;&nbsp;
 						<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;~&nbsp;
 						<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
-						<button type="button" class="btn btn-primary btn-sm" onClick="act_grid_data('search')"><span class="fa fa-search"></span>&nbsp;&nbsp;검색</button>&nbsp;
-						<button type="button" class="btn btn-danger btn-sm" onClick="act_grid_data('cancle')"><span class="fa fa-times"></span>&nbsp;&nbsp;취소</button>&nbsp;
-						<button type="button" class="btn btn-success btn-sm" onClick="act_grid_data('excel')"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;엑셀</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="act_grid_data('search')"><span class="btn-label"><i class="fa fa-search"></i></span>검색</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-danger btn-sm" onClick="act_grid_data('cancle')"><span class="btn-label"><i class="fa fa-times"></i></span>취소</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="act_grid_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 					</form>
 				</div>
 
@@ -105,8 +105,8 @@ include_once("../inc/bottom.php");
 				{label: "동 이름", 			name: "fdName",			align:'center', width:"100%"},
 				{label: "농장",				name: "rcFarmid",		hidden:true, editable:true, editrules:{ required: true, edithidden: true}},
 				{label: "동",				name: "rcDongid",		hidden:true, editable:true, editrules:{ required: true, edithidden: true}},
-				{label: "입추시간",			name: "cmIndate",			hidden:true,},
-				{label: "입추축종",			name: "cmIntype",			hidden:true,},
+				{label: "입추시간",			name: "cmIndate",		hidden:true,},
+				{label: "입추축종",			name: "cmIntype",		hidden:true,},
 				{label: "진행 상태",		name: "rcStatus",		align:'center', width:"70%"},
 				{label: "승인시간",			name: "rcApproveDate",	align:'center', width:"110%"},
 				{label: "요청 사항",		name: "rcCommand",		align:'center',	width:"80%"},
@@ -385,11 +385,11 @@ include_once("../inc/bottom.php");
 		);
 	};
 
-	// 엑셀버튼 클릭 이벤트
-	$("#btn_excel").on("click", function(){
-        $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
-		$("#jqgrid").jqGrid('excelExport', {url:'0502_action.php'});
-    });
+	// // 엑셀버튼 클릭 이벤트
+	// $("#btn_excel").on("click", function(){
+    //     $("#jqgrid").jqGrid('setGridParam', {postData:{"select" : selected_id}}); //POST 형식의 parameter 추가
+	// 	$("#jqgrid").jqGrid('excelExport', {url:'0502_action.php'});
+    // });
 
 	// 트리뷰 버튼 클릭시 리로드 이벤트
 	function act_grid_data(action){
@@ -407,10 +407,10 @@ include_once("../inc/bottom.php");
 				let dong = keys.length > 1 ? keys[1] : "01";
 
 				let temp = $("#" + farm + "\\|" + dong + "");
-				code = $(temp).attr("cmCode");
-				indate = $(temp).attr("cmIndate");
+				code 	= $(temp).attr("cmCode");
+				indate  = $(temp).attr("cmIndate");
 				outdate = $(temp).attr("cmOutDate");
-				intype = $(temp).attr("cmIntype");
+				intype  = $(temp).attr("cmIntype");
 
 				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action, "search_data" : search_data}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
 				break;

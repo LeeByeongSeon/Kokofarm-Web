@@ -5,16 +5,16 @@ var hide_dong = false;
 
 // css 속성 정의
 const color_over = "#FFFFFF";
-const color_leave = "#455a64";
+const color_leave = "#6c757d";
 const color_select = "#FFFFFF";
 
-const background_over = "#568a89";
+const background_over = "#a5a6ab";
 const background_leave = "#FFFFFF";
-const background_select = "#455a64";
+const background_select = "#696a6d";
 
-const border_over = "1px dotted #568a89";
-const border_leave = "1px dotted #455a64";
-const border_select = "1px dotted #568a89";
+const border_over = "1px solid #6c757d";
+const border_leave = "1px solid #6c757d";
+const border_select = "1px solid #6c757d";
 
 // jqgrid resize
 $(document).ready(function(){
@@ -66,7 +66,7 @@ function call_tree_view(search, work, in_out = "none"){
                 let tail = "";
 
                 head += "<li role='treeitem' style='cursor:pointer;'>\n";
-                head += "<span class='tree-content' style='padding: 7px; color: #455a64;' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
+                head += "<span class='tree-content' style='padding: 7px; color: #6c757d;' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
                 head += infos[1];
 
                 tail += "</span>\n";
@@ -86,10 +86,10 @@ function call_tree_view(search, work, in_out = "none"){
                             status = "";
                             break;
                         case "all":
-                            status = "&nbsp<span class='badge bg-" + (status == "입추" ? "blue" : "gray")  + " text-white'>" + status + "</span>";
+                            status = "&nbsp<span class='badge bg-" + (status == "입추" ? "green" : "gray")  + " text-white'>" + status + "</span>";
                             break;
                         case "in":
-                            status = status == "입추" ? "&nbsp<span class='badge bg-blue text-white'>입추</span>" : "pass";
+                            status = status == "입추" ? "&nbsp<span class='badge bg-green text-white'>입추</span>" : "pass";
                             break;
                         case "out":
                             status = status == "출하" ? "&nbsp<span class='badge bg-gray text-white'>출하</span>" : "pass";
@@ -100,7 +100,7 @@ function call_tree_view(search, work, in_out = "none"){
                     if(status == "pass") {continue;}
 
                     tail += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' ";
-                    tail += "style='padding: 7px; color: #455a64;' cmCode='" + cmCode + "', cmIndate='" + cmIndate + "', cmOutdate='" + cmOutdate + "', cmIntype='" + cmIntype + "'>" + name + status + "</li>\n";
+                    tail += "style='padding: 7px; color: #6c757d;' cmCode='" + cmCode + "', cmIndate='" + cmIndate + "', cmOutdate='" + cmOutdate + "', cmIntype='" + cmIntype + "'>" + name + status + "</li>\n";
                 }
                 tail += "</ul>\n";
                 tail += "</li>\n";
@@ -108,7 +108,7 @@ function call_tree_view(search, work, in_out = "none"){
                 if(in_out == "in" && cnt_in == 0) {continue;};          //입추 농가없으면 출력 x
                 if(in_out == "out" && cnt_out == 0) {continue;};        //출하 농가없으면 출력 x
 
-                head += cnt_in > 0 ? "&nbsp<span class='badge bg-blue text-white'>" + cnt_in + "</span>" : "";
+                head += cnt_in > 0 ? "&nbsp<span class='badge bg-green text-white'>" + cnt_in + "</span>" : "";
                 head += cnt_out > 0 ? "&nbsp<span class='badge bg-gray text-white'>" + cnt_out + "</span>" : "";
 
                 tree_html += head + tail;
@@ -563,25 +563,25 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
 			graph_obj["valueField"] = key;
 			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
 			graph_obj["bullet"] = "round";						/*꼭지점*/
-			graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+			graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
 			graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 
             if(is_label === "Y"){
-				graph_obj["labelText"]="[[value]]";					/*값 출력*/
+				graph_obj["labelText"]="[[value]]";				/*값 출력*/
 			}
 
 			switch(chart_style){
 				case "라인차트":
-					graph_obj["type"] = "smoothedLine";					/*차트모양*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";			/*차트모양*/
+					graph_obj["lineThickness"] = 1;				/*라인굵기*/
 					break;
 				case "영역차트":
-					graph_obj["type"] = "smoothedLine";					/*smoothedLine*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";			/*smoothedLine*/
+					graph_obj["lineThickness"] = 1;				/*라인굵기*/
 					graph_obj["fillAlphas"] = 0.2;
 					break;
 				default:
-					graph_obj["type"] = "column";							/*차트모양*/
+					graph_obj["type"] = "column";				/*차트모양*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 
@@ -596,9 +596,9 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
     //차트옵션 정하기
 	let chart_option = {"type": "serial", "theme": "light", "language":"ko", "marginRight":20, "fontSize":font_size,
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
-                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
-                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  	/*가이드라인*/
+                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"}, /*범례*/
+                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} 				/*가로눈금==>매우중요*/
 	};
 
     switch(chart_style){
@@ -674,21 +674,21 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
             if(is_label === "Y"){
 				graph_obj["labelText"]="[[value]]";					/*값 출력*/
                 graph_obj["bullet"] = "round";						/*꼭지점*/
-                graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+                graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
                 graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 			}
 
 			switch(graph_cnt){
 				case 1:
-					graph_obj["type"] = "column";						/*차트모양*/
-					graph_obj["lineColor"] = graph_color[1];			/*라인컬라*/
+					graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineColor"] = graph_color[1];		/*라인컬라*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 					break;
 				case 2:
-					//graph_obj["type"] = "smoothedLine";				/*차트모양*/
-                    graph_obj["type"] = "column";				/*차트모양*/
-					graph_obj["lineColor"] = graph_color[3];			/*라인컬라*/
+					//graph_obj["type"] = "smoothedLine";			/*차트모양*/
+                    graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineColor"] = graph_color[3];		/*라인컬라*/
 					graph_obj["lineThickness"] = 3;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					break;
@@ -700,9 +700,9 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
     //차트옵션 정하기
 	let chart_option = {"type": "serial", "theme": "light", "language":"ko", "marginRight":20, "fontSize":font_size,
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
-                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
-                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  	/*가이드라인*/
+                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"}, /*범례*/
+                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} 				/*가로눈금==>매우중요*/
 	};
 
 	if(is_zoom === "Y"){

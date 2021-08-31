@@ -286,7 +286,7 @@ function convert_excel($data, $field_data, $title, $option, $ret=false){
 
 	$html  = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>";
 	$html .= "<html>";
-	$html .= "<head><meta http-equiv='Content-Type' content='application/vnd.ms-excel; charset=utf-8;'></head>";
+	$html .= "<head><meta http-equiv='Content-Type' content='application/vnd.ms-excel; charset=UTF-8;'></head>";
 	$html .= "<style> #excel_table th {background:#A0B3B3; text-align:center; color:white;} </style>";
 	$html .= "<body style='border:solid 0.1pt #CCCCCC; font-size:14px'>";
 	$html .= "<table id='excel_table' border='1' style='width:100%; font-size:14px'>";

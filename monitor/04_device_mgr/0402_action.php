@@ -145,7 +145,7 @@ switch($oper){
 			array("접속 PW", "scPw", "STR", "center"),
 		);
 
-		convert_excel(get_select_data($select_query), $field_data, $title, $append_query);
+		convert_excel(get_select_data($select_query), $field_data, $title, $append_query, true);
 		break;
 }
 

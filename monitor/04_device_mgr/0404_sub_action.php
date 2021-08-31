@@ -137,7 +137,7 @@ switch($oper){
 			array("외기환경 설치일", "soDate", "STR", "center"),
 		);
 
-		convert_excel(get_select_data($select_query), $field_data, $title, $append_query);
+		convert_excel(get_select_data($select_query), $field_data, $title, $append_query, true);
 		break;
 }
 
