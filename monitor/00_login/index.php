@@ -118,12 +118,12 @@
 				success: function(data) {
 					switch(data.msg){
 						default:
-							popup_alert("오류", "통신오류입니다.<br>다시 시도해 주시기 바랍니다");
+							popup_alert("로그인 실패", "아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 						case "error":
 							$("#login_form [name=id]").val("");
 							$("#login_form [name=pw]").val("");
-							popup_alert("오류","아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
+							popup_alert("로그인 실패", "아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 
 						case "ok":
@@ -148,12 +148,12 @@
 				success: function(data) {
 					switch(data.msg){
 						default:
-							popup_alert("오류", "통신오류입니다.<br>다시 시도해 주시기 바랍니다");
+							popup_alert("로그인 실패", "아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 						case "error":
 							$("#login_form [name=id]").val("");
 							$("#login_form [name=pw]").val("");
-							popup_alert("오류","아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
+							popup_alert("로그인 실패","아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 
 						case "ok":

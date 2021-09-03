@@ -222,20 +222,20 @@
 						<li class="sparks-info">
 							<h5 class="text-white">
 								<div id="clockDate">오늘 : <?=date("Y-m-d")?></div>
-								<span class="text-white"><i class="fa fa-clock-o text-info"></i><span class="text-white" id="clock_now" style="display: inline"></span></span>
+								<span class="text-white"><i class="fa fa-clock-o text-orange-dark"></i><span class="text-white" id="clock_now" style="display: inline"></span></span>
 							</h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 입추동(수) <span class="text-white"><i class="fa fa-home text-info"></i>&nbsp;<?=number_format($inCntSU)?></span></h5>
+							<h5 class="text-white"> 입추동(수) <span class="text-white"><i class="fa fa-home text-orange-dark"></i>&nbsp;<?=number_format($inCntSU)?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 입추(수) <span class="text-white"><i class="fa fa-check-square text-info"></i>&nbsp;<?=number_format($inSU)?></span></h5>
+							<h5 class="text-white"> 입추(수) <span class="text-white"><i class="fa fa-check-square text-orange-dark"></i>&nbsp;<?=number_format($inSU)?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 생존(수) <span class="text-white"><i class="fa fa-plus-square text-info"></i>&nbsp;<?=number_format($remainSU)?></span></h5>
+							<h5 class="text-white"> 생존(수) <span class="text-white"><i class="fa fa-plus-square text-orange-dark"></i>&nbsp;<?=number_format($remainSU)?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 폐사(수) <span class="text-white"><i class="fa fa-minus-square text-info"></i>&nbsp;<?=number_format($deathSU)?></span></h5>
+							<h5 class="text-white"> 폐사(수) <span class="text-white"><i class="fa fa-minus-square text-orange-dark"></i>&nbsp;<?=number_format($deathSU)?></span></h5>
 						</li>
 					</ul>
 				</div>

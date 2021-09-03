@@ -10395,8 +10395,8 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
     font-size: 1.3rem; }
   .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a {
     /* color: #444444; */
-	/* color: #f7a510; */
-	color: #fff;
+	color: #f7a510;
+	/* color: #fff; */
     font-weight: 900; }
     .smart-style-6 .sa-aside-left .sa-left-menu > li.active > a:before {
       /* color: #455a64;  */

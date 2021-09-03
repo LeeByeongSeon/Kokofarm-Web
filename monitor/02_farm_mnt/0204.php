@@ -82,7 +82,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 		</div>
 
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-file-text-o text-red"></i>&nbsp;오류 이력</h2>	
@@ -95,7 +95,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 					
-				<div class="widget-body" style="height:465px;">
+				<div class="widget-body p-2" style="height:465px;">
 
 					<table id="error_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
@@ -116,14 +116,14 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 	<!--재산출-->
 	<div class="row">
 		<div class="col-xl-3">
-			<div class="jarviswidget jarviswidget-color-white  no-padding" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-file-text-o text-primary"></i>&nbsp;실측 중량</h2>	
 					</div>
 				</header>
 
-				<div class="widget-body">
+				<div class="widget-body" style="height: 250px">
 					<table id="measure_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
@@ -146,7 +146,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 
-				<div class="widget-body">	
+				<div class="widget-body" style="height: 250px">	
 					<table id="request_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>

@@ -789,7 +789,7 @@ function camera_modal(title, img_url){
     let img_obj = document.getElementById("modal_camera_img");
     camera_load(img_obj);
 
-    $("#modal_camera_title").html(title);					//modal title
+    $("#modal_camera_title").html(title);				//modal title
 	$("#modal_camera").modal('show');					//modal open
 };
 

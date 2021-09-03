@@ -299,52 +299,54 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 
-				<div class="widget-body p-2" style="height: 245px;">
+				<div class="widget-body p-2 d-flex align-items-center" style="height: 260px;">
 					<div class="col-xl-12 no-padding">
-						<div class="col-xl-6 float-left">
+						<div class="col-xl-6 float-left" style="height: 235.2px">
 							<table class="table table-bordered table-hover text-center">
 								<thead>
-									<td colspan="4"><button class="btn btn-outline-primary btn-sm btn-block" id="gw_lookup">GW 냉각팬 조회</button></td>
+									<th colspan="3" style="line-height: 32px">GW 냉각팬 정보<button class="btn btn-outline-secondary btn-sm ml-auto" id="gw_lookup"><span class='fa fa-refresh text-orange'></span> 조회</button></th>
 								</thead>
 								<tbody>
 									<tr>
 										<th>동작 온도</th>
-										<th>정지 온도</th>
-										<th>현재 온도</th>
-										<th>동작 상태</th>
-									</tr>
-									<tr>
 										<td id="gw_temp1">45</td>
-										<td id="gw_temp2">3</td>
-										<td>47</td>
-										<td>1</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 설정</button></td>
 									</tr>
 									<tr>
-										<td><button class="btn btn-outline-primary btn-sm btn-block">설정</button></td>
-										<td><button class="btn btn-outline-primary btn-sm btn-block">설정</button></td>
+										<th>정지 온도</th>
+										<td id="gw_temp2">3</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 설정</button></td>
+									</tr>
+									<tr>
+										<th>현재 온도</th>
+										<td>47</td>
 										<td></td>
+									</tr>
+									<tr>
+										<th>동작 상태</th>
+										<td>1</td>
 										<td></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<div class="col-xl-6 float-right">
-							<table class="table table-borderless text-center">
+						<div class="col-xl-6 float-right" style="height: 235.2px">
+							<table class="table table-bordered table-hover text-center">
 								<thead class="p-1">
-									<td><button class="btn btn-default btn-block" disabled>V 3.5.1</button></td>
+									<th colspan="2">GW 조회 및 설정</th>
 								</thead>
 								<tbody class="p-1">
 									<tr>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block">펌웨어 버전 조회</button></td>
+										<td>펌웨어 버전 조회</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 조회</button></td>
 									</tr>
 									<tr>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block">펌웨어 업데이트</button></td>
+										<td>펌웨어 업데이트</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 전송</button></td>
 									</tr>
 									<tr>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block">로그 데이터 삭제</button></td>
+										<td>로그 데이터 삭제</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 전송</button></td>
 									</tr>
 									<tr>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block">GW 재부팅</button></td>
+										<td>GW 재부팅</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 전송</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -363,7 +365,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 				
-				<div class="widget-body" style="height: 245px">
+				<div class="widget-body" style="height: 260px">
 
 					<table id="cell_control_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
@@ -507,14 +509,14 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 	<!--재산출-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-check-square-o text-primary"></i>&nbsp;재산출 기록</h2>	
 					</div>
 				</header>
 
-				<div class="widget-body">	
+				<div class="widget-body p-2">	
 				
 					<table id="request_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
 						<thead>
@@ -938,4 +940,6 @@ include_once("../inc/bottom.php");
 		$("#gw_temp1").html("<input class='form-control' type='text' maxlength='5' size='2' dir='rtl' value='45'>");
 		$("#gw_temp2").html("<input class='form-control' type='text' maxlength='5' size='2' dir='rtl' value='3'>");
 	});
+
+	
 </script>
