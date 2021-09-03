@@ -12,7 +12,7 @@ $gName_combo_json = make_jqgrid_combo($gName_query, "cGroup");
 <!--상세 옵션 관리-->
 <div class="row fullSc">
 	<article class="col-xl-12">
-		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-list"></i>&nbsp;상세 옵션 관리</h2>	
@@ -24,8 +24,8 @@ $gName_combo_json = make_jqgrid_combo($gName_query, "cGroup");
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">
 						<?=$gName_combo?>&nbsp;
-						<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search"></i></span>검색</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-danger btn-sm"  onClick="search_action('reset')"><span class="btn-label"><i class="fa fa-times"></i></span>취소</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-default btn-sm"  onClick="search_action('reset')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span>취소</button>&nbsp;
 						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="search_action('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 					</form>
 				</div>

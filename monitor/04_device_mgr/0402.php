@@ -17,7 +17,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 <article class="col-xl-10 float-right">
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-gray-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-tablet"></i>&nbsp;IP 카메라 관리</h2>	

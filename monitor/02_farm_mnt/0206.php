@@ -25,10 +25,10 @@ $defect_combo_json = make_jqgrid_combo($defect_query, "cName1");
 
 <!--결함 및 A/S 관리-->
 	<article class="col-xl-10 float-right">
-		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-gray-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-list"></i>&nbsp;결함 및 A/S 관리</h2>	
+					<h2><i class="fa fa-wrench"></i>&nbsp;결함 및 A/S 관리</h2>	
 				</div>
 			</header>
 				
@@ -41,8 +41,8 @@ $defect_combo_json = make_jqgrid_combo($defect_query, "cName1");
 						<?=$defect_combo?>&nbsp;&nbsp;
 						<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;~&nbsp;
 						<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
-						<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="act_grid_data('search')"><span class="btn-label"><i class="fa fa-search"></i></span>검색</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-danger btn-sm" onClick="act_grid_data('cancle')"><span class="btn-label"><i class="fa fa-times"></i></span>취소</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="act_grid_data('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="act_grid_data('cancle')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span>취소</button>&nbsp;
 						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="act_grid_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 					</form>
 				</div>

@@ -10,7 +10,7 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 <!--입출하 농장 수 & 호수별 입추 수-->
 <div class="row">
 	<article class="col-xl-4">
-		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-gray-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-home"></i>&nbsp;입출하 농장 수</h2>	
@@ -18,8 +18,8 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 					
 				<div class="widget-toolbar ml-auto">
 					<div class="form-inline">
-						<button class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;농장별로 확인</button>&nbsp;
-						<button class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;동별로 확인</button>
+						<button class="btn btn-default btn-labeled"><span class="btn-label"><i class="fa fa-search"></i></span>농장별로 확인</button>&nbsp;
+						<button class="btn btn-default btn-labeled"><span class="btn-label"><i class="fa fa-search"></i></span>동별로 확인</button>
 					</div>
 				</div>
 			</header>
@@ -47,7 +47,7 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 	</article>
 
 	<article class="col-xl-8">
-		<div class="jarviswidget jarviswidget-color-grey-dark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-gray-dark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-list"></i>&nbsp;호수별 입추 수 (단위 : 1000마리)</h2>	

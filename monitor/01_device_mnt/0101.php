@@ -4,16 +4,16 @@ include_once("../inc/top.php");
 ?>
 <!--농장 계정 관리-->
 	<article class="col-xl-12 no-padding">
-		<div class="jarviswidget jarviswidget-color-grey-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-home"></i>&nbsp;장치 요약 현황</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto" style="cursor: default">
-					<span class='badge bg-blue'>&nbsp;</span>&nbsp;정상&nbsp;
-					<span class='badge bg-green'>&nbsp;</span>&nbsp;경고&nbsp;
-					<span class='badge bg-yellow'>&nbsp;</span>&nbsp;주의&nbsp;
-					<span class='badge bg-red'>&nbsp;</span>&nbsp;위험
+					<span class='badge bg-blue'> </span>&nbsp;정상&nbsp;
+					<span class='badge bg-green'> </span>&nbsp;경고&nbsp;
+					<span class='badge bg-yellow'> </span>&nbsp;주의&nbsp;
+					<span class='badge bg-red'> </span>&nbsp;위험
 				</div>
 				<div class="widget-toolbar" style="padding-top:2px;">
 					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
@@ -25,8 +25,8 @@ include_once("../inc/top.php");
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">
 						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;
-						<button type="button" class="btn btn-primary btn-sm btn-labeled" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search"></i></span>검색</button>&nbsp;
-						<button type="button" class="btn btn-danger btn-sm btn-labeled" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times"></i></span>취소</button>
+						<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>&nbsp;
+						<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span>취소</button>
 					</form>
 				</div>
 

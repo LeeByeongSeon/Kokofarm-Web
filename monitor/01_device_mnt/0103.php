@@ -27,17 +27,17 @@ include_once("../common/php_module/common_func.php");
 						<h2><i class="fa fa-video-camera"></i>&nbsp;IP Camera 확인 (농장이름-동)</h2>	
 					</div>
 					<div class="widget-toolbar ml-auto" style="cursor: default">
-						<span class='badge bg-green'>&nbsp;</span>&nbsp;입추
-						<span class='badge bg-gray'>&nbsp;</span>&nbsp;출하
+						<span class='badge badge-primary'> </span>&nbsp;입추
+						<span class='badge badge-danger'> </span>&nbsp;출하
 					</div>
 				</header>
 				
 				<div class="widget-body no-padding">
 					<div class="widget-body-toolbar">
 						<form id="search_form" class="form-inline" onsubmit="return false;">
-							<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="get_camera_list('all')"><span class="btn-label"><i class="fa fa-search"></i></span>전체</button>&nbsp;
-							<button type="button" class="btn btn-labeled btn-success btn-sm" onClick="get_camera_list('in')"><span class="btn-label"><i class="fa fa-search"></i></span>입추</button>&nbsp;
-							<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="get_camera_list('out')"><span class="btn-label"><i class="fa fa-search"></i></span>출하</button>
+							<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="get_camera_list('all')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>전체</button>&nbsp;
+							<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="get_camera_list('in')"><span class="btn-label"><i class="fa fa-search"></i></span>입추</button>&nbsp;
+							<button type="button" class="btn btn-labeled btn-danger btn-sm" onClick="get_camera_list('out')"><span class="btn-label"><i class="fa fa-search"></i></span>출하</button>
 						</form>
 					</div>
 

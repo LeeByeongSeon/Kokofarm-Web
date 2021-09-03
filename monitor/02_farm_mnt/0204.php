@@ -21,7 +21,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;출하이력</h2>	
+						<h2><i class="fa fa-file-text-o text-red"></i>&nbsp;출하이력</h2>	
 					</div>
 				</header> 
 
@@ -44,7 +44,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-light no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-table"></i>&nbsp;평균중량</h2>	
+						<h2><i class="fa fa-bar-chart-o text-orange"></i>&nbsp;평균중량</h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto">
@@ -82,10 +82,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 		</div>
 
 		<div class="col-xl-6">
-			<div class="jarviswidget jarviswidget-color-orange no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;오류 이력</h2>	
+						<h2><i class="fa fa-file-text-o text-red"></i>&nbsp;오류 이력</h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto" style="padding-top: 4px">
@@ -101,8 +101,8 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<thead>
 							<tr>
 								<th data-field='f1' data-visible="true" data-sortable="true">오류시간</th>
-								<th data-field='f2' data-visible="true" data-sortable="true">오류상태</th>
-								<th data-field='f3' data-visible="true" data-sortable="true">저울번호</th>
+								<th data-field='f2' data-visible="true" data-sortable="true" data-align="center">오류상태</th>
+								<th data-field='f3' data-visible="true" data-sortable="true" data-align="center">저울번호</th>
 							</tr>
 						</thead>
 					</table>
@@ -116,10 +116,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 	<!--재산출-->
 	<div class="row">
 		<div class="col-xl-3">
-			<div class="jarviswidget jarviswidget-color-info  no-padding" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white  no-padding" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o"></i>&nbsp;실측 중량</h2>	
+						<h2><i class="fa fa-file-text-o text-primary"></i>&nbsp;실측 중량</h2>	
 					</div>
 				</header>
 
@@ -139,10 +139,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 		</div>
 
 		<div class="col-xl-9">
-			<div class="jarviswidget jarviswidget-color-info no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-check-square-o"></i>&nbsp;재산출 기록</h2>	
+						<h2><i class="fa fa-check-square-o text-primary"></i>&nbsp;재산출 기록</h2>	
 					</div>
 				</header>
 
@@ -169,10 +169,13 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 	<!--로우데이터 확인-->
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-green-dark no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;로우데이터 확인</h2>	
+						<h2><i class="fa fa-list text-primary"></i>&nbsp;로우데이터 확인</h2>	
+					</div>
+					<div class="widget-toolbar ml-auto" style="cursor: default">
+						<span class="font-weight-bold text-info">※ 조회범위 설정 후 조회 버튼을 눌러주세요.</span>
 					</div>
 				</header>
 
@@ -193,7 +196,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 							<div class="form-check">
 								<input class="form-check-input" type="radio" name="search_order" id="order_2" value="-1" checked>내림차순&nbsp;&nbsp;
 							</div>
-							<button type="button" class="btn btn-primary btn-sm btn-labeled" onClick="search_raw_data('search')"><span class="btn-label"><i class="fa fa-search"></i></span>조회</button>&nbsp;
+							<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_raw_data('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>조회</button>&nbsp;
 							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="search_raw_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</form>
 						
