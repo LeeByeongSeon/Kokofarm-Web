@@ -208,26 +208,26 @@ switch($oper){
                         }
                         break;
                     
-                    // 경과시간 확인하여 현재 오류인지 아닌지 출력
-                    case "siSensorDate":
-                        $out = "";
-                        $tokens = explode("|", $val);
+					// 경과시간 확인하여 현재 오류인지 아닌지 출력
+					case "siSensorDate":
+						$out = "";
+						$tokens = explode("|", $val);
 
-                        for($i=0; $i<count($tokens); $i++){
-                            $diff = get_date_diff($tokens[$i], $now);
-                            $out = $diff > 180 ? $out . " | " . ($i+1) : $out;
-                        }
-                        
-                        $out = strlen($out) > 2 ? substr($out, 3) : strlen($out);
-                        $row[$key] = "<span class='badge badge-pill badge-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "O" : $out) . "</span>";
-                        break;
-                    
-                    // 네트워크
-                    case "beNetwork":
-                        $row[$key] = "<span class='badge badge-pill badge-" . ($val < 80 ? "primary" : "warning") . " btn-sm'>" . $val . "ms</span>";
-                        break;
-                }
-            }
+						for($i=0; $i<count($tokens); $i++){
+							$diff = get_date_diff($tokens[$i], $now);
+							$out = $diff > 180 ? $out . " | " . ($i+1) : $out;
+						}
+						
+						$out = strlen($out) > 2 ? substr($out, 3) : strlen($out);
+						$row[$key] = "<span class='badge badge-pill badge-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "O" : $out) . "</span>";
+						break;
+					
+					// 네트워크
+					case "beNetwork":
+						$row[$key] = "<span class='badge badge-pill badge-" . ($val < 80 ? "primary" : "warning") . " btn-sm'>" . $val . "ms</span>";
+						break;
+				}
+			}
 
             $level_map = array(
                 array("class" => "primary", "info" => "정상"), array("class" => "success", "info" => "경고"), 

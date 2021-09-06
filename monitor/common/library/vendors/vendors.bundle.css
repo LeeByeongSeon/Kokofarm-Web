@@ -2880,11 +2880,12 @@ pre code {
   border-bottom-width: 2px;
 }
 
+.table-borderless,
 .table-borderless th,
 .table-borderless td,
 .table-borderless thead th,
 .table-borderless tbody + tbody {
-  border: 0;
+  border: 0 !important;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -6062,8 +6063,8 @@ input[type="button"].btn-block {
 }
 
 .badge-primary {
-  color: #fff;
-  background-color: #007bff;
+  color: #fff !important;
+  background-color: #007bff !important;
 }
 
 .badge-primary[href]:hover, .badge-primary[href]:focus {
@@ -6073,8 +6074,8 @@ input[type="button"].btn-block {
 }
 
 .badge-secondary {
-  color: #fff;
-  background-color: #6c757d;
+  color: #fff !important;
+  background-color: #6c757d !important;
 }
 
 .badge-secondary[href]:hover, .badge-secondary[href]:focus {
@@ -6084,8 +6085,8 @@ input[type="button"].btn-block {
 }
 
 .badge-success {
-  color: #fff;
-  background-color: #28a745;
+  color: #fff !important;
+  background-color: #28a745 !important;
 }
 
 .badge-success[href]:hover, .badge-success[href]:focus {
@@ -6095,8 +6096,8 @@ input[type="button"].btn-block {
 }
 
 .badge-info {
-  color: #fff;
-  background-color: #17a2b8;
+  color: #fff !important;
+  background-color: #17a2b8 !important;
 }
 
 .badge-info[href]:hover, .badge-info[href]:focus {
@@ -6106,8 +6107,8 @@ input[type="button"].btn-block {
 }
 
 .badge-warning {
-  color: #212529;
-  background-color: #ffc107;
+  color: #212529 !important;
+  background-color: #ffc107 !important;
 }
 
 .badge-warning[href]:hover, .badge-warning[href]:focus {
@@ -6117,8 +6118,8 @@ input[type="button"].btn-block {
 }
 
 .badge-danger {
-  color: #fff;
-  background-color: #dc3545;
+  color: #fff !important;
+  background-color: #dc3545 !important;
 }
 
 .badge-danger[href]:hover, .badge-danger[href]:focus {
@@ -6128,8 +6129,8 @@ input[type="button"].btn-block {
 }
 
 .badge-light {
-  color: #212529;
-  background-color: #f8f9fa;
+  color: #212529 !important;
+  background-color: #f8f9fa !important;
 }
 
 .badge-light[href]:hover, .badge-light[href]:focus {
@@ -6139,8 +6140,8 @@ input[type="button"].btn-block {
 }
 
 .badge-dark {
-  color: #fff;
-  background-color: #343a40;
+  color: #fff !important;
+  background-color: #343a40 !important;
 }
 
 .badge-dark[href]:hover, .badge-dark[href]:focus {

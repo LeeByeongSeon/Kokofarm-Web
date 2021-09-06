@@ -374,18 +374,19 @@ switch($oper){
                         LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
                         WHERE cmCode = '" .$code. "'
                         GROUP BY cm.cmCode, sc.scPort";
+		// var_dump($select_query);
 
         $select_data = get_select_data($select_query);
         $row = $select_data[0];
 
         $summary_data = array();
 
-        $summary_data["summary_name"] = $row["fdName"] . " (" . $row["cmFarmid"] . "-" . $row["cmDongid"] . ")";
-        $summary_data["summary_days"] = $row["days"];
-        $summary_data["summary_avg"] = number_format($row["beAvgWeight"], 0);
-        $summary_data["summary_devi"] = "표준편차<br>" . number_format($row["beDevi"], 1);
-        $summary_data["summary_inc"] = "일일증체량<br>" . (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
-        $summary_data["summary_type"] = $row["cmIntype"] . " " . $row["cmInsu"] . "수";
+        $summary_data["summary_name"] 	= $row["fdName"] . " (" . $row["cmFarmid"] . "-" . $row["cmDongid"] . ")";
+        $summary_data["summary_days"] 	= $row["days"];
+        $summary_data["summary_avg"] 	= number_format($row["beAvgWeight"], 0);
+        $summary_data["summary_devi"] 	= "표준편차<br>" . number_format($row["beDevi"], 1);
+        $summary_data["summary_inc"] 	= "일일증체량<br>" . (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
+        $summary_data["summary_type"] 	= $row["cmIntype"] . " " . $row["cmInsu"] . "수";
         $summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
 
         //카메라
@@ -401,15 +402,15 @@ switch($oper){
 		// 일일 / 전일 급이 급수
         $extra = array();
 
-		if($select_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
-			$extra["extra_curr_feed"]  = $select_data[0]["sfDailyFeed"];
-			$extra["extra_prev_feed"]  = $select_data[0]["sfPrevFeed"];
-			$extra["extra_curr_water"] = $select_data[0]["sfDailyWater"];
-			$extra["extra_prev_water"] = $select_data[0]["sfPrevWater"];
+		if($row["sfFarmid"] != ""){		// 급이 데이터가 있으면
+			$extra["extra_curr_feed"]  = $row["sfDailyFeed"];
+			$extra["extra_prev_feed"]  = $row["sfPrevFeed"];
+			$extra["extra_curr_water"] = $row["sfDailyWater"];
+			$extra["extra_prev_water"] = $row["sfPrevWater"];
 
 			// 남은 사료빈 용량 확인
-			$feed_max = $select_data[0]["sfFeedMax"];
-			$curr_feed = $select_data[0]["sfFeed"];
+			$feed_max = $row["sfFeedMax"];
+			$curr_feed = $row["sfFeed"];
 
 			$percent = $curr_feed / $feed_max;
 
@@ -447,9 +448,9 @@ switch($oper){
 
             $cell_control_data[] = array(
                 'f1'  => $sensor_map[0][$i], 
-                'f2'  => "<button class='btn btn-primary' id='btn_cell_version_" .$cell_id. "' onClick='itr_send(\"" .$version_info. "\", \"btn_cell_version_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
-                'f3'  => "<button class='btn btn-primary' id='btn_cell_sensor_" .$cell_id. "' onClick='itr_send(\"" .$sensor_info. "\", \"btn_cell_sensor_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
-                'f4'  => "<button class='btn btn-primary' id='btn_zeor_set_" .$cell_id. "' onClick='itr_send(\"" .$zero_set. "\", \"btn_zeor_set_" .$cell_id. "\", true)'><span id='ret'></span><span class='fa fa-cog'></span></button>",
+                'f2'  => "<button class='btn btn-outline-secondary btn-sm btn-block' id='btn_cell_version_" .$cell_id. "' onClick='itr_send(\"" .$version_info. "\", \"btn_cell_version_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
+                'f3'  => "<button class='btn btn-outline-secondary btn-sm btn-block' id='btn_cell_sensor_" .$cell_id. "' onClick='itr_send(\"" .$sensor_info. "\", \"btn_cell_sensor_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
+                'f4'  => "<button class='btn btn-outline-secondary btn-sm btn-block' id='btn_zeor_set_" .$cell_id. "' onClick='itr_send(\"" .$zero_set. "\", \"btn_zeor_set_" .$cell_id. "\", true)'><span id='ret'></span><span class='fa fa-cog'></span></button>",
             );
         }
 
@@ -522,7 +523,7 @@ function make_sub_table($header_arr, $body_arr){
     $data_html .= "<thead> <tr> ";
 
     foreach($header_arr as $header){
-        $data_html .= "<th style='background-color:#568a89; color:#f8f9fa; padding:1px; font-weight:normal;'>" .$header. "</th>";
+        $data_html .= "<th style='background-color:#b8b8b8; color:#fff; padding:1px; font-weight:normal;'>" .$header. "</th>";
     }
 
     $data_html .= "</tr> </thead>";

@@ -76,6 +76,8 @@
 <script language="javascript">
 	$(document).ready(function(){
 
+		//상단 시계
+		setInterval(function(){$("#clock_now").html("&nbsp;"+get_now_time());});
 		
 	});
 

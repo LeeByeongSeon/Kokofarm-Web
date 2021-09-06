@@ -8,7 +8,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;동 정보 요약</h2>	
+						<h2><i class="fa fa-home"></i>&nbsp;동 정보 요약</h2>	
 					</div>
 				</header>
 
@@ -33,7 +33,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;평균중량 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;평균중량 현황</h2>	
 					</div>
 				</header>
 
@@ -58,7 +58,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;환경센서 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;환경센서 현황</h2>	
 					</div>
 				</header>
 
@@ -83,7 +83,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;계근중량 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;계근중량 현황</h2>	
 					</div>
 				</header>
 
@@ -177,7 +177,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-orange no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;급이량 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;급이량 현황</h2>	
 					</div>
 				</header>
 
@@ -202,7 +202,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-info no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;급수량 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;급수량 현황</h2>	
 					</div>
 				</header>
 
@@ -227,7 +227,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-teal no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;평균중량 이력 비교</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;평균중량 이력 비교</h2>	
 					</div>
 				</header>
 
@@ -252,7 +252,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-green-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;환경센서 이력 비교</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;환경센서 이력 비교</h2>	
 					</div>
 				</header>
 

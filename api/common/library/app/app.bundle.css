@@ -2695,14 +2695,14 @@ body.nooverflow {
     color: #fff; }
 
 /* white theme */
-/* grey-dark theme */
-.jarviswidget-color-grey-dark > header {
+/* gray-dark theme */
+.jarviswidget-color-gray-dark > header {
   background: #525252;
   border-color: #525252;
   color: #FFF; }
-  .jarviswidget-color-grey-dark > header > .jarviswidget-ctrls a {
+  .jarviswidget-color-gray-dark > header > .jarviswidget-ctrls a {
     color: #fff; }
-  .jarviswidget-color-grey-dark > header .nav-tabs li a:not(.active) {
+  .jarviswidget-color-gray-dark > header .nav-tabs li a:not(.active) {
     color: #fff; }
 
 /* magenta theme */
@@ -3388,7 +3388,7 @@ textarea.clone {
 
 .ui-chatbox-input {
   padding: 0.23077rem;
-  border-top: 0.07692rem solid grey;
+  border-top: 0.07692rem solid gray;
   overflow: hidden;
   width: 100% !important;
   max-width: 100% !important;
@@ -5980,10 +5980,10 @@ hr.simple {
   background-color: #fff !important; }
 
 /* -------------------------------------- */
-.text-grey-dark {
+.text-gray-dark {
   color: #525252 !important; }
 
-.bg-grey-dark {
+.bg-gray-dark {
   background-color: #525252 !important; }
 
 /* -------------------------------------- */

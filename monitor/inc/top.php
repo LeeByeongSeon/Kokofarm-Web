@@ -12,33 +12,33 @@
 	
 	//메뉴 구성
 	$menu_struct = array(
-		//장치 현황
-		array("01_device_mnt", "0101.php", "장치 현황", "요약 현황", "Y", "fa fa-lg fa-fw fa-home"),
-		array("01_device_mnt", "0102.php", "장치 현황", "동별 세부 현황", "", ""),
-		array("01_device_mnt", "0103.php", "장치 현황", "IP 카메라 현황", "", ""),
+		//장치현황
+		array("01_device_mnt", "0101.php", "장치현황", "요약 현황", "Y", "fa fa-lg fa-fw fa-home"),
+		array("01_device_mnt", "0102.php", "장치현황", "동별 세부 현황", "", ""),
+		array("01_device_mnt", "0103.php", "장치현황", "IP 카메라 현황", "", ""),
 		
-		//농장 현황
-		array("02_farm_mnt", "0201.php", "농장 현황", "입출하 관리", "Y", "fa fa-lg fa-fw fa-bar-chart-o"),
-		array("02_farm_mnt", "0202.php", "농장 현황", "전국 농장 현황", "", ""),
-		array("02_farm_mnt", "0203.php", "농장 현황", "동별 세부 현황", "", ""),
-		array("02_farm_mnt", "0204.php", "농장 현황", "출하이력", "", ""),
-		array("02_farm_mnt", "0205.php", "농장 현황", "재산출 요청 관리", "", ""),
-		array("02_farm_mnt", "0206.php", "농장 현황", "결함 및 A/S 관리", "", ""),
+		//농장현황
+		array("02_farm_mnt", "0201.php", "농장현황", "입출하 관리", "Y", "fa fa-lg fa-fw fa-bar-chart-o"),
+		array("02_farm_mnt", "0202.php", "농장현황", "전국 농장 현황", "", ""),
+		array("02_farm_mnt", "0203.php", "농장현황", "동별 세부 현황", "", ""),
+		array("02_farm_mnt", "0204.php", "농장현황", "출하이력", "", ""),
+		array("02_farm_mnt", "0205.php", "농장현황", "재산출 요청 관리", "", ""),
+		array("02_farm_mnt", "0206.php", "농장현황", "결함 및 A/S 관리", "", ""),
 		
-		//계정 관리
-		array("03_account_mgr", "0301.php", "계정 관리", "농장 계정 관리", "Y", "fa fa-lg fa-fw fa-group"),
-		array("03_account_mgr", "0302.php", "계정 관리", "농장별 동 관리", "", ""),
-		array("03_account_mgr", "0303.php", "계정 관리", "관리자 계정 관리", "", ""),
+		//계정관리
+		array("03_account_mgr", "0301.php", "계정관리", "농장 계정 관리", "Y", "fa fa-lg fa-fw fa-group"),
+		array("03_account_mgr", "0302.php", "계정관리", "농장별 동 관리", "", ""),
+		array("03_account_mgr", "0303.php", "계정관리", "관리자 계정 관리", "", ""),
 		
-		//장치 관리
-		array("04_device_mgr", "0401.php", "장치 관리", "IoT 저울 관리", "Y", "fa fa-lg fa-fw fa-video-camera"),
-		array("04_device_mgr", "0402.php", "장치 관리", "IP 카메라 관리", "", ""),
-		array("04_device_mgr", "0403.php", "장치 관리", "PLC 관리", "", ""),
-		array("04_device_mgr", "0404.php", "장치 관리", "급이/급수/외기 관리", "", ""),
+		//장치관리
+		array("04_device_mgr", "0401.php", "장치관리", "IoT 저울 관리", "Y", "fa fa-lg fa-fw fa-video-camera"),
+		array("04_device_mgr", "0402.php", "장치관리", "IP 카메라 관리", "", ""),
+		array("04_device_mgr", "0403.php", "장치관리", "PLC 관리", "", ""),
+		array("04_device_mgr", "0404.php", "장치관리", "급이/급수/외기 관리", "", ""),
 
-		//옵션 관리
-		array("05_option_mgr", "0501.php", "옵션 관리", "상세 옵션 관리", "Y", "fa fa-lg fa-fw fa-cog"),
-		array("05_option_mgr", "0502.php", "옵션 관리", "PLC Unit ID 관리", "", ""),
+		//옵션관리
+		array("05_option_mgr", "0501.php", "옵션관리", "상세 옵션 관리", "Y", "fa fa-lg fa-fw fa-cog"),
+		array("05_option_mgr", "0502.php", "옵션관리", "PLC Unit ID 관리", "", ""),
 	);
   
     //현재 URL 확인 및 메뉴출력
@@ -97,7 +97,7 @@
 	$title_html = "";
 	foreach ($menu_struct as $value){
 		if($depth_1_url == $value[0] && $depth_2_url == $value[1]){
-			$title_html .= "<h4 class='page-header'><i class='fa-fw fa fa-th-list'></i> " .$value[2]. "<span style='color:#455a64'> <i class='fa-fw fa fa-angle-right'></i> <b>" .$value[3]. "</b></span></h4>";
+			$title_html .= "<h4 class='page-header'><i class='fa-fw fa fa-th-large text-orange'></i> " .$value[2]. "<span style='color:#455a64'> <i class='fa-fw fa fa-angle-right'></i> <b>" .$value[3]. "</b></span></h4>";
 		}
 	}
 ?>
@@ -194,8 +194,8 @@
 						<div class="sa-header-menu">
 							<div class="d-flex align-items-center w-100">
 								<div class="ml-auto sa-header-right-area">
-									<div class="form-inline text-secondary">
-										<spa><i class="glyphicon glyphicon-user"></i></i>&nbsp;&nbsp;<?=$mgr_name?> - <?=$mgr_type?></span>&nbsp;&nbsp;&nbsp;&nbsp;
+									<div class="form-inline text-dark font-weight-bold">
+										<i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;<?=$mgr_name?> - <?=$mgr_type?></span>&nbsp;&nbsp;&nbsp;&nbsp;
 										<a class="btn-sm text-secondary" href="../00_login/index_action.php?oper=logout" title="logout" role="button"> Logout <i class="glyphicon glyphicon-log-out"></i></a>
 									</div>
 								</div>
@@ -220,22 +220,22 @@
 					<!-- 오류표시 ul -->
 					<ul class="metismenu sa-left-menu sa-sparks float-right" style="margin-top: revert;">
 						<li class="sparks-info">
-							<h5>
-								<div id="clockDate">오늘 : 2021-07-28</div>
-								<span id="clockTime" class="text-teal"><i class="fa fa-clock-o"></i>&nbsp;11:20:45</span>
+							<h5 class="text-white">
+								<div id="clockDate">오늘 : <?=date("Y-m-d")?></div>
+								<span class="text-white"><i class="fa fa-clock-o text-orange-dark"></i><span class="text-white" id="clock_now" style="display: inline"></span></span>
 							</h5>
 						</li>
 						<li class="sparks-info">
-							<h5> 입추(수) <span class="text-blue"><i class="fa fa-plus-square"></i>&nbsp;<?=number_format($inSU)?></span></h5>
+							<h5 class="text-white"> 입추동(수) <span class="text-white"><i class="fa fa-home text-orange-dark"></i>&nbsp;<?=number_format($inCntSU)?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5> 폐사(수) <span class="text-red"><i class="fa fa-minus-square"></i>&nbsp;<?=number_format($deathSU)?></span></h5>
+							<h5 class="text-white"> 입추(수) <span class="text-white"><i class="fa fa-check-square text-orange-dark"></i>&nbsp;<?=number_format($inSU)?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5> 생존(수) <span class="text-green-dark"><i class="fa fa-pencil-square"></i>&nbsp;<?=number_format($remainSU)?></span></h5>
+							<h5 class="text-white"> 생존(수) <span class="text-white"><i class="fa fa-plus-square text-orange-dark"></i>&nbsp;<?=number_format($remainSU)?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5> 입추동(수) <span class="text-blue-dark"><i class="fa fa-home"></i>&nbsp;<?=number_format($inCntSU)?></span></h5>
+							<h5 class="text-white"> 폐사(수) <span class="text-white"><i class="fa fa-minus-square text-orange-dark"></i>&nbsp;<?=number_format($deathSU)?></span></h5>
 						</li>
 					</ul>
 				</div>
@@ -261,12 +261,16 @@
 							<article class="col-xl-2 tree_view no-padding" id="treeView" style='display:none;'>
 								<div class="col-xl-12 float-left no-padding">
 									
-									<div class="jarviswidget jarviswidget-color-custom no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+									<div class="jarviswidget jarviswidget-color-darken no-padding" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 										<header>
 											<div class="widget-header">
 												<span class="widget-icon"> <i class="fa fa-list"></i> </span>
 												<h2>농가 목록 </h2>
-											</div>		
+											</div>
+											<div class="widget-toolbar ml-auto" style="cursor: default">
+												<span class='badge badge-primary'> </span>&nbsp;입추
+												<span class='badge badge-danger'> </span>&nbsp;출하
+											</div>
 										</header>
 							
 										<div class="widget-body">
@@ -275,8 +279,8 @@
 											<div class="widget-body-toolbar bg-white" style="padding-top:10px; padding-left:20px;">
 												<form class="form-inline" id="form_tree_search" role="form" onsubmit="return false;">
 													<div class="input-group">
-														<input type="text" class="form-control" name="text_tree_search" placeholder="농장 이름" max-length="20">&nbsp;&nbsp;&nbsp;&nbsp;
-														<button type="button" class="btn" id="btn_tree_search" style="color:white; background-color:#568a89;">검색</button>
+														<input type="text" class="form-control" name="text_tree_search" placeholder="농장 이름" max-length="20">&nbsp;
+														<button type="button" class="btn btn-default btn-sm btn-labeled" id="btn_tree_search" style="margin-top: 1px"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>
 													</div>
 												</form>
 											</div>
@@ -284,7 +288,7 @@
 											<div class="custom-scroll table-responsive" style="height: 580px; padding-top: 10px;">
 
 												<!--농장 트리뷰 body 부분-->
-												<div class="tree smart-form" id="tree-body" style="margin-left:20px; color:#000000;">
+												<div class="tree smart-form" id="tree-body" style="margin-left:20px; color:#6c757d;">
 													<!-- <ul>
 														<li>
 															<span class="tree-content" id="KF0006"><i class="fa fa-lg fa-folder-open"></i> 농장 이름</span>

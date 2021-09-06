@@ -89,68 +89,138 @@ switch($oper){
                 break;
             
             case "excel":
-                $title = $farmID . "_" . $dongID . "_평균중량";
+                // $title = $farmID . "_" . $dongID . "_평균중량";
 
-                header("Content-Type: application/vnd.ms-excel");
-                header("Expires: 0");
-                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("content-disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
+                // header("Content-Type: application/vnd.ms-excel");
+                // header("Expires: 0");
+                // header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+                // header("content-disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
 
-                $field_data = array(
-                    /*농가 정보*/
-                    array("번호",       "No", "INT", "center"),
-                    array("농장ID",     "awFarmid", "STR", "center"),
-                    array("동ID",       "awDongid", "STR", "center"),
-                    array("산출시간",   "awDate", "STR", "center"),
-                    array("예측중량",   "awWeight", "STR", "center"),
-                    array("권고중량",   "refWeight", "STR", "center"),
-                    array("표준편차",   "awDevi", "STR", "center"),
-                    array("변이계수",   "awVc", "STR", "center"),
-                    array("+1 예측",    "awEstiT1", "STR", "center"),
-                    array("+2 예측",    "awEstiT2", "STR", "center"),
-                    array("+3 예측",    "awEstiT3", "STR", "center"),
-                    array("일령",       "awDays", "STR", "center"),
-                    array("정규분포",   "awNdis", "STR", "left"),
-                );
+                // $field_data = array(
+                //     /*농가 정보*/
+                //     array("번호",       "No", "INT", "center"),
+                //     array("농장ID",     "awFarmid", "STR", "center"),
+                //     array("동ID",       "awDongid", "STR", "center"),
+                //     array("산출시간",   "awDate", "STR", "center"),
+                //     array("예측중량",   "awWeight", "STR", "center"),
+                //     array("권고중량",   "refWeight", "STR", "center"),
+                //     array("표준편차",   "awDevi", "STR", "center"),
+                //     array("변이계수",   "awVc", "STR", "center"),
+                //     array("+1 예측",    "awEstiT1", "STR", "center"),
+                //     array("+2 예측",    "awEstiT2", "STR", "center"),
+                //     array("+3 예측",    "awEstiT3", "STR", "center"),
+                //     array("일령",       "awDays", "STR", "center"),
+                //     array("정규분포",   "awNdis", "STR", "left"),
+                // );
 
-                //echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
-                convert_excel(get_select_data($avg_history["query"]), $field_data, $title, $code);
-                break;
+                // //echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
+                // convert_excel(get_select_data($avg_history["query"]), $field_data, $title, $code);
+                // break;
+                $excel_title = date('Ymd_His') . "_" . $avg_history["name"] . "_평균중량.xls";
+				
+				$field_data = array(
+					/*농가 정보*/
+					array("번호", "No", "INT", "center"),
+					array("농장ID", "awFarmid", "STR", "center"),
+					array("동ID", "awDongid", "STR", "center"),
+					array("농장명", "fdName", "STR", "center"),
+					array("일령", "awDays", "STR", "center"),
+					array("산출시간", "awDate", "STR", "center"),
+					array("예측중량", "awWeight", "STR", "center"),
+					array("권고중량", "refWeight", "STR", "center"),
+					array("표준편차", "awDevi", "STR", "center"),
+					array("변이계수", "awVc", "STR", "center"),
+					array("+1 예측", "awEstiT1", "STR", "center"),
+					array("+2 예측", "awEstiT2", "STR", "center"),
+					array("+3 예측", "awEstiT3", "STR", "center"),
+					//array("정규분포", "awNdis", "STR", "left"),
+				);
+
+				// echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
+				$excel_html = convert_excel(get_select_data($avg_history["query"]), $field_data, $excel_title, $code, false);
+                
+                $response["excel_title"] = $excel_title; 
+				$response["excel_html"]  = $excel_html;
+				
+				echo json_encode($response);
+
+				break;
         }
 
 		break;
 
-    case "get_error_history":          //오류이력 - 추후에 입추기간만 가져오게 변경
+    // case "get_error_history":          //오류이력 - 추후에 입추기간만 가져오게 변경
     
+    //     $append_query = "AND ccFarmid = \"" . $farmID . "\" AND ccDongid = \"" . $dongID . "\" ORDER BY ccCapDate DESC";
+
+    //     $select_query = "SELECT * FROM capture_camera WHERE ccFarmid = ccFarmid " . $append_query;
+
+    //     $select_data = get_select_data($select_query);
+
+    //     $error_history_data = array();
+    //     foreach($select_data as $row){
+    //         $error_history_data[] = array(
+    //             'f1'  => $row["ccCapDate"],							
+    //             'f2'  => $row["ccStatus"],									
+    //             'f3'  => "01",									
+    //         );
+    //     }
+
+    //     $response["error_history_data"] = $error_history_data;
+    //     echo json_encode($response);
+
+    //     break;
+
+    case "get_error_history":          //오류이력 - 추후에 입추기간만 가져오게 변경
+
         $append_query = "AND ccFarmid = \"" . $farmID . "\" AND ccDongid = \"" . $dongID . "\" ORDER BY ccCapDate DESC";
 
         $select_query = "SELECT * FROM capture_camera WHERE ccFarmid = ccFarmid " . $append_query;
 
         $select_data = get_select_data($select_query);
 
-        $error_history_data = array();
-        foreach($select_data as $row){
-            $error_history_data[] = array(
-                'f1'  => $row["ccCapDate"],							
-                'f2'  => $row["ccStatus"],									
-                'f3'  => "01",									
-            );
-        }
+		switch($_REQUEST['comm']){
+			case "view":
+				$error_history_data = array();
+				foreach($select_data as $row){
+					$error_history_data[] = array(
+						'f1'  => $row["ccCapDate"],							
+						'f2'  => $row["ccStatus"],									
+						'f3'  => "01",									
+					);
+				}
+				$response["error_history_data"] = $error_history_data;
 
-        $response["error_history_data"] = $error_history_data;
-        echo json_encode($response);
+				echo json_encode($response);
+				break;
 
+			case "excel":
+				$error_excel_title = date('Ymd_His')."_" .$farmID. "_" .$dongID. "_오류이력.xls";
+
+				$field_data = array(
+					array("번호", "No", "INT", "center"),
+					array("오류시간", "ccCapDate", "STR", "center"),
+					array("오류상태", "ccStatus", "STR", "center"),
+					array("저울번호", "01", "STR", "center"),
+				);
+
+				$error_excel_html = convert_excel($select_data, $field_data, $error_excel_title, $code, false);
+
+				$response["error_excel_title"] = $error_excel_title;
+				$response["error_excel_html"]  = $error_excel_html;
+        		echo json_encode($response);
+				break;
+		}
+		
         break;
 
     case "get_request_history":          //재산출 이력
 
-        $select_query = "SELECT cm.*, rc.* FROM comein_master AS cm 
-                        LEFT JOIN request_calculate AS rc ON rc.rcCode = cm.cmCode
-                        WHERE cm.cmCode = \"" .$code. "\"";
+        $select_query = "SELECT * FROM request_calculate WHERE rcFarmid = \"" . $farmID . "\" AND rcDongid = \"" . $dongID . "\" 
+                        AND (rcRequestDate BETWEEN \"" . $_REQUEST["indate"] . "\" AND \"" . date('Y-m-d H:i:s') . "\") ORDER BY rcRequestDate DESC";
 
         $select_data = get_select_data($select_query);
 
-        // 재산출 이력 출력 테이블 만들기
         $request_history_data = array();
         foreach($select_data as $row){
 
@@ -185,7 +255,6 @@ switch($oper){
         }
 
         $response["request_history_data"] = $request_history_data;
-        $response["measure_weight_data"] = json_decode($select_data[0]["cmMeasureWeight"]);
         echo json_encode($response);
 
         break;
@@ -327,7 +396,7 @@ switch($oper){
 
                 $title = $farmID . "_" . $dongID . "_rawdata_" . $_REQUEST["type"];
 
-                header("Content-Type: application/vnd.ms-excel");
+                header("Content-Type: application/vnd.ms-excel; charset=UTF-8");
                 header("Expires: 0");
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
                 header("content-disposition: attachment; filename=" . date('Ymd_His') . "_" . $title . ".xls");
@@ -338,7 +407,7 @@ switch($oper){
                     $field_data[] = array($key, $key, "STR", "center");
                 }
 
-                convert_excel($result, $field_data, $title, $code);
+                convert_excel($result, $field_data, $title, $code, true);
 
                 break;
         }

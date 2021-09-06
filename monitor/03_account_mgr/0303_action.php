@@ -130,7 +130,7 @@ switch($oper){
 			array("등록일자", "mgrDate", "STR", "center"),
 		);
 
-		convert_excel($select_query, $field_data, $title, $append_query);
+		convert_excel(get_select_data($select_query), $field_data, $title, $append_query, true);
 		break;
 }
 

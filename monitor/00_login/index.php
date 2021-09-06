@@ -48,7 +48,7 @@
 					<div class="row w-100 justify-content-center">
 						<div class="d-flex col-xl-5 bg-white no-padding fadeIn animated align-items-center" style="border-radius: 20px">
 							<div class="col-xl-5 no-padding d-none d-xl-block">
-								<img class="img-reponsive" src="../images/img_expected01.jpg" style="border-radius: 20px 0 0 20px;">
+								<img class="img-reponsive" src="../images/img_expected01.jpg" style="border-radius: 20px 0 0 20px;" alt="코코팜">
 								<!-- <div class="carousel-caption"><img src="./images/logo.png" style="padding-bottom: 50px; margin-left: 50px;"></div> -->
 							</div>
 							<div class="col-xl-7 p-3" id="login_form">
@@ -64,7 +64,7 @@
 					</div>
 					<div class="row w-100 justify-content-center">
 						<div class="col-xl-5 no-padding">
-							<img class="img-reponsive logo_img" src="../images/logo.png">
+							<img class="img-reponsive logo_img" src="../images/logo.png" alt="코코팜">
 						</div>
 					</div>
 				</div>
@@ -118,12 +118,12 @@
 				success: function(data) {
 					switch(data.msg){
 						default:
-							popup_alert("오류", "통신오류입니다.<br>다시 시도해 주시기 바랍니다");
+							popup_alert("로그인 실패", "아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 						case "error":
 							$("#login_form [name=id]").val("");
 							$("#login_form [name=pw]").val("");
-							popup_alert("오류","아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
+							popup_alert("로그인 실패", "아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 
 						case "ok":
@@ -148,12 +148,12 @@
 				success: function(data) {
 					switch(data.msg){
 						default:
-							popup_alert("오류", "통신오류입니다.<br>다시 시도해 주시기 바랍니다");
+							popup_alert("로그인 실패", "아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 						case "error":
 							$("#login_form [name=id]").val("");
 							$("#login_form [name=pw]").val("");
-							popup_alert("오류","아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
+							popup_alert("로그인 실패","아이디 또는 비밀번호가 틀립니다.<br>다시 시도해 주시기 바랍니다.");
 							break;
 
 						case "ok":

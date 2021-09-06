@@ -3,18 +3,18 @@
 var selected_id = "";
 var hide_dong = false;
 
-// css 속성 정의
-const color_over = "#FFFFFF";
-const color_leave = "#455a64";
-const color_select = "#FFFFFF";
+// css 속성 정의 #FFFFFF 흰색 / #
+const color_hover = "#6c757d";
+const color_leave = "#6c757d";
+const color_select = "#6c757d";
 
-const background_over = "#568a89";
+const background_hover = "#cccccc";
 const background_leave = "#FFFFFF";
-const background_select = "#455a64";
+const background_select = "#f1f2f3";
 
-const border_over = "1px dotted #568a89";
-const border_leave = "1px dotted #455a64";
-const border_select = "1px dotted #568a89";
+const border_hover = "1px solid #cccccc";
+const border_leave = "1px solid #cccccc";
+const border_select = "1px solid #cccccc";
 
 // jqgrid resize
 $(document).ready(function(){
@@ -66,10 +66,10 @@ function call_tree_view(search, work, in_out = "none"){
                 let tail = "";
 
                 head += "<li role='treeitem' style='cursor:pointer;'>\n";
-                head += "<span class='tree-content' style='padding: 7px; color: #455a64;' id='" + infos[0] + "' title='" + infos[1] + "'><i class='fa fa-lg fa-folder'></i>&nbsp";
+                head += "<span class='tree-content' style='padding: 7px; color: #6c757d;' id='" + infos[0] + "' title='" + infos[1] + "'>&nbsp";
                 head += infos[1];
 
-                tail += "</span>\n";
+                tail += "&nbsp;&nbsp;<i class='fa fa-lg fa-angle-right'></i></span>\n";
                 tail += "<ul class='tree-group' style='display:none;'>\n";
 
                 let cnt_in = 0;         //입추 수
@@ -86,13 +86,13 @@ function call_tree_view(search, work, in_out = "none"){
                             status = "";
                             break;
                         case "all":
-                            status = "&nbsp<span class='badge bg-" + (status == "입추" ? "blue" : "gray")  + " text-white'>" + status + "</span>";
+                            status = "&nbsp<span class='badge " + (status == "입추" ? "bg-blue" : "badge-danger")  + " text-white'>" + status + "</span>";
                             break;
                         case "in":
                             status = status == "입추" ? "&nbsp<span class='badge bg-blue text-white'>입추</span>" : "pass";
                             break;
                         case "out":
-                            status = status == "출하" ? "&nbsp<span class='badge bg-gray text-white'>출하</span>" : "pass";
+                            status = status == "출하" ? "&nbsp<span class='badge badge-danger text-white'>출하</span>" : "pass";
                             break;
                     }
 
@@ -100,16 +100,17 @@ function call_tree_view(search, work, in_out = "none"){
                     if(status == "pass") {continue;}
 
                     tail += "<li style='cursor:pointer;'> <span class='tree-content' id='" + dong_key + "' ";
-                    tail += "style='padding: 7px; color: #455a64;' cmCode='" + cmCode + "', cmIndate='" + cmIndate + "', cmOutdate='" + cmOutdate + "', cmIntype='" + cmIntype + "'>" + name + status + "</li>\n";
+                    tail += "style='padding: 7px; color: #6c757d;' cmCode='" + cmCode + "', cmIndate='" + cmIndate + "', cmOutdate='" + cmOutdate + "', cmIntype='" + cmIntype + "'>" + name + status + "</li>\n";
                 }
                 tail += "</ul>\n";
                 tail += "</li>\n";
 
                 if(in_out == "in" && cnt_in == 0) {continue;};          //입추 농가없으면 출력 x
+				
                 if(in_out == "out" && cnt_out == 0) {continue;};        //출하 농가없으면 출력 x
 
                 head += cnt_in > 0 ? "&nbsp<span class='badge bg-blue text-white'>" + cnt_in + "</span>" : "";
-                head += cnt_out > 0 ? "&nbsp<span class='badge bg-gray text-white'>" + cnt_out + "</span>" : "";
+                head += cnt_out > 0 ? "&nbsp<span class='badge badge-danger text-white'>" + cnt_out + "</span>" : "";
 
                 tree_html += head + tail;
 
@@ -150,7 +151,7 @@ function set_tree_action(search, work){
         var keys = selected_id.split("|");
         if(keys.length == 1 && !hide_dong){
             $(this).parent("li").children("ul.tree-group").toggle(400);
-            $(this).children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+            $(this).children("i").toggleClass("fa-angle-down").toggleClass("fa-angle-right");
         }
 
         work(selected_id);
@@ -161,7 +162,7 @@ function set_tree_action(search, work){
     $(".tree-content").off("mouseenter").on("mouseenter", function(){		// 마우스 오버
         let is_selected = $(this).attr("is_selected");
         if(!is_selected){
-            $(this).css("background-color", background_over).css("border", border_over).css("color", color_over);
+            $(this).css("background-color", background_hover).css("border", border_hover).css("color", color_hover);
         }
     });
 
@@ -182,7 +183,7 @@ function click_tree_first(work){
 
     if(!hide_dong){
         $(".tree-content").first().parent("li").children("ul.tree-group").toggle(400);
-        $(".tree-content").first().children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+        $(".tree-content").first().children("i").toggleClass("fa-angle-down").toggleClass("fa-angle-right");
     }
 
     selected_id = $(".tree-content").first().attr('id');
@@ -204,7 +205,7 @@ function click_tree_by_id(work, pk){
 
     if(!hide_dong){
         $("#" + farmID).parent("li").children("ul.tree-group").toggle(400);
-        $("#" + farmID).children("i").toggleClass("fa-folder-open").toggleClass("fa-folder");
+        $("#" + farmID).children("i").toggleClass("fa-angle-down").toggleClass("fa-angle-right");
     }
 
     selected_id = pk;
@@ -262,8 +263,8 @@ param
 - msg : 모달에 표시될 내용
 */
 function popup_alert(title, msg){
-	$("#modal_alert_title").html(title);					//modal title
-	$("#modal_alert_body").html("<p>" + msg + "</p>");		//modal 내용
+	$("#modal_alert_title").html(title);				//modal title
+	$("#modal_alert_body").html("<p>" + msg + "</p>");	//modal 내용
 	$("#modal_alert").modal('show');					//modal open
 };
 
@@ -276,10 +277,10 @@ param
 function popup_confirm(title, msg, work, ok_msg = "확인", cancle_msg = "취소"){
 
     $("#modal_confirm_ok").html(ok_msg);					//modal title
-    $("#modal_confirm_cancle").html(cancle_msg);					//modal title
+    $("#modal_confirm_cancle").html(cancle_msg);			//modal title
 
 	$("#modal_confirm_title").html(title);					//modal title
-	$("#modal_confirm_body").html("<p>" + msg + "</p>");		//modal 내용
+	$("#modal_confirm_body").html("<p>" + msg + "</p>");	//modal 내용
 	$("#modal_confirm").modal('show');						//modal open
 
 	confirm_event(work);
@@ -561,27 +562,27 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
             var graph_obj = {};
             graph_obj["title"] = key; 
 			graph_obj["valueField"] = key;
-			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
+			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 hover Label*/
 			graph_obj["bullet"] = "round";						/*꼭지점*/
-			graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+			graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
 			graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 
             if(is_label === "Y"){
-				graph_obj["labelText"]="[[value]]";					/*값 출력*/
+				graph_obj["labelText"]="[[value]]";				/*값 출력*/
 			}
 
 			switch(chart_style){
 				case "라인차트":
-					graph_obj["type"] = "smoothedLine";					/*차트모양*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";			/*차트모양*/
+					graph_obj["lineThickness"] = 1;				/*라인굵기*/
 					break;
 				case "영역차트":
-					graph_obj["type"] = "smoothedLine";					/*smoothedLine*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";			/*smoothedLine*/
+					graph_obj["lineThickness"] = 1;				/*라인굵기*/
 					graph_obj["fillAlphas"] = 0.2;
 					break;
 				default:
-					graph_obj["type"] = "column";							/*차트모양*/
+					graph_obj["type"] = "column";				/*차트모양*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 
@@ -596,9 +597,9 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
     //차트옵션 정하기
 	let chart_option = {"type": "serial", "theme": "light", "language":"ko", "marginRight":20, "fontSize":font_size,
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
-                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
-                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  	/*가이드라인*/
+                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"}, /*범례*/
+                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} 				/*가로눈금==>매우중요*/
 	};
 
     switch(chart_style){
@@ -669,26 +670,26 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
             var graph_obj = {};
             graph_obj["title"] = key; 
 			graph_obj["valueField"] = key;
-			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
+			graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 hover Label*/
 
             if(is_label === "Y"){
 				graph_obj["labelText"]="[[value]]";					/*값 출력*/
                 graph_obj["bullet"] = "round";						/*꼭지점*/
-                graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+                graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
                 graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 			}
 
 			switch(graph_cnt){
 				case 1:
-					graph_obj["type"] = "column";						/*차트모양*/
-					graph_obj["lineColor"] = graph_color[1];			/*라인컬라*/
+					graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineColor"] = graph_color[1];		/*라인컬라*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 					break;
 				case 2:
-					//graph_obj["type"] = "smoothedLine";				/*차트모양*/
-                    graph_obj["type"] = "column";				/*차트모양*/
-					graph_obj["lineColor"] = graph_color[3];			/*라인컬라*/
+					//graph_obj["type"] = "smoothedLine";			/*차트모양*/
+                    graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineColor"] = graph_color[3];		/*라인컬라*/
 					graph_obj["lineThickness"] = 3;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					break;
@@ -700,9 +701,9 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
     //차트옵션 정하기
 	let chart_option = {"type": "serial", "theme": "light", "language":"ko", "marginRight":20, "fontSize":font_size,
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
-                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  /*가이드라인*/
-                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "chartCursor": {"categoryBalloonDateFormat": "YYYY-MM-DD HH:NN", "cursorPosition": "mouse"},					  	/*가이드라인*/
+                        "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"}, /*범례*/
+                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} 				/*가로눈금==>매우중요*/
 	};
 
 	if(is_zoom === "Y"){
@@ -740,10 +741,32 @@ function camera_popup(name, img_url){
     let pop_left = Math.ceil(( window.screen.width - pop_width ) / 2);
     let pop_top = Math.ceil(( window.screen.height - pop_height ) / 2);
 
-    let options = "width=" + pop_width + ", height=" + pop_height + ", left=" + pop_left + ", top=" + pop_top
+    let options = "width=" + pop_width + ", height=" + pop_height + ", left=" + pop_left + ", top=" + pop_top;
 
     open_url = img_url;
     open_window = window.open("camera_popup.php?title=" + name, "camera_popup", options);
+    // open_window = window.open("", "camera_popup", options);	//chrome -> location=no 안됨 'Opera only'라고 함
+	
+	// let form = document.createElement("form");
+	// 	form.setAttribute("method", "post");
+	// 	form.setAttribute("action", "camera_popup.php");
+	// 	document.body.appendChild(form);
+
+	// let post_name = document.createElement("input");
+	// 	post_name.setAttribute("type", "hidden");
+	// 	post_name.setAttribute("name", "name");
+	// 	post_name.setAttribute("value", name);
+	
+	// let post_addr = document.createElement("input");
+	// 	post_addr.setAttribute("type", "hidden");
+	// 	post_addr.setAttribute("name", "img_url");
+	// 	post_addr.setAttribute("value", img_url);
+
+	// 	form.appendChild(post_name).appendChild(post_addr);
+
+	// 	form.submit();
+
+	// 	document.body.removeChild(form);
 };
 
 function zoom(comm){
@@ -766,7 +789,7 @@ function camera_modal(title, img_url){
     let img_obj = document.getElementById("modal_camera_img");
     camera_load(img_obj);
 
-    $("#modal_camera_title").html(title);					//modal title
+    $("#modal_camera_title").html(title);				//modal title
 	$("#modal_camera").modal('show');					//modal open
 };
 

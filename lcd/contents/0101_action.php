@@ -15,7 +15,8 @@
 
 	switch($oper){
 		case "get_buffer":
-		
+			
+			$now = date("Y-m-d H:i:s");
 			$to_day = date("Y-m-d");
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
