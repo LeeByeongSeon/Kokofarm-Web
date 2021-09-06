@@ -871,4 +871,112 @@ function send_excel_android(title, table_id){
 	});
 	
 	window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
+};
+
+// 구글 맵 관련 js
+var map = new Array();				//마커 Object 생성
+var markers = new Array();			//마커 핸들링을 위한 배열
+var markers_circle = new Array();	//마커 circle 핸들링을 위한 배열
+
+//구글맵 마커
+var icon_base = '../images/markers/';
+var icons = {orange:{icon: icon_base + 'orange_m.png'},
+			 green:	{icon: icon_base + 'green_m.png'},
+			 purple:{icon: icon_base + 'purple_m.png'},
+			 blue:	{icon: icon_base + 'blue_m.png'	},
+};
+
+//마커와 마커써클 Delete
+function del_markers(map_variable){
+	for(var key in markers[map_variable]){
+		markers[map_variable][key].setMap(null);			//마커삭제(Key값이 없을 경우를 대비 각자 지우기)
+	}
+	markers[map_variable]=[];
+
+	for(var key in markers_circle[map_variable]){
+		markers_circle[map_variable][key].setMap(null);	//마커써클 삭제(Key값이 없을 경우를 대비 각자 지우기)
+	}
+	markers_circle[map_variable] = [];
 }
+
+//마커생성
+//map_name : 맵의 메인 변수명
+//house_data : 맵의 자표Data
+function add_markers(map_name, house_data){
+
+	markers[map_name]=new Array();
+
+	for(let i=0; i<=house_data.length-1; i++){
+		if(house_data[i].houseStatus==="입추"){
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName,icon: icons["purple"].icon,map:map[map_name],
+				animation:google.maps.Animation.DROP,zIndex:9999
+			});
+		}
+		else{
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName,icon: icons["orange"].icon,map:map[map_name],
+			});
+		}
+		markers[map_name].push(marker);
+		
+
+		//Marker click event
+		google.maps.event.addListener(marker, 'click', (function(marker, i) {
+			return function() {
+				let houseID = house_data[i].houseID;	
+				get_map_data(houseID);	// 하우스 현황 가져오기
+			}
+		})(marker, i));
+	}
+};
+
+//마커생성--영역표시(Km)
+function add_markers_zone(map_name, house_data){
+	markers[map_name]=new Array();
+	markers_circle[map_name]=new Array();
+
+	for(let i=0; i<=house_data.length-1; i++){
+		//마커생성
+		if(house_data[i].marker_icon==="orange" || house_data[i].marker_icon==="purple"){
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName, icon: icons[house_data[i].marker_icon].icon,map:map[map_name],
+				animation:google.maps.Animation.DROP,zIndex:9999
+			});
+		}
+		else{
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName, icon: icons[house_data[i].marker_icon].icon,map:map[map_name],
+			});
+		}
+		markers[map_name].push(marker);
+
+		//마커 영역 생성
+		if(house_data[i].marker_icon==="orange"){
+				map_circle = new google.maps.Circle({
+				strokeColor: 'orange',strokeOpacity: 0.3,strokeWeight: 1,fillColor: 'orange',fillOpacity: 0.3,map: map[map_name],
+				center: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),
+				radius:5000 /*5Km 반경*/
+			});
+			markers_circle[map_name].push(map_circle);
+		}
+		if(house_data[i].marker_icon==="purple"){
+				map_circle = new google.maps.Circle({
+				strokeColor: 'purple',strokeOpacity: 0.3,strokeWeight: 1,fillColor: 'purple',fillOpacity: 0.3,map: map[map_name],
+				center: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),
+				radius:30000 /*30Km 반경*/
+			});
+			markers_circle[map_name].push(map_circle);
+		}
+
+		//Marker click event
+		google.maps.event.addListener(marker, 'click', (function(marker, i) {
+			return function() {
+				let houseID = house_data[i].houseID;	
+				get_map_data(houseID); // 하우스 현황 가져오기
+	
+			}
+		})(marker, i));
+
+	}
+};

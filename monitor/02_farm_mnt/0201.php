@@ -1,16 +1,15 @@
 <?
 include_once("../inc/top.php");
 
-//======================================
-//Google Map API Key
-//=====================================
-$mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
+// Google Map API Key
+$map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 
 ?>
+
 <!--입출하 농장 수 & 호수별 입추 수-->
 <div class="row">
 	<article class="col-xl-4">
-		<div class="jarviswidget jarviswidget-color-gray-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-home"></i>&nbsp;입출하 농장 수</h2>	
@@ -18,8 +17,8 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 					
 				<div class="widget-toolbar ml-auto">
 					<div class="form-inline">
-						<button class="btn btn-default btn-labeled"><span class="btn-label"><i class="fa fa-search"></i></span>농장별로 확인</button>&nbsp;
-						<button class="btn btn-default btn-labeled"><span class="btn-label"><i class="fa fa-search"></i></span>동별로 확인</button>
+						<button class="btn btn-default btn-labeled btn-sm"><span class="btn-label"><i class="fa fa-search"></i></span>농장별로 확인</button>&nbsp;
+						<button class="btn btn-default btn-labeled btn-sm"><span class="btn-label"><i class="fa fa-search"></i></span>동별로 확인</button>
 					</div>
 				</div>
 			</header>
@@ -34,10 +33,10 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 					</thead>
 					<tbody>
 						<tr>
-							<td>15</td>
-							<td>4</td>
-							<td>6</td>
-							<td>27</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
 						</tr>
 					</tbody>
 				</table>
@@ -47,7 +46,7 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 	</article>
 
 	<article class="col-xl-8">
-		<div class="jarviswidget jarviswidget-color-gray-dark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
 					<h2><i class="fa fa-list"></i>&nbsp;호수별 입추 수 (단위 : 1000마리)</h2>	
@@ -56,7 +55,7 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 
 			<div class="widget-body no-padding">
 
-				<table class="table table-bordered table-hover" style="text-align: center;">
+				<table id="ho_insu" class="table table-bordered table-hover" style="text-align: center;">
 					<thead>
 						<th>11호</th>
 						<th>12호</th>
@@ -71,16 +70,16 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 					</thead>
 					<tbody>
 						<tr>
-							<td>30</td>
-							<td>24</td>
-							<td>12</td>
-							<td>124</td>
-							<td>45</td>
-							<td>30</td>
-							<td>30</td>
-							<td>0</td>
-							<td>60</td>
-							<td>0</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
 						</tr>
 					</tbody>
 				</table>
@@ -119,65 +118,63 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 <!--입출하 일정 & 농가 지도-->
 <div class="row">
 	<article class="col-xl-7">
-		<div class="jarviswidget jarviswidget-color-blue" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">
-					<span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-					<h2> 입출하 일정</h2>						
+					<span class="widget-icon"> <i class="fa fa-calendar text-primary"></i> </span>
+					<h2> 입출하 일정</h2>
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<!-- add: non-hidden - to disable auto hide -->
 					<div class="form-inline">
-						<a class="btn btn-default" href="javascript:void(0);" id="mt">Month</a>&nbsp;
-						<a class="btn btn-default" href="javascript:void(0);" id="ag">Agenda</a>&nbsp;
-						<a class="btn btn-default" href="javascript:void(0);" id="td">Today</a>&nbsp;
-						<button class="btn bg-blue" id="openModalBtn"><i class="fa fa-plus"></i></button>
+						<!-- <a class="btn btn-default btn-sm" href="javascript:void(0);" id="mt">Month</a>&nbsp;
+						<a class="btn btn-default btn-sm" href="javascript:void(0);" id="ag">Agenda</a>&nbsp;
+						<a class="btn btn-default btn-sm" href="javascript:void(0);" id="td">Today</a>&nbsp;
+						<button class="btn btn-outline-primary btn-sm" id="open_modal_btn"><i class="fa fa-plus"></i></button> -->
 					</div>
 				</div>
 			</header>
 
-				<div class="widget-body no-padding">
+			<div class="widget-body no-padding">
 
-					<div class="widget-body-toolbar text-right">
+				<div class="widget-body-toolbar text-right">
 
-						<div id="calendar-buttons">
+					<div id="calendar_buttons">
 
-							<div class="btn-group">
-								<a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
-								<a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
-							</div>
+						<div class="btn-group">
+							<a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn_prev"><i class="fa fa-chevron-left"></i></a>
+							<a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn_next"><i class="fa fa-chevron-right"></i></a>
 						</div>
-
 					</div>
 
-					<div id="calendar"></div>
-
 				</div>
+
+				<div id="calendar"></div>
+
+			</div>
 
 		</div>
 	</article>
 
 	<article class="col-xl-5">
-		<div class="jarviswidget jarviswidget-color-green-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-map-marker"></i>&nbsp;농가 지도</h2>	
+					<h2><i class="fa fa-map-marker text-green"></i>&nbsp;농가 지도</h2>	
 				</div>
 			</header>
 				
 			<div class="widget-body">
 
-				<div id="mapDIV" style="height:750px;"></div>
+				<div id="map_div" style="height: 876.4px;"></div>
 				
 			</div>
 					
 		</div>
 	</article>
 
-	
-
-	<!--ModalBox-->
-	<div id="modalBox" class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<!--modal_box-->
+	<!-- <div id="modal_box" class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -190,7 +187,6 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 						<div>
 
 							<div class="widget-body">
-								<!-- content goes here -->
 
 								<form id="add-event-form">
 									<fieldset>
@@ -257,7 +253,6 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 									</fieldset>
 								</form>
 
-								<!-- end content -->
 							</div>
 
 						</div>
@@ -265,13 +260,14 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="add-event">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
+					<button type="button" class="btn btn-primary btn-sm" id="add-event">확인</button>
+					<button type="button" class="btn btn-default btn-sm" id="closeModalBtn">취소</button>
 				</div>
 
 			</div>
 		</div>
-	</div><!--ModalBox end-->
+	</div> -->
+	<!-- modal_box end -->
 
 </div>
 
@@ -279,35 +275,37 @@ $mapKey="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 include_once("../inc/bottom.php");
 ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<?=$mapKey?>&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?=$map_key?>&callback=initMap" async defer></script>
 
 <script type="text/javascript">
 	
-	$("#mapDIV").bind('resize',function(){ initMap(); });
+	var map_data;
+
+	$("#map_div").bind('resize',function(){ initMap(); });
 	
 	//구글맵 출력
 	function initMap() {
-		map["mapDIV"]=new google.maps.Map(document.getElementById("mapDIV"), {
+		map["map_div"] = new google.maps.Map(document.getElementById("map_div"), {
 			zoom:8,center:{lat:35.8391582,lng:127.0998321}
 		});
-		//delMarkers("mapDIV"); addMarkers("mapDIV",jQuery.makeArray(mapData));
+		del_markers("map_div"); add_markers("map_div",jQuery.makeArray(map_data));
 	};
 
 	// 입출하 달력
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
-	
 	$(document).ready(function() {
+
+		get_map_data();
 		
 		$('#openModalBtn').on('click', function(){
-			$('#modalBox').modal('show');
+			$('#modal_box').modal('show');
 		});
 			// 모달 안의 취소 버튼에 이벤트를 건다.
 		$('#closeModalBtn').on('click', function(){
-			$('#modalBox').modal('hide');
+			$('#modal_box').modal('hide');
 		});
 
 		//pageSetUp();
-			
 
 		"use strict";
 			
@@ -372,7 +370,7 @@ include_once("../inc/bottom.php");
 		
 				addEvent(title, priority, description, icon);
 				
-				$('#modalBox').modal('hide');
+				$('#modal_box').modal('hide');
 			});
 		
 			/* initialize the calendar
@@ -446,33 +444,66 @@ include_once("../inc/bottom.php");
 			$('.fc-right, .fc-center').hide();
 
 		
-			$('#calendar-buttons #btn-prev').click(function () {
+			$('#calendar_buttons #btn_prev').click(function () {
 				$('.fc-prev-button').click();
 				return false;
 			});
 			
-			$('#calendar-buttons #btn-next').click(function () {
+			$('#calendar_buttons #btn_next').click(function () {
 				$('.fc-next-button').click();
 				return false;
 			});
 			
-			$('#calendar-buttons #btn-today').click(function () {
-				$('.fc-today-button').click();
-				return false;
-			});
+			// Month button
+			// $('#mt').click(function () {
+			// 	$('#calendar').fullCalendar('changeView', 'month');
+			// });
 			
-			$('#mt').click(function () {
-				$('#calendar').fullCalendar('changeView', 'month');
-			});
+			// Agenda button
+			// $('#ag').click(function () {
+			// 	$('#calendar').fullCalendar('changeView', 'agendaWeek');
+			// });
 			
-			$('#ag').click(function () {
-				$('#calendar').fullCalendar('changeView', 'agendaWeek');
-			});
-			
-			$('#td').click(function () {
-				$('#calendar').fullCalendar('changeView', 'agendaDay');
-			});	
+			// today button
+			// $('#td').click(function () {
+			// 	$('#calendar').fullCalendar('changeView', 'agendaDay');
+			// });	
 	
-	})
+	});
+
+	function get_map_data(){
+		let data_arr = {};
+			data_arr["oper"] = "get_data";
+
+		$.ajax({
+			url:"0201_action.php",
+			data:data_arr,
+			cache:false,
+			type:"post",
+			dataType:"json",
+			success: function(data){
+				// 지도 data
+				map_data = data.json_map;
+				del_markers("map_div"); add_markers("map_div",jQuery.makeArray(map_data));
+			};
+		});
+	};
+
+	// function get_calendar_data(){
+	// 	let data_arr = {};
+	// 		data_arr["oper"] = "get_data";
+
+	// 	$.ajax({
+	// 		url:"0201_action.php",
+	// 		data:data_arr,
+	// 		cache:false,
+	// 		type:"post",
+	// 		dataType:"json",
+	// 		success: function(data){
+				
+	// 		}
+	// 	});
+
+	// };
 
 	</script>
