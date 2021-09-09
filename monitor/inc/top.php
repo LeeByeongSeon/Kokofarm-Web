@@ -100,6 +100,20 @@
 			$title_html .= "<h4 class='page-header'><i class='fa-fw fa fa-th-large text-orange'></i> " .$value[2]. "<span style='color:#455a64'> <i class='fa-fw fa fa-angle-right'></i> <b>" .$value[3]. "</b></span></h4>";
 		}
 	}
+
+	$query = "SELECT 
+			COUNT(*) AS cnt_all, 
+			COUNT(IF(beStatus = 'O', beStatus, null)) AS cnt_out, 
+			COUNT(IF(beStatus = 'E', beStatus, null)) AS cnt_err, 
+			COUNT(IF(beStatus = 'W', beStatus, null)) AS cnt_wait 
+		FROM buffer_sensor_status";
+
+	$cnt_data = get_select_data($query)[0];
+	$cnt_out = number_format($cnt_data["cnt_out"]);
+	$cnt_in = number_format($cnt_data["cnt_all"]) - $cnt_out;
+	$cnt_err = number_format($cnt_data["cnt_err"]);
+	$cnt_wait = number_format($cnt_data["cnt_wait"]);
+	
 ?>
 <!DOCTYPE html>
 
@@ -226,16 +240,16 @@
 							</h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 입추동(수) <span class="text-white"><i class="fa fa-home text-orange-dark"></i>&nbsp;<?=number_format($inCntSU)?></span></h5>
+							<h5 class="text-white"> 입추(동) <span class="text-white"><i class="fa fa-home text-orange-dark"></i>&nbsp;<?=$cnt_in?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 입추(수) <span class="text-white"><i class="fa fa-check-square text-orange-dark"></i>&nbsp;<?=number_format($inSU)?></span></h5>
+							<h5 class="text-white"> 오류(동) <span class="text-white"><i class="fa fa-check-square text-orange-dark"></i>&nbsp;<?=$cnt_err?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 생존(수) <span class="text-white"><i class="fa fa-plus-square text-orange-dark"></i>&nbsp;<?=number_format($remainSU)?></span></h5>
+							<h5 class="text-white"> 출하대기(동) <span class="text-white"><i class="fa fa-plus-square text-orange-dark"></i>&nbsp;<?=$cnt_wait?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 폐사(수) <span class="text-white"><i class="fa fa-minus-square text-orange-dark"></i>&nbsp;<?=number_format($deathSU)?></span></h5>
+							<h5 class="text-white"> 출하(동) <span class="text-white"><i class="fa fa-minus-square text-orange-dark"></i>&nbsp;<?=$cnt_out?></span></h5>
 						</li>
 					</ul>
 				</div>

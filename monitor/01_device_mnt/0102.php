@@ -86,29 +86,44 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-bell-o"></i>&nbsp;알림사항</h2>	
+						<h2><i class="fa fa-bell-o"></i>&nbsp;사육정보</h2>	
 					</div>
 				</header>
 				<div class="widget-body" style="height: 294.97px">
 					<!--급이 / 급수가 없으면 나타날 div-->
-					<div class="col-xs-7 float-left pr-4 pl-0 feed_none_div" style="height: -webkit-fill-available; display: none;">
+					<!-- <div class="col-xs-7 float-left pr-4 pl-0 feed_none_div" style="height: -webkit-fill-available; display: none;">
 						<h1 class='font-weight-bold m-auto'><i class='glyphicon glyphicon-remove-sign text-danger'></i> 표시할 데이터가 없습니다.</h1>
-					</div>
+					</div> -->
 
 					<div class="col-xs-7 float-left mt-4 pr-4 pl-0 feed_info_div" style="border-right: 2px dotted #ddd">
 						<div class="row">
-							<div class="col-xs-8 h-50 float-left">
-								<div class="col-xs-6 no-padding h-75 text-center"><img src="../images/feed-04.png" id="feed_img" style="width: 8rem;" alt="급이 이미지"><div class="carousel-caption" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">50%<h5></div></div>
-								<div class="col-xs-6 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급이량(㎏)</span><br><span class="font-xl" id="extra_curr_feed">-</span></div>
+							<div class="col-xs-4 no-padding text-center">
+								<div class="col-xs-12 text-center">
+									<img src="../images/feed-00.png" id="feed_img" style="width: 8rem;" alt="급이 이미지">
+									<div class="carousel-caption h-100" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">-%<h5></div>
+								</div>
+								<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(kg)</span></div>
+							</div>
+							<div class="col-xs-4 h-50">
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right">
+									<span class="font-weight-bold text-secondary">오늘 급이량(㎏)</span><br>
+									<span class="font-xl" id="extra_curr_feed">-</span>
+								</div>
 							</div>
 							<div class="col-xs-4 h-50 float-right">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급이량(㎏)</span><br><span class="font-xl" id="extra_prev_feed">-</span></div>
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right">
+									<span class="font-weight-bold text-secondary">전일 급이량(㎏)</span><br>
+									<span class="font-xl" id="extra_prev_feed">-</span>
+								</div>
 							</div>
 						</div>
 						<div class="row mt-3">
-							<div class="col-xs-8 h-50 float-left">
-								<div class="col-xs-6 pt-4 pb-0 px-0 h-75 text-center"><img src="../images/water-02.png" style="width: 5rem;" alt="급수 이미지"></div>
-								<div class="col-xs-6 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">-</span></div>
+							<div class="col-xs-4 no-padding text-center">
+								<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 5rem;" alt="급수 이미지"></div>
+								<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
+							</div>
+							<div class="col-xs-4 h-50">
+								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">-</span></div>
 							</div>
 							<div class="col-xs-4 h-50 float-right">
 								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량(L)</span><br><span class="font-xl" id="extra_prev_water">-</span></div>
@@ -116,17 +131,21 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						</div>
 					</div>
 					<div class="col-xs-5 float-right mt-3">
-						<div class="col-xs-12 h-100 no-padding">
-							<ul class="list-group">
-								<li class="list-group-item"><div class="alert alert-danger m-0">재산출 요청 중</div></li>
-								<li class="list-group-item"><div class="alert alert-danger m-0">결함 진행사항 존재</div></li>
-								<li class="list-group-item"><div class="alert alert-danger m-0">재산출 요청 중</div></li>
-								<li class="list-group-item"><div class="alert alert-danger m-0">결함 진행사항 존재</div></li>
-								<!-- <li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #455a64; border-color: #568a89;">재산출 요청 중</div></li>
-								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #568a89; border-color: #455a64;">재산출 요청 중</div></li> -->
-							</ul>
+						<div class="row">
 						</div>
 					</div>
+					<!-- <div class="col-xs-5 float-right mt-3">
+						<div class="col-xs-12 h-100 no-padding">
+							<ul class="list-group" id="alarm_list">
+								<li class="list-group-item"><div class="alert alert-secondary m-0">재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert alert-danger m-0">결함 진행사항 존재</div></li>
+								<li class="list-group-item"><div class="alert alert-danger m-0">재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert alert-danger m-0">결함 진행사항 존재</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #455a64; border-color: #568a89;">재산출 요청 중</div></li>
+								<li class="list-group-item"><div class="alert m-0 text-white" style="background-color: #568a89; border-color: #455a64;">재산출 요청 중</div></li>
+							</ul>
+						</div>
+					</div> -->
 				</div>
 						
 			</div>
@@ -304,27 +323,29 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="col-xl-6 float-left" style="height: 235.2px">
 							<table class="table table-bordered table-hover text-center">
 								<thead>
-									<th colspan="3" style="line-height: 32px">GW 냉각팬 정보<button class="btn btn-outline-secondary btn-sm ml-auto" id="gw_lookup"><span class='fa fa-refresh text-orange'></span> 조회</button></th>
+									<th colspan="3" style="line-height: 32px">GW 냉각팬 정보
+										<button class="btn btn-outline-secondary btn-sm ml-auto" onClick="send_gw_itr('gw_fan_info')"><span class='fa fa-refresh text-orange'></span> 조회</button>
+									</th>
 								</thead>
 								<tbody>
 									<tr>
 										<th>동작 온도</th>
-										<td id="gw_temp1">45</td>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 설정</button></td>
+										<td><input class='form-control' id='text_gw_fan_on_temp' type='text' maxlength='2' size='2'></td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_on_temp', true)"><span class="fa fa-gear text-orange"></span> 설정</button></td>
 									</tr>
 									<tr>
 										<th>정지 온도</th>
-										<td id="gw_temp2">3</td>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 설정</button></td>
+										<td><input class='form-control' id='text_gw_fan_off_temp' type='text' maxlength='2' size='2'></td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_off_temp', true)"><span class="fa fa-gear text-orange"></span> 설정</button></td>
 									</tr>
 									<tr>
 										<th>현재 온도</th>
-										<td>47</td>
+										<td id='text_gw_fan_curr_temp'></td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>동작 상태</th>
-										<td>1</td>
+										<td id='text_gw_fan_status'></td>
 										<td></td>
 									</tr>
 								</tbody>
@@ -337,16 +358,20 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 								</thead>
 								<tbody class="p-1">
 									<tr>
-										<td>펌웨어 버전 조회</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 조회</button></td>
+										<td>펌웨어 버전 조회</td>
+										<td><button class='btn btn-outline-secondary btn-sm btn-block' id='btn_gw_version_info' onClick="send_gw_itr('gw_version_info')"><span id='ret'></span><span class='fa fa-refresh text-orange'></span> 조회</button></td>
 									</tr>
 									<tr>
-										<td>펌웨어 업데이트</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 전송</button></td>
+										<td>펌웨어 업데이트</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_update' onClick="send_gw_itr('gw_update', true)"><span class="fa fa-gear text-orange"></span> 전송</button></td>
 									</tr>
 									<tr>
-										<td>로그 데이터 삭제</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 전송</button></td>
+										<td>로그 데이터 삭제</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_log_delete' onClick="send_gw_itr('gw_log_delete', true)"><span class="fa fa-gear text-orange"></span> 전송</button></td>
 									</tr>
 									<tr>
-										<td>GW 재부팅</td><td><button class="btn btn-outline-secondary btn-sm btn-block"><span class="fa fa-gear text-orange"></span> 전송</button></td>
+										<td>GW 재부팅</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_restart' onClick="send_gw_itr('gw_restart', true)"><span class="fa fa-gear text-orange"></span> 전송</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -666,28 +691,27 @@ include_once("../inc/bottom.php");
 					
 					$('#cell_control_table').bootstrapTable('load', data.cell_control_data);
 				
-					// 급이, 급수, 외기 창 표시할지 선택
-					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
+					// 급이, 급수 창 표시할지 선택
 					if(data.extra.hasOwnProperty("extra_curr_feed")){
-						
-							let per = data.extra.extra_feed_percent;
-								per = parseInt(per);
-							if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
-							if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
-							if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
-							if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
-							if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
-					};
+						$.each(data.extra, function(key, val){	$("#" + key).html(val); });
+						let per = data.extra.extra_feed_percent;
+						per = parseInt(per);
+						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
+						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
+						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
+						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
+						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
+					}
 					
 					// 급이, 급수 데이터 없으면 나타날 div -> class='feed_none_div' removeClass로 d- 관련 없애줘야 display none 이 먹힘
-					if(data.extra != null && data.extra != ""){
-						$(".feed_none_div").css("display", "none").removeClass("d-flex align-items-center");
-						$(".feed_info_div").css("display", "block");
-					}
-					else {
-						$(".feed_none_div").css("display", "block").addClass("d-flex align-items-center");
-						$(".feed_info_div").css("display", "none");
-					}
+					// if(data.extra != null && data.extra != ""){
+					// 	$(".feed_none_div").css("display", "none").removeClass("d-flex align-items-center");
+					// 	$(".feed_info_div").css("display", "block");
+					// }
+					// else {
+					// 	$(".feed_none_div").css("display", "block").addClass("d-flex align-items-center");
+					// 	$(".feed_info_div").css("display", "none");
+					// }
 				}
 			});
 		}
@@ -897,8 +921,8 @@ include_once("../inc/bottom.php");
 	function itr_send(send, id, need_confirm = false){
 
 		if(need_confirm){
-			msg = $("#summary_name").html() + " " + id.substr(id.length - 2, id.length) + "번 저울의 영점을 조정하시겠습니까?";
-			popup_confirm("영점 조정 확인", msg, function(confirm){
+			let msg = $("#summary_name").html() + " " + id.substr(id.length - 2, id.length) + "번 저울의 영점을 조정하시겠습니까?";
+			popup_confirm("명령 전송 확인", msg, function(confirm){
 				
 				if(confirm){
 					socket_send(send, id);
@@ -910,6 +934,7 @@ include_once("../inc/bottom.php");
 			socket_send(send, id);
 		}
 	};
+
 	function socket_send(send, id){
 		let data_arr = {}; 
 		data_arr['oper'] = "socket_send";
@@ -935,11 +960,78 @@ include_once("../inc/bottom.php");
 		});
 	}
 
-	// GW 냉각팬 조회 버튼 클릭시
-	$("#gw_lookup").click(function(){
-		$("#gw_temp1").html("<input class='form-control' type='text' maxlength='5' size='2' dir='rtl' value='45'>");
-		$("#gw_temp2").html("<input class='form-control' type='text' maxlength='5' size='2' dir='rtl' value='3'>");
-	});
+	function send_gw_itr(comm, need_confirm = false){
+		if(need_confirm){
+			let msg = $("#summary_name").html() + " " + comm + " 명령을 전송합니다.";
+			popup_confirm("명령 전송 확인", msg, function(confirm){
+				
+				if(confirm){
+					socket_send_to_gw(comm);
+				}
+			});
+		}
+		else{
+			socket_send_to_gw(comm);
+		}
+	}
+
+	function socket_send_to_gw(comm){
+		let data_arr = {}; 
+		data_arr['oper'] = "socket_send_to_gw";
+		data_arr['comm'] = comm;
+		data_arr['code'] = code;
+
+		switch(comm){
+            case "gw_fan_on_temp":
+			case "gw_fan_off_temp":
+				let set_value = $("#text_" + comm).val().trim();
+				data_arr['value'] = set_value;
+                break;
+		}
+
+		$.ajax({url:'0102_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
+			success: function(data) {
+
+				switch(comm){
+					case "gw_version_info":
+						$("#btn_" + comm + " #ret").html(data.recv.retValue + "&nbsp;&nbsp;");
+                		break;
+
+					case "gw_fan_info":
+						//popup_alert("명령 전송 결과", data.recv.retValue);
+						let ret_val = data.recv.retValue;
+						let ret_arr = ret_val.split("/");
+						if(ret_arr.length >= 4){
+							$("#text_gw_fan_on_temp").val(ret_arr[0].split("=")[1].trim());
+							$("#text_gw_fan_off_temp").val(ret_arr[1].split("=")[1].trim());
+							$("#text_gw_fan_curr_temp").html(ret_arr[2].split("=")[1].trim());
+							$("#text_gw_fan_status").html(ret_arr[3].split("=")[1].trim());
+						}
+                		break;
+
+					default:
+						popup_alert("명령 전송 결과", data.recv.retMsg);
+						break;
+				}
+			}
+		});
+	}
+
+	// function get_ajax_result(target, data_arr){
+	// 	let ret = array();
+
+	// 	$.ajax({url:target, data:data_arr, cache:false, type:'post', dataType:'json',
+	// 		success: function(data) {
+	// 			ret = data;
+	// 		},
+	// 		error: function(data) {
+	// 			ret = data;
+	// 		},
+	// 		complete: function(data) {
+	// 			return ret;
+	// 		}
+	// 	});
+	// }
 
 	
 </script>

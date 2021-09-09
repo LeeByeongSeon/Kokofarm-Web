@@ -15,6 +15,9 @@
     const TARGET = "81";
     const TAIL = "EE";
 
+	const HOST = "kokofarm.co.kr";
+    const PORT = 3300;
+
     //--------------------------------------------------------
 	// 패킷 생성
 	// $comm : 명령 바이트 (1 Byte)
@@ -71,7 +74,11 @@
 		$farmID = strtoupper( sprintf("%04s", dechex( (int)$farmID ) ) );
 		$dongID = strtoupper( sprintf("%02s", dechex( (int)$dongID ) ) );
 
-		$data = $farmID . $dongID . $sub . get_ascii_number($value);
+		$data = $farmID . $dongID . $sub;
+		if($value != ""){
+			$data .= strtoupper( sprintf("%02s", dechex( (int)$value ) ) );
+		}
+
 		$ret = make_packet("53", $data);
 
 		return $ret;
@@ -220,7 +227,7 @@
 	//--------------------------------------------------------
 	// 팬 정보 조회
 	//--------------------------------------------------------
-    function gw_fan_info($farmID, $dongID, $cellID){
+    function gw_fan_info($farmID, $dongID){
 		return comm_remote_info_gw("4F", $farmID, $dongID);		// 0x4F (O)
 	}
 
@@ -254,11 +261,8 @@
 
 	// 실제 웹소켓 전송 부
 	function send_packet($send){
-		$host = "192.168.0.80";
-		$port = 3300;
-
 		$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("error : create fail");
-		$conn = socket_connect($sock, $host, $port) or die("error : connect fail");
+		$conn = socket_connect($sock, HOST, PORT) or die("error : connect fail");
 
 		socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 4, 'usec' => 0));
 

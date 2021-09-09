@@ -222,7 +222,7 @@ switch($oper){
 
                 $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
 
-                $result = get_aggregate_data("kokofarm3", "sensorData", $pipeline);
+                $result = get_aggregate_data("kokofarm1", "sensorData", $pipeline);
 
                 $raw_data = array();
                 foreach($result as $row){
@@ -248,7 +248,7 @@ switch($oper){
                 
                 $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
 
-                $result = get_aggregate_data("kokofarm3", "plcSensor", $pipeline);
+                $result = get_aggregate_data("kokofarm1", "plcSensor", $pipeline);
 
                 $raw_data = array();
                 foreach($result as $row){
@@ -274,7 +274,7 @@ switch($oper){
                 
                 $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
 
-                $result = get_aggregate_data("kokofarm3", "plcHistory", $pipeline);
+                $result = get_aggregate_data("kokofarm1", "plcHistory", $pipeline);
 
                 $raw_data = array();
                 foreach($result as $row){
@@ -295,7 +295,7 @@ switch($oper){
                 
                 $pipeline = [ $pipe_match, $pipe_sort, $pipe_limit, [ '$project' => $hide_arr ] ];
 
-                $result = get_aggregate_data("kokofarm3", "sensorExtData", $pipeline);
+                $result = get_aggregate_data("kokofarm1", "sensorExtData", $pipeline);
 
                 $raw_data = array();
                 foreach($result as $row){
@@ -353,10 +353,12 @@ switch($oper){
     
     case "get_buffer":          //버퍼테이블
 
+        $now = date("Y-m-d H:i:s");
+
         $ref_date = date('Y-m-d H:i:s');
         $ref_date = substr($ref_date, 0, 15) . "0:00";
 
-        $select_query = "SELECT cm.*, fd.fdName, be.*, bp.*, sf.*, so.*, sc.*, 
+        $select_query = "SELECT cm.*, fd.fdName, be.*, bp.*, sf.*, so.*, sc.*, sh.shFeedData, 
                         IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) as days, 
                         GROUP_CONCAT(siCellid separator ' | ') AS siCellid, 
                         GROUP_CONCAT(siSensorDate separator ' | ') AS siSensorDate, 
@@ -372,9 +374,9 @@ switch($oper){
                         LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
                         LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid 
                         LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
+                        LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND shDate = \"" . substr($now, 0, 13) . ":00:00\" 
                         WHERE cmCode = '" .$code. "'
                         GROUP BY cm.cmCode, sc.scPort";
-		// var_dump($select_query);
 
         $select_data = get_select_data($select_query);
         $row = $select_data[0];
@@ -401,12 +403,15 @@ switch($oper){
 
 		// 일일 / 전일 급이 급수
         $extra = array();
-
 		if($row["sfFarmid"] != ""){		// 급이 데이터가 있으면
 			$extra["extra_curr_feed"]  = $row["sfDailyFeed"];
 			$extra["extra_prev_feed"]  = $row["sfPrevFeed"];
 			$extra["extra_curr_water"] = $row["sfDailyWater"];
 			$extra["extra_prev_water"] = $row["sfPrevWater"];
+            $extra["extra_feed_remain"] = $row["sfFeed"];
+
+            $feed_json = json_decode($row["shFeedData"]);
+			$extra["extra_water_per_hour"] = $feed_json->feed_water;
 
 			// 남은 사료빈 용량 확인
 			$feed_max = $row["sfFeedMax"];
@@ -418,6 +423,16 @@ switch($oper){
 
 			$extra["extra_feed_percent"] = $percent . "%";
         }
+        else{
+            $extra["extra_curr_feed"]  = "-";
+			$extra["extra_prev_feed"]  = "-";
+			$extra["extra_curr_water"] = "-";
+			$extra["extra_prev_water"] = "-";
+            $extra["extra_feed_remain"] = "-";
+			$extra["extra_water_per_hour"] = "-";
+			$extra["extra_feed_percent"] = "-%";
+        }
+
 		$response["extra"] = $extra;
 
         $buffer_data = array();         // 버퍼 데이터 테이블 표시
@@ -450,7 +465,7 @@ switch($oper){
                 'f1'  => $sensor_map[0][$i], 
                 'f2'  => "<button class='btn btn-outline-secondary btn-sm btn-block' id='btn_cell_version_" .$cell_id. "' onClick='itr_send(\"" .$version_info. "\", \"btn_cell_version_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
                 'f3'  => "<button class='btn btn-outline-secondary btn-sm btn-block' id='btn_cell_sensor_" .$cell_id. "' onClick='itr_send(\"" .$sensor_info. "\", \"btn_cell_sensor_" .$cell_id. "\")'><span id='ret'></span><span class='fa fa-refresh'></span></button>",
-                'f4'  => "<button class='btn btn-outline-secondary btn-sm btn-block' id='btn_zeor_set_" .$cell_id. "' onClick='itr_send(\"" .$zero_set. "\", \"btn_zeor_set_" .$cell_id. "\", true)'><span id='ret'></span><span class='fa fa-cog'></span></button>",
+                'f4'  => "<button class='btn btn-outline-secondary btn-sm btn-block' id='btn_zero_set_" .$cell_id. "' onClick='itr_send(\"" .$zero_set. "\", \"btn_zero_set_" .$cell_id. "\", true)'><span id='ret'></span><span class='fa fa-cog'></span></button>",
             );
         }
 
@@ -514,6 +529,57 @@ switch($oper){
         $response["recv"] = $recv;
 
         echo json_encode($response);
+        break;
+
+    case "socket_send_to_gw":
+        $comm = $_REQUEST["comm"];
+        $unit = $_REQUEST["unit"];
+
+        switch($comm){
+            case "gw_version_info":
+                $recv = send_packet(gw_version_info($farmID, $dongID));
+                break;
+            
+            case "gw_update":
+                $recv = send_packet(gw_update($farmID, $dongID));
+                $recv["retMsg"] = $recv["retCode"] == "S" ? "원격 업데이트 정상 실행 됨(약 5분 소요)" : "전송오류 혹은 응답이 존재하지않는 명령";
+                break;
+
+            case "gw_log_delete":
+                $recv = send_packet(gw_log_delete($farmID, $dongID));
+                $recv["retMsg"] = $recv["retCode"] == "S" ? "로그 삭제 중(약 30초 소요)" : "전송오류 혹은 응답이 존재하지않는 명령";
+                break;
+
+            case "gw_restart":
+                $recv = send_packet(gw_restart($farmID, $dongID));
+                $recv["retMsg"] = $recv["retCode"] == "S" ? "재부팅 명령 전송됨" : "전송오류 혹은 응답이 존재하지않는 명령";
+                break;
+            
+            case "gw_fan_info":
+                $recv = send_packet(gw_fan_info($farmID, $dongID));
+                break;
+
+            case "gw_fan_on_temp":
+                $value = $_REQUEST["value"];
+                $recv = send_packet(gw_fan_on_temp($farmID, $dongID, $value));
+                $recv["retMsg"] = $recv["retCode"] == "S" ? "동작온도 설정 완료" : "전송오류 혹은 응답이 존재하지않는 명령";
+                break;
+
+            case "gw_fan_off_temp":
+                $value = $_REQUEST["value"];
+                $recv = send_packet(gw_fan_off_temp($farmID, $dongID, $value));
+                $recv["retMsg"] = $recv["retCode"] == "S" ? "정지온도 설정 완료" : "전송오류 혹은 응답이 존재하지않는 명령";
+                break;
+
+        }
+
+        $response["recv"] = $recv;
+        echo json_encode($response);
+
+        break;
+
+    case "get_alarm":
+        
         break;
 }
 
