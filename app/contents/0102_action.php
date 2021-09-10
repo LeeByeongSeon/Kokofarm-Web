@@ -89,5 +89,17 @@ include_once("../common/php_module/common_func.php");
 			echo json_encode($response);
 
 			break;
+
+		case "get_sensor_history":
+			$result = get_cell_history($cmCode, "get_all");
+
+			$response["chart_temp"] = $result["chart_temp"];
+			$response["chart_humi"] = $result["chart_humi"];
+			$response["chart_co2"] =  $result["chart_co2"];
+			$response["chart_nh3"] =  $result["chart_nh3"];
+			$response["table"] = 	$result["table"];
+
+			echo json_encode($response);
+			break;
 	}
 ?>

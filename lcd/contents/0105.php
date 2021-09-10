@@ -391,7 +391,7 @@ include_once("../inc/bottom.php")
 							}
 						});
 					}
-				}
+				}, "확인", "취소"
 			);
 		}
 	});

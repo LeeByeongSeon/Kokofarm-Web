@@ -50,6 +50,11 @@
 <script src="../common/library/vendors/vendors.bundle.js"></script>
 <script src="../common/library/app/app.bundle.js"></script>
 
+<!--amChart-->
+<script src="../common/library/amchart/amcharts.js" type="text/javascript"></script>
+<script src="../common/library/amchart/serial.js" type="text/javascript"></script>
+<script src="../common/library/amchart/lang/ko.js" type="text/javascript"></script>
+
 <!--BOOTSTRAP Table-->
 <script src="../common/library/bootstrap_table/bootstrap-table.js"></script>
 

@@ -166,6 +166,7 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 				daily_data = data;
+				data.chart_temp_humi = convert_amchart_time(data.chart_temp_humi, "시간");
 				draw_select_chart("daily_outsensor_chart", data.chart_temp_humi, "세로-Bar", "Y", "N", 12, "hh");
 			}
 		});
@@ -185,6 +186,7 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 				today_data = data;
+				data.chart_temp_humi = convert_amchart_time(data.chart_temp_humi, "시간");
 				draw_select_chart("today_outsensor_chart", data.chart_temp_humi, "세로-Bar", "Y", "N", 12, "mm");
 			}
 		});
@@ -205,6 +207,7 @@ include_once("../inc/bottom.php")
 		};
 
 		if(use_data != null){
+			use_data[chart_name] = convert_amchart_time(use_data[chart_name], "시간");
 			draw_select_chart(use_div, use_data[chart_name], "세로-Bar", "Y", "N", 12, "mm");
 		};
 

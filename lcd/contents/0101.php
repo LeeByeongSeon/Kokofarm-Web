@@ -194,7 +194,7 @@
 				<h2 class="text-white font-weight-bold">일령별 평균중량 변화추이</h2>
 			</header>
 			<div class="widget-body" style="border-radius: 0 0 10px 10px; border : 4px solid #E6E6E6; border-top: 0;">
-				<div id="avg_weight_chart"></div>
+				<div id="avg_weight_chart" style="height:300px; width : 100%;"></div>
 			</div><!--widget-body-->
 		</div><!--widget-->
 	</div>
@@ -310,8 +310,10 @@
 			type:'post',
 			dataType:'json',
 			success: function(data) {
-				draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12);
-				$("#avg_weight_chart").css({ 'height':'300px', 'width':'100%' }); // amChart 'call' 오류 임시제어(?)
+				data.avg_weight_chart = convert_amchart_time(data.avg_weight_chart, "일령");
+				console.log(data.avg_weight_chart);
+				draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12, "hh");
+				//$("#avg_weight_chart").css({ 'height':'300px', 'width':'100%' }); // amChart 'call' 오류 임시제어(?)
 			}
 		});
 	};

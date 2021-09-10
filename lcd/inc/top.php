@@ -107,11 +107,6 @@
 	<script src="../common/library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  		<!--JQGrid:Language-->
 	<link rel="stylesheet" type="text/css" href="../common/library/jqgrid/ui.jqgrid-bootstrap.css">  	<!--JQGrid:CSS--->
 
-	<!--amChart-->
-	<script src="../common/library/amchart/amcharts.js" type="text/javascript"></script>
-	<script src="../common/library/amchart/serial.js" type="text/javascript"></script>
-	<script src="../common/library/amchart/lang/ko.js" type="text/javascript"></script>
-
 	<!--Template CSS-->
 	<link rel="stylesheet" media="screen, print" href="../common/library/vendors/vendors.bundle.css">
 	<link rel="stylesheet" media="screen, print" href="../common/library/app/app.bundle.css">
