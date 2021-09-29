@@ -36,44 +36,42 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 
 				<div class="widget-body d-flex justify-content-between pt-1" style="height: 294.97px">
 
-					<div class="col-md-6 no-padding">
-						<div class="text-center text-secondary">
+					<div class="well col-xl-6 no-padding" style="margin-top:2%">
+						<div class="col-xl-12 text-center text-secondary mb-4">
 							<h2 class="font-weight-bold p-2 no-margin"><span id="summary_name">망성농장-01동 (KF0013-01) </span></h2>
 						</div>
 
-						<div>
-							<div class="well p-2" style="margin-top: 15px">
-								<div class="col-md-12 no-padding">
-									<div class="col-md-4 no-padding text-center">
-										<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png" alt="닭 이미지">
-										<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-2 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
-									</div>
-									<div class="col-md-8 no-padding">
-										<div class="text-center font-weight-bold"><h1 class="text-center font-weight-bold no-margin no-padding"><small class="font-weight-bold">평균중량</small><br><span class="text-danger" id="summary_avg">-</span></h1></div>
-
-										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_devi">-</span></h6></div>
-										<div class="col-md-6 no-padding no-margin text-center font-weight-bold"><h6><br><span id="summary_inc">-</span></h6></div>
-									</div>
+						<div class="col-xl-12 d-flex justify-content-between align-items-center no-padding mb-3">
+							<div class="col-xl-4 no-padding text-center">
+								<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png" alt="닭 이미지">
+								<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
+							</div>
+							<div class="col-xl-8 no-padding d-flex justify-content-between">
+								<div class="col-xl-6 text-center font-weight-bold pt-3">
+									<span class="font-weight-bold font-lg">평균중량</sapi_windows_vt100_support><br>
+									<span class="text-danger font-xl" id="summary_avg">-</span>
 								</div>
-
-								<div class="col-md-12 no-padding">
-									<div class="col-md-4 no-padding">
-										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_type">육계 -수</span></h6></div>
-									</div>
-									<div class="col-md-8 no-padding">
-										<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_comein">입추일자 : -</span></h6></div>
-
-										<div id="summary_indate" style="display:none;"></div>
-										<div id="summary_outdate" style="display:none;"></div>
-									</div>
+								<div class="col-xl-6 no-margin text-center font-weight-bold pt-2">
+									<span class="font-md">표준편차</span><br><span class="font-md" id="summary_devi">-</span><br>
+									<span class="font-md">일일증체량</span><br><span class="font-md" id="summary_inc">-</span>
 								</div>
+							</div>
+						</div>
 
-								<div style="clear:both"></div>
+						<div class="col-xl-12 no-padding d-flex justify-content-between">
+							<div class="col-xl-4 no-padding">
+								<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_type">육계 -수</span></h6></div>
+							</div>
+							<div class="col-xl-8 no-padding">
+								<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_comein">입추일자 : -</span></h6></div>
+
+								<div id="summary_indate" style="display:none;"></div>
+								<div id="summary_outdate" style="display:none;"></div>
 							</div>
 						</div>
 					</div>
 
-					<div class="col-md-6 pr-2" id="summary_camera" style="padding-top:2%">
+					<div class="col-xl-6 pr-2" id="summary_camera" style="padding-top:2%">
 						
 					</div>
 					
@@ -89,48 +87,54 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<h2><i class="fa fa-bell-o"></i>&nbsp;사육정보</h2>	
 					</div>
 				</header>
-				<div class="widget-body" style="height: 294.97px">
+				<div class="widget-body p-3" style="height: 294.97px">
 					<!--급이 / 급수가 없으면 나타날 div-->
 					<!-- <div class="col-xs-7 float-left pr-4 pl-0 feed_none_div" style="height: -webkit-fill-available; display: none;">
 						<h1 class='font-weight-bold m-auto'><i class='glyphicon glyphicon-remove-sign text-danger'></i> 표시할 데이터가 없습니다.</h1>
 					</div> -->
 
-					<div class="col-xs-7 float-left mt-4 pr-4 pl-0 feed_info_div" style="border-right: 2px dotted #ddd">
-						<div class="row">
-							<div class="col-xs-4 no-padding text-center">
-								<div class="col-xs-12 text-center">
-									<img src="../images/feed-00.png" id="feed_img" style="width: 8rem;" alt="급이 이미지">
+					<div class="col-xl-8 float-left mt-4 pr-5 pl-0 feed_info_div" style="border-right: 2px dotted #ddd;">
+						<div class="row d-flex align-items-center">
+							<div class="col-xl-4 no-padding text-center">
+								<div class="col-xl-12 text-center">
+									<img src="../images/feed-00.png" id="feed_img" style="width: 7rem;" alt="급이 이미지">
 									<div class="carousel-caption h-100" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">-%<h5></div>
 								</div>
-								<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(kg)</span></div>
+								<div class="col-xl-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(kg)</span></div>
 							</div>
-							<div class="col-xs-4 h-50">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right">
-									<span class="font-weight-bold text-secondary">오늘 급이량(㎏)</span><br>
+							<div class="col-xl-4 h-50 no-padding">
+								<div class="col-xl-12 h-75 text-right no-padding">
+									<span class="font-weight-bold text-secondary font-md">오늘 급이량(㎏)</span><br>
 									<span class="font-xl" id="extra_curr_feed">-</span>
 								</div>
 							</div>
-							<div class="col-xs-4 h-50 float-right">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right">
-									<span class="font-weight-bold text-secondary">전일 급이량(㎏)</span><br>
+							<div class="col-xl-4 h-50 float-right no-padding">
+								<div class="col-xl-12 h-75 text-right no-padding">
+									<span class="font-weight-bold text-secondary font-md">전일 급이량(㎏)</span><br>
 									<span class="font-xl" id="extra_prev_feed">-</span>
 								</div>
 							</div>
 						</div>
-						<div class="row mt-3">
-							<div class="col-xs-4 no-padding text-center">
-								<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 5rem;" alt="급수 이미지"></div>
-								<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
+						<div class="row mt-3 d-flex align-items-center">
+							<div class="col-xl-4 no-padding text-center">
+								<div class="col-xl-12 text-center"><img src="../images/water-02.png" style="width: 5rem;" alt="급수 이미지"></div>
+								<div class="col-xl-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
 							</div>
-							<div class="col-xs-4 h-50">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">오늘 급수량(L)</span><br><span class="font-xl" id="extra_curr_water">-</span></div>
+							<div class="col-xl-4 h-50 no-padding">
+								<div class="col-xl-12 h-75 text-right no-padding">
+									<span class="font-weight-bold text-secondary font-md">오늘 급수량(L)</span><br>
+									<span class="font-xl" id="extra_curr_water">-</span>
+								</div>
 							</div>
-							<div class="col-xs-4 h-50 float-right">
-								<div class="col-xs-12 pt-4 pb-0 px-0 h-75 text-right"><span class="font-weight-bold text-secondary">전일 급수량(L)</span><br><span class="font-xl" id="extra_prev_water">-</span></div>
+							<div class="col-xl-4 h-50 float-right no-padding">
+								<div class="col-xl-12 h-75 text-right no-padding">
+									<span class="font-weight-bold text-secondary font-md">전일 급수량(L)</span><br>
+									<span class="font-xl" id="extra_prev_water">-</span>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-5 float-right mt-3">
+					<div class="col-xs-4 float-right mt-3">
 						<div class="row">
 						</div>
 					</div>
@@ -165,39 +169,39 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 				<div class="widget-body" style="height: 323.5px">
 					<table class="table table-bordered table-hover" style="text-align: center;">
 						<thead>
-							<tr style="height:38px">
+							<tr>
 								<th>장치명</th>
 								<th>설치수</th>
 								<th>장치 설정</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr style="height:45px">
+							<tr>
 								<td>IoT 저울</td>
 								<td id="device_cnt_cell">3</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0401.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
-							<tr style="height:45px">
+							<tr>
 								<td>IP 카메라</td>
 								<td id="device_cnt_camera">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0402.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
-							<tr style="height:45px">
+							<tr>
 								<td>자동환경제어장치</td>
 								<td id="device_cnt_plc">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0403.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
-							<tr style="height:45px">
+							<tr>
 								<td>사료빈 로드셀</td>
 								<td id="device_cnt_feeder">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
-							<tr style="height:45px">
+							<tr>
 								<td>유량센서</td>
 								<td id="device_cnt_water">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
-							<tr style="height:45px">
+							<tr>
 								<td>외기환경센서</td>
 								<td id="device_cnt_out">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-gear text-orange"></span></button></td>
@@ -245,7 +249,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="form-inline">
 							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')">일령별</button>&nbsp;
 							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')">시간별</button>&nbsp;
-							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(400)" id="avg_table_slide"><span class="btn-label"><i class="fa fa-table"></i></span>표 출력</button>&nbsp;
+							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(700).focus()" id="avg_table_slide"><span class="btn-label"><i class="fa fa-table"></i></span>표 출력</button>&nbsp;
 							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
 						</div>
 					</div>
@@ -257,8 +261,8 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div id="avg_weight_chart" style="height:465px; width:100%;"></div>
 					</div>
 					
-					<div class="col-xl-12" id="avg_weight_table_div" style="display:none;">
-						<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
+					<div class="col-xl-12" id="avg_weight_table_div" style="display:none;" tabindex="-1"> <!-- tabindex로 div에 focus()를 줄 수 있다 -1 일 경우 js로만 focus 가능 -->
+						<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-sort-name="f2" data-sort-order="desc" data-toggle="table" style="font-size:14px">
 							<thead>
 								<tr>
 									<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
@@ -294,7 +298,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="error_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true" data-sortable="true">오류시간</th>
+								<th data-field='f1' data-visible="true" data-sortable="true" data-align="center">오류시간</th>
 								<th data-field='f2' data-visible="true" data-sortable="true" data-align="center">오류상태</th>
 								<th data-field='f3' data-visible="true" data-sortable="true" data-align="center">저울번호</th>
 							</tr>
@@ -330,12 +334,12 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 								<tbody>
 									<tr>
 										<th>동작 온도</th>
-										<td><input class='form-control' id='text_gw_fan_on_temp' type='text' maxlength='2' size='2'></td>
+										<td><input class='form-control input-sm' id='text_gw_fan_on_temp' type='text' maxlength='2' size='2'></td>
 										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_on_temp', true)"><span class="fa fa-gear text-orange"></span> 설정</button></td>
 									</tr>
 									<tr>
 										<th>정지 온도</th>
-										<td><input class='form-control' id='text_gw_fan_off_temp' type='text' maxlength='2' size='2'></td>
+										<td><input class='form-control input-sm' id='text_gw_fan_off_temp' type='text' maxlength='2' size='2' style="height: 29.6px"></td>
 										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_off_temp', true)"><span class="fa fa-gear text-orange"></span> 설정</button></td>
 									</tr>
 									<tr>

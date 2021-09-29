@@ -17,14 +17,14 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 					
 				<div class="widget-toolbar ml-auto">
 					<div class="form-inline">
-						<button class="btn btn-default btn-labeled btn-sm"><span class="btn-label"><i class="fa fa-search"></i></span>농장별로 확인</button>&nbsp;
-						<button class="btn btn-default btn-labeled btn-sm"><span class="btn-label"><i class="fa fa-search"></i></span>동별로 확인</button>
+						<button class="btn btn-default btn-labeled btn-sm" onClick=""><span class="btn-label" style="top: auto;"><i class="fa fa-search text-primary"></i></span>농장별로 확인</button>&nbsp;
+						<button class="btn btn-default btn-labeled btn-sm" onClick=""><span class="btn-label" style="top: auto;"><i class="fa fa-search text-primary"></i></span>동별로 확인</button>
 					</div>
 				</div>
 			</header>
 
 			<div class="widget-body">
-				<table class="table table-bordered table-hover" style="text-align: center;">
+				<!-- <table class="table table-bordered table-hover" style="text-align: center;">
 					<thead>
 						<th>입추</th>
 						<th>입추예정</th>
@@ -39,6 +39,16 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 							<td>-</td>
 						</tr>
 					</tbody>
+				</table> -->
+				<table id="in_out_farm" data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
+					<thead>
+						<tr>
+							<th data-field='f1'  data-sortable='true' data-align='center'>입추</th>
+							<th data-field='f2'  data-sortable='true' data-align='center'>입추예정</th>
+							<th data-field='f3'  data-sortable='true' data-align='center'>출하예정</th>
+							<th data-field='f4'  data-sortable='true' data-align='center'>출하</th>
+						</tr>
+					</thead>
 				</table>
 			</div>
 					
@@ -55,33 +65,23 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 
 			<div class="widget-body no-padding">
 
-				<table id="ho_insu" class="table table-bordered table-hover" style="text-align: center;">
+				<table id="ho_insu" data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="1" data-toggle="table" style="font-size:14px;">
 					<thead>
-						<th>11호</th>
-						<th>12호</th>
-						<th>13호</th>
-						<th>14호</th>
-						<th>15호</th>
-						<th>16호</th>
-						<th>17호</th>
-						<th>18호</th>
-						<th>19호</th>
-						<th>20호</th>
-					</thead>
-					<tbody>
 						<tr>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
+							<th data-field='f11' data-sortable='true' data-align='center'>11호</th>
+							<th data-field='f12' data-sortable='true' data-align='center'>12호</th>
+							<th data-field='f13' data-sortable='true' data-align='center'>13호</th>
+							<th data-field='f14' data-sortable='true' data-align='center'>14호</th>
+							<th data-field='f15' data-sortable='true' data-align='center'>15호</th>
+							<th data-field='f16' data-sortable='true' data-align='center'>16호</th>
+							<th data-field='f17' data-sortable='true' data-align='center'>17호</th>
+							<th data-field='f18' data-sortable='true' data-align='center'>18호</th>
+							<th data-field='f19' data-sortable='true' data-align='center'>19호</th>
+							<th data-field='f20' data-sortable='true' data-align='center'>20호</th>
+							<th data-field='f21' data-sortable='true' data-align='center'>21호</th>
+							<th data-field='f22' data-sortable='true' data-align='center'>22호</th>
 						</tr>
-					</tbody>
+					</thead>
 				</table>
 				
 			</div>
@@ -90,7 +90,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 	</article>
 </div>
 
-<div class="row">
+<!-- <div class="row">
 	<article class="col-xl-12">
 		<div class="well well-sm" id="event-container">
 			<form>
@@ -99,9 +99,9 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 						Draggable Events
 					</legend>
 					<ul id='external-events' class="list-unstyled">
-						<!--<li>
+						<li>
 							<span class="bg-darken text-white" data-description="Currently busy" data-icon="fa-time">Office Meeting</span>
-						</li>-->
+						</li>
 					</ul>
 					<div class="checkbox vcheck">
 						<label>
@@ -113,7 +113,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 			</form>
 		</div>
 	</article>
-</div>
+</div> -->
 
 <!--입출하 일정 & 농가 지도-->
 <div class="row">
@@ -124,7 +124,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 					<span class="widget-icon"> <i class="fa fa-calendar text-primary"></i> </span>
 					<h2> 입출하 일정</h2>
 				</div>
-				<div class="widget-toolbar ml-auto">
+				<div class="widget-toolbar ml-auto" style="padding-top: 4px">
 					<!-- add: non-hidden - to disable auto hide -->
 					<div class="form-inline">
 						<!-- <a class="btn btn-default btn-sm" href="javascript:void(0);" id="mt">Month</a>&nbsp;
@@ -162,6 +162,10 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				<div class="widget-header">	
 					<h2><i class="fa fa-map-marker text-green"></i>&nbsp;농가 지도</h2>	
 				</div>
+				<div class="widget-toolbar ml-auto" style="cursor: default">
+					<span class='fa fa-map-marker text-blue'> </span>&nbsp;입추&nbsp;
+					<span class='fa fa-map-marker text-orange'> </span>&nbsp;출하&nbsp;
+				</div>
 			</header>
 				
 			<div class="widget-body">
@@ -174,9 +178,9 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 	</article>
 
 	<!--modal_box-->
-	<!-- <div id="modal_box" class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div id="modal_box" class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="top:20%">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel"><b>일정 추가</b></h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
@@ -261,12 +265,12 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary btn-sm" id="add-event">확인</button>
-					<button type="button" class="btn btn-default btn-sm" id="closeModalBtn">취소</button>
+					<button type="button" class="btn btn-default btn-sm" id="close_modal_btn">취소</button>
 				</div>
 
 			</div>
 		</div>
-	</div> -->
+	</div>
 	<!-- modal_box end -->
 
 </div>
@@ -278,7 +282,6 @@ include_once("../inc/bottom.php");
 <script src="https://maps.googleapis.com/maps/api/js?key=<?=$map_key?>&callback=initMap" async defer></script>
 
 <script type="text/javascript">
-	
 	var map_data;
 
 	$("#map_div").bind('resize',function(){ initMap(); });
@@ -288,20 +291,21 @@ include_once("../inc/bottom.php");
 		map["map_div"] = new google.maps.Map(document.getElementById("map_div"), {
 			zoom:8,center:{lat:35.8391582,lng:127.0998321}
 		});
-		del_markers("map_div"); add_markers("map_div",jQuery.makeArray(map_data));
+		del_markers("map_div"); add_markers("map_div", jQuery.makeArray(map_data));
 	};
 
 	// 입출하 달력
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	$(document).ready(function() {
-
+		get_inout_data();
+		get_ho_data();
 		get_map_data();
 		
-		$('#openModalBtn').on('click', function(){
+		$('#open_modal_btn').on('click', function(){
 			$('#modal_box').modal('show');
 		});
 			// 모달 안의 취소 버튼에 이벤트를 건다.
-		$('#closeModalBtn').on('click', function(){
+		$('#close_modal_btn').on('click', function(){
 			$('#modal_box').modal('hide');
 		});
 
@@ -320,58 +324,58 @@ include_once("../inc/bottom.php");
 				right: 'prev,today,next'
 			};
 		
-			var initDrag = function (e) {
-				// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-				// it doesn't need to have a start or end
+			// var initDrag = function (e) {
+			// 	// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+			// 	// it doesn't need to have a start or end
 		
-				var eventObject = {
-					title: $.trim(e.children().text()), // use the element's text as the event title
-					description: $.trim(e.children('span').attr('data-description')),
-					icon: $.trim(e.children('span').attr('data-icon')),
-					className: $.trim(e.children('span').attr('class')) // use the element's children as the event class
-				};
-				// store the Event Object in the DOM element so we can get to it later
-				e.data('eventObject', eventObject);
+			// 	var eventObject = {
+			// 		title: $.trim(e.children().text()), // use the element's text as the event title
+			// 		description: $.trim(e.children('span').attr('data-description')),
+			// 		icon: $.trim(e.children('span').attr('data-icon')),
+			// 		className: $.trim(e.children('span').attr('class')) // use the element's children as the event class
+			// 	};
+			// 	// store the Event Object in the DOM element so we can get to it later
+			// 	e.data('eventObject', eventObject);
 		
-				// make the event draggable using jQuery UI
-				e.draggable({
-					zIndex: 999,
-					revert: true, // will cause the event to go back to its
-					revertDuration: 0 //  original position after the drag
-				});
-			};
+			// 	// make the event draggable using jQuery UI
+			// 	e.draggable({
+			// 		zIndex: 999,
+			// 		revert: true, // will cause the event to go back to its
+			// 		revertDuration: 0 //  original position after the drag
+			// 	});
+			// };
 		
-			var addEvent = function (title, priority, description, icon) {
-				title = title.length === 0 ? "Untitled Event" : title;
-				description = description.length === 0 ? "No Description" : description;
-				icon = icon.length === 0 ? " " : icon;
-				priority = priority.length === 0 ? "label label-default" : priority;
+			// var addEvent = function (title, priority, description, icon) {
+			// 	title = title.length === 0 ? "Untitled Event" : title;
+			// 	description = description.length === 0 ? "No Description" : description;
+			// 	icon = icon.length === 0 ? " " : icon;
+			// 	priority = priority.length === 0 ? "label label-default" : priority;
 		
-				var html = $('<li><span class="' + priority + '" data-description="' + description + '" data-icon="' +
-					icon + '">' + title + '</span></li>').prependTo('ul#external-events').hide().fadeIn();
+			// 	var html = $('<li><span class="' + priority + '" data-description="' + description + '" data-icon="' +
+			// 		icon + '">' + title + '</span></li>').prependTo('ul#external-events').hide().fadeIn();
 		
-				$("#event-container").effect("highlight", 800);
+			// 	$("#event-container").effect("highlight", 800);
 		
-				initDrag(html);
-			};
+			// 	initDrag(html);
+			// };
 		
 			/* initialize the external events
 			 -----------------------------------------------------------------*/
 		
-			$('#external-events > li').each(function () {
-				initDrag($(this));
-			});
+			// $('#external-events > li').each(function () {
+			// 	initDrag($(this));
+			// });
 		
-			$('#add-event').click(function () {
-				var title = $('#title').val(),
-					priority = $('input:radio[name=priority]:checked').val(),
-					description = $('#description').val(),
-					icon = $('input:radio[name=iconselect]:checked').val();
+			// $('#add-event').click(function () {
+			// 	var title = $('#title').val(),
+			// 		priority = $('input:radio[name=priority]:checked').val(),
+			// 		description = $('#description').val(),
+			// 		icon = $('input:radio[name=iconselect]:checked').val();
 		
-				addEvent(title, priority, description, icon);
+			// 	addEvent(title, priority, description, icon);
 				
-				$('#modal_box').modal('hide');
-			});
+			// 	$('#modal_box').modal('hide');
+			// });
 		
 			/* initialize the calendar
 			 -----------------------------------------------------------------*/
@@ -403,9 +407,7 @@ include_once("../inc/bottom.php");
 						// if so, remove the element from the "Draggable Events" list
 						$(this).remove();
 					}
-		
 				},
-		
 				select: function (start, end, allDay) {
 					var title = prompt('Event Title:');
 					if (title) {
@@ -419,11 +421,8 @@ include_once("../inc/bottom.php");
 					}
 					calendar.fullCalendar('unselect');
 				},
-				
-
 				// 추가한 event
 				events: [],
-		
 				eventRender: function (event, element, icon) {
 					if (!event.description == "") {
 						element.find('.fc-title').append("<br/><span class='ultra-light'>" + event.description +
@@ -434,7 +433,6 @@ include_once("../inc/bottom.php");
 							" '></i>");
 					}
 				},
-		
 				windowResize: function (event, ui) {
 					$('#calendar').fullCalendar('render');
 				}
@@ -455,25 +453,58 @@ include_once("../inc/bottom.php");
 			});
 			
 			// Month button
-			// $('#mt').click(function () {
-			// 	$('#calendar').fullCalendar('changeView', 'month');
-			// });
+			$('#mt').click(function () {
+				$('#calendar').fullCalendar('changeView', 'month');
+			});
 			
-			// Agenda button
+			// // Agenda button
 			// $('#ag').click(function () {
 			// 	$('#calendar').fullCalendar('changeView', 'agendaWeek');
 			// });
 			
-			// today button
+			// // today button
 			// $('#td').click(function () {
 			// 	$('#calendar').fullCalendar('changeView', 'agendaDay');
 			// });	
 	
 	});
 
+	function get_inout_data(){
+		let data_arr = {};
+			data_arr["oper"] = "get_inout_data";
+		
+		$.ajax({
+			url:"0201_action.php",
+			data:data_arr,
+			cache:false,
+			type:"post",
+			dataType:"json",
+			success: function(data){
+				$('#in_out_farm').bootstrapTable('load', data.inout_data);
+			}
+		});
+	};
+
+	function get_ho_data(){
+		let data_arr = {};
+			data_arr["oper"] = "get_ho_data";
+		
+		$.ajax({
+			url:"0201_action.php",
+			data:data_arr,
+			cache:false,
+			type:"post",
+			dataType:"json",
+			success: function(data){
+				//alert(data.ho_data);
+				$('#ho_insu').bootstrapTable('load', data.ho_data);
+			}
+		});
+	}
+
 	function get_map_data(){
 		let data_arr = {};
-			data_arr["oper"] = "get_data";
+			data_arr["oper"] = "get_map_data";
 
 		$.ajax({
 			url:"0201_action.php",
@@ -483,16 +514,16 @@ include_once("../inc/bottom.php");
 			dataType:"json",
 			success: function(data){
 				// 지도 data
-				map_data = data.json_map;
-				del_markers("map_div"); add_markers("map_div",jQuery.makeArray(map_data));
-			};
+				let map_data = data.json_map;
+				del_markers("map_div"); add_markers("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
+			}
 		});
 	};
 
 	// function get_calendar_data(){
 	// 	let data_arr = {};
-	// 		data_arr["oper"] = "get_data";
-
+	// 		data_arr["oper"] = "get_calendar_data";
+		
 	// 	$.ajax({
 	// 		url:"0201_action.php",
 	// 		data:data_arr,
@@ -500,10 +531,9 @@ include_once("../inc/bottom.php");
 	// 		type:"post",
 	// 		dataType:"json",
 	// 		success: function(data){
-				
+
 	// 		}
 	// 	});
-
-	// };
+	// }
 
 	</script>

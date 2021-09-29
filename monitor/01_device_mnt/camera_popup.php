@@ -13,7 +13,7 @@
 		<link rel="stylesheet" media="screen, print" href="../common/library/app/app.bundle.css">
     </head>
 
-    <body>
+    <body style="align-items: center; padding-top: 3%">
         <!-- <div id="camera_popup">
             <div style="width:120px; padding:5px" class="center-block">
                 <button class="btn btn-primary" type="button" onClick="zoom('+')">확대</button>
@@ -23,12 +23,12 @@
         <img class="img-responsive center-block" id="camera_img" src="../images/noimage.jpg" style="opacity: 1.0; filter: alpha(opacity=100); margin:auto"> -->
 
 		<div class="col-xl-12 d-flex flex-row">
-			<div class="col-xl-12 text-center p-4">
-				<button class="btn btn-default btn-sm" onClick="zoom('+')"><i class="fa fa-search-plus"></i>&nbsp;확대</button>
-				<button class="btn btn-default btn-sm" onClick="zoom('-')"><i class="fa fa-search-minus"></i>&nbsp;축소</button>
+			<div class="col-xl-12 text-center" style="padding: 12px">
+				<button class="btn btn-default btn-md" onClick="zoom('+')"><i class="fa fa-search-plus text-blue"></i>&nbsp;확대</button>
+				<button class="btn btn-default btn-md" onClick="zoom('-')"><i class="fa fa-search-minus text-red"></i>&nbsp;축소</button>
 			</div>
-			<div class="col-xl-12 p-4">
-				<img class="img-responsive center-block" id="camera_img" src="../images/noimage.jpg" style="opacity: 1.0; filter: alpha(opacity=100); margin:auto">
+			<div class="col-xl-12">
+				<img class="img-responsive center-block p-5" id="camera_img" src="../images/noimage.jpg" style="opacity: 1.0; filter: alpha(opacity=100);">
 			</div>
 		</div>
     </body>

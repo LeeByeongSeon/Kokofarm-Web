@@ -25,34 +25,86 @@ if(isset($_REQUEST["code"])){
 };
 
 switch($oper){
+	case "get_inout_data": // 임시(?)
 
-	default:
-		$page  = check_str($_REQUEST['page']); // jqGrid의 page 속성의 값
-		$limit = check_str($_REQUEST['rows']); // jqGrid의 rowNum 속성의 값
-		$sidx  = check_str($_REQUEST['sidx']); // jqGrid의 sortname 속성의 값
-		$sord  = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
+		$select_query = "SELECT COUNT(CASE WHEN beStatus='I' THEN 1 END) AS insu, COUNT(CASE WHEN beStatus='O' THEN 1 END) AS outsu FROM buffer_sensor_status";
+
+		$select_data = get_select_data($select_query);
+
+		$inout_data = array();
+
+		if(!empty($select_data)){
+
+			$row = $select_data[0];
+
+			$inout_data[] = array(
+				'f1' => $row["insu"],
+				'f2' => "-",
+				'f3' => "-",
+				'f4' => $row["outsu"],
+			);
+		}
+
+		$response["inout_data"] = $inout_data;
+
+		echo json_encode($response);
 
 		break;
 
-	case "get_data":
-		$select_query = "SELECT fd.*, cm.* FROM farm_detail AS fd
-						JOIN comein_master AS cm ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
-						WHERE fdFarmid = \"$farmID\" AND fdDongid = \"$dongID\"";
+	case "get_ho_data":
+
+		$select_query = "SELECT cName1, COUNT(*) AS cnt FROM codeinfo AS c 
+						 LEFT JOIN buffer_sensor_status AS be ON beAvgWeight BETWEEN cName2 AND cName3
+						 WHERE c.cGroup = '중량호수' GROUP BY cName1";
+
+		$select_data = get_select_data($select_query);
+
+		$ho_data = array();
+
+		if(!empty($select_data)){
+			foreach($select_data as $row){
+				if($row["cName1"] > 10){
+					$ho_data[0]["f". $row["cName1"]] = $row["cnt"];
+				}
+			}
+		};
+		
+		$response["ho_data"] = $ho_data;
+
+		echo json_encode($response);
+
+		break;
+
+	case "get_map_data":
+
+		$select_query = "SELECT fd.*, cm.*, be.beStatus FROM farm_detail AS fd
+						 JOIN comein_master AS cm ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
+						 JOIN buffer_sensor_status AS be ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid";
 		
 		$select_data = get_select_data($select_query);
 
 		$json_map = array();
 
-		foreach($select_data as $val){
-			$json_map[] = array(
-				"gps_lat" => $val["fdGpslat"];
-				"gps_lng" => $val["fdGpslng"];
-			);
-		}
+		if(!empty($select_data)){
+			foreach($select_data as $val){
+				$json_map[] = array(
+					"f_status" => $val["beStatus"],
+					"f_farmid" => $val["fdFarmid"]. "|" .$val["fdDongid"],
+					"f_name"   => $val["fdName"],
+					"gps_lat"  => $val["fdGpslat"],
+					"gps_lng"  => $val["fdGpslng"],
+				);
+			};
+		};
+
+		// var_dump($json_map);
 
 		$response["json_map"] = $json_map;
-		
+
+		echo json_encode($response);
+
 		break;
+
 };
 
 ?>

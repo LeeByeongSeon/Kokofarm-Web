@@ -18,20 +18,10 @@ $oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 
 switch($oper){
 	default:
-        $page  = check_str($_REQUEST['page']); // jqGrid의 page 속성의 값
-        $limit = check_str($_REQUEST['rows']); // jqGrid의 rowNum 속성의 값
-        $sidx  = check_str($_REQUEST['sidx']); // jqGrid의 sortname 속성의 값
-        $sord  = check_str($_REQUEST['sord']); // jqGrid의 sortorder 속성의 값
-
-        //검색필드
-        $append_query = "";
-
-        if(isset($_REQUEST["search_data"])){
-            $search_data = $_REQUEST["search_data"];
-            $search_json = json_decode(stripslashes($search_data), true);
-
-            $append_query = ($search_json["search_name"] == "") ? $append_query : $append_query . " AND (fdName LIKE \"%" .$search_json["search_name"]. "%\" OR cmFarmid LIKE \"%" .$search_json["search_name"]. "%\") ";
-        }
+        $page  = isset($_REQUEST['page']) ? $page  = check_str($_REQUEST['page']) : 1; // jqGrid의 page 속성의 값
+        $limit = isset($_REQUEST['rows']) ? $limit = check_str($_REQUEST['rows']) : 1; // jqGrid의 rowNum 속성의 값
+        $sidx  = isset($_REQUEST['sidx']) ? $sidx  = check_str($_REQUEST['sidx']) : 'warning'; // jqGrid의 sortname 속성의 값
+        $sord  = isset($_REQUEST['sord']) ? $sord  = check_str($_REQUEST['sord']) : 'desc'; // jqGrid의 sortorder 속성의 값
 
         // 권고 환경값 및 중량 가져오기
         $ref_data = get_select_data("SELECT * FROM codeinfo WHERE LEFT(cGroup, 2) = \"권고\"");
@@ -65,13 +55,10 @@ switch($oper){
         }
 		
         // 표로 나타낼 데이터
-        $select_query = "SELECT cm.cmCode, cm.cmFarmid, cm.cmDongid, cm.cmIntype, fd.fdName,
-                            	IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) as days, 
+        $select_query = "SELECT cm.cmCode, cm.cmFarmid, cm.cmDongid, cm.cmIntype, fd.fdName, fd.fdScale, fd.fdGpslat, fd.fdGpslng, fd.fdAddr, fd.fdOutDays,
+                            	IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS days, 
                             	TRUNCATE(be.beAvgWeight, 0) AS beAvgWeight, be.beAvgTemp, be.beAvgHumi, be.beAvgCo2, be.beAvgNh3, 
-                            	be.beNetwork, bp.bpSensorDate, bp.bpDeviceDate, sf.sfFeedDate, sf.sfWaterDate, so.soSensorDate,
-                            	GROUP_CONCAT(siSensorDate separator '|') AS siSensorDate, 
-                            	GROUP_CONCAT(TRUNCATE(siTemp, 1) separator ' | ') AS siTemp, GROUP_CONCAT(TRUNCATE(siHumi, 1) separator ' | ') AS siHumi, 
-                            	GROUP_CONCAT(TRUNCATE(siCo2, 1) separator ' | ') AS siCo2, GROUP_CONCAT(TRUNCATE(siNh3, 1) separator ' | ') AS siNh3 
+                            	be.beStatus, bp.bpSensorDate, bp.bpDeviceDate, sf.sfFeedDate, sf.sfWaterDate, so.soSensorDate
 						   FROM comein_master AS cm
 						   LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
 						   LEFT JOIN set_iot_cell AS si ON si.siFarmid = cm.cmFarmid AND si.siDongid = cm.cmDongid
@@ -79,8 +66,11 @@ switch($oper){
 						   LEFT JOIN buffer_plc_status AS bp ON bp.bpFarmid = cm.cmFarmid AND bp.bpDongid = cm.cmDongid
 						   LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
 						   LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid
-						   WHERE (cmOutdate is NULL OR cmOutdate = '2000-01-01 00:00:00') ". $append_query . " 
+						   WHERE (cmOutdate is NULL OR cmOutdate = '2000-01-01 00:00:00') 
 						   GROUP BY cm.cmCode";
+
+		// 구글맵 data select
+		$select_data = get_select_data($select_query);
 
         // 페이징 처리
         $total_len = get_select_count($select_query);
@@ -262,8 +252,27 @@ switch($oper){
         $response["page"] = $page;
         $response["total"] = $total_pages;
         $response["records"] = $total_len;
+			
+		// 구글맵 관련
+		$json_map = array();
 
-        echo json_encode($response);
+		if(!empty($select_data)){
+			foreach($select_data as $val){
+
+				$json_map[] = array(
+					"f_status" => $val["beStatus"],
+					"f_farmid" => $val["fdFarmid"]. "|" .$val["fdDongid"],
+					"f_name"   => $val["fdName"],
+					"gps_lat"  => $val["fdGpslat"],
+					"gps_lng"  => $val["fdGpslng"],
+				);
+
+			};
+		};
+
+		$response["json_map"]  = $json_map;
+
+		echo json_encode($response);
 
 		break;
 }

@@ -80,8 +80,8 @@ switch($oper){
 			$insert_map["dmAction"]    = check_str($_REQUEST["dmAction"]);
 			$insert_map["dmOthers"]    = check_str($_REQUEST["dmOthers"]);
 			$insert_map["dmActor"]     = check_str($_REQUEST["dmActor"]);
-			$insert_map["dmStartDate"]   = check_str($_REQUEST["dmStartDate"]);
-			$insert_map["dmEndDate"]     = check_str($_REQUEST["dmEndDate"]);
+			$insert_map["dmStartDate"] = check_str($_REQUEST["dmStartDate"]);
+			$insert_map["dmEndDate"]   = check_str($_REQUEST["dmEndDate"]);
 
 			run_sql_insert("defect_manage", $insert_map);
 		}

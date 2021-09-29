@@ -10,6 +10,9 @@ $type_combo_json = make_jqgrid_combo($type_query, "cName1");
 // 동 선택 콤보박스
 $dong_combo_json = make_jqgrid_combo_num(32);
 
+$init_farm = isset($_REQUEST["farmID"]) ? $_REQUEST["farmID"] : "";
+
+$init_id = $init_farm != "" ? $init_farm : ""; 
 ?>
 <!--농장별 동 관리-->
 <article class="col-xl-10 float-right">
@@ -45,6 +48,9 @@ include_once("../inc/bottom.php");
 ?>
 
 <script language="javascript">
+
+	var init_id = "<?=$init_id?>";
+
 	$(document).ready(function(){
 
 		hide_dong = true;
@@ -53,6 +59,7 @@ include_once("../inc/bottom.php");
 
 		call_tree_view("", act_grid_data);
 		set_tree_search(act_grid_data);
+
 	});
 
 	function get_grid_data(){
@@ -73,19 +80,19 @@ include_once("../inc/bottom.php");
 			height:570,
 			jsonReader:{repeatitems:false, id:'pk', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
-				{label: "농장ID", 	name: "fdFarmid",	align:'center', 	editable:true, editrules:{ required: true} },
-				{label: "동ID",		name: "fdDongid",	align:'center',		editable:true, editrules:{ required: true},
+				{label: "농장ID", 	name: "fdFarmid",	align:'center', 	editable:true, width:"20", editrules:{ required: true} },
+				{label: "동ID",		name: "fdDongid",	align:'center',		editable:true, width:"20", editrules:{ required: true},
 					edittype:'select', editoptions:{value:<?=$dong_combo_json?>}
 				},
-				{label: "동이름",	name: "fdName",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "전화번호",	name: "fdTel",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "생계구분",	name: "fdType",		align:'center',		editable:true, editrules:{ required: true},
+				{label: "동이름",	name: "fdName",		align:'left',		editable:true, width:"30",  editrules:{ required: true} },
+				{label: "전화번호",	name: "fdTel",		align:'center',		editable:true, width:"30",  editrules:{ required: true} },
+				{label: "생계구분",	name: "fdType",		align:'center',		editable:true, width:"20",  editrules:{ required: true},
 					edittype:'select', editoptions:{value:<?=$type_combo_json?>}
 				},
-				{label: "사육규모",	name: "fdScale",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "주소",		name: "fdAddr",		align:'center',		editable:true, editrules:{ required: true} },
-				{label: "위도",		name: "fdGpslat",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "경도",		name: "fdGpslng",	align:'center',		editable:true, editrules:{ required: true} },
+				{label: "사육규모",	name: "fdScale",	align:'left',		editable:true, width:"20",  editrules:{ required: true} },
+				{label: "주소",		name: "fdAddr",		align:'left',		editable:true, width:"80", editrules:{ required: true} },
+				{label: "위도",		name: "fdGpslat",	align:'center',		editable:true, hidden:true, editrules:{ required: true} },
+				{label: "경도",		name: "fdGpslng",	align:'center',		editable:true, hidden:true, editrules:{ required: true} },
 				{label: "pk", 		name: "pk",			hidden:true },
 			],
 			onSelectRow: function(id){		  },
@@ -105,6 +112,7 @@ include_once("../inc/bottom.php");
 					}
 					
 					var key = selected_id;
+
 					$("#jqgrid").setColProp('fdFarmid', {editoptions:{readonly:true, defaultValue:key}} );
 
 				},editCaption:"자료수정", recreateForm:true, checkOnUpdate:true, closeAfterEdit:true, errorTextFormat:function(data){ return 'Error: ' + data.responseText}
@@ -130,7 +138,13 @@ include_once("../inc/bottom.php");
 
 	// 트리뷰 버튼 클릭시 리로드 이벤트
 	function act_grid_data(action){
-
+		
+		if(action == "" && init_id != ""){
+			click_tree_by_id(act_grid_data, init_id);
+			init_id = "";
+			return;
+		}
+		
 		switch(action){
 			default:
 				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가

@@ -56,9 +56,6 @@
         </div><!--modal-dialog -->
     </div><!--modal -->
 
-	<!--Excel Download iframe-->
-	<iframe id="excel_download_iframe" name="excel_download_iframe" style="display:none"></iframe>
-
 </body>
 </html>
 
@@ -74,6 +71,7 @@
 
 
 <script language="javascript">
+	
 	$(document).ready(function(){
 
 		//상단 시계

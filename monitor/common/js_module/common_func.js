@@ -6,11 +6,11 @@ var hide_dong = false;
 // css 속성 정의 #FFFFFF 흰색 / #
 const color_hover = "#6c757d";
 const color_leave = "#6c757d";
-const color_select = "#6c757d";
+const color_select = "#fff";
 
-const background_hover = "#cccccc";
+const background_hover = "#f1f2f3";
 const background_leave = "#FFFFFF";
-const background_select = "#f1f2f3";
+const background_select = "#cccccc";
 
 const border_hover = "1px solid #cccccc";
 const border_leave = "1px solid #cccccc";
@@ -86,13 +86,13 @@ function call_tree_view(search, work, in_out = "none"){
                             status = "";
                             break;
                         case "all":
-                            status = "&nbsp<span class='badge " + (status == "입추" ? "bg-blue" : "badge-danger")  + " text-white'>" + status + "</span>";
+                            status = "&nbsp<span class='badge text-white " + (status == "입추" ? "bg-blue" : "bg-red")  + "'>" + status + "</span>";
                             break;
                         case "in":
-                            status = status == "입추" ? "&nbsp<span class='badge bg-blue text-white'>입추</span>" : "pass";
+                            status = status == "입추" ? "&nbsp<span class='badge text-white bg-blue'>입추</span>" : "pass";
                             break;
                         case "out":
-                            status = status == "출하" ? "&nbsp<span class='badge badge-danger text-white'>출하</span>" : "pass";
+                            status = status == "출하" ? "&nbsp<span class='badge text-white bg-red'>출하</span>" : "pass";
                             break;
                     }
 
@@ -109,8 +109,8 @@ function call_tree_view(search, work, in_out = "none"){
 				
                 if(in_out == "out" && cnt_out == 0) {continue;};        //출하 농가없으면 출력 x
 
-                head += cnt_in > 0 ? "&nbsp<span class='badge bg-blue text-white'>" + cnt_in + "</span>" : "";
-                head += cnt_out > 0 ? "&nbsp<span class='badge badge-danger text-white'>" + cnt_out + "</span>" : "";
+                head += cnt_in > 0 ? "&nbsp<span class='badge text-white bg-blue'>" + cnt_in + "</span>" : "";
+                head += cnt_out > 0 ? "&nbsp<span class='badge text-white bg-red'>" + cnt_out + "</span>" : "";
 
                 tree_html += head + tail;
 
@@ -246,12 +246,12 @@ function set_selected_highlight(prev, curr){
         // 이전 선택 지우기
         if(prev != ""){
             $("#" + prev).removeAttr("is_selected");
-            $("#" + prev).css("background-color", background_leave).css("border", border_leave).css("color", color_leave);
+            $("#" + prev).css("background-color", background_leave).css("font-weight", "normal").css("font-size", "13px").css("border", border_leave).css("color", color_leave);
         }
 
         // 현재 선택
         $("#" + curr).attr("is_selected", true);
-        $("#" + curr).css("background-color", background_select).css("border", border_select).css("color", color_select);
+        $("#" + curr).css("background-color", background_select).css("font-weight", "bold").css("font-size", "15px").css("border", border_select).css("color", color_select);
     }
 
     $("html, body").animate({scrollTop :0}, 0); //상단으로 포커싱함
@@ -830,7 +830,7 @@ function camera_close(img_obj){
     //open_window.close();
 };
 
-// 엑셀파일 다운로드
+// 엑셀파일 다운로드-------------------------------------------------------------------------------
 function table_to_excel(title, html){
     let data_type = "data:application/vnd.ms-excel";
     let ua = window.navigator.userAgent;
@@ -858,7 +858,7 @@ function table_to_excel(title, html){
     }
 };
 
-// 엑셀 데이터 안드로이드 전송
+// 엑셀 데이터 안드로이드 전송---------------------------------------------------------------------
 function send_excel_android(title, table_id){
 	let date_time = get_now_datetime();
 
@@ -873,18 +873,21 @@ function send_excel_android(title, table_id){
 	window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
 };
 
+// ------------------------------------------------------------------------------------------------
 // 구글 맵 관련 js
+// ------------------------------------------------------------------------------------------------
 var map = new Array();				//마커 Object 생성
 var markers = new Array();			//마커 핸들링을 위한 배열
 var markers_circle = new Array();	//마커 circle 핸들링을 위한 배열
 
 //구글맵 마커
 var icon_base = '../images/markers/';
-var icons = {orange:{icon: icon_base + 'orange_m.png'},
+var icons = {
+			 orange:{icon: icon_base + 'orange_m.png'},
 			 green:	{icon: icon_base + 'green_m.png'},
 			 purple:{icon: icon_base + 'purple_m.png'},
 			 blue:	{icon: icon_base + 'blue_m.png'	},
-};
+			};
 
 //마커와 마커써클 Delete
 function del_markers(map_variable){
@@ -900,70 +903,104 @@ function del_markers(map_variable){
 }
 
 //마커생성
-//map_name : 맵의 메인 변수명
-//house_data : 맵의 자표Data
-function add_markers(map_name, house_data){
+//map_name : map의 메인 변수명
+//map_data : map의 좌표 Data
+function add_markers(map_name, map_data){
 
-	markers[map_name]=new Array();
+	markers[map_name] = new Array();
 
-	for(let i=0; i<=house_data.length-1; i++){
-		if(house_data[i].houseStatus==="입추"){
+	for(let i=0; i<=map_data.length-1; i++){
+		if(map_data[i].f_status==="I"){
 				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName,icon: icons["purple"].icon,map:map[map_name],
+				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["blue"].icon, map:map[map_name],
 				animation:google.maps.Animation.DROP,zIndex:9999
 			});
 		}
 		else{
 				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName,icon: icons["orange"].icon,map:map[map_name],
+				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["orange"].icon, map:map[map_name],
 			});
 		}
 		markers[map_name].push(marker);
-		
 
 		//Marker click event
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
-				let houseID = house_data[i].houseID;	
-				get_map_data(houseID);	// 하우스 현황 가져오기
+				let farm = map_data[i].f_farmid;
+				let farm_detail = farm.split("|");
+				let farmID = farm_detail[0];
+				let dongID = farm_detail[1];
+				window.location = "../01_device_mnt/0102.php?farmID="+farmID+"&dongID="+dongID;	//동별 세부 현황으로 이동
+			}
+		})(marker, i));
+	}
+};
+
+function add_markers_modal(map_name, map_data){
+
+	markers[map_name] = new Array();
+
+	for(let i=0; i<=map_data.length-1; i++){
+		if(map_data[i].f_status==="I"){
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["blue"].icon, map:map[map_name],
+				animation:google.maps.Animation.DROP,zIndex:9999
+			});
+		}
+		else{
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["orange"].icon, map:map[map_name],
+			});
+		}
+		markers[map_name].push(marker);
+
+		//Marker click event
+		google.maps.event.addListener(marker, 'click', (function(marker, i) {
+			return function() {
+				//popup_alert();
+				$("#farm_modal").modal("show");
+				let f_full_name = map_data[i].f_name;
+				let farm_name = f_full_name.split("-");
+				let f_name = farm_name[0];
+				$("#modal_alert_title").html(f_name);
 			}
 		})(marker, i));
 	}
 };
 
 //마커생성--영역표시(Km)
-function add_markers_zone(map_name, house_data){
-	markers[map_name]=new Array();
-	markers_circle[map_name]=new Array();
+function add_markers_zone(map_name, map_data){
+	markers[map_name] = new Array();
+	markers_circle[map_name] = new Array();
 
-	for(let i=0; i<=house_data.length-1; i++){
+	for(let i=0; i<=map_data.length-1; i++){
 		//마커생성
-		if(house_data[i].marker_icon==="orange" || house_data[i].marker_icon==="purple"){
+		if(map_data[i].marker_icon==="orange" || map_data[i].marker_icon==="blue"){
 				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName, icon: icons[house_data[i].marker_icon].icon,map:map[map_name],
+				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons[map_data[i].marker_icon].icon, map:map[map_name],
 				animation:google.maps.Animation.DROP,zIndex:9999
 			});
 		}
 		else{
 				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),title:house_data[i].dongName, icon: icons[house_data[i].marker_icon].icon,map:map[map_name],
+				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons[map_data[i].marker_icon].icon, map:map[map_name],
 			});
 		}
 		markers[map_name].push(marker);
 
 		//마커 영역 생성
-		if(house_data[i].marker_icon==="orange"){
+		if(map_data[i].marker_icon==="orange"){
 				map_circle = new google.maps.Circle({
-				strokeColor: 'orange',strokeOpacity: 0.3,strokeWeight: 1,fillColor: 'orange',fillOpacity: 0.3,map: map[map_name],
-				center: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),
+				strokeColor:'orange', strokeOpacity:0.3, strokeWeight:1, fillColor:'orange', fillOpacity: 0.3, map:map[map_name],
+				center: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng),
 				radius:5000 /*5Km 반경*/
 			});
 			markers_circle[map_name].push(map_circle);
 		}
-		if(house_data[i].marker_icon==="purple"){
+		if(map_data[i].marker_icon==="blue"){
 				map_circle = new google.maps.Circle({
-				strokeColor: 'purple',strokeOpacity: 0.3,strokeWeight: 1,fillColor: 'purple',fillOpacity: 0.3,map: map[map_name],
-				center: new google.maps.LatLng(house_data[i].gpsLat, house_data[i].gpsLng),
+				strokeColor:'blue', strokeOpacity:0.3, strokeWeight:1, fillColor:'blue', fillOpacity: 0.3, map:map[map_name],
+				center: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng),
 				radius:30000 /*30Km 반경*/
 			});
 			markers_circle[map_name].push(map_circle);
@@ -972,9 +1009,11 @@ function add_markers_zone(map_name, house_data){
 		//Marker click event
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
-				let houseID = house_data[i].houseID;	
-				get_map_data(houseID); // 하우스 현황 가져오기
-	
+				let farm = map_data[i].f_farmid;
+				let farm_detail = farm.split("|");
+				let farmID = farm_detail[0];
+				let dongID = farm_detail[1];
+				window.location = "../01_device_mnt/0102.php?farmID="+farmID+"&dongID="+dongID;	//동별 세부 현황으로 이동
 			}
 		})(marker, i));
 

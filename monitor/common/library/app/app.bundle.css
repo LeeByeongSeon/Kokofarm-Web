@@ -7692,7 +7692,7 @@ hr.simple {
   .sa-fixed-navigation:not(.minified) .sa-aside-left {
     position: fixed;
     /* z-index: 9; */
-	z-index:10000;
+	z-index:100;
     top: 49px;
     bottom: 0;
     overflow: hidden; }
@@ -10599,7 +10599,7 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .text-pink-dark {
     color: #AD1457 !important; }
   .smart-style-6 .bg-blue {
-    background-color: #2196F3 !important; }
+    background-color: #007bff !important; }
   .smart-style-6 .text-blue {
     color: #2196F3 !important; }
   .smart-style-6 .bg-blue-light {
@@ -10627,7 +10627,7 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .text-orange-dark {
     color: #E65100 !important; }
   .smart-style-6 .bg-red {
-    background-color: #F44336 !important; }
+    background-color: #dc3545 !important; }
   .smart-style-6 .text-red {
     color: #F44336 !important; }
   .smart-style-6 .bg-red-light {

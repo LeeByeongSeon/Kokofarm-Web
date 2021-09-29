@@ -377,7 +377,6 @@ switch($oper){
                         LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND shDate = \"" . substr($now, 0, 13) . ":00:00\" 
                         WHERE cmCode = '" .$code. "'
                         GROUP BY cm.cmCode, sc.scPort";
-
         $select_data = get_select_data($select_query);
         $row = $select_data[0];
 
@@ -386,8 +385,8 @@ switch($oper){
         $summary_data["summary_name"] 	= $row["fdName"] . " (" . $row["cmFarmid"] . "-" . $row["cmDongid"] . ")";
         $summary_data["summary_days"] 	= $row["days"];
         $summary_data["summary_avg"] 	= number_format($row["beAvgWeight"], 0);
-        $summary_data["summary_devi"] 	= "표준편차<br>" . number_format($row["beDevi"], 1);
-        $summary_data["summary_inc"] 	= "일일증체량<br>" . (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
+        $summary_data["summary_devi"] 	= number_format($row["beDevi"], 1);
+        $summary_data["summary_inc"] 	= (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
         $summary_data["summary_type"] 	= $row["cmIntype"] . " " . $row["cmInsu"] . "수";
         $summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
 

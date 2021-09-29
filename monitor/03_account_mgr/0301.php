@@ -19,6 +19,9 @@ $dong_combo_json = make_jqgrid_combo_num(32);
 				<div class="widget-header">	
 					<h2><i class="fa fa-home"></i>&nbsp;농장 계정 관리</h2>	
 				</div>
+					<div class="widget-toolbar ml-auto" style="cursor: default">
+						<span class="font-weight-bold">※ 행을 더블클릭하면 해당 농장의 '농장별 동 관리'로 이동합니다.</span>
+					</div>
 			</header>
 				
 			<div class="widget-body">
@@ -87,7 +90,14 @@ include_once("../inc/bottom.php");
 				{label: "외기환경센서",		 name: "cnt_so",	align:'center',		},
 			],
 			onSelectRow: function(id){		  },
-			loadComplete:function(data){		}
+			loadComplete:function(data){		},
+			ondblClickRow:function(id){
+				let row = $(this).jqGrid('getRowData', id);
+
+				let farmID = row.fFarmid;
+
+				window.location = "0302.php?farmID=" + farmID;
+			}
 		});
 
 		$('#jqgrid').navGrid('#jqgrid_pager',

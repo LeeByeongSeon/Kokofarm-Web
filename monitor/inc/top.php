@@ -102,11 +102,11 @@
 	}
 
 	$query = "SELECT 
-			COUNT(*) AS cnt_all, 
-			COUNT(IF(beStatus = 'O', beStatus, null)) AS cnt_out, 
-			COUNT(IF(beStatus = 'E', beStatus, null)) AS cnt_err, 
-			COUNT(IF(beStatus = 'W', beStatus, null)) AS cnt_wait 
-		FROM buffer_sensor_status";
+				   COUNT(*) AS cnt_all, 
+				   COUNT(IF(beStatus = 'O', beStatus, null)) AS cnt_out, 
+				   COUNT(IF(beStatus = 'E', beStatus, null)) AS cnt_err, 
+				   COUNT(IF(beStatus = 'W', beStatus, null)) AS cnt_wait 
+			  FROM buffer_sensor_status";
 
 	$cnt_data = get_select_data($query)[0];
 	$cnt_out = number_format($cnt_data["cnt_out"]);
@@ -292,7 +292,7 @@
 											<!--농장 트리뷰 검색필드-->
 											<div class="widget-body-toolbar bg-white" style="padding-top:10px; padding-left:20px;">
 												<form class="form-inline" id="form_tree_search" role="form" onsubmit="return false;">
-													<div class="input-group">
+													<div class="col-xl-12 input-group">
 														<input type="text" class="form-control" name="text_tree_search" placeholder="농장 이름" max-length="20">&nbsp;
 														<button type="button" class="btn btn-default btn-sm btn-labeled" id="btn_tree_search" style="margin-top: 1px"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>
 													</div>

@@ -100,7 +100,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="error_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true" data-sortable="true">오류시간</th>
+								<th data-field='f1' data-visible="true" data-sortable="true" data-align="center">오류시간</th>
 								<th data-field='f2' data-visible="true" data-sortable="true" data-align="center">오류상태</th>
 								<th data-field='f3' data-visible="true" data-sortable="true" data-align="center">저울번호</th>
 							</tr>
@@ -217,15 +217,15 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="cell_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true" data-sortable="true">획득시간</th>
-								<th data-field='f2' data-visible="true" data-sortable="true">저울ID</th>
-								<th data-field='f3' data-visible="true" data-sortable="true">온도(℃)</th>
-								<th data-field='f4' data-visible="true" data-sortable="true">습도(%)</th>
-								<th data-field='f5' data-visible="true" data-sortable="true">CO2(ppm)</th>
-								<th data-field='f6' data-visible="true" data-sortable="true">NH3(ppm)</th>
-								<th data-field='f7' data-visible="true" data-sortable="false">w01</th>
-								<th data-field='f8' data-visible="true" data-sortable="false">w02</th>
-								<th data-field='f9' data-visible="true" data-sortable="false">w03</th>
+								<th data-field='f1'  data-visible="true" data-sortable="true">획득시간</th>
+								<th data-field='f2'  data-visible="true" data-sortable="true">저울ID</th>
+								<th data-field='f3'  data-visible="true" data-sortable="true">온도(℃)</th>
+								<th data-field='f4'  data-visible="true" data-sortable="true">습도(%)</th>
+								<th data-field='f5'  data-visible="true" data-sortable="true">CO2(ppm)</th>
+								<th data-field='f6'  data-visible="true" data-sortable="true">NH3(ppm)</th>
+								<th data-field='f7'  data-visible="true" data-sortable="false">w01</th>
+								<th data-field='f8'  data-visible="true" data-sortable="false">w02</th>
+								<th data-field='f9'  data-visible="true" data-sortable="false">w03</th>
 								<th data-field='f10' data-visible="true" data-sortable="false">w04</th>
 								<th data-field='f11' data-visible="true" data-sortable="false">w05</th>
 							</tr>
@@ -264,15 +264,15 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="ext_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 						<thead>
 							<tr>
-								<th data-field='f1' data-sortable='true'>획득시간</th>
-								<th data-field='f2' data-sortable='true'>사료빈무게</th>
-								<th data-field='f3' data-sortable='true'>현재값-직전값</th>
-								<th data-field='f4' data-sortable='true'>유량센서값</th>
-								<th data-field='f5' data-sortable='true'>온도(℃)</th>
-								<th data-field='f6' data-sortable='true'>습도(%)</th>
-								<th data-field='f7' data-sortable='true'>NH3(ppm)</th>
-								<th data-field='f8' data-sortable='true'>H2S(ppm)</th>
-								<th data-field='f9' data-sortable='true'>미세먼지(ppm)</th>
+								<th data-field='f1'  data-sortable='true'>획득시간</th>
+								<th data-field='f2'  data-sortable='true'>사료빈무게</th>
+								<th data-field='f3'  data-sortable='true'>현재값-직전값</th>
+								<th data-field='f4'  data-sortable='true'>유량센서값</th>
+								<th data-field='f5'  data-sortable='true'>온도(℃)</th>
+								<th data-field='f6'  data-sortable='true'>습도(%)</th>
+								<th data-field='f7'  data-sortable='true'>NH3(ppm)</th>
+								<th data-field='f8'  data-sortable='true'>H2S(ppm)</th>
+								<th data-field='f9'  data-sortable='true'>미세먼지(ppm)</th>
 								<th data-field='f10' data-sortable='true'>초미세먼지(ppm)</th>
 								<th data-field='f11' data-sortable='true'>풍향</th>
 								<th data-field='f12' data-sortable='true'>풍속(m/s)</th>
@@ -378,7 +378,7 @@ include_once("../inc/bottom.php");
 				{label: "입출하코드", 		name: "cmCode",		hidden:true},
 				{label: "농장ID", 			name: "cmFarmid",	align:'center'},
 				{label: "동ID", 			name: "cmDongid",	align:'center'},
-				{label: "동 이름", 			name: "fdName",		align:'center'},
+				{label: "동 이름", 			name: "fdName",		align:'left'},
 				{label: "축종", 			name: "cmIntype",	align:'center'},
 				{label: "입추수", 			name: "cmInsu",		align:'center'},
 				{label: "산출 Ratio", 		name: "cmRatio",	align:'center'},
