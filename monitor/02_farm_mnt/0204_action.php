@@ -216,10 +216,14 @@ switch($oper){
 
     case "get_request_history":          //재산출 이력
 
-        $select_query = "SELECT * FROM request_calculate WHERE rcFarmid = \"" . $farmID . "\" AND rcDongid = \"" . $dongID . "\" 
-                        AND (rcRequestDate BETWEEN \"" . $_REQUEST["indate"] . "\" AND \"" . date('Y-m-d H:i:s') . "\") ORDER BY rcRequestDate DESC";
+        $select_query = "SELECT * FROM request_calculate WHERE rcCode = \"" . $code . "\" ORDER BY rcRequestDate DESC";
 
         $select_data = get_select_data($select_query);
+
+        $measure_query = "SELECT * FROM comein_master WHERE cmCode = \"" .$code. "\"";
+        $measure_data = json_decode(get_select_data($measure_query)[0]["cmMeasureWeight"], true);
+
+        $measure_data = empty($measure_data) ? array() : $measure_data;
 
         $request_history_data = array();
         foreach($select_data as $row){
@@ -242,6 +246,9 @@ switch($oper){
             if(in_array("Opt", $checker)){
                 $change_str .= (strlen($change_str) > 2 ? "<br>" : "") . $row["rcPrevRatio"] . " -> " . $row["rcChangeRatio"];
                 $change_status .= (strlen($change_status) > 2 ? "<br>" : "") . "Opt(재산출)";
+
+                $mdate = $row["rcMeasureDate"];
+                $measure_data[$mdate] = $row["rcMeasureVal"];
             }
 
             $request_history_data[] = array(
@@ -254,7 +261,33 @@ switch($oper){
             );
         }
 
+        $response["measure_weight_data"] = $measure_data;
         $response["request_history_data"] = $request_history_data;
+        echo json_encode($response);
+
+        break;
+
+    case "input_measure_val":
+        $mdate = check_str($_REQUEST["input_date"]);
+        $mval = check_str($_REQUEST["input_val"]);
+        $mprop = check_str($_REQUEST["input_prop"]);
+        $mprop = $mprop == "" ? "" : "|" . $mprop;
+
+        $query = "SELECT cmMeasureWeight FROM comein_master WHERE cmCode = \"" .$code. "\"";
+        $select_data = get_select_data($query);
+
+        $update_query = "UPDATE comein_master SET cmMeasureWeight = ";
+
+        if($select_data[0]["cmMeasureWeight"] != ""){       // 값이 존재하면
+            $update_query .= "JSON_INSERT(cmMeasureWeight, '$.\\\"" .$mdate. "\\\"', '" .$mval . $mprop . "' )";
+        }
+        else{
+            $update_query .= "JSON_OBJECT('" .$mdate. "', '" .$mval . $mprop . "' )";
+        }
+        
+        $update_query .= " WHERE cmCode = \"" .$code. "\"";
+		run_query($update_query);
+
         echo json_encode($response);
 
         break;

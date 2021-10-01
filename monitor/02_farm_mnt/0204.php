@@ -123,16 +123,26 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 
-				<div class="widget-body" style="height: 250px">
-					<table id="measure_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
+				<div class="widget-body" style="height: 300px">
+
+					<table id="measure_weight_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="4" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true">실측시간</th>
+								<th data-field='f1' data-sortable="true" data-visible="true">실측시간</th>
 								<th data-field='f2' data-visible="true">실측값</th>
 								<th data-field='f3' data-visible="true">비고</th>
 							</tr>
 						</thead>
 					</table>
+
+					<div class="widget-body-toolbar">
+						<form id="input_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
+							<input class="form-control" type="text" name="input_date" maxlength="20" placeholder="시간" size="16" >
+							<input class="form-control" type="text" name="input_val" maxlength="10" placeholder="중량" size="3" >
+							<input class="form-control" type="text" name="input_prop" maxlength="10" placeholder="속성" size="3" >&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" onClick="input_action()">입력</button>
+						</form>
+					</div>
 				</div>
 						
 			</div>
@@ -146,8 +156,8 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					</div>
 				</header>
 
-				<div class="widget-body" style="height: 250px">	
-					<table id="request_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
+				<div class="widget-body" style="height: 300px">	
+					<table id="request_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="6" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
 								<th data-field='f1' data-visible="true">완료시간</th>
@@ -296,6 +306,7 @@ include_once("../inc/bottom.php");
 	var code = "";
 	var indate = "";
 	var outdate = "";
+	var farm_name = "";
 
 	var reloaded = false;
 
@@ -391,6 +402,7 @@ include_once("../inc/bottom.php");
 				code = row.cmCode;
 				indate = row.cmIndate;
 				outdate = row.cmOutdate;
+				farm_name = row.fdName;
 
 				clear_search();
 				load_data();
@@ -600,6 +612,28 @@ include_once("../inc/bottom.php");
 		get_raw_data(action, type, search_map);
 	}
 
+	function input_action(){
+		let input_map = {};
+		$.each($("#input_form").serializeArray(), function(){ 
+			input_map[this.name] = this.value;
+		});
+
+		let msg = farm_name + " " + indate + " ~ " + outdate + " 입추기간에 " + input_map["input_date"] + "에 실측한 " + input_map["input_val"] + "g 을 입력합니다.";
+		msg += input_map["input_prop"] != "" ? " (" + input_map["input_prop"] + ")" : "";
+
+		popup_confirm("실측중량 입력", msg, function(){
+
+			input_map['oper'] = "input_measure_val";
+			input_map['code'] = code;
+
+			$.ajax({url:'0204_action.php',data:input_map,cache:false,type:'post',dataType:'json',
+				success: function(data) {
+					get_request_data();
+				}
+			});
+		});
+	}
+
 	// 탭버튼 선택 이벤트
 	function raw_tab_click(type){
 		let search_map = {};
@@ -624,7 +658,6 @@ include_once("../inc/bottom.php");
 		let type = $(this).attr("id");
 		raw_tab_click(type);
 	});
-
 
 	//로우데이터 검색부 키 제한
 	$("#raw_data_search_form [name=search_sdate]").on("keyup", function() { $(this).val(""); });

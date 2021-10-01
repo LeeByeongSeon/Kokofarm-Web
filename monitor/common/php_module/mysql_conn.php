@@ -210,6 +210,10 @@ class sql_conn{
         $this->local_db_conn->query($excute_sql);
     }
 
+    public function run_query($excute_sql){
+        $this->local_db_conn->query($excute_sql);
+    }
+
     public function check_str($chk_str){
         $this->db_init();
 

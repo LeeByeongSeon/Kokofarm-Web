@@ -11,6 +11,10 @@ define("corr_humi", 7);		//저울-습도보정
 define("corr_co2", 0);		//저울-CO2보정
 define("corr_nh3", 0);		//저울-NH3보정
 
+function run_query($query){
+	sql_conn::get_inst()->run_query($query);
+}
+
 // select 결과 데이터 반환
 function get_select_data($query){
     $ret = sql_conn::get_inst()->select($query);
