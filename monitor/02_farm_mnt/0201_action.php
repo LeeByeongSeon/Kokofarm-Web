@@ -17,17 +17,26 @@ $response = array();
 $oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 
 // cmCode에서 농장, 동 id 추출
-if(isset($_REQUEST["code"])){
-    $code = $_REQUEST["code"];
-    $id = explode("_", $code)[1];
-    $farmID = substr($id, 0, 6);
-    $dongID = substr($id, 6);
-};
+// if(isset($_REQUEST["code"])){
+//     $code = $_REQUEST["code"];
+//     $id = explode("_", $code)[1];
+//     $farmID = substr($id, 0, 6);
+//     $dongID = substr($id, 6);
+// };
 
 switch($oper){
 	case "get_inout_data": // 임시(?)
 
 		$select_query = "SELECT COUNT(CASE WHEN beStatus='I' THEN 1 END) AS insu, COUNT(CASE WHEN beStatus='O' THEN 1 END) AS outsu FROM buffer_sensor_status";
+
+		// switch($sub_oper){
+		// 	case "nong":	// 농장별로 확인
+
+		// 		break;
+		// 	case "dong":	// 동별로 확인
+				
+		// 		break;
+		// };
 
 		$select_data = get_select_data($select_query);
 
@@ -100,6 +109,38 @@ switch($oper){
 		// var_dump($json_map);
 
 		$response["json_map"] = $json_map;
+
+		echo json_encode($response);
+
+		break;
+
+	case "get_calendar":
+
+		$select_query = "SELECT fd.*,cm.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS days
+						FROM comein_master AS cm
+						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
+						WHERE (cmOutdate is NULL OR cmOutdate = '2000-01-01 00:00:00')";
+
+		$select_data = get_select_data($select_query);
+
+		// $cur_interm = $val["days"];
+		// $out_interm = $val["fdOutDays"];
+		// var_dump($curr_interm . " / " . $out_date);
+
+		$calendar_map = array();
+
+		foreach($select_data as $val){
+			$calendar_map[] = array(
+				"out_farm" => $val["fdName"],
+				"cur_days" => $val["days"],
+				"out_days" => $val["fdOutDays"],
+				"in_date"  => substr($val["cmIndate"],0,10),	// 입추일
+			);
+		}
+
+		$response['calendar_map'] = $calendar_map;
+
+		// var_dump($calendar_map);
 
 		echo json_encode($response);
 

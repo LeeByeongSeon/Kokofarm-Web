@@ -115,6 +115,7 @@ include_once("../inc/bottom.php");
 	});
 
 	var map_data;
+	var code = "";
 
 	// $("#map_div").bind('resize',function(){ initMap(); });
 	
@@ -125,6 +126,25 @@ include_once("../inc/bottom.php");
 		});
 		del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data));
 	};
+
+	// function get_farm_data(){
+	// 	let data_arr = {};
+	// 		data_arr["oper"] = "get_map";
+
+	// 	$.ajax({
+	// 		url:"0202_action.php",
+	// 		type:"post",
+	// 		cache:false,
+	// 		data:data_arr,
+	// 		dataType:"json",
+	// 		success: function(data){
+				
+	// 			// 구글맵
+	// 			let map_data = data.json_map;
+	// 			del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
+	// 		}
+	// 	});
+	// };
 
 	function get_farm_data(){
 		$("#jqgrid").jqGrid({
@@ -171,27 +191,6 @@ include_once("../inc/bottom.php");
 			}
 		);
 	};
-
-	// function get_farm_data(){
-	// 	let data_arr = {};
-	// 		data_arr["oper"] = "get_map";
-
-	// 	$.ajax({
-	// 		url:"0202_action.php",
-	// 		type:"post",
-	// 		cache:false,
-	// 		data:data_arr,
-	// 		dataType:"json",
-	// 		success: function(data){
-				
-	// 			//$('#farm_detail_table').bootstrapTable('load', data.print_data);
-
-	// 			// 지도 data
-	// 			let map_data = data.json_map;
-	// 			del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
-	// 		}
-	// 	});
-	// };
 
 	// 페이지 이동
 	// function page_move(page){

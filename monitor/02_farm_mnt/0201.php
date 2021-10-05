@@ -15,31 +15,15 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 					<h2><i class="fa fa-home"></i>&nbsp;입출하 농장 수</h2>	
 				</div>
 					
-				<div class="widget-toolbar ml-auto">
+				<!-- <div class="widget-toolbar ml-auto">
 					<div class="form-inline">
 						<button class="btn btn-default btn-labeled btn-sm" onClick=""><span class="btn-label" style="top: auto;"><i class="fa fa-search text-primary"></i></span>농장별로 확인</button>&nbsp;
 						<button class="btn btn-default btn-labeled btn-sm" onClick=""><span class="btn-label" style="top: auto;"><i class="fa fa-search text-primary"></i></span>동별로 확인</button>
 					</div>
-				</div>
+				</div> -->
 			</header>
 
 			<div class="widget-body">
-				<!-- <table class="table table-bordered table-hover" style="text-align: center;">
-					<thead>
-						<th>입추</th>
-						<th>입추예정</th>
-						<th>출하예정</th>
-						<th>출하</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-					</tbody>
-				</table> -->
 				<table id="in_out_farm" data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 					<thead>
 						<tr>
@@ -324,26 +308,26 @@ include_once("../inc/bottom.php");
 				right: 'prev,today,next'
 			};
 		
-			// var initDrag = function (e) {
-			// 	// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-			// 	// it doesn't need to have a start or end
+			var initDrag = function (e) {
+				// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+				// it doesn't need to have a start or end
 		
-			// 	var eventObject = {
-			// 		title: $.trim(e.children().text()), // use the element's text as the event title
-			// 		description: $.trim(e.children('span').attr('data-description')),
-			// 		icon: $.trim(e.children('span').attr('data-icon')),
-			// 		className: $.trim(e.children('span').attr('class')) // use the element's children as the event class
-			// 	};
-			// 	// store the Event Object in the DOM element so we can get to it later
-			// 	e.data('eventObject', eventObject);
+				var eventObject = {
+					title: $.trim(e.children().text()), // use the element's text as the event title
+					description: $.trim(e.children('span').attr('data-description')),
+					icon: $.trim(e.children('span').attr('data-icon')),
+					className: $.trim(e.children('span').attr('class')) // use the element's children as the event class
+				};
+				// store the Event Object in the DOM element so we can get to it later
+				e.data('eventObject', eventObject);
 		
-			// 	// make the event draggable using jQuery UI
-			// 	e.draggable({
-			// 		zIndex: 999,
-			// 		revert: true, // will cause the event to go back to its
-			// 		revertDuration: 0 //  original position after the drag
-			// 	});
-			// };
+				// make the event draggable using jQuery UI
+				e.draggable({
+					zIndex: 999,
+					revert: true, // will cause the event to go back to its
+					revertDuration: 0 //  original position after the drag
+				});
+			};
 		
 			// var addEvent = function (title, priority, description, icon) {
 			// 	title = title.length === 0 ? "Untitled Event" : title;
@@ -362,31 +346,31 @@ include_once("../inc/bottom.php");
 			/* initialize the external events
 			 -----------------------------------------------------------------*/
 		
-			// $('#external-events > li').each(function () {
-			// 	initDrag($(this));
-			// });
+			$('#external-events > li').each(function () {
+				initDrag($(this));
+			});
 		
-			// $('#add-event').click(function () {
-			// 	var title = $('#title').val(),
-			// 		priority = $('input:radio[name=priority]:checked').val(),
-			// 		description = $('#description').val(),
-			// 		icon = $('input:radio[name=iconselect]:checked').val();
+			$('#add-event').click(function () {
+				var title = $('#title').val(),
+					priority = $('input:radio[name=priority]:checked').val(),
+					description = $('#description').val(),
+					icon = $('input:radio[name=iconselect]:checked').val();
 		
-			// 	addEvent(title, priority, description, icon);
+				addEvent(title, priority, description, icon);
 				
-			// 	$('#modal_box').modal('hide');
-			// });
+				$('#modal_box').modal('hide');
+			});
 		
 			/* initialize the calendar
 			 -----------------------------------------------------------------*/
 		
 			$('#calendar').fullCalendar({
 		
-				header: hdr,
-				editable: true,
-				droppable: true, // this allows things to be dropped onto the calendar !!!
+				header: hdr,	 // header 설정
+				editable: true,	 // 수정 가능
+				droppable: true, // 드래그 가능
 		
-				drop: function (date, allDay) { // this function is called when something is dropped
+				drop: function (date, allDay) { // drag & drop 성공시 실행
 		
 					// retrieve the dropped element's stored Event Object
 					var originalEventObject = $(this).data('eventObject');
@@ -402,11 +386,11 @@ include_once("../inc/bottom.php");
 					// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
 					$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
 		
-					// is the "remove after drop" checkbox checked?
-					if ($('#drop-remove').is(':checked')) {
-						// if so, remove the element from the "Draggable Events" list
-						$(this).remove();
-					}
+					// // is the "remove after drop" checkbox checked?
+					// if ($('#drop-remove').is(':checked')) {
+					// 	// if so, remove the element from the "Draggable Events" list
+					// 	$(this).remove();
+					// }
 				},
 				select: function (start, end, allDay) {
 					var title = prompt('Event Title:');
@@ -421,8 +405,59 @@ include_once("../inc/bottom.php");
 					}
 					calendar.fullCalendar('unselect');
 				},
-				// 추가한 event
-				events: [],
+				// 달력에 표시할 event 부분(현재 일령 기준에서 fdOutDays(33일령)이 되는 날을 캘린더에 표시)
+				events: function(start, end, timezone, callback){
+					
+					let data_arr = {};
+					data_arr['oper'] = "get_calendar";
+					//data_arr['code'] = code;
+
+					$.ajax({
+						url:"0201_action.php",
+						dataType:"json",
+						type:"post",
+						data:data_arr,
+						success:function(data){
+
+							// let out_date = data.calendar_map.out_days;	// 출하예정일령
+							// let cur_date = data.calendar_map.cur_days;	// 현재일령
+
+							// if(cur_date < out_date){
+								
+							// }
+
+							let events = [];
+							
+							$.each(data.calendar_map, function(key, value){
+							
+								let out_farm = value.out_farm; // calendar title ex) 이모션농장-01동 출하예정일
+								let cur_days = value.cur_days; // 해당 농장의 현재 일령
+								let out_days = value.out_days; // 33일령(임시? 출하예정일령)
+								let in_date  = value.in_date;  // 입추일자
+
+								let out_date = "";
+
+								if(cur_days <= out_days){
+
+									out_date = date_add(in_date, out_days);
+
+									console.log(out_date);
+
+								};
+								
+								events.push({
+									title: out_farm + " 출하예정", 	// 제목
+									start: out_date,	 				// events 시작하는 시간
+									end: out_date,		 			 	// events 끝나는 시간
+									// description: out_farm,		 	// events 내용
+									// className: ["event", "bg-red"],	// css 형태(?)
+									// icon: 'fa-check'					// icon class명
+								});
+							});
+							callback(events);
+						}
+					});
+				},
 				eventRender: function (event, element, icon) {
 					if (!event.description == "") {
 						element.find('.fc-title').append("<br/><span class='ultra-light'>" + event.description +
@@ -468,6 +503,21 @@ include_once("../inc/bottom.php");
 			// });	
 	
 	});
+
+	// 날짜에 일 더하기
+	function date_add(sDate, nDays) {
+		var yy = parseInt(sDate.substr(0, 4), 10);
+		var mm = parseInt(sDate.substr(5, 2), 10);
+		var dd = parseInt(sDate.substr(8), 10);
+	
+		d = new Date(yy, mm - 1, dd + parseInt(nDays));
+	
+		yy = d.getFullYear();
+		mm = d.getMonth() + 1; mm = (mm < 10) ? '0' + mm : mm;
+		dd = d.getDate(); dd = (dd < 10) ? '0' + dd : dd;
+	
+		return '' + yy + '-' +  mm  + '-' + dd;
+	};
 
 	function get_inout_data(){
 		let data_arr = {};
@@ -519,21 +569,5 @@ include_once("../inc/bottom.php");
 			}
 		});
 	};
-
-	// function get_calendar_data(){
-	// 	let data_arr = {};
-	// 		data_arr["oper"] = "get_calendar_data";
-		
-	// 	$.ajax({
-	// 		url:"0201_action.php",
-	// 		data:data_arr,
-	// 		cache:false,
-	// 		type:"post",
-	// 		dataType:"json",
-	// 		success: function(data){
-
-	// 		}
-	// 	});
-	// }
 
 	</script>

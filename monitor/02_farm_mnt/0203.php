@@ -27,12 +27,39 @@ include_once("../inc/top.php");
 					<div class="widget-body d-flex justify-content-between align-items-center">
 
 						<!-- 농가 정보 div -->
-						<div class="well col-xl-4 no-padding">
-							<div class="col-xl-12 text-center text-secondary mb-2">
-								<h2 class="font-weight-bold p-2 no-margin"><span id="summary_name">망성농장-01동 (KF0013-01) </span></h2>
+						<div class="col-xl-5 p-2 text-center">
+							<div class="col-xl-12 text-center text-secondary mb-1">
+								<h2 class="font-weight-bold p-1 no-margin"><span id="summary_name">망성농장-01동 (KF0013-01) </span></h2>
 							</div>
 
-							<div class="col-xl-12 d-flex justify-content-between align-items-center no-padding">
+							<div class="col-xl-12 d-flex align-items-center">
+								<div class="col-xl-4">
+									<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png" alt="닭 이미지">
+									<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
+								</div>
+								<div class="col-xl-8">
+									<table class="table table-borderless text-center">
+										<tr>
+											<td><span class="font-md">평균중량 : </span></td>
+											<td><span class="text-danger font-weight-bold" id="summary_avg" style="font-size: 28px;">-</span></td>
+											<td><span class="font-md">일일 증체량 : </span></td>
+											<td><span class="font-md font-weight-bold" id="summary_inc">-</span></td>
+										</tr>
+										<tr>
+											<td><span class="font-md">표준편차 : </span></td>
+											<td><span class="font-md font-weight-bold" id="summary_devi">-</span></td>
+											<td><span class="font-md">변이계수 : </span></td>
+											<td><span class="font-md font-weight-bold" id="">-</span></td>
+										</tr>
+										<tr>
+											<td class="text-left"><span class="font-md">출하 목표 일령 : </span></td>
+											<td colspan="3"><span class="" id="summary_out_day">-</span></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+
+							<!-- <div class="col-xl-12 d-flex justify-content-between align-items-center no-padding">
 								<div class="col-xl-4 no-padding text-center">
 									<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png" alt="닭 이미지">
 									<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
@@ -46,60 +73,82 @@ include_once("../inc/top.php");
 										<span class="font-md">일일증체량</span>&nbsp;&nbsp;&nbsp;<span class="font-md" id="summary_inc">-</span>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
-							<div class="col-xl-12 no-padding d-flex justify-content-between">
+							<!-- <div class="col-xl-12 no-padding d-flex justify-content-between">
 								<div class="col-xl-4 no-padding">
 									<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_type">육계 -수</span></h6></div>
 								</div>
 								<div class="col-xl-8 no-padding">
 									<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_comein">입추일자 : -</span></h6></div>
-
+									
 									<div id="summary_indate" style="display:none;"></div>
 									<div id="summary_outdate" style="display:none;"></div>
 								</div>
-								<div>
+							</div> -->
+
+							<div class="col-xl-12 no-padding d-flex align-items-center">
+								<table class="table table-bordered text-center">
+									<tr class="table-secondary">
+										<td>+1 예측 (<span id="summary_day_term1">-</span>)</td>
+										<td>+2 예측 (<span id="summary_day_term2">-</span>)</td>
+										<td>+3 예측 (<span id="summary_day_term3">-</span>)</td>
+									</tr>
+									<tr>
+										<td><span id="summary_day_1">-</span></td>
+										<td><span id="summary_day_2">-</span></td>
+										<td><span id="summary_day_3">-</span></td>
+									</tr>
+								</table>
 							</div>
 						</div>
 
 						<!-- 급이 / 급수 div -->
-						<div class="col-xl-5 float-left pr-5 pl-0 feed_info_div" style="border-right: 2px dotted #ddd;">
-							<div class="row d-flex align-items-center">
-								<div class="col-xl-4 no-padding text-center">
-									<div class="col-xl-12 text-center">
+						<div class="col-xl-4 float-left no-padding feed_info_div" style="border-right: 2px dotted #ddd; border-left: 2px dotted #ddd;">
+						
+							<div class="col-xl-12 d-flex align-items-center justify-content-between">
+								<span class="font-md font-weight-bold">환경경보 </span><span></span>
+							</div>
+
+							<div class="m-3">
+								<table class="table table-bordered text-center">
+									<tr class="table-secondary">
+										<th>온도</th>
+										<th>습도</th>
+										<th>이산화탄소</th>
+										<th>암모니아</th>
+									</tr>
+									<tr>
+										<td><span id="summary_avg_temp">-</span></td>
+										<td><span id="summary_avg_humi">-</span></td>
+										<td><span id="summary_avg_co2">-</span></td>
+										<td><span id="summary_avg_nh3">-</span></td>
+									</tr>
+								</table>
+							</div>
+
+							<div class="col-xl-12 d-flex align-items-center">
+								<div class="col-xl-3 no-padding text-center">
+									<div class="col-xl-12 text-center p-1">
 										<img src="../images/feed-00.png" id="feed_img" style="width: 7rem;" alt="급이 이미지">
 										<div class="carousel-caption h-100" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">-%<h5></div>
 									</div>
 									<div class="col-xl-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(kg)</span></div>
 								</div>
-								<div class="col-xl-4 h-50 no-padding">
-									<div class="col-xl-12 h-75 text-right no-padding">
-										<span class="font-weight-bold text-secondary font-md">오늘 급이량(㎏)</span><br>
+								<div class="col-xl-3 no-padding">
+									<div class="col-xl-12 text-right no-padding">
+										<span class="font-weight-bold text-secondary" style="font-size:15px">오늘 급이량(㎏)</span><br>
 										<span class="font-xl" id="extra_curr_feed">-</span>
 									</div>
 								</div>
-								<div class="col-xl-4 h-50 float-right no-padding">
-									<div class="col-xl-12 h-75 text-right no-padding">
-										<span class="font-weight-bold text-secondary font-md">전일 급이량(㎏)</span><br>
-										<span class="font-xl" id="extra_prev_feed">-</span>
-									</div>
-								</div>
-							</div>
-							<div class="row mt-3 d-flex align-items-center">
-								<div class="col-xl-4 no-padding text-center">
-									<div class="col-xl-12 text-center"><img src="../images/water-02.png" style="width: 5rem;" alt="급수 이미지"></div>
+								<div class="col-xl-3 no-padding text-center">
+									<div class="col-xl-12 text-center"><img src="../images/water-02.png" style="width: 7rem;" alt="급수 이미지"></div>
 									<div class="col-xl-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
 								</div>
-								<div class="col-xl-4 h-50 no-padding">
-									<div class="col-xl-12 h-75 text-right no-padding">
-										<span class="font-weight-bold text-secondary font-md">오늘 급수량(L)</span><br>
+								<div class="col-xl-3 no-padding">
+									<div class="col-xl-12 text-right no-padding">
+										<span class="font-weight-bold text-secondary" style="font-size:15px">오늘 급수량(L)</span><br>
 										<span class="font-xl" id="extra_curr_water">-</span>
-									</div>
-								</div>
-								<div class="col-xl-4 h-50 float-right no-padding">
-									<div class="col-xl-12 h-75 text-right no-padding">
-										<span class="font-weight-bold text-secondary font-md">전일 급수량(L)</span><br>
-										<span class="font-xl" id="extra_prev_water">-</span>
 									</div>
 								</div>
 							</div>
@@ -253,7 +302,7 @@ include_once("../inc/top.php");
 	</div>
 
 	<!--급이량 현황-->
-	<div class="row">
+	<div class="row" id="daily_feed_chart_row" style="display:none;">
 		<article class="col-xl-12">
 			<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
@@ -278,7 +327,7 @@ include_once("../inc/top.php");
 
 
 	<!--급수량 현황-->
-	<div class="row">
+	<div class="row" id="daily_water_chart_row" style="display:none;">
 		<article class="col-xl-12">
 			<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
@@ -305,7 +354,7 @@ include_once("../inc/top.php");
 	<!--평균중량 이력 비교-->
 	<div class="row">
 		<article class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-list"></i>&nbsp;평균중량 이력 비교</h2>	
@@ -313,7 +362,21 @@ include_once("../inc/top.php");
 				</header>
 
 				<div class="widget-body">
-
+					<div class="widget-body-toolbar">
+						<form id="search_form" class="form-inline" onsubmit="return false;">
+							<select class="form-control w-auto" name="">
+								<option selected>회차선택</option>
+								<option value="">1회차</option>
+								<option value="">2회차</option>
+								<option value="">3회차</option>
+								<option value="">4회차</option>
+								<option value="">5회차</option>
+							</select>&nbsp;
+							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>불러오기</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+						</form>
+					</div>
+					<div></div>
 					
 				</div>
 						
@@ -325,7 +388,7 @@ include_once("../inc/top.php");
 	<!--환경센서 이력 비교-->
 	<div class="row">
 		<article class="col-xl-12">
-			<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
 						<h2><i class="fa fa-list"></i>&nbsp;환경센서 이력 비교</h2>	
@@ -333,7 +396,35 @@ include_once("../inc/top.php");
 				</header>
 
 				<div class="widget-body">
-
+					<div class="widget-body-toolbar">
+						<form id="search_form" class="form-inline" onsubmit="return false;">
+							<select class="form-control w-auto" name="">
+								<option selected>회차선택</option>
+								<option value="">1회차</option>
+								<option value="">2회차</option>
+								<option value="">3회차</option>
+								<option value="">4회차</option>
+								<option value="">5회차</option>
+							</select>&nbsp;
+							<div id="sensor_btn_group" class="btn-group">
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_temp');">
+									<i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;온도
+								</button>
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_humi');">
+									<i class="fa fa-tint text-primary"></i>&nbsp;&nbsp;습도
+								</button>
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_co2');">
+									<i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;이산화탄소
+								</button>
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_nh3');">
+									<i class="fa fa-warning text-danger"></i>&nbsp;&nbsp;암모니아
+								</button>
+							</div>&nbsp;
+							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>불러오기</button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+						</form>
+					</div>
+					<div></div>
 					
 				</div>
 						
@@ -415,10 +506,8 @@ include_once("../inc/bottom.php");
 			$.ajax({url:'0203_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
 				success: function(data) {
 
-					// 요약 정보
-					$.each(data.summary_data, function(key, value){ 
-						$("#" + key).html(value); 
-					});
+					// 요약 정보 id="summary_"
+					$.each(data.summary_data, function(key, value){ $("#" + key).html(value); });
 
 					// 닭 이미지 변경
 					let days = data.summary_data.summary_days;
@@ -557,8 +646,12 @@ include_once("../inc/bottom.php");
 
 			$.ajax({url:'0203_action.php',type:'post',cache:false,data:data_arr,dataType:'json',
 				success: function(data){
-					draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
-					draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD");
+					if(data.extra.hasOwnProperty("chart_feed_daily")){
+						$("#daily_feed_chart_row").css("display", "block");
+						$("#daily_water_chart_row").css("display", "block");
+						draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
+						draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD");
+					}
 				}
 			});
 		};

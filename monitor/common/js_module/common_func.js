@@ -922,20 +922,10 @@ function add_markers(map_name, map_data){
 			});
 		}
 		markers[map_name].push(marker);
-
-		//Marker click event
-		google.maps.event.addListener(marker, 'click', (function(marker, i) {
-			return function() {
-				let farm = map_data[i].f_farmid;
-				let farm_detail = farm.split("|");
-				let farmID = farm_detail[0];
-				let dongID = farm_detail[1];
-				window.location = "../01_device_mnt/0102.php?farmID="+farmID+"&dongID="+dongID;	//동별 세부 현황으로 이동
-			}
-		})(marker, i));
 	}
 };
 
+//마커생성 & 마커 클릭 이벤트
 function add_markers_modal(map_name, map_data){
 
 	markers[map_name] = new Array();
@@ -963,6 +953,7 @@ function add_markers_modal(map_name, map_data){
 				let farm_name = f_full_name.split("-");
 				let f_name = farm_name[0];
 				$("#modal_alert_title").html(f_name);
+				get
 			}
 		})(marker, i));
 	}

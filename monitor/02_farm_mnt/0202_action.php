@@ -16,6 +16,14 @@ $response = array();
 // 어떤 작업인지 가져옴
 $oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 
+// cmCode에서 농장, 동 id 추출
+if(isset($_REQUEST["code"])){
+    $code = $_REQUEST["code"];
+    $id = explode("_", $code)[1];
+    $farmID = substr($id, 0, 6);
+    $dongID = substr($id, 6);
+}
+
 switch($oper){
 	default:
         $page  = isset($_REQUEST['page']) ? $page  = check_str($_REQUEST['page']) : 1; // jqGrid의 page 속성의 값
@@ -66,7 +74,7 @@ switch($oper){
 						   LEFT JOIN buffer_plc_status AS bp ON bp.bpFarmid = cm.cmFarmid AND bp.bpDongid = cm.cmDongid
 						   LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
 						   LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid
-						   WHERE (cmOutdate is NULL OR cmOutdate = '2000-01-01 00:00:00') 
+						   WHERE (cmOutdate is NULL OR cmOutdate = '2000-01-01 00:00:00')
 						   GROUP BY cm.cmCode";
 
 		// 구글맵 data select
@@ -260,6 +268,7 @@ switch($oper){
 			foreach($select_data as $val){
 
 				$json_map[] = array(
+					"f_code"   => $val["cmCode"],
 					"f_status" => $val["beStatus"],
 					"f_farmid" => $val["fdFarmid"]. "|" .$val["fdDongid"],
 					"f_name"   => $val["fdName"],
