@@ -621,16 +621,18 @@ include_once("../inc/bottom.php");
 		let msg = farm_name + " " + indate + " ~ " + outdate + " 입추기간에 " + input_map["input_date"] + "에 실측한 " + input_map["input_val"] + "g 을 입력합니다.";
 		msg += input_map["input_prop"] != "" ? " (" + input_map["input_prop"] + ")" : "";
 
-		popup_confirm("실측중량 입력", msg, function(){
+		popup_confirm("실측중량 입력", msg, function(confirm){
 
-			input_map['oper'] = "input_measure_val";
-			input_map['code'] = code;
+			if(confirm){
+				input_map['oper'] = "input_measure_val";
+				input_map['code'] = code;
 
-			$.ajax({url:'0204_action.php',data:input_map,cache:false,type:'post',dataType:'json',
-				success: function(data) {
-					get_request_data();
-				}
-			});
+				$.ajax({url:'0204_action.php',data:input_map,cache:false,type:'post',dataType:'json',
+					success: function(data) {
+						get_request_data();
+					}
+				});
+			}
 		});
 	}
 
