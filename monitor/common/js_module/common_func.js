@@ -910,13 +910,13 @@ function add_markers(map_name, map_data){
 	markers[map_name] = new Array();
 
 	for(let i=0; i<=map_data.length-1; i++){
-		if(map_data[i].f_status==="I"){
+		if(map_data[i].f_status==="I"){	// 입추
 				marker = new google.maps.Marker({
 				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["blue"].icon, map:map[map_name],
 				animation:google.maps.Animation.DROP,zIndex:9999
 			});
 		}
-		else{
+		else{	// 출하
 				marker = new google.maps.Marker({
 				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["orange"].icon, map:map[map_name],
 			});
@@ -931,13 +931,13 @@ function add_markers_modal(map_name, map_data){
 	markers[map_name] = new Array();
 
 	for(let i=0; i<=map_data.length-1; i++){
-		if(map_data[i].f_status==="I"){
+		if(map_data[i].f_status==="I"){	// 입추
 				marker = new google.maps.Marker({
 				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["blue"].icon, map:map[map_name],
 				animation:google.maps.Animation.DROP,zIndex:9999
 			});
 		}
-		else{
+		else{	// 출하
 				marker = new google.maps.Marker({
 				position: new google.maps.LatLng(map_data[i].gps_lat, map_data[i].gps_lng), title:map_data[i].f_name, icon:icons["orange"].icon, map:map[map_name],
 			});
@@ -947,13 +947,16 @@ function add_markers_modal(map_name, map_data){
 		//Marker click event
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
-				//popup_alert();
 				$("#farm_modal").modal("show");
-				let f_full_name = map_data[i].f_name;
+				let f_full_name = map_data[i].f_name;	// fdName
 				let farm_name = f_full_name.split("-");
-				let f_name = farm_name[0];
+				let f_name = farm_name[0];	// 농장이름만
 				$("#modal_alert_title").html(f_name);
-				get
+
+				// modal창에서 해당 농장의 동 data 가져옴
+				let code = map_data[i].f_farmid;	// ex) code : KF0001|01
+				get_farm_modal(code);
+				grid_reload(code);
 			}
 		})(marker, i));
 	}
@@ -997,16 +1000,16 @@ function add_markers_zone(map_name, map_data){
 			markers_circle[map_name].push(map_circle);
 		}
 
-		//Marker click event
-		google.maps.event.addListener(marker, 'click', (function(marker, i) {
-			return function() {
-				let farm = map_data[i].f_farmid;
-				let farm_detail = farm.split("|");
-				let farmID = farm_detail[0];
-				let dongID = farm_detail[1];
-				window.location = "../01_device_mnt/0102.php?farmID="+farmID+"&dongID="+dongID;	//동별 세부 현황으로 이동
-			}
-		})(marker, i));
+		// //Marker click event
+		// google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		// 	return function() {
+		// 		let farm = map_data[i].f_farmid;
+		// 		let farm_detail = farm.split("|");
+		// 		let farmID = farm_detail[0];
+		// 		let dongID = farm_detail[1];
+		// 		window.location = "../01_device_mnt/0102.php?farmID="+farmID+"&dongID="+dongID;	//동별 세부 현황으로 이동
+		// 	}
+		// })(marker, i));
 
 	}
 };

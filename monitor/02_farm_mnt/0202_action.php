@@ -16,16 +16,68 @@ $response = array();
 // 어떤 작업인지 가져옴
 $oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 
-// cmCode에서 농장, 동 id 추출
-if(isset($_REQUEST["code"])){
-    $code = $_REQUEST["code"];
-    $id = explode("_", $code)[1];
-    $farmID = substr($id, 0, 6);
-    $dongID = substr($id, 6);
-}
-
 switch($oper){
-	default:
+	case "get_map":
+
+		//검색필드
+		$append_query = "";
+
+		if(isset($_REQUEST["select"]) && $_REQUEST["select"] != ""){
+			$select = $_REQUEST["select"];
+			$select_ids = explode("|", $select);
+			
+			$append_query = "AND fdFarmid = \"" . $select_ids[0] . "\"";
+
+			$append_query = isset($select_ids[1]) ? $append_query . " AND fdDongid = \"" . $select_ids[1] . "\"" : $append_query;
+		}
+
+		$select_query = "SELECT fd.*, cm.*, be.beStatus FROM farm_detail AS fd
+						 JOIN comein_master AS cm ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
+						 JOIN buffer_sensor_status AS be ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid
+						 WHERE cmFarmid = cmFarmid ". $append_query;
+						 
+		$select_data = get_select_data($select_query);
+					
+		// 구글맵 관련
+		$json_map = array();
+
+		if(!empty($select_data)){
+			foreach($select_data as $val){
+
+				$json_map[] = array(
+					"f_status" => $val["beStatus"],
+					"f_farmid" => $val["fdFarmid"]. "|" .$val["fdDongid"],
+					"f_name"   => $val["fdName"],
+					"gps_lat"  => $val["fdGpslat"],
+					"gps_lng"  => $val["fdGpslng"],
+				);
+
+			};
+		};
+
+		$response["json_map"]  = $json_map;
+
+		echo json_encode($response);
+
+		break;
+
+	case "get_farm":
+
+		// f_farmid 에서 농장, 동 id 추출
+		if(isset($_REQUEST["code"])){
+			$code = $_REQUEST["code"];
+			$id = explode("|", $code);
+			$farmID = $id[0];
+			$dongID = $id[1];
+		}
+		
+		// 환경경보 cnt
+		$warn_arr = array();
+		$warn_arr[0] = 0;
+		$warn_arr[1] = 0;
+		$warn_arr[2] = 0;
+		$warn_arr[3] = 0;
+
         $page  = isset($_REQUEST['page']) ? $page  = check_str($_REQUEST['page']) : 1; // jqGrid의 page 속성의 값
         $limit = isset($_REQUEST['rows']) ? $limit = check_str($_REQUEST['rows']) : 1; // jqGrid의 rowNum 속성의 값
         $sidx  = isset($_REQUEST['sidx']) ? $sidx  = check_str($_REQUEST['sidx']) : 'warning'; // jqGrid의 sortname 속성의 값
@@ -60,25 +112,25 @@ switch($oper){
             
             //ex) [Temp][육계][일령]{35,36,37,38}
             $ref_map[$group][$type][$day] = array($val["cName3"], $val["cName4"], $val["cName5"], $val["cName6"]);
-        }
+        };
 		
         // 표로 나타낼 데이터
-        $select_query = "SELECT cm.cmCode, cm.cmFarmid, cm.cmDongid, cm.cmIntype, fd.fdName, fd.fdScale, fd.fdGpslat, fd.fdGpslng, fd.fdAddr, fd.fdOutDays,
-                            	IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS days, 
-                            	TRUNCATE(be.beAvgWeight, 0) AS beAvgWeight, be.beAvgTemp, be.beAvgHumi, be.beAvgCo2, be.beAvgNh3, 
-                            	be.beStatus, bp.bpSensorDate, bp.bpDeviceDate, sf.sfFeedDate, sf.sfWaterDate, so.soSensorDate
-						   FROM comein_master AS cm
-						   LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
-						   LEFT JOIN set_iot_cell AS si ON si.siFarmid = cm.cmFarmid AND si.siDongid = cm.cmDongid
-						   LEFT JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
-						   LEFT JOIN buffer_plc_status AS bp ON bp.bpFarmid = cm.cmFarmid AND bp.bpDongid = cm.cmDongid
-						   LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
-						   LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid
-						   WHERE (cmOutdate is NULL OR cmOutdate = '2000-01-01 00:00:00')
-						   GROUP BY cm.cmCode";
+        $select_query = "SELECT cm.cmCode, cm.cmFarmid, cm.cmDongid, cm.cmIntype, cm.cmIndate, cm.cmOutdate, fd.fdName, fd.fdScale, fd.fdAddr, fd.fdOutDays,
+								IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS days, 
+								TRUNCATE(be.beAvgWeight, 0) AS beAvgWeight, be.beAvgTemp, be.beAvgHumi, be.beAvgCo2, be.beAvgNh3, be.beComeinCode,
+								be.beStatus, bp.bpSensorDate, bp.bpDeviceDate, sf.sfFeedDate, sf.sfWaterDate, so.soSensorDate
+						FROM comein_master AS cm
+						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
+						LEFT JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
+						LEFT JOIN buffer_plc_status AS bp ON bp.bpFarmid = cm.cmFarmid AND bp.bpDongid = cm.cmDongid
+						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid
+						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid AND so.soDongid = cm.cmDongid
+						WHERE cm.cmFarmid = \"$farmID\" AND cm.cmCode = be.beComeinCode";
 
-		// 구글맵 data select
-		$select_data = get_select_data($select_query);
+		//var_dump($select_query);
+
+		// // 구글맵 data select
+		// $select_data = get_select_data($select_query);
 
         // 페이징 처리
         $total_len = get_select_count($select_query);
@@ -241,6 +293,8 @@ switch($oper){
             // 경보로 소팅시 사용
             $warn_level_map["" . $idx] = $level;
 
+			$warn_arr[$level] = $warn_arr[$level] + 1; // $warn_arr[0] -> 정상, $warn_arr[1] -> 주의, $warn_arr[2] -> 경고, $warn_arr[3] -> 위험
+
             $row["warning"] = "<span class='badge badge-pill badge-" . $level_map[$level-1]["class"] . " btn-sm'>" . $level_map[$level-1]["info"] . "</span>";
 
             $temp["print_data"][] = $row;
@@ -261,25 +315,24 @@ switch($oper){
         $response["total"] = $total_pages;
         $response["records"] = $total_len;
 			
-		// 구글맵 관련
-		$json_map = array();
+		// // 구글맵 관련
+		// $json_map = array();
 
-		if(!empty($select_data)){
-			foreach($select_data as $val){
+		// if(!empty($select_data)){
+		// 	foreach($select_data as $val){
 
-				$json_map[] = array(
-					"f_code"   => $val["cmCode"],
-					"f_status" => $val["beStatus"],
-					"f_farmid" => $val["fdFarmid"]. "|" .$val["fdDongid"],
-					"f_name"   => $val["fdName"],
-					"gps_lat"  => $val["fdGpslat"],
-					"gps_lng"  => $val["fdGpslng"],
-				);
+		// 		$json_map[] = array(
+		// 			"f_status" => $val["beStatus"],
+		// 			"f_farmid" => $val["fdFarmid"]. "|" .$val["fdDongid"],
+		// 			"f_name"   => $val["fdName"],
+		// 			"gps_lat"  => $val["fdGpslat"],
+		// 			"gps_lng"  => $val["fdGpslng"],
+		// 		);
 
-			};
-		};
+		// 	};
+		// };
 
-		$response["json_map"]  = $json_map;
+		// $response["json_map"]  = $json_map;
 
 		echo json_encode($response);
 

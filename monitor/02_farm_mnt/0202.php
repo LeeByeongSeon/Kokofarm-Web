@@ -20,7 +20,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 						정상 : <span class="badge badge-primary" id="farm_cnt_normal">&nbsp;</span>&nbsp;
 						주의 : <span class="badge badge-success" id="farm_cnt_caution">&nbsp;</span>&nbsp;
 						경고 : <span class="badge badge-warning" id="farm_cnt_warning">&nbsp;</span>&nbsp;
-						위험 : <span class="badge badge-danger"  id="farm_cnt_danger">&nbsp;</span>&nbsp;&nbsp;&nbsp;
+						위험 : <span class="badge badge-danger"  id="farm_cnt_danger">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<span class='fa fa-map-marker text-blue'> </span>&nbsp;입추&nbsp;
 						<span class='fa fa-map-marker text-orange'> </span>&nbsp;출하&nbsp;
 					</div>
@@ -59,45 +59,13 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary float-left" onClick="page_move(../01_device_mnt/0102.php);">세부현황</button>
-				<button type="button" class="btn btn-primary float-left" onClick="page_move(./0204.php);">출하이력</button>
+				<button type="button" class="btn btn-primary float-left" onClick="page_move('../01_device_mnt/0102.php');">세부현황</button>
+				<button type="button" class="btn btn-primary float-left" onClick="page_move('./0204.php');">출하이력</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
 </div>
-
-<!-- <div id="farm_modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
-	<div class="modal-dialog" style="max-width:50%">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 id="modal_alert_title" class="modal-title float-right">Modal title</h4>
-				<button type="button" class="close float-left" data-dismiss="modal" aria-hidden="true">×</button>
-			</div>
-			<div id="modal_alert_body" class="modal-body">
-				<table id='farm_detail_table' data-page-list='[]' data-pagination='true' data-page-list='false' data-page-size='10' data-sort-name='f4' data-sort-order='desc' data-toggle='table' style='font-size:14px'>
-					<thead>
-						<tr>
-							<th data-field='cmDongid' data-visible='true' data-sortable='true' data-align='center'>동</th>
-							<th data-field='cmIntype' data-visible='true' data-sortable='true' data-align='center'>축종</th>
-							<th data-field='fdScale' data-visible='true' data-sortable='true' data-align='center'>생존(수)</th>
-							<th data-field='days' data-visible='true' data-sortable='true' data-align='center'>일령</th>
-							<th data-field='fdOutDays' data-visible='true' data-sortable='true' data-align='center'>출하예상일령</th>
-							<th data-field='beAvgWeight' data-visible='true' data-sortable='true' data-align='center'>평균중량(권고대비)</th>
-							<th data-field='warning' data-visible='true' data-sortable='true' data-align='center'>환경경보</th>
-						</tr>
-					</thead>
-				</table>
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary float-left" onClick="page_move(../01_device_mnt/0102.php);">세부현황</button>
-				<button type="button" class="btn btn-primary float-left" onClick="page_move(./0204.php);">출하이력</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-			</div>
-		</div>
-	</div>
-</div> -->
 
 <?
 include_once("../inc/bottom.php");
@@ -107,15 +75,17 @@ include_once("../inc/bottom.php");
 
 <script type="text/javascript">
 
-	$(document).ready(function(){
-
-		call_tree_view("", get_farm_data);
-		set_tree_search(get_farm_data);
-
-	});
-
 	var map_data;
 	var code = "";
+
+	$(document).ready(function(){
+
+		hide_dong = true;
+
+		call_tree_view("", get_map_data,"all");
+		set_tree_search(get_map_data);
+
+	});
 
 	// $("#map_div").bind('resize',function(){ initMap(); });
 	
@@ -127,30 +97,37 @@ include_once("../inc/bottom.php");
 		del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data));
 	};
 
-	// function get_farm_data(){
-	// 	let data_arr = {};
-	// 		data_arr["oper"] = "get_map";
+	function get_map_data(selected_id){
+		let data_arr = {};
+			data_arr["oper"] = "get_map";
+			data_arr["select"] = selected_id;
 
-	// 	$.ajax({
-	// 		url:"0202_action.php",
-	// 		type:"post",
-	// 		cache:false,
-	// 		data:data_arr,
-	// 		dataType:"json",
-	// 		success: function(data){
+		$.ajax({
+			url:"0202_action.php",
+			type:"post",
+			cache:false,
+			data:data_arr,
+			dataType:"json",
+			success: function(data){
 				
-	// 			// 구글맵
-	// 			let map_data = data.json_map;
-	// 			del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
-	// 		}
-	// 	});
-	// };
+				// 구글맵
+				let map_data = data.json_map;
+				del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
+				
+			}
+		});
+	};
 
-	function get_farm_data(){
+	function get_farm_modal(code){
+		let data_arr = {};
+			data_arr["oper"] = "get_farm";
+			data_arr["code"] = code;
+
 		$("#jqgrid").jqGrid({
 			url:"0202_action.php", 
 			editurl:"0202_action.php",
 			styleUI:"Bootstrap",
+			postData:data_arr,
 			autowidth:true,
 			shrinkToFit:true,
 			mtype:'post',
@@ -167,7 +144,7 @@ include_once("../inc/bottom.php");
 				{label: "입출하코드", 		 name: "cmCode",			hidden:true 	},
 				{label: "농장ID", 			 name: "cmFarmid",			hidden:true 	},
 				{label: "동ID", 			 name: "cmDongid",			align:'center', },
-				{label: "농장명",			name: "fdName",				align:'center',	},
+				{label: "농장명",			 name: "fdName",			align:'center',	},
 				{label: "축종",				 name: "cmIntype",			align:'center',	},
 				{label: "일령",				 name: "days",				align:'center',	},
 				{label: "생존수",	 		 name: "fdScale",			align:'center',	},
@@ -178,9 +155,9 @@ include_once("../inc/bottom.php");
 			onSelectRow: function(id){		  },
 			loadComplete:function(data){	
 				
-				// 구글맵
-				let map_data = data.json_map;
-				del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
+				// // 구글맵
+				// let map_data = data.json_map;
+				// del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
 
 			},
 		});
@@ -192,12 +169,30 @@ include_once("../inc/bottom.php");
 		);
 	};
 
-	// 페이지 이동
-	// function page_move(page){
+	// marker 클릭시 리로드
+	function grid_reload(code){
+		jQuery("#jqgrid").jqGrid("setGridParam", {postData:{"oper":"get_farm","code": code}}).trigger("reloadGrid");
+	};
+	
+	// modal창 페이지 이동 (세부현황, 출하이력)
+	function page_move(page){
 
-	// 	let farmID = keys[0];
-	// 	let dongID = keys.length == 2 ? keys[1] : "01";
+		let keys = selected_id.split("|");
 
-	// 	window.location = page + "?farmID=" + farmID + "&dongID=" + dongID; 
-	// };
+		let farmID = keys[0];
+		let dongID = keys.length == 2 ? keys[1] : "01";
+
+		window.location = page + "?farmID=" + farmID + "&dongID=" + dongID;
+	};
+
+	// 트리뷰 버튼 클릭시 리로드 이벤트
+	function act_grid_data(action){
+		
+		if(action == "" && init_id != ""){
+			click_tree_by_id(get_map_data, init_id);
+			init_id = "";
+			return;
+		}
+	};
+
 </script>
