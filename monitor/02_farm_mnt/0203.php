@@ -33,11 +33,11 @@ include_once("../inc/top.php");
 							</div>
 
 							<div class="col-xl-12 d-flex align-items-center">
-								<div class="col-xl-4">
+								<div class="col-xl-3">
 									<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png" alt="닭 이미지">
 									<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
 								</div>
-								<div class="col-xl-8">
+								<div class="col-xl-9">
 									<table class="table table-borderless text-center">
 										<tr>
 											<td><span class="font-md">평균중량 : </span></td>
@@ -52,8 +52,8 @@ include_once("../inc/top.php");
 											<td><span class="font-md font-weight-bold" id="">-</span></td>
 										</tr>
 										<tr>
-											<td class="text-left"><span class="font-md">출하 목표 일령 : </span></td>
-											<td colspan="3"><span class="" id="summary_out_day">-</span></td>
+											<td class="text-center" colspan="4"><span class="font-md">출하 목표 일령 : </span><span class="font-md" id="summary_out_day">-</span></td>
+											<!-- <td class="text-left"><span class="" id="summary_out_day">-</span></td> -->
 										</tr>
 									</table>
 								</div>
@@ -90,9 +90,9 @@ include_once("../inc/top.php");
 							<div class="col-xl-12 no-padding d-flex align-items-center">
 								<table class="table table-bordered text-center">
 									<tr class="table-secondary">
-										<td>+1 예측 (<span id="summary_day_term1">-</span>)</td>
-										<td>+2 예측 (<span id="summary_day_term2">-</span>)</td>
-										<td>+3 예측 (<span id="summary_day_term3">-</span>)</td>
+										<td><span id="summary_date_term1"></span> (<span id="summary_day_term1">-</span>)</td>
+										<td><span id="summary_date_term2"></span> (<span id="summary_day_term2">-</span>)</td>
+										<td><span id="summary_date_term3"></span> (<span id="summary_day_term3">-</span>)</td>
 									</tr>
 									<tr>
 										<td><span id="summary_day_1">-</span></td>
@@ -646,12 +646,10 @@ include_once("../inc/bottom.php");
 
 			$.ajax({url:'0203_action.php',type:'post',cache:false,data:data_arr,dataType:'json',
 				success: function(data){
-					if(data.extra.hasOwnProperty("chart_feed_daily")){
 						$("#daily_feed_chart_row").css("display", "block");
 						$("#daily_water_chart_row").css("display", "block");
 						draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
 						draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD");
-					}
 				}
 			});
 		};

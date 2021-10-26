@@ -17,6 +17,127 @@ $response = array();
 $oper = isset($_REQUEST["oper"]) ? $oper = check_str($_REQUEST["oper"]) : "";
 
 switch($oper){
+	// 환경경보
+	case "get_warn":
+
+        // 권고 환경값 및 중량 가져오기
+        $ref_data = get_select_data("SELECT * FROM codeinfo WHERE LEFT(cGroup, 2) = \"권고\"");
+        $ref_map = array();
+
+        foreach($ref_data as $val){
+            $group = $val["cGroup"];
+            $type = $val["cName1"];
+            $day = $val["cName2"];
+
+            switch($group){
+                case "권고온도":
+                    $group = "Temp";
+                    break;
+                case "권고습도":
+                    $group = "Humi";
+                    break;
+                case "권고CO2":
+                    $group = "Co2";
+                    break;
+                case "권고NH3":
+                    $group = "Nh3";
+                    break; 
+            }
+            
+            //ex) [Temp][육계][일령]{35,36,37,38}
+            $ref_map[$group][$type][$day] = array($val["cName3"], $val["cName4"], $val["cName5"], $val["cName6"]);
+        };
+
+        // 위젯 헤더에 나타낼 환경경보 데이터
+        $select_query = "SELECT cm.cmCode, cm.cmFarmid, cm.cmDongid, cm.cmIndate,
+								IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS days, 
+								be.beAvgTemp, be.beAvgHumi, be.beAvgCo2, be.beAvgNh3
+						FROM comein_master AS cm
+						LEFT JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
+						WHERE cm.cmFarmid = be.beFarmid AND cm.cmCode = be.beComeinCode";
+					//  WHERE (cmOutdate is NULL OR cmOutdate = '2000-01-01 00:00:00')"; 
+		$select_data = get_select_data($select_query);
+
+        // 경보로 소팅하기 위한 변수
+        $warn_level_map = array();
+
+        // 데이터 가공 작업
+        $now = date('Y-m-d H:i:s');
+        foreach($select_data as $idx => $row){
+            $row["warning"] = "";               // 환경 경보
+
+            foreach($row as $key => $val){
+                switch($key){
+                    // 경보 처리
+                    case "beAvgTemp":
+                    case "beAvgHumi":
+                    case "beAvgCo2":
+                    case "beAvgNh3":
+
+                        //일령 가져와서 경보 처리
+                        $curr_days = $row["days"] > 42 ? 42 : $row["days"] ;
+                        $curr_type = $row["cmIntype"];
+
+                        // $ref_map["Temp"]에 현재 축종이 존재하는지 확인하고, 없는 경우 육계 참조값으로 사용
+                        $prop = substr($key, 5);
+                        $ref_type = array_key_exists($curr_type, $ref_map[$prop]) ? $curr_type : "육계";
+
+                        $val = number_format($val, 1);    // 숫자로 변환
+
+                        switch($prop){
+                            case "Temp":
+                            case "Humi":
+                                $checker = $val - $ref_map[$prop][$ref_type][$curr_days][0];       // ref_map[Temp][육계][일령]{35,36,37,38}
+                                $checker = abs($checker);
+
+                                for($i=1; $i<=3; $i++){
+                                    if($checker <= $ref_map[$prop][$ref_type][$curr_days][$i] - $ref_map[$prop][$ref_type][$curr_days][0]){      // 0.7 <= 35 - 36
+                                        $row["warning"] .= " | " . $i;
+                                        break;
+                                    }
+
+                                    if($i == 3) $row["warning"] .= " | 4";
+                                }
+                                break;
+                            
+                            case "Co2":
+                            case "Nh3":
+                                for($i=0; $i<=3; $i++){
+                                    if($val <= $ref_map[$prop][$ref_type][$curr_days][$i]){
+                                        $row["warning"] .= " | " . ($i+1);
+                                        break;
+                                    }
+
+                                    if($i == 3) $row["warning"] .= " | 4";
+                                }
+
+                                break;
+                        }
+                        break;
+				}
+			}
+
+            $row["warning"] = substr($row["warning"], 3);
+
+            $tokens = explode(" | ", $row["warning"]);	
+
+            $level = max($tokens);
+
+            // 경보로 소팅시 사용
+            $warn_level_map["" . $idx] = $level;
+
+			$warn_arr[$level] = $warn_arr[$level] + 1; // $warn_arr[0] -> 정상, $warn_arr[1] -> 주의, $warn_arr[2] -> 경고, $warn_arr[3] -> 위험
+        }
+
+		$response["warn_map"] = $warn_level_map;
+
+		// var_dump($warn_level_map);
+
+		echo json_encode($response);
+
+		break;
+
+	// 구글맵
 	case "get_map":
 
 		//검색필드
@@ -31,10 +152,9 @@ switch($oper){
 			$append_query = isset($select_ids[1]) ? $append_query . " AND fdDongid = \"" . $select_ids[1] . "\"" : $append_query;
 		}
 
-		$select_query = "SELECT fd.*, cm.*, be.beStatus FROM farm_detail AS fd
-						 JOIN comein_master AS cm ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
+		$select_query = "SELECT fd.*, be.beStatus FROM farm_detail AS fd
 						 JOIN buffer_sensor_status AS be ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid
-						 WHERE cmFarmid = cmFarmid ". $append_query;
+						 WHERE fdFarmid = fdFarmid ". $append_query;
 						 
 		$select_data = get_select_data($select_query);
 					
@@ -61,6 +181,7 @@ switch($oper){
 
 		break;
 
+	// marker modal data
 	case "get_farm":
 
 		// f_farmid 에서 농장, 동 id 추출
@@ -70,13 +191,6 @@ switch($oper){
 			$farmID = $id[0];
 			$dongID = $id[1];
 		}
-		
-		// 환경경보 cnt
-		$warn_arr = array();
-		$warn_arr[0] = 0;
-		$warn_arr[1] = 0;
-		$warn_arr[2] = 0;
-		$warn_arr[3] = 0;
 
         $page  = isset($_REQUEST['page']) ? $page  = check_str($_REQUEST['page']) : 1; // jqGrid의 page 속성의 값
         $limit = isset($_REQUEST['rows']) ? $limit = check_str($_REQUEST['rows']) : 1; // jqGrid의 rowNum 속성의 값
@@ -258,24 +372,24 @@ switch($oper){
                         }
                         break;
                     
-					// 경과시간 확인하여 현재 오류인지 아닌지 출력
-					case "siSensorDate":
-						$out = "";
-						$tokens = explode("|", $val);
+					// // 경과시간 확인하여 현재 오류인지 아닌지 출력
+					// case "siSensorDate":
+					// 	$out = "";
+					// 	$tokens = explode("|", $val);
 
-						for($i=0; $i<count($tokens); $i++){
-							$diff = get_date_diff($tokens[$i], $now);
-							$out = $diff > 180 ? $out . " | " . ($i+1) : $out;
-						}
+					// 	for($i=0; $i<count($tokens); $i++){
+					// 		$diff = get_date_diff($tokens[$i], $now);
+					// 		$out = $diff > 180 ? $out . " | " . ($i+1) : $out;
+					// 	}
 						
-						$out = strlen($out) > 2 ? substr($out, 3) : strlen($out);
-						$row[$key] = "<span class='badge badge-pill badge-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "O" : $out) . "</span>";
-						break;
+					// 	$out = strlen($out) > 2 ? substr($out, 3) : strlen($out);
+					// 	$row[$key] = "<span class='badge badge-pill badge-" . ($out == "" ? "primary" : "warning") . " btn-sm'>" . ($out == "" ? "O" : $out) . "</span>";
+					// 	break;
 					
-					// 네트워크
-					case "beNetwork":
-						$row[$key] = "<span class='badge badge-pill badge-" . ($val < 80 ? "primary" : "warning") . " btn-sm'>" . $val . "ms</span>";
-						break;
+					// // 네트워크
+					// case "beNetwork":
+					// 	$row[$key] = "<span class='badge badge-pill badge-" . ($val < 80 ? "primary" : "warning") . " btn-sm'>" . $val . "ms</span>";
+					// 	break;
 				}
 			}
 

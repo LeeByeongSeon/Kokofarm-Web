@@ -10308,9 +10308,9 @@ body.smart-style-3:not(.sa-menu-on-top) .sa-aside-left .sa-left-menu li.active >
   .smart-style-6 .sa-page-body {
     background: none; }
   .smart-style-6 .sa-content {
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 15px; }
+    padding-left: 1.5em;
+    padding-right: 0.1em;
+    padding-top: 0.5em; }
   .smart-style-6 .sa-page-header {
     /*background: #2196F3;*/
     /*background: #455a64;*/

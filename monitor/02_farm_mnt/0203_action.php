@@ -84,14 +84,21 @@ switch($oper){
 
 		$aw_data = get_select_data($select_sql);
 
+		$curr_interm = $select_data[0]["days"];		 //현재 일령
+		$curr_weight = $select_data[0]["beAvgWeight"];	 //현재 평균중량
+		$curr_devi   = $select_data[0]["beDevi"];		 //현재 표준편차
+
+		$daily_water = $select_data[0]["sfDailyWater"]; //일일 급수량
+		$daily_feed  = $select_data[0]["sfDailyFeed"];  //일일 급이량
+
 		$posi = count($aw_data) - 1;
 
 		if($posi > -1){	 	// 어제 또는 오늘 데이터가 존재하는 경우
-			$prev_weight = $aw_data[$posi]["awWeight"];	 //어제 평균중량
-			$prev_esti1  = $aw_data[$posi]["awEstiT1"];	 //어제 +1 예측
-			$prev_esti2  = $aw_data[$posi]["awEstiT2"];	 //어제 +2 예측
-			$prev_esti3  = $aw_data[$posi]["awEstiT3"];	 //어제 +3 예측
-			$prev_date   = $aw_data[$posi]["awDate"];	 //어제 마지막 산출 시간
+			$prev_weight = sprintf('%0.1f', $aw_data[$posi]["awWeight"]);	 //어제 평균중량
+			$prev_esti1  = sprintf('%0.1f', $aw_data[$posi]["awEstiT1"]);	 //어제 +1 예측
+			$prev_esti2  = sprintf('%0.1f', $aw_data[$posi]["awEstiT2"]);	 //어제 +2 예측
+			$prev_esti3  = sprintf('%0.1f', $aw_data[$posi]["awEstiT3"]);	 //어제 +3 예측
+			$prev_date   = sprintf('%0.1f', $aw_data[$posi]["awDate"]);	 //어제 마지막 산출 시간
 		}
 		else{	 // 없는 경우
 			$prev_weight = 0.0;	 //어제 평균중량
@@ -102,18 +109,18 @@ switch($oper){
 		}
 
 		if($curr_interm > 15){
-			$prev_avg_inc_2 = $prev_esti2 - $prev_esti1;
-			$prev_avg_inc_3 = $prev_esti3 - $prev_esti2;
+			$prev_avg_inc_2 = sprintf('%0.1f', $prev_esti2 - $prev_esti1);
+			$prev_avg_inc_3 = sprintf('%0.1f', $prev_esti3 - $prev_esti2);
 
 			if($curr_weight < $prev_weight){
 				$curr_weight = $prev_weight;
 			}
 		}
 		else{
-			$prev_weight = "0.0";
-			$prev_esti1  = "0.0";
-			$prev_esti2  = "0.0";
-			$prev_esti3  = "0.0";
+			$prev_weight = "-";
+			$prev_esti1  = "-";
+			$prev_esti2  = "-";
+			$prev_esti3  = "-";
 
 			$prev_avg_inc_2 = "0.0";
 			$prev_avg_inc_3 = "0.0";
@@ -142,14 +149,18 @@ switch($oper){
 		$summary_data["summary_type"] 	= $row["cmIntype"] . " " . $row["cmInsu"] . "수";
 		$summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
 		$summary_data["summary_out_day"]= $row["fdOutDays"];
+		
+		$summary_data["summary_date_term1"]	=  substr($yester_day, 5);		/*어제 날짜*/
+		$summary_data["summary_date_term2"]	=  substr($day_plus_1, 5);		/*내일 날짜*/
+		$summary_data["summary_date_term3"]	=  substr($day_plus_2, 5);		/*모레 날짜*/
 
 		$summary_data["summary_day_term1"]	= ($curr_interm - 1)."일령";	/*어제 일령*/
 		$summary_data["summary_day_term2"]	= ($curr_interm + 1)."일령";	/*내일 일령*/
 		$summary_data["summary_day_term3"]	= ($curr_interm + 2)."일령";	/*모레 일령*/
 
-		$summary_data["summary_day_1"]	= sprintf('%0.1f', $prev_weight);	/*어제 예측평체*/
-		$summary_data["summary_day_2"]	= sprintf('%0.1f', $prev_esti2);	/*내일 예측평체*/
-		$summary_data["summary_day_3"]	= sprintf('%0.1f', $prev_esti3);	/*모레 예측평체*/
+		$summary_data["summary_day_1"]	= $prev_weight;	/*어제 예측평체*/
+		$summary_data["summary_day_2"]	= $prev_esti2;	/*내일 예측평체*/
+		$summary_data["summary_day_3"]	= $prev_esti3;	/*모레 예측평체*/
 				
 		$summary_data["summary_avg_temp"] = sprintf('%0.1f', $row["beAvgTemp"] + corr_temp);	/*현재 온도 센서 평균*/
 		$summary_data["summary_avg_humi"] = sprintf('%0.1f', $row["beAvgHumi"] + corr_humi);	/*현재 습도 센서 평균*/

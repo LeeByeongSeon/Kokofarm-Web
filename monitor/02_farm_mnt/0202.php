@@ -13,7 +13,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 			<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-map-marker text-green"></i>&nbsp;전국 농장 현황</h2>	
+						<h2><i class="fa fa-map-marker"></i>&nbsp;전국 농장 현황</h2>	
 					</div>
 					<div class="widget-toolbar ml-auto" style="cursor: default">
 						전체 : <span class="badge badge-default" id="farm_cnt_total">&nbsp;</span>&nbsp;
@@ -59,8 +59,8 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary float-left" onClick="page_move('../01_device_mnt/0102.php');">세부현황</button>
-				<button type="button" class="btn btn-primary float-left" onClick="page_move('./0204.php');">출하이력</button>
+				<button type="button" class="btn btn-primary float-left" id="detail_farm" onClick="page_move('../01_device_mnt/0102.php');">세부현황</button>
+				<button type="button" class="btn btn-primary float-left" id="out_farm" onClick="page_move('./0204.php');">출하이력</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
@@ -85,9 +85,9 @@ include_once("../inc/bottom.php");
 		call_tree_view("", get_map_data,"all");
 		set_tree_search(get_map_data);
 
-	});
+		get_warn_data();
 
-	// $("#map_div").bind('resize',function(){ initMap(); });
+	});
 	
 	//구글맵 출력
 	function initMap() {
@@ -97,6 +97,40 @@ include_once("../inc/bottom.php");
 		del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data));
 	};
 
+	// 위젯 헤더 환경경보 data 불러옴
+	function get_warn_data(){
+		let data_arr = {};
+			data_arr["oper"] = "get_warn";
+
+		$.ajax({
+			url:"0202_action.php",
+			type:"post",
+			cache:false,
+			data:data_arr,
+			dataType:"json",
+			success:function(data){
+				// alert(data.warn_map);
+
+				let warn = data.warn_map;
+
+				let cnt_normal = warn.reduce((c, e) => c + ('1' === e), 0);			 // 정상
+				let cnt_caution = warn.reduce((c, e) => c + ('2' === e), 0);		 // 주의
+				let cnt_warning = warn.reduce((c, e) => c + ('3' === e), 0);		 // 경고
+				let cnt_danger = warn.reduce((c, e) => c + ('4' === e), 0);			 // 위험
+				let cnt_total = cnt_normal + cnt_caution + cnt_warning + cnt_danger; // 전체 환경경보 수
+
+				$("#farm_cnt_normal").html(cnt_normal);		// 정상
+				$("#farm_cnt_caution").html(cnt_caution);	// 주의
+				$("#farm_cnt_warning").html(cnt_warning);	// 경고
+				$("#farm_cnt_danger").html(cnt_danger);		// 위험
+				$("#farm_cnt_total").html(cnt_total);		// 전체 환경경보 수
+
+				// alert(cnt_normal+"/"+cnt_caution+"/"+cnt_warning+"/"+cnt_danger);
+			}
+		});
+	}
+
+	// 구글맵 data 가져옴
 	function get_map_data(selected_id){
 		let data_arr = {};
 			data_arr["oper"] = "get_map";
@@ -118,6 +152,7 @@ include_once("../inc/bottom.php");
 		});
 	};
 
+	// 구글맵 marker 클릭시 나오는 데이터
 	function get_farm_modal(code){
 		let data_arr = {};
 			data_arr["oper"] = "get_farm";
@@ -153,11 +188,7 @@ include_once("../inc/bottom.php");
 				{label: "평균중량(권고대비)",name: "beAvgWeight",		align:'center',	},
 			],
 			onSelectRow: function(id){		  },
-			loadComplete:function(data){	
-				
-				// // 구글맵
-				// let map_data = data.json_map;
-				// del_markers("map_div"); add_markers_modal("map_div", jQuery.makeArray(map_data)); //JSON ==> javascript 배열로 변환
+			loadComplete:function(data){
 
 			},
 		});
@@ -174,7 +205,7 @@ include_once("../inc/bottom.php");
 		jQuery("#jqgrid").jqGrid("setGridParam", {postData:{"oper":"get_farm","code": code}}).trigger("reloadGrid");
 	};
 	
-	// modal창 페이지 이동 (세부현황, 출하이력)
+	// modal창 -> 페이지 이동 (세부현황, 출하이력)
 	function page_move(page){
 
 		let keys = selected_id.split("|");
@@ -183,6 +214,7 @@ include_once("../inc/bottom.php");
 		let dongID = keys.length == 2 ? keys[1] : "01";
 
 		window.location = page + "?farmID=" + farmID + "&dongID=" + dongID;
+
 	};
 
 	// 트리뷰 버튼 클릭시 리로드 이벤트

@@ -71,7 +71,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						</div>
 					</div>
 
-					<div class="col-xl-6 pr-2" id="summary_camera" style="padding-top:2%">
+					<div class="col-xl-6 pr-2" id="summary_camera" style="padding-top:1.5%">
 						
 					</div>
 					
