@@ -3,17 +3,19 @@
 
     //Return Array======================================
 	$response = array();						
-	$response["errCode"] = "00";
+	$response["errCode"] = "01";
 	$response["errMsg"] = "Access denied";
-	$response["retData"] = array();
+	$response["retData"] = "";
 
 	$apiKey = check_str($_REQUEST["apiKey"]);	//API KEY
-	$setComm = check_str($_REQUEST["setComm"]);	//명령어
+	$userType = check_str($_REQUEST["userType"]);	// 유저 형식
+	$userID = check_str($_REQUEST["userID"]);		// 유저 ID
+	$setComm = check_str($_REQUEST["setComm"]);		// 요청 명령
 
     //기본 Error처리======================================
-	if(	empty($apiKey) || empty($setComm) ){
-		$response["errCode"] = "00";
-		$response["errMsg"] = "There is no API Key or command ";
+	if(	empty($userID) || empty($userType) || empty($setComm) ){
+		$response["errCode"] = "02";
+		$response["errMsg"] = "Invalid request";
 		echo json_encode($response);
 		exit(0);	//exit(0) 하단은 실행중지
 	}
@@ -22,44 +24,57 @@
 	$query = "SELECT akKey FROM api_key WHERE akKey = \"" .$apiKey. "\"";
 	$get_data = get_select_data($query);
 	if(empty($get_data)){
-		$response["errCode"]="00";
-		$response["errMsg"]="API Key is incorrect";
+		$response["errCode"] = "03";
+		$response["errMsg"] = "Incorrect API Key";
 		echo json_encode($response);
 		exit(0);	//exit(0) 하단은 실행중지
 	}
 
-    //명령어 처리=========================================
-	switch($setComm){
-		case "Day":	//로그인 명령어
-			$userID = check_str($_REQUEST["userID"]);
-			$userPW = check_str($_REQUEST["userPW"]);
+	switch($userType){
+		case "manager":
+			$response = work_manager($setComm);
+			break;
 
-			$query="SELECT userID, userType, farmID
-						 FROM(
-								(SELECT mgrID as userID, mgrPW as userPW, 'ALL' as farmID, 'ADMIN' as userType  FROM manager)	/*관리자계정*/
-								UNION ALL
-								(SELECT fID as userID, fPW as userPW, fFarmid as farmID, 'FARM' as userType FROM farm)			/*농장계정*/
-						) resultTable
-					 WHERE resultTable.userID = \"" .$userID. "\" AND resultTable.userPW = \"" .$userPW. "\" LIMIT 0, 1";
-			$get_data = get_select_data($query);
-
-			if( !empty($get_data[0]["userID"]) && !empty($get_data[0]["userType"]) && !empty($get_data[0]["farmID"])  ){
-				$response["errCode"] = "01";
-				$response["errMsg"] = "Login success";
-				$response["retData"] = array(
-					"userID"   => $get_data[0]["userID"],
-					"userType" => $get_data[0]["userType"],
-					"farmID" => $get_data[0]["farmID"]
-				);
-			}
-			else{
-				$response["errCode"] = "00";
-				$response["errMsg"] = "Login failed";
-				$response["retData"] = array();
-			}
-
+		case "user":
+			$response = work_user($setComm);
 			break;
 	}
 
 	echo json_encode($response);
+
+	function work_manager($setComm){
+
+		$ret = array();
+
+		switch($setComm){
+			case "request":
+				$query = "SELECT * FROM request_calculate WHERE rcStatus = \"R\"";
+				$select_data = get_select_data($query);
+				
+				$ret["errCode"] = "00";
+				$ret["errMsg"] = "";
+				$ret["retData"] = count($select_data);
+				
+				break;
+		}
+
+		return $ret;
+	}
+
+	function work_user($setComm){
+
+		$ret = array();
+
+		switch($setComm){
+			case "recalculate":
+				$query = "SELECT * FROM ";
+
+				$ret["errCode"] = "00";
+				$ret["errMsg"] = "";
+				$ret["retData"] = "";
+				break;
+		}
+
+		return $ret;
+	}
 ?>
