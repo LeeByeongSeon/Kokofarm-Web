@@ -124,7 +124,7 @@ function get_now_time(){
 
 // gap 만큼 더하거나 뺀 시간을 리턴
 function get_gap_time(origin, gap){
-	var origin_date = new Date(origin);
+	var origin_date = new Date(origin.replace(/-/g, "/"));
 	var ret = origin_date.getTime() + gap;
 	var return_date = new Date(ret);
 
