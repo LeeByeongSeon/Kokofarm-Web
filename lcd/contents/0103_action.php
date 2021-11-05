@@ -22,11 +22,11 @@ include_once("../common/php_module/common_func.php");
 				$select_data = get_select_data($select_sql);
 
 				$extra = array();
-				if(count($select_data) > 0){		// 외기 데이터가 있으면
-					$extra["extra_curr_feed"] = $select_data[0]["sfDailyFeed"];
-					$extra["extra_prev_feed"] = $select_data[0]["sfPrevFeed"];
-					$extra["extra_curr_water"] = $select_data[0]["sfDailyWater"];
-					$extra["extra_prev_water"] = $select_data[0]["sfPrevWater"];
+				if(count($select_data) > 0){		// 사료빈 데이터가 있으면
+					$extra["extra_curr_feed"] = $select_data[0]["sfDailyFeed"] < 0 ? 0 : $buffer_data[0]["sfDailyFeed"];
+					$extra["extra_prev_feed"] = $select_data[0]["sfPrevFeed"] < 0 ? 0 : $buffer_data[0]["sfPrevFeed"];
+					$extra["extra_curr_water"] = $select_data[0]["sfDailyWater"] < 0 ? 0 : $buffer_data[0]["sfDailyWater"];
+					$extra["extra_prev_water"] = $select_data[0]["sfPrevWater"] < 0 ? 0 : $buffer_data[0]["sfPrevWater"];
 					$extra["extra_feed_remain"] = $select_data[0]["sfFeed"];
 
 					$feed_json = json_decode($select_data[0]["shFeedData"]);

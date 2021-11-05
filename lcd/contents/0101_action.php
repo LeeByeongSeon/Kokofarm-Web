@@ -135,10 +135,10 @@
 
 			$extra = array();
 			if($buffer_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
-				$extra["extra_curr_feed"] = $buffer_data[0]["sfDailyFeed"];
-				$extra["extra_prev_feed"] = $buffer_data[0]["sfPrevFeed"];
-				$extra["extra_curr_water"] = $buffer_data[0]["sfDailyWater"];
-				$extra["extra_prev_water"] = $buffer_data[0]["sfPrevWater"];
+				$extra["extra_curr_feed"] = $buffer_data[0]["sfDailyFeed"] < 0 ? 0 : $buffer_data[0]["sfDailyFeed"];
+				$extra["extra_prev_feed"] = $buffer_data[0]["sfPrevFeed"] < 0 ? 0 : $buffer_data[0]["sfPrevFeed"];
+				$extra["extra_curr_water"] = $buffer_data[0]["sfDailyWater"] < 0 ? 0 : $buffer_data[0]["sfDailyWater"];
+				$extra["extra_prev_water"] = $buffer_data[0]["sfPrevWater"] < 0 ? 0 : $buffer_data[0]["sfPrevWater"];
 				$extra["extra_feed_remain"] = $buffer_data[0]["sfFeed"];
 
 				$feed_json = json_decode($buffer_data[0]["shFeedData"]);
