@@ -436,7 +436,7 @@ function get_now_time(){
 
 // gap 만큼 더하거나 뺀 시간을 리턴
 function get_gap_time(origin, gap){
-	var origin_date = new Date(origin);
+	var origin_date = new Date(origin.replace(/-/g, "/"));
 	var ret = origin_date.getTime() + gap;
 	var return_date = new Date(ret);
 
@@ -649,7 +649,7 @@ param
 - is_label : Label 출력 여부
 - font_size : 차트의 출력되는 font size
 */
-function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period = "hh"){
+function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period = "hh", fisrt_color = ""){
     if(chart_data.length <= 0){ return false; }
 
     //console.log(JSON.stringify(chart_data));
@@ -680,7 +680,7 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
 			switch(graph_cnt){
 				case 1:
 					graph_obj["type"] = "column";						/*차트모양*/
-					graph_obj["lineColor"] = graph_color[1];			/*라인컬라*/
+					graph_obj["lineColor"] = fisrt_color == "" ? graph_color[1] : fisrt_color;			/*라인컬라*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 					break;

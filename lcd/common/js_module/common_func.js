@@ -29,6 +29,19 @@ function popup_confirm(title, msg, work, ok_msg, cancle_msg){
 	confirm_event(work);
 };
 
+// 확인 및 취소 버튼 클릭 시 실행 할 작업을 바인딩 함
+var confirm_event = function (work){
+	$("#modal_confirm_ok").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
+		work(true);
+		$("#modal_confirm").modal('hide');
+	});
+	
+	$("#modal_confirm_cancle").off("click").on("click", function(){
+		work(false);
+		$("#modal_confirm").modal('hide');
+	});
+};
+
 // 날짜 형식 강제 입력 함수
 function force_input_date(input){
     let len = input.length;	
@@ -337,7 +350,7 @@ param
 - is_label : Label 출력 여부
 - font_size : 차트의 출력되는 font size
 */
-function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period){
+function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period, fisrt_color){
     if(chart_data.length <= 0){ return false; }
 
     //console.log(JSON.stringify(chart_data));
@@ -368,7 +381,7 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
 			switch(graph_cnt){
 				case 1:
 					graph_obj["type"] = "column";						/*차트모양*/
-					graph_obj["lineColor"] = graph_color[1];			/*라인컬라*/
+					graph_obj["lineColor"] = fisrt_color;			/*라인컬라*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 					break;

@@ -11,6 +11,8 @@ define("corr_humi", 7);		//저울-습도보정
 define("corr_co2", 0);		//저울-CO2보정
 define("corr_nh3", 0);		//저울-NH3보정
 
+define("feed_hunt", 10);		// 사료빈 저울 헌팅값 제거
+
 function buffer_code(){
 	$query = "SELECT cmFarmid, cmDongid, MAX(cmCode) AS maxCode FROM comein_master GROUP BY cmFarmid, cmDongid";
 
@@ -581,6 +583,9 @@ function get_feed_history($code, $type){
 			$sensor_date = $val["shDate"];
 			$feed = $json->feed_feed;
 			$water = $json->feed_water;
+
+			// 2021-11-08 이병선 급이 (-) 값 수정
+			$feed = abs($feed) <= feed_hunt ? 0 : $feed;
 			
 			$date = substr($sensor_date, 0, 10);
 			$day_map[$date]["feed"] = isset($day_map[$date]["feed"]) ? $day_map[$date]["feed"] + $feed : $feed;
@@ -588,24 +593,24 @@ function get_feed_history($code, $type){
 
 			$chart_feed[] = array(
 				"시간" => $sensor_date,
-				"급이량" => $feed,
+				"급이량(kg)" => $feed,
 			);
 
 			$chart_water[] = array(
 				"시간" => $sensor_date,
-				"급수량" => $water,
+				"급수량(L)" => $water,
 			);
 
 			$feed_stack = $feed_stack + $feed;
 			$chart_feed_stack[] = array(
 				"시간" => $sensor_date,
-				"누적급이량" => $feed_stack,
+				"누적급이량(kg)" => $feed_stack,
 			);
 
 			$water_stack = $water_stack + $water;
 			$chart_water_stack[] = array(
 				"시간" => $sensor_date,
-				"누적급수량" => $water_stack,
+				"누적급수량(L)" => $water_stack,
 			);
 
 			$table[] = array(
@@ -618,11 +623,11 @@ function get_feed_history($code, $type){
 		foreach($day_map as $key => $val){
 			$chart_feed_daily[] = array(
 				"시간" => $key,
-				"급이량" => $val["feed"],
+				"급이량(kg)" => $val["feed"],
 			);
 			$chart_water_daily[] = array(
 				"시간" => $key,
-				"급수량" => $val["water"],
+				"급수량(L)" => $val["water"],
 			);
 		}
 

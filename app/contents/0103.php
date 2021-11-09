@@ -152,7 +152,7 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 				draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
-				draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD");
+				draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD", "#2FB5F0");
 			}
 		});
 	};
@@ -170,8 +170,8 @@ include_once("../inc/bottom.php")
 			data:data_arr,
 			dataType:'json',
 			success: function(data){
-				draw_bar_line_chart("today_feed_chart", data.chart_feed, "Y", "N", 12, "mm");
-				draw_bar_line_chart("today_water_chart", data.chart_water, "Y", "N", 12, "mm");
+				draw_bar_line_chart("today_feed_chart", data.chart_feed, "Y", "N", 12, "hh");
+				draw_bar_line_chart("today_water_chart", data.chart_water, "Y", "N", 12, "hh", "#2FB5F0");
 			}
 		});
 	};
