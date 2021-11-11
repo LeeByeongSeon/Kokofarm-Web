@@ -151,8 +151,17 @@ include_once("../inc/bottom.php")
 			data:data_arr,
 			dataType:'json',
 			success: function(data){
-				draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
-				draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD", "#2FB5F0");
+				let params = {};
+				params["graph_color"] = ["#FF9900","#2FB5F0","#109618","#990099"];
+				params["font_size"] = 12;
+				params["is_zoom"] = true;
+				params["period"] = "DD";
+				params["date_format"] = "YYYY-MM-DD";
+				//draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
+				//draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD", "#2FB5F0");
+				draw_chart("daily_feed_chart", data.chart_feed_daily, params);
+				params["graph_color"] = ["#2FB5F0","#FF9900","#109618","#990099"];
+				draw_chart("daily_water_chart", data.chart_water_daily, params);
 			}
 		});
 	};

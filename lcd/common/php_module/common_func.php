@@ -580,7 +580,9 @@ function get_feed_history($code, $type){
 
 			$json = json_decode($val["shFeedData"]);
 
-			$sensor_date = $val["shDate"];
+			// 2021-11-11 이병선 시간 60분전으로 계산
+			//$sensor_date = $val["shDate"];
+			$sensor_date = get_term_date($val["shDate"], -60);
 			$feed = $json->feed_feed;
 			$water = $json->feed_water;
 
