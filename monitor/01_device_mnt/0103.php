@@ -24,20 +24,20 @@ include_once("../common/php_module/common_func.php");
 			<div class="jarviswidget jarviswidget-color-gray-dark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-video-camera"></i>&nbsp;IP Camera 확인 (농장이름-동)</h2>	
+						<h2><i class="fa fa-video-camera"></i>&nbsp;<span class="KKF-136">IP Camera 확인 (농장이름-동)</span></h2>	
 					</div>
 					<div class="widget-toolbar ml-auto" style="cursor: default">
-						<span class='badge badge-primary'> </span>&nbsp;입추
-						<span class='badge badge-danger'> </span>&nbsp;출하
+						<span class='badge badge-primary'> </span>&nbsp;<span class="KKF-29">입추</span>
+						<span class='badge badge-danger'> </span>&nbsp;<span class="KKF-30">출하</span>
 					</div>
 				</header>
 				
 				<div class="widget-body no-padding">
 					<div class="widget-body-toolbar">
 						<form id="search_form" class="form-inline" onsubmit="return false;">
-							<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="get_camera_list('all')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>전체</button>&nbsp;
-							<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="get_camera_list('in')"><span class="btn-label"><i class="fa fa-search"></i></span>입추</button>&nbsp;
-							<button type="button" class="btn btn-labeled btn-danger btn-sm" onClick="get_camera_list('out')"><span class="btn-label"><i class="fa fa-search"></i></span>출하</button>
+							<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="get_camera_list('all')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-155">전체</span></button>&nbsp;
+							<button type="button" class="btn btn-labeled btn-primary btn-sm" onClick="get_camera_list('in')"><span class="btn-label"><i class="fa fa-search"></i></span><span class="KKF-29">입추</span></button>&nbsp;
+							<button type="button" class="btn btn-labeled btn-danger btn-sm" onClick="get_camera_list('out')"><span class="btn-label"><i class="fa fa-search"></i></span><span class="KKF-30">출하</span></button>
 						</form>
 					</div>
 
@@ -63,6 +63,7 @@ include_once("../inc/bottom.php");
 
 		call_tree_view("", get_camera_list);
 		set_tree_search(get_camera_list);
+
 	});
 
 	function get_camera_list(comm){

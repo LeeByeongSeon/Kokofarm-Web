@@ -26,44 +26,44 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 <!--농장정보 & 이슈사항-->
 <article class="col-xl-10 float-right">
 	<div class="row">
-		<div class="col-xl-6">
+		<div class="col-xl-7">
 			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-info-circle"></i>&nbsp;요약정보</h2>	
+						<h2><i class="fa fa-info-circle"></i>&nbsp;<span class="KKF-40">요약정보</span></h2>	
 					</div>
 				</header>
 
 				<div class="widget-body d-flex justify-content-between pt-1" style="height: 294.97px">
 
 					<div class="well col-xl-6 no-padding" style="margin-top:2%">
-						<div class="col-xl-12 text-center text-secondary mb-4">
-							<h2 class="font-weight-bold p-2 no-margin"><span id="summary_name">망성농장-01동 (KF0013-01) </span></h2>
+						<div class="col-xl-12 no-padding text-center text-secondary mb-4">
+							<h2 class="font-weight-bold p-2 no-margin"><span id="summary_name">이모션농장-01동 (KF0006-01)</span></h2>
 						</div>
 
 						<div class="col-xl-12 d-flex justify-content-between align-items-center no-padding mb-3">
 							<div class="col-xl-4 no-padding text-center">
 								<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png" alt="닭 이미지">
-								<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
+								<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span><span class="KKF-41">일</span></h2></div>
 							</div>
 							<div class="col-xl-8 no-padding d-flex justify-content-between">
 								<div class="col-xl-6 text-center font-weight-bold pt-3">
-									<span class="font-weight-bold font-lg">평균중량</sapi_windows_vt100_support><br>
+									<span class="font-weight-bold font-md KKF-42">평균중량</span><br>
 									<span class="text-danger font-xl" id="summary_avg">-</span>
 								</div>
-								<div class="col-xl-6 no-margin text-center font-weight-bold pt-2">
-									<span class="font-md">표준편차</span><br><span class="font-md" id="summary_devi">-</span><br>
-									<span class="font-md">일일증체량</span><br><span class="font-md" id="summary_inc">-</span>
+								<div class="col-xl-6 no-margin no-padding text-center font-weight-bold pt-2">
+									<span class="font-md KKF-44">표준편차</span><br><span class="font-md" id="summary_devi">-</span><br>
+									<span class="font-md KKF-43">일일증체량</span><br><span class="font-md" id="summary_inc">-</span>
 								</div>
 							</div>
 						</div>
 
 						<div class="col-xl-12 no-padding d-flex justify-content-between">
-							<div class="col-xl-4 no-padding">
+							<div class="col-xl-5 no-padding">
 								<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_type">육계 -수</span></h6></div>
 							</div>
-							<div class="col-xl-8 no-padding">
-								<div class="text-center"><h6 class="m-2 font-weight-bold"><span id="summary_comein">입추일자 : -</span></h6></div>
+							<div class="col-xl-7 no-padding">
+								<div class="text-center"><h6 class="m-2 font-weight-bold"><span class="KKF-46">입추일자</span> : <span id="summary_comein">-</span></h6></div>
 
 								<div id="summary_indate" style="display:none;"></div>
 								<div id="summary_outdate" style="display:none;"></div>
@@ -71,7 +71,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						</div>
 					</div>
 
-					<div class="col-xl-6 pr-2" id="summary_camera" style="padding-top:1.5%">
+					<div class="col-xl-6 pr-2" id="summary_camera" style="padding-top:2%">
 						
 					</div>
 					
@@ -80,11 +80,11 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			</div>
 		</div>
 
-		<div class="col-xl-6">
+		<div class="col-xl-5">
 			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-bell-o"></i>&nbsp;사육정보</h2>	
+						<h2><i class="fa fa-bell-o"></i>&nbsp;<span class="KKF-47"></span></h2>	
 					</div>
 				</header>
 				<div class="widget-body p-3" style="height: 294.97px">
@@ -93,24 +93,24 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<h1 class='font-weight-bold m-auto'><i class='glyphicon glyphicon-remove-sign text-danger'></i> 표시할 데이터가 없습니다.</h1>
 					</div> -->
 
-					<div class="col-xl-8 float-left mt-4 pr-5 pl-0 feed_info_div" style="border-right: 2px dotted #ddd;">
+					<div class="col-xl-12 float-left mt-4 pr-5 pl-0 feed_info_div">
 						<div class="row d-flex align-items-center">
 							<div class="col-xl-4 no-padding text-center">
 								<div class="col-xl-12 text-center">
 									<img src="../images/feed-00.png" id="feed_img" style="width: 7rem;" alt="급이 이미지">
 									<div class="carousel-caption h-100" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">-%<h5></div>
 								</div>
-								<div class="col-xl-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(kg)</span></div>
+								<div class="col-xl-12 text-center no-padding"><span class="KKF-48">사료잔량</span>&nbsp;<span id="extra_feed_remain">-</span>(kg)</div>
 							</div>
 							<div class="col-xl-4 h-50 no-padding">
 								<div class="col-xl-12 h-75 text-right no-padding">
-									<span class="font-weight-bold text-secondary font-md">오늘 급이량(㎏)</span><br>
+									<span class="font-weight-bold text-secondary font-md KKF-49">오늘 급이량</span>(㎏)<br>
 									<span class="font-xl" id="extra_curr_feed">-</span>
 								</div>
 							</div>
 							<div class="col-xl-4 h-50 float-right no-padding">
 								<div class="col-xl-12 h-75 text-right no-padding">
-									<span class="font-weight-bold text-secondary font-md">전일 급이량(㎏)</span><br>
+									<span class="font-weight-bold text-secondary font-md KKF-50">전일 급이량</span>(㎏)<br>
 									<span class="font-xl" id="extra_prev_feed">-</span>
 								</div>
 							</div>
@@ -118,27 +118,27 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="row mt-3 d-flex align-items-center">
 							<div class="col-xl-4 no-padding text-center">
 								<div class="col-xl-12 text-center"><img src="../images/water-02.png" style="width: 5rem;" alt="급수 이미지"></div>
-								<div class="col-xl-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
+								<div class="col-xl-12 text-center no-padding"><span class="KKF-51">시간당 급수량</span>&nbsp;<span id="extra_water_per_hour">-</span>(L)</div>
 							</div>
 							<div class="col-xl-4 h-50 no-padding">
 								<div class="col-xl-12 h-75 text-right no-padding">
-									<span class="font-weight-bold text-secondary font-md">오늘 급수량(L)</span><br>
+									<span class="font-weight-bold text-secondary font-md KKF-52">오늘 급수량</span>(L)<br>
 									<span class="font-xl" id="extra_curr_water">-</span>
 								</div>
 							</div>
 							<div class="col-xl-4 h-50 float-right no-padding">
 								<div class="col-xl-12 h-75 text-right no-padding">
-									<span class="font-weight-bold text-secondary font-md">전일 급수량(L)</span><br>
+									<span class="font-weight-bold text-secondary font-md KKF-53">전일 급수량</span>(L)<br>
 									<span class="font-xl" id="extra_prev_water">-</span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-4 float-right mt-3">
+					<!-- <div class="col-xs-4 float-right mt-3">
 						<div class="row">
 						</div>
 					</div>
-					<!-- <div class="col-xs-5 float-right mt-3">
+					<div class="col-xs-5 float-right mt-3">
 						<div class="col-xs-12 h-100 no-padding">
 							<ul class="list-group" id="alarm_list">
 								<li class="list-group-item"><div class="alert alert-secondary m-0">재산출 요청 중</div></li>
@@ -158,11 +158,11 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 
 	<!--장치현황-->
 	<div class="row">
-		<div class="col-xl-3">
+		<div class="col-xl-4">
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-gears text-dark"></i>&nbsp;장치 현황</h2>	
+						<h2><i class="fa fa-gears text-dark"></i>&nbsp;<span class="KKF-54">장치 현황</span></h2>	
 					</div>
 				</header>
 			
@@ -170,39 +170,39 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table class="table table-bordered table-hover" style="text-align: center;">
 						<thead>
 							<tr>
-								<th>장치명</th>
-								<th>설치수</th>
-								<th>장치 설정</th>
+								<th class="KKF-55">장치명</th>
+								<th class="KKF-187">설치수</th>
+								<th class="KKF-56">장치 설정</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>IoT 저울</td>
+								<td class="KKF-57">IoT 저울</td>
 								<td id="device_cnt_cell">3</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0401.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
 							<tr>
-								<td>IP 카메라</td>
+								<td class="KKF-58">IP 카메라</td>
 								<td id="device_cnt_camera">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0402.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
 							<tr>
-								<td>자동환경제어장치</td>
+								<td class="KKF-59">자동환경제어장치</td>
 								<td id="device_cnt_plc">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0403.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
 							<tr>
-								<td>사료빈 로드셀</td>
+								<td class="KKF-60">사료빈 로드셀</td>
 								<td id="device_cnt_feeder">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
 							<tr>
-								<td>유량센서</td>
+								<td class="KKF-61">유량센서</td>
 								<td id="device_cnt_water">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
 							<tr>
-								<td>외기환경센서</td>
+								<td class="KKF-62">외기환경센서</td>
 								<td id="device_cnt_out">1</td>
 								<td><button type="button" class="btn btn-outline-secondary btn-block btn-sm" onClick="page_move('../04_device_mgr/0404.php')"><span class="fa fa-gear text-orange"></span></button></td>
 							</tr>
@@ -212,20 +212,20 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			</div>
 		</div>
 
-		<div class="col-xl-9">
+		<div class="col-xl-8">
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-gears text-dark"></i>&nbsp;장치 데이터</h2>	
+						<h2><i class="fa fa-gears text-dark"></i>&nbsp;<span class="KKF-63">장치 데이터</span></h2>	
 					</div>
 				</header>
 				<div class="widget-body" style="height: 323.5px">
 					<table id="device_buffer_table"  data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px; height: 323.5px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true" data-align="center" data-cell-style="del_padding">장치</th>
-								<th data-field='f2' data-visible="true" data-align="center" data-cell-style="del_padding">수집시간</th>
-								<th data-field='f3' data-visible="true" data-cell-style="del_padding">데이터</th>
+								<th data-field='f1' data-visible="true" data-align="center" data-cell-style="del_padding"><span class="KKF-64">장치</span></th>
+								<th data-field='f2' data-visible="true" data-align="center" data-cell-style="del_padding"><span class="KKF-65">수집시간</span></th>
+								<th data-field='f3' data-visible="true" data-cell-style="del_padding"><span class="KKF-66">데이터</span></th>
 							</tr>
 						</thead>
 					</table>
@@ -242,15 +242,15 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-bar-chart-o text-orange"></i>&nbsp;평균중량</h2>	
+						<h2><i class="fa fa-bar-chart-o text-orange"></i>&nbsp;<span class="KKF-42">평균중량</span></h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto">
 						<div class="form-inline">
-							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')">일령별</button>&nbsp;
-							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')">시간별</button>&nbsp;
-							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(700).focus()" id="avg_table_slide"><span class="btn-label"><i class="fa fa-table"></i></span>표 출력</button>&nbsp;
-							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')"><span class="KKF-67">일령별</span></button>&nbsp;
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')"><span class="KKF-68">시간별</span></button>&nbsp;
+							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(700).focus()" id="avg_table_slide"><span class="btn-label"><i class="fa fa-table"></i></span><span class="KKF-69">표 출력</span></button>&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</div>
 					</div>
 				</header>
@@ -265,10 +265,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-sort-name="f2" data-sort-order="desc" data-toggle="table" style="font-size:14px">
 							<thead>
 								<tr>
-									<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
-									<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
-									<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
-									<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
+									<th data-field='f1' data-visible="true" data-sortable="true"><span class="KKF-71">산출시간</span></th>
+									<th data-field='f2' data-visible="true" data-sortable="true"><span class="KKF-72">일령</span></th>
+									<th data-field='f3' data-visible="true" data-sortable="true"><span class="KKF-73">평체</span></th>
+									<th data-field='f4' data-visible="true" data-sortable="true"><span class="KKF-74">권고</span></th>
 								</tr>
 							</thead>
 						</table>
@@ -283,12 +283,12 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o text-red"></i>&nbsp;오류 이력</h2>	
+						<h2><i class="fa fa-file-text-o text-red"></i>&nbsp;<span class="KKF-75">오류 이력</span></h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto" style="padding-top: 4px">
 						<div class="form-inline">
-							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_error_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_error_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</div>
 					</div>
 				</header>
@@ -298,9 +298,9 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="error_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true" data-sortable="true" data-align="center">오류시간</th>
-								<th data-field='f2' data-visible="true" data-sortable="true" data-align="center">오류상태</th>
-								<th data-field='f3' data-visible="true" data-sortable="true" data-align="center">저울번호</th>
+								<th data-field='f1' data-visible="true" data-sortable="true" data-align="center"><span class="KKF-76">오류시간</span></th>
+								<th data-field='f2' data-visible="true" data-sortable="true" data-align="center"><span class="KKF-77">오류상태</span></th>
+								<th data-field='f3' data-visible="true" data-sortable="true" data-align="center"><span class="KKF-78">저울번호</span></th>
 							</tr>
 						</thead>
 					</table>
@@ -318,7 +318,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-gear text-dark"></i>&nbsp;GW 관리 (농장ID-동ID)</h2>	
+						<h2><i class="fa fa-gear text-dark"></i>&nbsp;<span class="KKF-79">GW 관리</span></h2>	
 					</div>
 				</header>
 
@@ -327,28 +327,28 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="col-xl-6 float-left" style="height: 235.2px">
 							<table class="table table-bordered table-hover text-center">
 								<thead>
-									<th colspan="3" style="line-height: 32px">GW 냉각팬 정보
-										<button class="btn btn-outline-secondary btn-sm ml-auto" onClick="send_gw_itr('gw_fan_info')"><span class='fa fa-refresh text-orange'></span> 조회</button>
+									<th class="KKF-80" colspan="3" style="line-height: 32px">GW 냉각팬 정보
+										<button class="btn btn-outline-secondary btn-sm ml-auto" onClick="send_gw_itr('gw_fan_info')"><span class='fa fa-refresh text-orange'></span>&nbsp;<span class="KKF-81">조회</span></button>
 									</th>
 								</thead>
 								<tbody>
 									<tr>
-										<th>동작 온도</th>
+										<th class="KKF-83">동작 온도</th>
 										<td><input class='form-control input-sm' id='text_gw_fan_on_temp' type='text' maxlength='2' size='2'></td>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_on_temp', true)"><span class="fa fa-gear text-orange"></span> 설정</button></td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_on_temp', true)"><span class="fa fa-gear text-orange"></span>&nbsp;<span class="KKF-82">설정</span></button></td>
 									</tr>
 									<tr>
-										<th>정지 온도</th>
+										<th class="KKF-84">정지 온도</th>
 										<td><input class='form-control input-sm' id='text_gw_fan_off_temp' type='text' maxlength='2' size='2' style="height: 29.6px"></td>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_off_temp', true)"><span class="fa fa-gear text-orange"></span> 설정</button></td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" onClick="send_gw_itr('gw_fan_off_temp', true)"><span class="fa fa-gear text-orange"></span>&nbsp;<span class="KKF-82">설정</span></button></td>
 									</tr>
 									<tr>
-										<th>현재 온도</th>
+										<th class="KKF-85">현재 온도</th>
 										<td id='text_gw_fan_curr_temp'></td>
 										<td></td>
 									</tr>
 									<tr>
-										<th>동작 상태</th>
+										<th class="KKF-86">동작 상태</th>
 										<td id='text_gw_fan_status'></td>
 										<td></td>
 									</tr>
@@ -358,24 +358,24 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 						<div class="col-xl-6 float-right" style="height: 235.2px">
 							<table class="table table-bordered table-hover text-center">
 								<thead class="p-1">
-									<th colspan="2">GW 조회 및 설정</th>
+									<th class="KKF-87" colspan="2">GW 조회 및 설정</th>
 								</thead>
 								<tbody class="p-1">
 									<tr>
-										<td>펌웨어 버전 조회</td>
-										<td><button class='btn btn-outline-secondary btn-sm btn-block' id='btn_gw_version_info' onClick="send_gw_itr('gw_version_info')"><span id='ret'></span><span class='fa fa-refresh text-orange'></span> 조회</button></td>
+										<td class="KKF-88">펌웨어 버전 조회</td>
+										<td><button class='btn btn-outline-secondary btn-sm btn-block' id='btn_gw_version_info' onClick="send_gw_itr('gw_version_info')"><span id='ret'></span><span class='fa fa-refresh text-orange'></span>&nbsp;<span class="KKF-81">조회</span></button></td>
 									</tr>
 									<tr>
-										<td>펌웨어 업데이트</td>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_update' onClick="send_gw_itr('gw_update', true)"><span class="fa fa-gear text-orange"></span> 전송</button></td>
+										<td class="KKF-89">펌웨어 업데이트</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_update' onClick="send_gw_itr('gw_update', true)"><span class="fa fa-gear text-orange"></span>&nbsp;<span class="KKF-92">전송</span></button></td>
 									</tr>
 									<tr>
-										<td>로그 데이터 삭제</td>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_log_delete' onClick="send_gw_itr('gw_log_delete', true)"><span class="fa fa-gear text-orange"></span> 전송</button></td>
+										<td class="KKF-90">로그 데이터 삭제</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_log_delete' onClick="send_gw_itr('gw_log_delete', true)"><span class="fa fa-gear text-orange"></span>&nbsp;<span class="KKF-92">전송</span></button></td>
 									</tr>
 									<tr>
-										<td>GW 재부팅</td>
-										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_restart' onClick="send_gw_itr('gw_restart', true)"><span class="fa fa-gear text-orange"></span> 전송</button></td>
+										<td class="KKF-91">GW 재부팅</td>
+										<td><button class="btn btn-outline-secondary btn-sm btn-block" id='btn_gw_restart' onClick="send_gw_itr('gw_restart', true)"><span class="fa fa-gear text-orange"></span>&nbsp;<span class="KKF-92">전송</span></button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -390,7 +390,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white" id="wid-id-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-gear text-dark"></i>&nbsp;IoT 저울 관리 (농장ID-동ID)</h2>	
+						<h2><i class="fa fa-gear text-dark"></i>&nbsp;<span class="KKF-17">IoT 저울 관리</span></h2>	
 					</div>
 				</header>
 				
@@ -399,10 +399,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="cell_control_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true" data-align="center" >저울 번호</th>
-								<th data-field='f2' data-visible="true" data-align="center" >펌웨어 버전</th>
-								<th data-field='f3' data-visible="true" data-align="center" >데이터 (온도/습도/CO2/NH3/중량)</th>
-								<th data-field='f4' data-visible="true" data-align="center" >영점조정</th>
+								<th data-field='f1' data-visible="true" data-align="center"><span class="KKF-78">저울 번호</span></th>
+								<th data-field='f2' data-visible="true" data-align="center"><span class="KKF-185">펌웨어 버전</span></th>
+								<th data-field='f3' data-visible="true" data-align="center"><span class="KKF-186">데이터 (온도/습도/CO2/NH3/중량)</span></th>
+								<th data-field='f4' data-visible="true" data-align="center"><span class="KKF-93">영점조정</span></th>
 							</tr>
 						</thead>
 					</table>
@@ -420,10 +420,10 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list text-primary"></i>&nbsp;로우데이터 확인</h2>	
+						<h2><i class="fa fa-list text-primary"></i>&nbsp;<span class="KKF-94">로우데이터 확인</span></h2>	
 					</div>
 					<div class="widget-toolbar ml-auto" style="cursor: default">
-						<span class="font-weight-bold text-info">※ 조회범위 설정 후 조회 버튼을 눌러주세요.</span>
+						<span class="KKF-95 font-weight-bold text-info">※ 조회범위 설정 후 조회 버튼을 눌러주세요.</span>
 					</div>
 				</header>
 
@@ -431,44 +431,38 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 
 					<ul class="nav nav-tabs nav-tabs-right bordered px-3" id="nav_raw_data">
 						<form id="raw_data_search_form" class="form-inline" onsubmit="return false;">
-							<span class="fa fa-clock-o"></span>&nbsp;조회범위&nbsp;&nbsp;
-							<input class="form-control" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;
+							<span class="fa fa-clock-o"></span>&nbsp;<span class="KKF-96">조회범위</span>&nbsp;&nbsp;
+							<input class="form-control" id="start_date" type="text" name="search_sdate" maxlength="10" placeholder="시작일" size="10" />&nbsp;
 							<input class="form-control" type="text" name="search_stime" maxlength="5" placeholder="시작시간" size="7" />
 							&nbsp;&nbsp; ~ &nbsp;&nbsp;
 							<input class="form-control" type="text" name="search_edate" maxlength="10" placeholder="종료일" size="10" />&nbsp;
 							<input class="form-control" type="text" name="search_etime" maxlength="5" placeholder="종료시간" size="7" />&nbsp;&nbsp;
-							LIMIT&nbsp;<input class="form-control" type="text" name="search_limit" placeholder="1~9999" size="7" />&nbsp;&nbsp;
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="search_order" id="order_1" value="1">오름차순&nbsp;
+							Limit : &nbsp;<input class="form-control" type="text" name="search_limit" placeholder="1~9999" size="7" />&nbsp;&nbsp;
+							<div class="form-check-inline">
+								<input class="form-check-input" type="radio" name="search_order" id="order_1" value="1">
+								<label class="form-check-label pt-0 KKF-101" for="order_1">오름차순</label>
 							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="search_order" id="order_2" value="-1" checked>내림차순&nbsp;&nbsp;
+							<div class="form-check-inline">
+								<input class="form-check-input" type="radio" name="search_order" id="order_2" value="-1" checked>
+								<label class="form-check-label pt-0 KKF-102" for="order_2">내림차순</label>
 							</div>
-							<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_raw_data('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>조회</button>&nbsp;
-							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="search_raw_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_raw_data('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-81">조회</span></button>&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="search_raw_data('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</form>
 						
-						<li class="nav-item ml-auto">
-							<a data-toggle="tab" class="nav-link tab-raw" id="ext">급이/급수/외기</a>
-						</li>
-						<li class="nav-item">
-							<a data-toggle="tab" class="nav-link tab-raw" id="dev">PLC 제어</a>
-						</li>
-						<li class="nav-item">
-							<a data-toggle="tab" class="nav-link tab-raw" id="plc">PLC 환경</a>
-						</li>
-						<li class="nav-item">
-							<a data-toggle="tab" class="nav-link active tab-raw" id="cell">IoT저울</a>
-						</li>
+						<li class="nav-item ml-auto"><a data-toggle="tab" class="KKF-103 nav-link tab-raw" id="ext">급이/급수/외기</a></li>
+						<li class="nav-item"><a data-toggle="tab" class="KKF-104 nav-link tab-raw" id="dev">PLC 제어</a></li>
+						<li class="nav-item"><a data-toggle="tab" class="KKF-105 nav-link tab-raw" id="plc">PLC 환경</a></li>
+						<li class="nav-item"><a data-toggle="tab" class="KKF-57 nav-link active tab-raw" id="cell">IoT 저울</a></li>
 					</ul>
 
 					<table id="cell_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 						<thead>
 							<tr>
-								<th data-field='f1'  data-visible="true" data-sortable="true">획득시간</th>
-								<th data-field='f2'  data-visible="true" data-sortable="true">저울ID</th>
-								<th data-field='f3'  data-visible="true" data-sortable="true">온도(℃)</th>
-								<th data-field='f4'  data-visible="true" data-sortable="true">습도(%)</th>
+								<th data-field='f1'  data-visible="true" data-sortable="true"><span class="KKF-106">획득시간</span></th>
+								<th data-field='f2'  data-visible="true" data-sortable="true"><span class="KKF-107">저울 ID</span></th>
+								<th data-field='f3'  data-visible="true" data-sortable="true"><span class="KKF-108">온도</span>(℃)</th>
+								<th data-field='f4'  data-visible="true" data-sortable="true"><span class="KKF-109">습도</span>(%)</th>
 								<th data-field='f5'  data-visible="true" data-sortable="true">CO2(ppm)</th>
 								<th data-field='f6'  data-visible="true" data-sortable="true">NH3(ppm)</th>
 								<th data-field='f7'  data-visible="true" data-sortable="false">w01</th>
@@ -483,15 +477,15 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="plc_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 						<thead>
 							<tr>
-								<th data-field='f1' data-sortable='true'>획득시간</th>
-								<th data-field='f2' data-sortable='true'>내부온도(℃)</th>
-								<th data-field='f3' data-sortable='true'>내부습도(%)</th>
-								<th data-field='f4' data-sortable='true'>내부CO2(ppm)</th>
-								<th data-field='f5' data-sortable='true'>내부음압</th>
-								<th data-field='f6' data-sortable='true'>외부온도(℃)</th>
-								<th data-field='f7' data-sortable='true'>외부습도(%)</th>
-								<th data-field='f8' data-sortable='true'>외부NH3(ppm)</th>
-								<th data-field='f9' data-sortable='true'>외부H2S(ppm)</th>
+								<th data-field='f1' data-sortable='true'><span class="KKF-106">획득시간</span></th>
+								<th data-field='f2' data-sortable='true'><span class="KKF-110">내부온도</span>(℃)</th>
+								<th data-field='f3' data-sortable='true'><span class="KKF-111">내부습도</span>(%)</th>
+								<th data-field='f4' data-sortable='true'><span class="KKF-112">내부CO2</span>(ppm)</th>
+								<th data-field='f5' data-sortable='true'><span class="KKF-113">내부음압</span></th>
+								<th data-field='f6' data-sortable='true'><span class="KKF-114">외부온도</span>(℃)</th>
+								<th data-field='f7' data-sortable='true'><span class="KKF-115">외부습도</span>(%)</th>
+								<th data-field='f8' data-sortable='true'><span class="KKF-116">외부NH3</span>(ppm)</th>
+								<th data-field='f9' data-sortable='true'><span class="KKF-117">외부H2S</span>(ppm)</th>
 							</tr>
 						</thead>
 					</table>
@@ -499,12 +493,12 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="dev_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 						<thead>
 							<tr>
-								<th data-field='f1' data-sortable='true'>획득시간</th>
-								<th data-field='f2' data-sortable='true'>유닛ID</th>
-								<th data-field='f3' data-sortable='true'>장치속성</th>
-								<th data-field='f4' data-sortable='true'>장치구분</th>
-								<th data-field='f5' data-sortable='true'>장치명</th>
-								<th data-field='f6' data-sortable='true'>상태</th>
+								<th data-field='f1' data-sortable='true'><span class="KKF-106">획득시간</span></th>
+								<th data-field='f2' data-sortable='true'><span class="KKF-118">유닛ID</span></th>
+								<th data-field='f3' data-sortable='true'><span class="KKF-119">장치속성</span></th>
+								<th data-field='f4' data-sortable='true'><span class="KKF-120">장치구분</span></th>
+								<th data-field='f5' data-sortable='true'><span class="KKF-55">장치명</span></th>
+								<th data-field='f6' data-sortable='true'><span class="KKF-121">상태</span></th>
 							</tr>
 						</thead>
 					</table>
@@ -512,18 +506,18 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="ext_raw_data_table" data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 						<thead>
 							<tr>
-								<th data-field='f1'  data-sortable='true'>획득시간</th>
-								<th data-field='f2'  data-sortable='true'>사료빈무게</th>
-								<th data-field='f3'  data-sortable='true'>현재값-직전값</th>
-								<th data-field='f4'  data-sortable='true'>유량센서값</th>
-								<th data-field='f5'  data-sortable='true'>온도(℃)</th>
-								<th data-field='f6'  data-sortable='true'>습도(%)</th>
+								<th data-field='f1'  data-sortable='true'><span class="KKF-106">획득시간</span></th>
+								<th data-field='f2'  data-sortable='true'><span class="KKF-122">사료빈무게</span></th>
+								<th data-field='f3'  data-sortable='true'><span class="KKF-123">현재값-직전값</span></th>
+								<th data-field='f4'  data-sortable='true'><span class="KKF-124">유량센서값</span></th>
+								<th data-field='f5'  data-sortable='true'><span class="KKF-108">온도</span>(℃)</th>
+								<th data-field='f6'  data-sortable='true'><span class="KKF-109">습도</span>(%)</th>
 								<th data-field='f7'  data-sortable='true'>NH3(ppm)</th>
 								<th data-field='f8'  data-sortable='true'>H2S(ppm)</th>
-								<th data-field='f9'  data-sortable='true'>미세먼지(ppm)</th>
-								<th data-field='f10' data-sortable='true'>초미세먼지(ppm)</th>
-								<th data-field='f11' data-sortable='true'>풍향</th>
-								<th data-field='f12' data-sortable='true'>풍속(m/s)</th>
+								<th data-field='f9'  data-sortable='true'><span class="KKF-125">미세먼지</span>(ppm)</th>
+								<th data-field='f10' data-sortable='true'><span class="KKF-126">초미세먼지</span>(ppm)</th>
+								<th data-field='f11' data-sortable='true'><span class="KKF-127">풍향</span></th>
+								<th data-field='f12' data-sortable='true'><span class="KKF-128">풍속</span>(m/s)</th>
 							</tr>
 						</thead>
 					</table>
@@ -541,7 +535,7 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-white" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-check-square-o text-primary"></i>&nbsp;재산출 기록</h2>	
+						<h2><i class="fa fa-check-square-o text-primary"></i>&nbsp;<span class="KKF-129">재산출 기록</span></h2>	
 					</div>
 				</header>
 
@@ -550,12 +544,12 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					<table id="request_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true">완료시간</th>
-								<th data-field='f2' data-visible="true">요청사항</th>
-								<th data-field='f3' data-visible="true">변경사항</th>
-								<th data-field='f4' data-visible="true">실측시간</th>
-								<th data-field='f5' data-visible="true">실측값</th>
-								<th data-field='f6' data-visible="true">재산출 전 예측</th>
+								<th data-field='f1' data-visible="true"><span class="KKF-130">완료시간</span></th>
+								<th data-field='f2' data-visible="true"><span class="KKF-131">요청사항</span></th>
+								<th data-field='f3' data-visible="true"><span class="KKF-132">변경사항</span></th>
+								<th data-field='f4' data-visible="true"><span class="KKF-133">실측시간</span></th>
+								<th data-field='f5' data-visible="true"><span class="KKF-134">실측값</span></th>
+								<th data-field='f6' data-visible="true"><span class="KKF-135">재산출 전 예측</span></th>
 							</tr>
 						</thead>
 					</table>
@@ -599,6 +593,7 @@ include_once("../inc/bottom.php");
 
 		$("#raw_data_search_form [name=search_stime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});		//로우데이터 검색 시작시간
 		$("#raw_data_search_form [name=search_etime]").clockpicker({placement: 'bottom', align: 'left', autoclose: true});		//로우데이터 검색 종료시간
+
 	});
 
 	// 데이터 불러오기

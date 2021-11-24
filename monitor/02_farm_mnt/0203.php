@@ -18,7 +18,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-home"></i>&nbsp;동 정보 요약</h2>	
+						<h2><i class="fa fa-home"></i>&nbsp;<span class="KKF-157">동 정보 요약</span></h2>	
 					</div>
 				</header>
 
@@ -29,30 +29,30 @@ include_once("../inc/top.php");
 						<!-- 농가 정보 div -->
 						<div class="col-xl-5 p-2 text-center">
 							<div class="col-xl-12 text-center text-secondary mb-1">
-								<h2 class="font-weight-bold p-1 no-margin"><span id="summary_name">망성농장-01동 (KF0013-01) </span></h2>
+								<h2 class="font-weight-bold p-1 no-margin"><span id="summary_name">이모션농장-01동 (KF0006-01)</span></h2>
 							</div>
 
 							<div class="col-xl-12 d-flex align-items-center">
 								<div class="col-xl-3">
 									<img class="img-reponsive" id="hen_img" src="../images/hen-scale1.png" alt="닭 이미지">
-									<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span>일</h2></div>
+									<div class="carousel-caption" style="text-shadow: none;"><h2 class="p-3 no-margin font-weight-bold"> <span id="summary_days"></span><span class="KKF-41">일</span></h2></div>
 								</div>
 								<div class="col-xl-9">
 									<table class="table table-borderless text-center">
 										<tr>
-											<td><span class="font-md">평균중량 : </span></td>
+											<td><span class="KKF-42 font-md">평균중량</span> : </td>
 											<td><span class="text-danger font-weight-bold" id="summary_avg" style="font-size: 28px;">-</span></td>
-											<td><span class="font-md">일일 증체량 : </span></td>
+											<td><span class="KKF-43 font-md">일일 증체량</span> : </td>
 											<td><span class="font-md font-weight-bold" id="summary_inc">-</span></td>
 										</tr>
 										<tr>
-											<td><span class="font-md">표준편차 : </span></td>
+											<td><span class="KKF-44 font-md">표준편차</span> : </td>
 											<td><span class="font-md font-weight-bold" id="summary_devi">-</span></td>
-											<td><span class="font-md">변이계수 : </span></td>
+											<td><span class="KKF-159 font-md">변이계수</span> : </td>
 											<td><span class="font-md font-weight-bold" id="">-</span></td>
 										</tr>
 										<tr>
-											<td class="text-center" colspan="4"><span class="font-md">출하 목표 일령 : </span><span class="font-md" id="summary_out_day">-</span></td>
+											<td class="text-center" colspan="4"><span class="160 font-md">출하 목표 일령</span> : <span class="font-md" id="summary_out_day">-</span></td>
 											<!-- <td class="text-left"><span class="" id="summary_out_day">-</span></td> -->
 										</tr>
 									</table>
@@ -66,7 +66,7 @@ include_once("../inc/top.php");
 								</div>
 								<div class="col-xl-8 no-padding d-flex justify-content-between">
 									<div class="col-xl-6 text-center font-weight-bold pt-0">
-										<span class="font-weight-bold font-lg">평균중량</sapn><span class="text-danger" id="summary_avg" style="font-size: 35px;">-</span>
+										<span class="font-weight-bold font-lg">평균중량</span><span class="text-danger" id="summary_avg" style="font-size: 35px;">-</span>
 									</div>
 									<div class="col-xl-6 no-margin text-center font-weight-bold pt-2">
 										<p><span class="font-md">표준편차</span>&nbsp;&nbsp;&nbsp;<span class="font-md" id="summary_devi">-</span></p>
@@ -107,16 +107,16 @@ include_once("../inc/top.php");
 						<div class="col-xl-4 float-left no-padding feed_info_div" style="border-right: 2px dotted #ddd; border-left: 2px dotted #ddd;">
 						
 							<div class="col-xl-12 d-flex align-items-center justify-content-between">
-								<span class="font-md font-weight-bold">환경경보 </span><span></span>
+								<span class="KKF-161 font-md font-weight-bold">환경경보 </span>
 							</div>
 
 							<div class="m-3">
 								<table class="table table-bordered text-center">
 									<tr class="table-secondary">
-										<th>온도</th>
-										<th>습도</th>
-										<th>이산화탄소</th>
-										<th>암모니아</th>
+										<th class="KKF-108">온도</th>
+										<th class="KKF-109">습도</th>
+										<th class="KKF-162">이산화탄소</th>
+										<th class="KKF-163">암모니아</th>
 									</tr>
 									<tr>
 										<td><span id="summary_avg_temp">-</span></td>
@@ -133,21 +133,21 @@ include_once("../inc/top.php");
 										<img src="../images/feed-00.png" id="feed_img" style="width: 7rem;" alt="급이 이미지">
 										<div class="carousel-caption h-100" style="text-shadow: none;"><h5 class="font-weight-bold text-secondary" id="extra_feed_percent">-%<h5></div>
 									</div>
-									<div class="col-xl-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(kg)</span></div>
+									<div class="col-xl-12 text-center no-padding"><span class="KKF-48">사료잔량</span> <span id="extra_feed_remain">-</span>(kg)</div>
 								</div>
 								<div class="col-xl-3 no-padding">
 									<div class="col-xl-12 text-right no-padding">
-										<span class="font-weight-bold text-secondary" style="font-size:15px">오늘 급이량(㎏)</span><br>
+										<span class="KKF-49 font-weight-bold text-secondary" style="font-size:13px">오늘 급이량</span>(kg)<br>
 										<span class="font-xl" id="extra_curr_feed">-</span>
 									</div>
 								</div>
 								<div class="col-xl-3 no-padding text-center">
 									<div class="col-xl-12 text-center"><img src="../images/water-02.png" style="width: 7rem;" alt="급수 이미지"></div>
-									<div class="col-xl-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
+									<div class="col-xl-12 text-center no-padding"><span class="KKF-51">시간당 급수량</span> <span id="extra_water_per_hour">-</span>(L)</div>
 								</div>
 								<div class="col-xl-3 no-padding">
 									<div class="col-xl-12 text-right no-padding">
-										<span class="font-weight-bold text-secondary" style="font-size:15px">오늘 급수량(L)</span><br>
+										<span class="KKF-52 font-weight-bold text-secondary" style="font-size:13px">오늘 급수량</span>(L)<br>
 										<span class="font-xl" id="extra_curr_water">-</span>
 									</div>
 								</div>
@@ -174,15 +174,15 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;평균중량 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-164">평균중량 현황</span></h2>	
 					</div>
 
 					<div class="widget-toolbar ml-auto">
 						<div class="form-inline">
-							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')">일령별</button>&nbsp;
-							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')">시간별</button>&nbsp;
-							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(700).focus()" id="avg_table_slide"><span class="btn-label"><i class="fa fa-table"></i></span>표 출력</button>&nbsp;
-							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')"><span class="KKF-67">일령별</span></button>&nbsp;
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')"><span class="KKF-68">시간별</span></button>&nbsp;
+							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(700).focus()" id="avg_table_slide"><span class="btn-label"><i class="fa fa-table"></i></span><span class="KKF-69">표 출력</span></button>&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</div>
 					</div>
 				</header>
@@ -196,10 +196,10 @@ include_once("../inc/top.php");
 						<table id="avg_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-sort-name="f2" data-sort-order="desc" data-toggle="table" style="font-size:14px">
 							<thead>
 								<tr>
-									<th data-field='f1' data-visible="true" data-sortable="true">산출시간</th>
-									<th data-field='f2' data-visible="true" data-sortable="true">일령</th>
-									<th data-field='f3' data-visible="true" data-sortable="true">평체</th>
-									<th data-field='f4' data-visible="true" data-sortable="true">권고</th>
+									<th data-field='f1' data-visible="true" data-sortable="true"><span class="KKF-71">산출시간</span></th>
+									<th data-field='f2' data-visible="true" data-sortable="true"><span class="KKF-72">일령</span></th>
+									<th data-field='f3' data-visible="true" data-sortable="true"><span class="KKF-73">평체</span></th>
+									<th data-field='f4' data-visible="true" data-sortable="true"><span class="KKF-74">권고</span></th>
 								</tr>
 							</thead>
 						</table>
@@ -217,25 +217,17 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;환경센서 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-165">환경센서 현황</span></h2>	
 					</div>
 				</header>
 					
 				<div class="widget-body no-padding">
 				<div class="widget-body-toolbar">
 					<div id="sensor_btn_group" class="btn-group">
-						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_temp');">
-							<i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;온도
-						</button>
-						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_humi');">
-							<i class="fa fa-tint text-primary"></i>&nbsp;&nbsp;습도
-						</button>
-						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_co2');">
-							<i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;이산화탄소
-						</button>
-						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_nh3');">
-							<i class="fa fa-warning text-danger"></i>&nbsp;&nbsp;암모니아
-						</button>
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_temp');"><i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;<span class="KKF-108">온도</span></button>
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_humi');"><i class="fa fa-tint text-primary"></i>&nbsp;&nbsp;<span class="KKF-109">습도</span></button>
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_co2');"><i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;<span class="KKF-162">이산화탄소</span></button>
+						<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_nh3');"><i class="fa fa-warning text-danger"></i>&nbsp;&nbsp; <span class="KKF-163">암모니아</span></button>
 					</div>
 				</div>
 					<div class="col-xl-12">
@@ -254,7 +246,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-file-text-o text-primary"></i>&nbsp;실측 중량</h2>	
+						<h2><i class="fa fa-file-text-o text-primary"></i>&nbsp;<span class="KKF-166">실측 중량</span></h2>	
 					</div>
 				</header>
 
@@ -262,9 +254,9 @@ include_once("../inc/top.php");
 					<table id="measure_weight_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true">실측시간</th>
-								<th data-field='f2' data-visible="true">실측값</th>
-								<th data-field='f3' data-visible="true">비고</th>
+								<th data-field='f1' data-visible="true"><span class="KKF-133">실측시간</span></th>
+								<th data-field='f2' data-visible="true"><span class="KKF-134">실측값</span></th>
+								<th data-field='f3' data-visible="true"><span class="KKF-167">비고</span></th>
 							</tr>
 						</thead>
 					</table>
@@ -277,7 +269,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-check-square-o text-primary"></i>&nbsp;재산출 기록</h2>	
+						<h2><i class="fa fa-check-square-o text-primary"></i>&nbsp;<span class="KKF-129">재산출 기록</span></h2>	
 					</div>
 				</header>
 
@@ -285,12 +277,12 @@ include_once("../inc/top.php");
 					<table id="request_history_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="5" data-toggle="table" style="font-size:14px">
 						<thead>
 							<tr>
-								<th data-field='f1' data-visible="true">완료시간</th>
-								<th data-field='f2' data-visible="true">요청사항</th>
-								<th data-field='f3' data-visible="true">변경사항</th>
-								<th data-field='f4' data-visible="true">실측시간</th>
-								<th data-field='f5' data-visible="true">실측값</th>
-								<th data-field='f6' data-visible="true">재산출 전 예측</th>
+								<th data-field='f1' data-visible="true"><span class="KKF-130">완료시간</span></th>
+								<th data-field='f2' data-visible="true"><span class="KKF-131">요청사항</span></th>
+								<th data-field='f3' data-visible="true"><span class="KKF-132">변경사항</span></th>
+								<th data-field='f4' data-visible="true"><span class="KKF-133">실측시간</span></th>
+								<th data-field='f5' data-visible="true"><span class="KKF-134">실측값</span></th>
+								<th data-field='f6' data-visible="true"><span class="KKF-135">재산출 전 예측</span></th>
 							</tr>
 						</thead>
 					</table>
@@ -307,7 +299,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;급이량 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-168">급이량 현황</span></h2>
 					</div>
 				</header>
 
@@ -332,7 +324,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;급수량 현황</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-169">급수량 현황</span></h2>	
 					</div>
 				</header>
 
@@ -357,26 +349,26 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;평균중량 이력 비교</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-170">평균중량 이력 비교</span></h2>	
 					</div>
 				</header>
 
 				<div class="widget-body">
+
 					<div class="widget-body-toolbar">
 						<form id="search_form" class="form-inline" onsubmit="return false;">
 							<select class="form-control w-auto" name="">
-								<option selected>회차선택</option>
-								<option value="">1회차</option>
-								<option value="">2회차</option>
-								<option value="">3회차</option>
-								<option value="">4회차</option>
-								<option value="">5회차</option>
+								<option selected><span class="KKF-171">회차선택</span></option>
+								<option value=""><span class="KKF-172">1회차</span></option>
+								<option value=""><span class="KKF-173">2회차</span></option>
+								<option value=""><span class="KKF-174">3회차</span></option>
+								<option value=""><span class="KKF-175">4회차</span></option>
+								<option value=""><span class="KKF-176">5회차</span></option>
 							</select>&nbsp;
-							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>불러오기</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="0203-08-btn-load">불러오기</span></button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="0203-08-btn-excel">엑셀</span></button>
 						</form>
 					</div>
-					<div></div>
 					
 				</div>
 						
@@ -391,7 +383,7 @@ include_once("../inc/top.php");
 			<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-list"></i>&nbsp;환경센서 이력 비교</h2>	
+						<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-178">환경센서 이력 비교</span></h2>	
 					</div>
 				</header>
 
@@ -399,32 +391,23 @@ include_once("../inc/top.php");
 					<div class="widget-body-toolbar">
 						<form id="search_form" class="form-inline" onsubmit="return false;">
 							<select class="form-control w-auto" name="">
-								<option selected>회차선택</option>
-								<option value="">1회차</option>
-								<option value="">2회차</option>
-								<option value="">3회차</option>
-								<option value="">4회차</option>
-								<option value="">5회차</option>
+								<option selected><span class="KKF-171">회차선택</span></option>
+								<option value=""><span class="KKF-172">1회차</span></option>
+								<option value=""><span class="KKF-173">2회차</span></option>
+								<option value=""><span class="KKF-174">3회차</span></option>
+								<option value=""><span class="KKF-175">4회차</span></option>
+								<option value=""><span class="KKF-176">5회차</span></option>
 							</select>&nbsp;
 							<div id="sensor_btn_group" class="btn-group">
-								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_temp');">
-									<i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;온도
-								</button>
-								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_humi');">
-									<i class="fa fa-tint text-primary"></i>&nbsp;&nbsp;습도
-								</button>
-								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_co2');">
-									<i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;이산화탄소
-								</button>
-								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_nh3');">
-									<i class="fa fa-warning text-danger"></i>&nbsp;&nbsp;암모니아
-								</button>
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_temp');"><i class="fa fa-sun-o text-danger"></i>&nbsp;&nbsp;<span class="KKF-108">온도</span></button>
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_humi');"><i class="fa fa-tint text-primary"></i>&nbsp;&nbsp;<span class="KKF-109">습도</span></button>
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_co2');"><i class="fa fa-cloud text-secondary"></i>&nbsp;&nbsp;<span class="KKF-162">이산화탄소</span></button>
+								<button type="button" class="btn btn-default btn-sm" onClick="get_sensor_history('chart_nh3');"><i class="fa fa-warning text-danger"></i>&nbsp;&nbsp;<span class="KKF-163">암모니아</span></button>
 							</div>&nbsp;
-							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>불러오기</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-177">불러오기</span></button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</form>
 					</div>
-					<div></div>
 					
 				</div>
 						
