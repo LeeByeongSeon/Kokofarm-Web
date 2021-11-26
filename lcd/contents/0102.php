@@ -246,14 +246,10 @@ include_once("../inc/bottom.php")
 					sensor_chart_data = data;
 					sensor_chart_data[chart_name] = convert_amchart_time(sensor_chart_data[chart_name], "시간");
 					draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
-					//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
-					//draw_bar_line_chart("daily_sensor_chart", sensor_chart_data[chart_name], "N", "N", 12);
 				}
 			});
 		}
 		else{
-			//draw_bar_line_chart("daily_sensor_chart", sensor_chart_data[chart_name], "N", "N", 12);
-			//draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "세로-Bar", "Y", "N", 12, "hh");
 			sensor_chart_data[chart_name] = convert_amchart_time(sensor_chart_data[chart_name], "시간");
 			draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
 		}

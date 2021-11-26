@@ -22,7 +22,7 @@ include_once("../common/php_module/common_func.php");
 				$select_data = get_select_data($select_sql);
 
 				$extra = array();
-				if(count($select_data) > 0){		// 외기 데이터가 있으면
+				if(count($select_data) > 0){		// 사료빈 데이터가 있으면
 
 					$extra["extra_curr_feed"] = $select_data[0]["sfDailyFeed"] < 0 ? 0 : $select_data[0]["sfDailyFeed"];
 					$extra["extra_prev_feed"] = $select_data[0]["sfPrevFeed"] < 0 ? 0 : $select_data[0]["sfPrevFeed"];

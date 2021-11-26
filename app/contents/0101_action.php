@@ -24,8 +24,9 @@
 			$day_plus_2 = date("Y-m-d", strtotime("+2 Days"));
 
 			// 버퍼 및 입추정보, 카메라 데이터
-			$select_sql = "SELECT be.*, sf.*, cm.*, sc.*, so.*, fd.fdName, sh.shFeedData, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
+			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, sc.*, so.*, fd.fdName, sh.shFeedData, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
 						JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid 
+						LEFT JOIN set_light AS sl ON sl.slFarmid = cm.cmFarmid AND sl.slDongid = cm.cmDongid 
 						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid 
 						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid 
 						LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
@@ -135,10 +136,12 @@
 				"summary_day_water"		=> $daily_water."L",							/*일일 급수량*/
 				"summary_day_feed"		=> $daily_feed."Kg",							/*일일 급이량*/
 				
-				"summary_avg_temp" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgTemp"] + corr_temp),	/*현재 온도 센서 평균*/
-				"summary_avg_humi" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgHumi"] + corr_humi),	/*현재 습도 센서 평균*/
-				"summary_avg_co2"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgCo2"] + corr_co2),	/*현재 이산화탄소 센서 평균*/
-				"summary_avg_nh3"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgNh3"] + corr_nh3),	/*현재 암모니아 센서 평균*/
+				"summary_avg_temp" 		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgTemp"] + corr_temp),	/*현재 온도 센서 평균*/
+				"summary_avg_humi" 		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgHumi"] + corr_humi),	/*현재 습도 센서 평균*/
+				"summary_avg_co2"  		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgCo2"] + corr_co2),	/*현재 이산화탄소 센서 평균*/
+				"summary_avg_nh3"  		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgNh3"] + corr_nh3),	/*현재 암모니아 센서 평균*/
+				"summary_avg_dust"  	=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgDust"]),				/*현재 미세먼지 센서 평균*/
+				"summary_avg_light"  	=> check_sensor_val('%0.1f', $buffer_data[0]["slLight01"]),				/*현재 조도 센서 평균*/
 			);
 			$response["summary"] = $summary;
 
@@ -165,44 +168,16 @@
 			}
 
 			if($buffer_data[0]["soFarmid"] != ""){		// 외기 데이터가 있으면
-				$extra["extra_out_temp"] = 		sprintf('%0.1f', $buffer_data[0]["soTemp"]);
-				$extra["extra_out_humi"] = 		sprintf('%0.1f', $buffer_data[0]["soHumi"]);
-				$extra["extra_out_nh3"] = 		sprintf('%0.1f', $buffer_data[0]["soNh3"]);
-				$extra["extra_out_h2s"] = 		sprintf('%0.1f', $buffer_data[0]["soH2s"]);
-				$extra["extra_out_dust"] = 		sprintf('%0.1f', $buffer_data[0]["soDust"]);
-				$extra["extra_out_udust"] = 	sprintf('%0.1f', $buffer_data[0]["soUDust"]);
-				$extra["extra_out_wind"] = 		sprintf('%0.1f', $buffer_data[0]["soWindSpeed"]);
+				$extra["extra_out_temp"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soTemp"]);
+				$extra["extra_out_humi"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soHumi"]);
+				$extra["extra_out_nh3"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soNh3"]);
+				$extra["extra_out_h2s"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soH2s"]);
+				$extra["extra_out_dust"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soDust"]);
+				$extra["extra_out_udust"] = 	get_udust_status($buffer_data[0]["soUDust"]);
+				$extra["extra_out_wind"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soWindSpeed"]);
+				$extra["extra_out_solar"] = 	check_sensor_val('%0.1f', $buffer_data[0]["soSolar"]);
 
-				$direction = sprintf('%d', $buffer_data[0]["soWindDirection"]);
-
-				switch($direction){
-					case 0:
-					case 360:
-						$direction = "북";
-						break;
-					case 45:
-						$direction = "북동";
-						break;
-					case 90:
-						$direction = "동";
-						break;
-					case 135:
-						$direction = "남동";
-						break;
-					case 180:
-						$direction = "남";
-						break;
-					case 225:
-						$direction = "남서";
-						break;
-					case 270:
-						$direction = "서";
-						break;
-					case 315:
-						$direction = "북서";
-						break;
-				}
-				$extra["extra_out_direction"] = $direction;
+				$extra["extra_out_direction"] = get_wind_status($buffer_data[0]["soWindDirection"]);
 			}
 
 			$response["extra"] = $extra;

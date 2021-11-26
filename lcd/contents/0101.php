@@ -200,6 +200,20 @@
 	</div>
 </div>
 
+<!--IP 카메라-->
+<!-- <div class="row" id="row_camera_view" style="margin-top:-25px;">
+	<div class="col-sm-12 no-padding">
+		<div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+				<h2 class="font-weight-bold text-white"><i class="fa fa-camera"></i>&nbsp;IP 카메라</h2>	
+			</header>
+			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #E6E6E6; border-top: 0;" id="camera_zone">
+
+			</div>
+		</div>
+	</div>
+</div> -->
+
 <?
 	include_once("../inc/bottom.php");
 ?>
@@ -268,6 +282,9 @@
 					$("#row_cell_data").hide();
 					$("#row_avg_weight").hide(); // 평균중량
 				}
+
+				//카메라
+				//$("#camera_zone").html(data.camera_zone);
 
 			},
 			error: function(request,status,error){

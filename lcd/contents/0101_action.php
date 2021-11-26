@@ -124,10 +124,10 @@
 				"summary_day_water"		=> $daily_water,								/*일일 급수량*/
 				"summary_day_feed"		=> $daily_feed,									/*일일 급이량*/
 				
-				"summary_avg_temp" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgTemp"] + corr_temp),	/*현재 온도 센서 평균*/
-				"summary_avg_humi" 		=> sprintf('%0.1f', $buffer_data[0]["beAvgHumi"] + corr_humi),	/*현재 습도 센서 평균*/
-				"summary_avg_co2"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgCo2"] + corr_co2),	/*현재 이산화탄소 센서 평균*/
-				"summary_avg_nh3"  		=> sprintf('%0.1f', $buffer_data[0]["beAvgNh3"] + corr_nh3),	/*현재 암모니아 센서 평균*/
+				"summary_avg_temp" 		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgTemp"] + corr_temp),	/*현재 온도 센서 평균*/
+				"summary_avg_humi" 		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgHumi"] + corr_humi),	/*현재 습도 센서 평균*/
+				"summary_avg_co2"  		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgCo2"] + corr_co2),	/*현재 이산화탄소 센서 평균*/
+				"summary_avg_nh3"  		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgNh3"] + corr_nh3),	/*현재 암모니아 센서 평균*/
 			);
 			$response["summary"] = $summary;
 
@@ -156,49 +156,30 @@
 			}
 
 			if($buffer_data[0]["soFarmid"] != ""){		// 외기 데이터가 있으면
-				$extra["extra_out_temp"] = 	sprintf('%0.1f', $buffer_data[0]["soTemp"]);
-				$extra["extra_out_humi"] = 	sprintf('%0.1f', $buffer_data[0]["soHumi"]);
-				$extra["extra_out_nh3"] = 	sprintf('%0.1f', $buffer_data[0]["soNh3"]);
-				$extra["extra_out_h2s"] = 	sprintf('%0.1f', $buffer_data[0]["soH2s"]);
-				$extra["extra_out_dust"] = 	sprintf('%0.1f', $buffer_data[0]["soDust"]);
-				$extra["extra_out_udust"] = sprintf('%0.1f', $buffer_data[0]["soUDust"]);
-				$extra["extra_out_wind"] = 	sprintf('%0.1f', $buffer_data[0]["soWindSpeed"]);
+				$extra["extra_out_temp"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soTemp"]);
+				$extra["extra_out_humi"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soHumi"]);
+				$extra["extra_out_nh3"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soNh3"]);
+				$extra["extra_out_h2s"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soH2s"]);
+				$extra["extra_out_dust"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soDust"]);
+				$extra["extra_out_udust"] = 	get_udust_status($buffer_data[0]["soUDust"]);
+				$extra["extra_out_wind"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soWindSpeed"]);
+				$extra["extra_out_solar"] = 	check_sensor_val('%0.1f', $buffer_data[0]["soSolar"]);
 
-				$direction = sprintf('%d', $buffer_data[0]["soWindDirection"]);
-
-				switch($direction){
-					case 0:
-					case 360:
-						$direction = "북풍";
-						break;
-					case 45:
-						$direction = "북동풍";
-						break;
-					case 90:
-						$direction = "동풍";
-						break;
-					case 135:
-						$direction = "남동풍";
-						break;
-					case 180:
-						$direction = "남풍";
-						break;
-					case 225:
-						$direction = "남서풍";
-						break;
-					case 270:
-						$direction = "서풍";
-						break;
-					case 315:
-						$direction = "북서풍";
-						break;
-				}
-				$extra["extra_out_direction"] = $direction;
+				$extra["extra_out_direction"] = get_wind_status($buffer_data[0]["soWindDirection"]);
 			}
 
 			$response["extra"] = $extra;
 
 			$name = $buffer_data[0]["fdName"];
+
+			// 테스트농장 카메라 임시조치
+			//if($buffer_data[0]["beIPaddr"] == "220.124.186.151"){ $buffer_data[0]["beIPaddr"] = "221.159.10.251";}
+			// $img_url = "../common/php_module/camera_func.php?ip=" .$buffer_data[0]["beIPaddr"]. "&port=" .$buffer_data[0]["scPort"]. "&url=" .urlencode($buffer_data[0]["scUrl"]). "&id=" .$buffer_data[0]["scId"]. "&pw=" .$buffer_data[0]["scPw"];
+			
+			// $camera_zone = "<img src='".$img_url."' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
+			// 				<img id='cameraIcon' src='../images/play-128.png' class='fadeIn animated' onClick=\"camera_modal('" .$name. "','" .$img_url. "'); \">";
+			
+			// $response["camera_zone"] = $camera_zone;
 
 			echo json_encode($response);
 

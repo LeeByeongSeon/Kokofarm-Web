@@ -36,13 +36,17 @@ include_once("../inc/top.php")
 					<div class="col-xs-4 no-padding"><img src="../images/pm2.5.png"><br><span></span></div>
 					<div class="col-xs-8 no-padding text-right">초미세먼지<br><span id="extra_out_udust" style="font-size:28px">-</span></div>
 				</div>
-				<div class="col-xs-6 p-2 border-right">
+				<div class="col-xs-6 p-2 border-bottom border-right">
 					<div class="col-xs-4 no-padding"><img src="../images/wind-direction.png"><br><span></span></div>
 					<div class="col-xs-8 no-padding text-right">풍향<br><span id="extra_out_direction" style="font-size:25px">-</span></div>
 				</div>
-				<div class="col-xs-6 p-2">
+				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding"><img src="../images/wind.png"><br><span></span></div>
 					<div class="col-xs-8 no-padding text-right">풍속(m/s)<br><span id="extra_out_wind" style="font-size:28px">-</span></div>
+				</div>
+				<div class="col-xs-6 p-2 border-right">
+					<div class="col-xs-4 no-padding text-center"><img src="../images/solar.png"><br><span></span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">일사량</span>(W/㎡)<br><span id="extra_out_solar" style="font-size:28px">-</span></div>
 				</div>
 			</div>
 		</div>
