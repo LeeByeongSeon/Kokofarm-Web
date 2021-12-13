@@ -31,7 +31,7 @@
 					<p>One fine body…</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"><span class="KKF-32">닫기</span></button>
 				</div>
 			</div><!--modal-content -->
 		</div><!--modal-dialog -->
@@ -49,8 +49,8 @@
                     <p>One fine body…</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_confirm_ok">확인</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_confirm_cancle">취소</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_confirm_ok"><span class="KKF-33">확인</span></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_confirm_cancle"><span class="KKF-34">취소</span></button>
                 </div>
             </div><!--modal-content -->
         </div><!--modal-dialog -->
@@ -77,6 +77,37 @@
 		//상단 시계
 		setInterval(function(){$("#clock_now").html("&nbsp;"+get_now_time());});
 		
+		change_lang(curr_lang);
 	});
+
+	var get_lang = get_lang().split("-"); // ko-KR
+	var curr_lang = get_lang[0];		  // ko
+	
+	// 현재 local language 가져옴
+	function get_lang(){
+		return navigator.language || navigator.userLanguage;
+	}
+
+	// 번역
+	function change_lang(curr_lang){
+		$.getJSON("../common/kkf_lang/KKF_lang.json", function(data){
+			$.each(data, function(idx, obj){
+				// switch(curr_lang){
+				// 	case "ko" :
+				// 		$("."+idx).html(obj.KR);
+
+				// 		break;
+				// 	case "en" :
+				// 		$("."+idx).html(obj.EN);
+				// 		break;
+				// }
+				if(curr_lang == 'ko'){
+					$("."+idx).html(obj.KR);
+				} else {
+					$("."+idx).html(obj.EN);
+				}
+			})
+		});
+	}
 
 </script>

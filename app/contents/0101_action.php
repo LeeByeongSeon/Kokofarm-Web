@@ -125,13 +125,13 @@
 				"summary_day_term2"		=>  ($curr_interm + 1)."일령",					/*내일 일령*/
 				"summary_day_term3"		=>  ($curr_interm + 2)."일령",					/*모레 일령*/
 
-				"summary_day_1"			=>  $prev_weight,				/*어제 예측평체*/
-				"summary_day_2"			=>  $prev_esti2,				/*내일 예측평체*/
-				"summary_day_3"			=>  $prev_esti3,				/*모레 예측평체*/
+				"summary_day_1"			=>  $prev_weight,								/*어제 예측평체*/
+				"summary_day_2"			=>  $prev_esti2,								/*내일 예측평체*/
+				"summary_day_3"			=>  $prev_esti3,								/*모레 예측평체*/
 
 				"summary_day_inc1"		=> $prev_date,									/*어제 마지막 평균중량 산출 시간*/
-				"summary_day_inc2"		=> $prev_avg_inc_2,			/*2일차 중량증가량*/
-				"summary_day_inc3"		=> $prev_avg_inc_3,			/*1일차 중량증가량*/
+				"summary_day_inc2"		=> $prev_avg_inc_2,								/*2일차 중량증가량*/
+				"summary_day_inc3"		=> $prev_avg_inc_3,								/*1일차 중량증가량*/
 
 				"summary_day_water"		=> $daily_water."L",							/*일일 급수량*/
 				"summary_day_feed"		=> $daily_feed."Kg",							/*일일 급이량*/
@@ -176,7 +176,6 @@
 				$extra["extra_out_udust"] = 	get_udust_status($buffer_data[0]["soUDust"]);
 				$extra["extra_out_wind"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soWindSpeed"]);
 				$extra["extra_out_solar"] = 	check_sensor_val('%0.1f', $buffer_data[0]["soSolar"]);
-
 				$extra["extra_out_direction"] = get_wind_status($buffer_data[0]["soWindDirection"]);
 			}
 

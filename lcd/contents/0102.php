@@ -5,7 +5,7 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-sm-12 no-padding" style="margin-top:-25px">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white">현재 저울 상태</h2>	
 				</div>
@@ -35,7 +35,7 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-sm-12 no-padding" style="margin-top:-25px">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white">평균중량</h2>	
 				</div>
@@ -76,7 +76,7 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-sm-12 no-padding" style="margin-top:-25px">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white">오늘 증체중량</h2>	
 				</div>
@@ -94,7 +94,7 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-sm-12 no-padding" style="margin-top:-25px">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;일령별 환경센서</h2>	
 				</div>

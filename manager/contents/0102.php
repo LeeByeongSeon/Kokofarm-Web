@@ -144,20 +144,28 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-6 p-2 border-bottom border-right">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/temp.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">온도</span>(℃)<br><span id="summary_avg_temp" style="font-size:28px">-</span></div>
+					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/temp.png" style="height:66px; width:66px;"><br><span></span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">온도</span>(℃)<br><span id="summary_avg_temp" style="font-size:27px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-bottom">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/humi.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">습도</span>(％)<br><span id="summary_avg_humi" style="font-size:28px">-</span></div>
+					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/humi.png" style="height:66px; width:66px;"><br><span></span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">습도</span>(％)<br><span id="summary_avg_humi" style="font-size:27px">-</span></div>
+				</div>
+				<div class="col-xs-6 p-2 border-bottom border-right">
+					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/co2.png" style="height:66px; width:66px;"><br><span></span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:13px">이산화탄소</span>(ppm)<br><span id="summary_avg_co2" style="font-size:27px">-</span></div>
+				</div>
+				<div class="col-xs-6 p-2 border-bottom">
+					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/nh3.png" style="height:66px; width:66px;"><br><span></span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="summary_avg_nh3" style="font-size:27px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2 border-right">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/co2.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:13px">이산화탄소</span>(ppm)<br><span id="summary_avg_co2" style="font-size:28px">-</span></div>
+					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/pm10.png" style="height:66px; width:66px;"><br><span></span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">미세먼지</span><br><span id="summary_avg_dust" style="font-size:27px">-</span></div>
 				</div>
 				<div class="col-xs-6 p-2">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/nh3.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="summary_avg_nh3" style="font-size:28px">-</span></div>
+					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/lux.png" style="height:66px; width:66px;"><br><span></span></div>
+					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">조도</span>(lux)<br><span id="summary_avg_light" style="font-size:27px">-</span></div>
 				</div>
 			</div>
 		</div>
@@ -246,13 +254,17 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/pm2.5.png"><br><span></span></div>
 					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">초미세먼지</span><br><span id="extra_out_udust" style="font-size:28px">-</span></div>
 				</div>
-				<div class="col-xs-6 p-2 border-right">
+				<div class="col-xs-6 p-2 border-right border-bottom">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/wind-direction.png"><br><span></span></div>
 					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍향</span><br><span id="extra_out_direction" style="font-size:25px">-</span></div>
 				</div>
-				<div class="col-xs-6 p-2">
+				<div class="col-xs-6 p-2 border-bottom">
 					<div class="col-xs-4 no-padding text-center"><img src="../images/wind.png"><br><span></span></div>
 					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍속</span>(m/s)<br><span id="extra_out_wind" style="font-size:28px">-</span></div>
+				</div>
+				<div class="col-xs-6 p-2 border-right">
+					<div class="col-xs-4 no-padding text-center"><img src="../images/solar.png"><br><span></span></div>
+					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">일사량</span>(W/㎡)<br><span id="extra_out_solar" style="font-size:28px">-</span></div>
 				</div>
 			</div>
 		</div>

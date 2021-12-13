@@ -6,7 +6,7 @@
 <div class="row" id="row_avg_esti" style="margin-top:-25px">
 	<div class="col-sm-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<h2 class="text-white font-weight-bold">예측평체</h2>
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
@@ -37,7 +37,7 @@
 <div class="row" id="row_cell_avg" style="margin-top:-25px">
 	<div class="col-sm-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<h2 class="text-white font-weight-bold">환경센서 평균정보</h2>
 			</header>
 			<div class="widget-body" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; min-height:0;">
@@ -69,12 +69,12 @@
 <div class="row" id="row_feed_water">
 	<div class="col-sm-12 no-padding" style="margin-top:-25px;">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white feeder">급이 및 급수 정보</h2>	
 				</div>
 			</header>
-			<div class="widget-body pt-3" style="border-radius: 0 0 15px 15px; padding:1rem;">
+			<div class="widget-body pt-3" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; min-height:0;">
 				<div class="col-sm-2 no-padding">
 					<div class="col-sm-12 text-center"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
 						<div class="carousel-caption" style="text-shadow: none;"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
@@ -106,7 +106,7 @@
 <div class="row" id="row_outsensor" style="margin-top: -25px; display: none;">
 	<div class="col-sm-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white sensor">외기환경 센서 정보</h2>	
 				</div>
@@ -161,7 +161,7 @@
 <div class="row" id="row_cell_data" style="margin-top:-25px;">
 	<div class="col-sm-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-light" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<h2 class="text-white font-weight-bold">현재 센서상태</h2>
 			</header>
 			<div class="widget-body p-1" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0;">
@@ -190,7 +190,7 @@
 <div class="row" id="row_avg_weight" style="margin-top:-25px;">
 	<div class="col-sm-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
-			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<h2 class="text-white font-weight-bold">일령별 평균중량 변화추이</h2>
 			</header>
 			<div class="widget-body" style="border-radius: 0 0 10px 10px; border : 4px solid #E6E6E6; border-top: 0;">

@@ -480,7 +480,7 @@
   margin-right: -5px;
 }
 .datepicker.dropdown-menu {
-  margin-top:60px;							/*============================현재 스킨에서 Datepicker 시작 위치값 조정*/
+  /*margin-top:60px;*/							/*============================현재 스킨에서 Datepicker 시작 위치값 조정*/
   position: absolute;
   top: 100%;
   left: 0;

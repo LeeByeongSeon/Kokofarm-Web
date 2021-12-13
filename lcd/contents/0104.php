@@ -6,7 +6,7 @@ include_once("../inc/top.php")
 <div class="row" id="row_outsensor" style="margin-top: -25px;">
 	<div class="col-sm-12 no-padding">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white sensor">외기환경 센서 정보</h2>	
 				</div>
@@ -60,7 +60,7 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12 no-padding" style="margin-top:-25px;">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0 0; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white">오늘 외기환경 변화</h2>	
 				</div>
@@ -91,7 +91,7 @@ include_once("../inc/top.php")
 <div class="row">
 	<div class="col-xs-12 no-padding" style="margin-top:-25px;">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat">
+			<header style="border-radius: 15px 15px 0px 0px; border : 4px solid #E6E6E6; border-bottom: 0; background-image: url(../images/bgcolor.png); background-repeat: no-repeat; background-size: cover">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white">일령별 외기환경 변화</h2>	
 				</div>

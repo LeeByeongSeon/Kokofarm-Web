@@ -387,12 +387,12 @@ switch($oper){
         $summary_data["summary_avg"] 	= number_format($row["beAvgWeight"], 0);
         $summary_data["summary_devi"] 	= number_format($row["beDevi"], 1);
         $summary_data["summary_inc"] 	= (empty($row["awWeight"]) ? "-" : number_format($row["beAvgWeight"] - $row["awWeight"], 0));
-        $summary_data["summary_type"] 	= $row["cmIntype"] . " " . $row["cmInsu"] . "수";
-        $summary_data["summary_comein"] = "입추일자 : " . substr($row["cmIndate"], 0, 10);
+        $summary_data["summary_type"] 	= $row["cmIntype"] . " " . $row["cmInsu"] . "<span class='0102-01-bd-num'>수</span>";
+        $summary_data["summary_comein"] = substr($row["cmIndate"], 0, 10);
 
         //카메라
         $img_url = "../common/php_module/camera_func.php?ip=" .$row["beIPaddr"]. "&port=" .$row["scPort"]. "&url=" .urlencode($row["scUrl"]). "&id=" .$row["scId"]. "&pw=" .$row["scPw"];
-        $summary_data["summary_camera"] = "<img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
+        $summary_data["summary_camera"] = "<img src='" .$img_url. "' style='width:100%; height:-webkit-fill-available;' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
                                         <img id='cameraIcon' src='../images/play.png' class='fadeIn animated' onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">";
 
         // $summary_data["summary_indate"] = $row["cmIndate"];

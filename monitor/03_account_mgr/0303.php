@@ -19,20 +19,20 @@ $mgr_combo_json = make_jqgrid_combo($mgr_query, "cName1");
 		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-user"></i>&nbsp;관리자 계정 관리</h2>	
+					<h2><i class="fa fa-user"></i>&nbsp;<span class="KKF-15">관리자 계정 관리</span></h2>	
 				</div>
 			</header>
 				
 			<div class="widget-body">
 
 				<div class="widget-body-toolbar">
-					<form id="search_form" class="form-inline" onsubmit="return false;">&nbsp;&nbsp;
-						<?=$group_combo?>&nbsp;&nbsp;
-						<?=$mgr_combo?>&nbsp;&nbsp;
-						<input class="form-control" type="text" name="searchName" maxlength="20" placeholder=" 농장명, 농장ID" size="15" >&nbsp;&nbsp;
-						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span>취소</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="search_action('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+					<form id="search_form" class="form-inline" onsubmit="return false;">
+						<?=$group_combo?>&nbsp;
+						<?=$mgr_combo?>&nbsp;
+						<input class="form-control" type="text" name="searchName" maxlength="20" placeholder=" 농장명, 농장ID" size="15" >&nbsp;
+						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-31">검색</span></button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span><span class="KKF-34">취소</span></button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="search_action('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 					</form>
 				</div>
 
@@ -54,6 +54,7 @@ include_once("../inc/bottom.php");
 	$(document).ready(function(){
 
 		get_grid_data();
+
 	});
 
 	function get_grid_data(){

@@ -7,13 +7,13 @@ include_once("../inc/top.php");
 		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-home"></i>&nbsp;장치 요약 현황</h2>	
+					<h2><i class="fa fa-home"></i>&nbsp;<span class="KKF-35"></span></h2>	
 				</div>
 				<div class="widget-toolbar ml-auto" style="cursor: default">
-					<span class='badge bg-blue'> </span>&nbsp;정상&nbsp;
-					<span class='badge bg-green'> </span>&nbsp;경고&nbsp;
-					<span class='badge bg-yellow'> </span>&nbsp;주의&nbsp;
-					<span class='badge bg-red'> </span>&nbsp;위험
+					<span class='badge bg-blue'> </span>&nbsp;<span class="KKF-36">정상</span>&nbsp;
+					<span class='badge bg-green'> </span>&nbsp;<span class="KKF-37">경고</span>&nbsp;
+					<span class='badge bg-yellow'> </span>&nbsp;<span class="KKF-38">주의</span>&nbsp;
+					<span class='badge bg-red'> </span>&nbsp;<span class="KKF-39">위험</span>
 				</div>
 				<div class="widget-toolbar" style="padding-top:2px;">
 					<div class="progress progress-striped active" rel="tooltip" data-original-title="55%" data-placement="bottom">
@@ -25,8 +25,17 @@ include_once("../inc/top.php");
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">
 						<input class="form-control" type="text" name="search_name" maxlength="20" placeholder=" 농장명, 농장ID" size="20" >&nbsp;
-						<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>&nbsp;
-						<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span>취소</button>
+						<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-31">검색</span></button>&nbsp;
+						<button type="button" class="btn btn-default btn-sm btn-labeled" onClick="search_action('cancle')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span><span class="KKF-34">취소</span></button>&nbsp;&nbsp;
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" id="lang_kr" type="radio" name="lang" onClick="jqgrid_lang('kr')" checked="checked">
+							<label class="form-check-label pt-0" for="lang_kr">한국어</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" id="lang_en" type="radio" name="lang" onClick="jqgrid_lang('en')">
+							<label class="form-check-label pt-0" for="lang_en">영어</label>
+						</div>
 					</form>
 				</div>
 
@@ -83,6 +92,7 @@ include_once("../inc/bottom.php");
 			sortname:"warning",
 			rownumbers:true,
 			height:"auto",
+			regional:"kr",
 			jsonReader:{repeatitems:false, id:'cmCode', root:'print_data', page:'page', total:'total', records:'records'},
 			colModel: [
 				{label: "입출하코드", 		name: "cmCode",				hidden:true 	},

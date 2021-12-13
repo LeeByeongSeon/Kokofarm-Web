@@ -52,7 +52,7 @@ include_once("../inc/top.php");
 											<td><span class="font-md font-weight-bold" id="">-</span></td>
 										</tr>
 										<tr>
-											<td class="text-center" colspan="4"><span class="160 font-md">출하 목표 일령</span> : <span class="font-md" id="summary_out_day">-</span></td>
+											<td class="text-center" colspan="4"><span class="KKF-160 font-md">출하 목표 일령</span> : <span class="font-md" id="summary_out_day">-</span></td>
 											<!-- <td class="text-left"><span class="" id="summary_out_day">-</span></td> -->
 										</tr>
 									</table>
@@ -365,8 +365,8 @@ include_once("../inc/top.php");
 								<option value=""><span class="KKF-175">4회차</span></option>
 								<option value=""><span class="KKF-176">5회차</span></option>
 							</select>&nbsp;
-							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="0203-08-btn-load">불러오기</span></button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="0203-08-btn-excel">엑셀</span></button>
+							<button type="button" class="btn btn-default btn-sm btn-labeled"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-177">불러오기</span></button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</form>
 					</div>
 					
@@ -436,7 +436,7 @@ include_once("../inc/bottom.php");
 
 		call_tree_view("", act_grid_data, "all");
 		set_tree_search(act_grid_data, "all");
-		
+
 	});
 
 	// 데이터 불러오기

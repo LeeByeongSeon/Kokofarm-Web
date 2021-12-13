@@ -91,7 +91,7 @@
 				$("#state_bar").html(update_per + "%"); 
 				$("#state_bar").parent().attr("data-original-title", update_per + "%");
 			}
-		}, 1000);
+		}, 5000);
 
 		get_weather(top_lat, top_lng);
 

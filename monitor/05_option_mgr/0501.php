@@ -15,7 +15,7 @@ $gName_combo_json = make_jqgrid_combo($gName_query, "cGroup");
 		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-list"></i>&nbsp;상세 옵션 관리</h2>	
+					<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-22">상세 옵션 관리</span></h2>	
 				</div>
 			</header>
 				
@@ -24,9 +24,9 @@ $gName_combo_json = make_jqgrid_combo($gName_query, "cGroup");
 				<div class="widget-body-toolbar">
 					<form id="search_form" class="form-inline" onsubmit="return false;">
 						<?=$gName_combo?>&nbsp;
-						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-default btn-sm"  onClick="search_action('reset')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span>취소</button>&nbsp;
-						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="search_action('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+						<button type="button" class="btn btn-labeled btn-default btn-sm" onClick="search_action('search')"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-31">검색</span></button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-default btn-sm"  onClick="search_action('reset')"><span class="btn-label"><i class="fa fa-times text-danger"></i></span><span class="KKF-34">취소</span></button>&nbsp;
+						<button type="button" class="btn btn-labeled btn-secondary btn-sm" onClick="search_action('excel')"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 					</form>
 				</div>
 
@@ -129,7 +129,7 @@ include_once("../inc/bottom.php");
 	function search_action(action){
 
 		var search_map = {};
-		$.each($("#search_form").serializeArray(), function(){ 
+		$.each($("#search_form").serializeArray(), function(){
 			search_map[this.name] = this.value;
 		});
 
@@ -144,7 +144,7 @@ include_once("../inc/bottom.php");
 					$("#search_form").each(function() {	this.reset();  });
 
 					//리로드
-					$.each($("#search_form").serializeArray(), function(){ 
+					$.each($("#search_form").serializeArray(), function(){
 						search_map[this.name] = this.value; 
 					});
 					search_data = JSON.stringify(search_map);

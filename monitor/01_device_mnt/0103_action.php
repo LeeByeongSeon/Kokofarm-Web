@@ -58,12 +58,12 @@ switch($oper){
 									<img src='" .$img_url. "' width='100%' onError=\" $(this).attr('src','../images/noimage.jpg');\" onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \">
 									<p class='alert alert-" .($row["beStatus"] == "O" ? "danger" : "info"). "'>
 										<span class='fa fa-home'></span>" .$name. "&nbsp;
-										<span class='fa fa-bar-chart-o'></span>&nbsp;평체:" .$avg_weight. "g
+											<span class='KKF-73'>평체</span> : " .$avg_weight. "g
 										<span class='pull-right'>
 											<span class='fa fa-camera' style='cursor:pointer' onClick=\"camera_popup('" .$name. "','" .$img_url. "'); \"></span>
 										</span>
 										<span class='pull-right'>
-											<span class='fa fa-clock-o'></span>&nbsp;일령: " .$row["beDays"]. "&nbsp;
+											<span class='KKF-72'>일령</span> : " .$row["beDays"]. "&nbsp;
 										</span>
 									</p>
 								</div>";

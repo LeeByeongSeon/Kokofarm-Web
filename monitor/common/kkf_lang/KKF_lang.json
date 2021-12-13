@@ -1,0 +1,1114 @@
+{
+	"KKF-1" : {
+		"KR" : "장치현황",
+		"EN" : "Device Status"
+	},
+	"KKF-2" : {
+		"KR" : "요약현황",
+		"EN" : "Summary"
+	},
+	"KKF-3" : {
+		"KR" : "동별 세부 현황",
+		"EN" : "Details by Block"
+	},
+	"KKF-4" : {
+		"KR" : "IP 카메라 현황",
+		"EN" : "IP Camera"
+	},
+	"KKF-5" : {
+		"KR" : "농장현황",
+		"EN" : "Farm Status"
+	},
+	"KKF-6" : {
+		"KR" : "입출하 관리",
+		"EN" : "Enter and release Management"
+	},
+	"KKF-7" : {
+		"KR" : "전국 농장 현황",
+		"EN" : "Farms Nationwide"
+	},
+	"KKF-8" : {
+		"KR" : "동별 세부 현황",
+		"EN" : "Details by Block"
+	},
+	"KKF-9" : {
+		"KR" : "출하이력",
+		"EN" : "Release History"
+	},
+	"KKF-10" : {
+		"KR" : "재산출 요청 관리",
+		"EN" : "Recalculation requests"
+	},
+	"KKF-11" : {
+		"KR" : "결함 및 A/S 관리",
+		"EN" : "Defects & A/S"
+	},
+	"KKF-12" : {
+		"KR" : "계정관리",
+		"EN" : "Account Management"
+	},
+	"KKF-13" : {
+		"KR" : "농장 계정 관리",
+		"EN" : "Farm Account Management"
+	},
+	"KKF-14" : {
+		"KR" : "농장별 동 관리",
+		"EN" : "Block Management by Farm"
+	},
+	"KKF-15" : {
+		"KR" : "관리자 계정 관리",
+		"EN" : "Admin Account Management"
+	},
+	"KKF-16" : {
+		"KR" : "장치 관리",
+		"EN" : "Device Management"
+	},
+	"KKF-17" : {
+		"KR" : "IoT 저울 관리",
+		"EN" : "IoT Scale Management"
+	},
+	"KKF-18" : {
+		"KR" : "IP 카메라 관리",
+		"EN" : "IP Camera Management"
+	},
+	"KKF-19" : {
+		"KR" : "PLC 관리",
+		"EN" : "PLC Management"
+	},
+	"KKF-20" : {
+		"KR" : "급이/급수/외기 관리",
+		"EN" : "Feed/Water/External Env. Sensor Management"
+	},
+	"KKF-21" : {
+		"KR" : "옵션 관리",
+		"EN" : "Options"
+	},
+	"KKF-22" : {
+		"KR" : "상세 옵션 관리",
+		"EN" : "Detailed Options"
+	},
+	"KKF-23" : {
+		"KR" : "PLC Unit ID 관리",
+		"EN" : "PLC Unit ID Management"
+	},
+	"KKF-24" : {
+		"KR" : "입추(동)",
+		"EN" : "Enter(Block)"
+	},
+	"KKF-25" : {
+		"KR" : "오류(동)",
+		"EN" : "Error(Block)"
+	},
+	"KKF-26" : {
+		"KR" : "출하대기(동)",
+		"EN" : "Release Pending(Block)"
+	},
+	"KKF-27" : {
+		"KR" : "출하(동)",
+		"EN" : "Release(Block)"
+	},
+	"KKF-28" : {
+		"KR" : "농가 목록",
+		"EN" : "Farm List"
+	},
+	"KKF-29" : {
+		"KR" : "입추",
+		"EN" : "Enter"
+	},
+	"KKF-30" : {
+		"KR" : "출하",
+		"EN" : "Release"
+	},
+	"KKF-31" : {
+		"KR" : "검색",
+		"EN" : "Search"
+	},
+	"KKF-32" : {
+		"KR" : "닫기",
+		"EN" : "Close"
+	},
+	"KKF-33" : {
+		"KR" : "확인",
+		"EN" : "Confirm"	
+	},
+	"KKF-34" : {
+		"KR" : "취소",
+		"EN" : "Cancel"
+	},
+	"KKF-35" : {
+		"KR" : "장치 요약 현황",
+		"EN" : "Device Summary"
+	},
+	"KKF-36" : {
+		"KR" : "정상",
+		"EN" : "Normal"
+	},
+	"KKF-37" : {
+		"KR" : "경고",
+		"EN" : "Warning"
+	},
+	"KKF-38" : {
+		"KR" : "주의",
+		"EN" : "Caution"
+	},
+	"KKF-39" : {
+		"KR" : "위험",
+		"EN" : "Danger"
+	},
+	"KKF-40" : {
+		"KR" : "요약정보",
+		"EN" : "Summary Info."
+	},
+	"KKF-41" : {
+		"KR" : "일",
+		"EN" : "Days"
+	},
+	"KKF-42" : {
+		"KR" : "평균중량",
+		"EN" : "Avg Weight"
+	},
+	"KKF-43" : {
+		"KR" : "일일 증체량",
+		"EN" : "Daily Weight Gain"
+	},
+	"KKF-44" : {
+		"KR" : "표준편차",
+		"EN" : "Standard Deviation"
+	},
+	"KKF-45" : {
+		"KR" : "수",
+		"EN" : "Quantity"
+	},
+	"KKF-46" : {
+		"KR" : "입추일자",
+		"EN" : "Enter Date"
+	},
+	"KKF-47" : {
+		"KR" : "사육정보",
+		"EN" : "Breeding Info."
+	},
+	"KKF-48" : {
+		"KR" : "사료잔량",
+		"EN" : "Remaining Feed"
+	},
+	"KKF-49" : {
+		"KR" : "오늘 급이량",
+		"EN" : "Today’s Feed"
+	},
+	"KKF-50" : {
+		"KR" : "전일 급이량",
+		"EN" : "Yesterday’s Feed"
+	},
+	"KKF-51" : {
+		"KR" : "시간당 급수량",
+		"EN" : "Water Supply per Hour"
+	},
+	"KKF-52" : {
+		"KR" : "오늘 급수량",
+		"EN" : "Today’s Water Supply"
+	},
+	"KKF-53" : {
+		"KR" : "전일 급수량",
+		"EN" : "Yesterday’s Water Supply"
+	},
+	"KKF-54" : {
+		"KR" : "장치현황",
+		"EN" : "Device Status"
+	},
+	"KKF-55" : {
+		"KR" : "장치명",
+		"EN" : "Device Name"
+	},
+	"KKF-56" : {
+		"KR" : "장치설정",
+		"EN" : "Device Settings"
+	},
+	"KKF-57" : {
+		"KR" : "IoT 저울",
+		"EN" : "IoT Scale"
+	},
+	"KKF-58" : {
+		"KR" : "IP 카메라",
+		"EN" : "IP Camera"
+	},
+	"KKF-59" : {
+		"KR" : "자동환경제어장치",
+		"EN" : "Automatic Env. Control Device"
+	},
+	"KKF-60" : {
+		"KR" : "사료빈 로드셀",
+		"EN" : "Feed bin load cell"
+	},
+	"KKF-61" : {
+		"KR" : "유량센서",
+		"EN" : ""
+	},
+	"KKF-62" : {
+		"KR" : "외기환경센서",
+		"EN" : "External Env. Sensor"
+	},
+	"KKF-63" : {
+		"KR" : "장치 데이터",
+		"EN" : "Device Data"
+	},
+	"KKF-64" : {
+		"KR" : "장치",
+		"EN" : "Device"
+	},
+	"KKF-65" : {
+		"KR" : "수집시간",
+		"EN" : "Measured Time"
+	},
+	"KKF-66" : {
+		"KR" : "데이터",
+		"EN" : "Data"
+	},
+	"KKF-67" : {
+		"KR" : "일령별",
+		"EN" : "by Days"
+	},
+	"KKF-68" : {
+		"KR" : "시간별",
+		"EN" : "by Time"
+	},
+	"KKF-69" : {
+		"KR" : "표 출력",
+		"EN" : "Table Output"
+	},
+	"KKF-70" : {
+		"KR" : "엑셀",
+		"EN" : "Excel"
+	},
+	"KKF-71" : {
+		"KR" : "산출시간",
+		"EN" : "Calculation time"
+	},
+	"KKF-72" : {
+		"KR" : "일령",
+		"EN" : "Days"
+	},
+	"KKF-73" : {
+		"KR" : "평체",
+		"EN" : "Avg Weight"
+	},
+	"KKF-74" : {
+		"KR" : "권고",
+		"EN" : "Suggestions"
+	},
+	"KKF-75" : {
+		"KR" : "오류이력",
+		"EN" : "Error History"
+	},
+	"KKF-76" : {
+		"KR" : "오류시간",
+		"EN" : "Error Time"
+	},
+	"KKF-77" : {
+		"KR" : "오류상태",
+		"EN" : "Error Status"
+	},
+	"KKF-78" : {
+		"KR" : "저울 번호",
+		"EN" : "Scale No."
+	},
+	"KKF-79" : {
+		"KR" : "GW 관리",
+		"EN" : "GW Management"
+	},
+	"KKF-80" : {
+		"KR" : "GW 냉각팬 정보",
+		"EN" : "Gw Cooling fan Info."
+	},
+	"KKF-81" : {
+		"KR" : "조회",
+		"EN" : "Search"
+	},
+	"KKF-82" : {
+		"KR" : "설정",
+		"EN" : "Settings"
+	},
+	"KKF-83" : {
+		"KR" : "동작 온도",
+		"EN" : "Operating temp."
+	},
+	"KKF-84" : {
+		"KR" : "정지 온도",
+		"EN" : "Stop(max) temp."
+	},
+	"KKF-85" : {
+		"KR" : "현재 온도",
+		"EN" : "Current temp."
+	},
+	"KKF-86" : {
+		"KR" : "동작 상태",
+		"EN" : "Operating Status"
+	},
+	"KKF-87" : {
+		"KR" : "GW 조회 및 설정",
+		"EN" : "GW Info & Settings"
+	},
+	"KKF-88" : {
+		"KR" : "펌웨어 버전 조회",
+		"EN" : "Firmware Info."
+	},
+	"KKF-89" : {
+		"KR" : "펌웨어 업데이트",
+		"EN" : "Firmware Update"
+	},
+	"KKF-90" : {
+		"KR" : "로그 데이터 삭제",
+		"EN" : "Delete Log Data"
+	},
+	"KKF-91" : {
+		"KR" : "GW 재부팅",
+		"EN" : "Reboot GW"
+	},
+	"KKF-92" : {
+		"KR" : "전송",
+		"EN" : "Send"
+	},
+	"KKF-93" : {
+		"KR" : "영점 조정",
+		"EN" : "Zero-set(Scale)"
+	},
+	"KKF-94" : {
+		"KR" : "로우데이터 확인",
+		"EN" : "Check Raw Data"
+	},
+	"KKF-95" : {
+		"KR" : "※ 조회범위 설정 후 조회 버튼을 눌러주세요.",
+		"EN" : "※ Click search button after setting the search range"
+	},
+	"KKF-96" : {
+		"KR" : "조회범위",
+		"EN" : "Search range"
+	},
+	"KKF-97" : {
+		"KR" : "시작일",
+		"EN" : "Start date"
+	},
+	"KKF-98" : {
+		"KR" : "시작시간",
+		"EN" : "Start time"
+	},
+	"KKF-99" : {
+		"KR" : "종료일",
+		"EN" : "Finish date"
+	},
+	"KKF-100" : {
+		"KR" : "종료시간",
+		"EN" : "Finish time"
+	},
+	"KKF-101" : {
+		"KR" : "오름차순",
+		"EN" : "Ascending"
+	},
+	"KKF-102" : {
+		"KR" : "내림차순",
+		"EN" : "Descending"
+	},
+	"KKF-103" : {
+		"KR" : "급이/급수/외기",
+		"EN" : "Feed/Water/External Env. Sensor"
+	},
+	"KKF-104" : {
+		"KR" : "PLC 제어",
+		"EN" : "PLC Control"
+	},
+	"KKF-105" : {
+		"KR" : "PLC 환경",
+		"EN" : "PLC Env. Data"
+	},
+	"KKF-106" : {
+		"KR" : "획득시간",
+		"EN" : "Time"
+	},
+	"KKF-107" : {
+		"KR" : "저울 ID",
+		"EN" : "Scale ID"
+	},
+	"KKF-108" : {
+		"KR" : "온도",
+		"EN" : "Temperature"
+	},
+	"KKF-109" : {
+		"KR" : "습도",
+		"EN" : "Humidity"
+	},
+	"KKF-110" : {
+		"KR" : "내부온도",
+		"EN" : "Internal temp"
+	},
+	"KKF-111" : {
+		"KR" : "내부습도",
+		"EN" : "Internal humidity"
+	},
+	"KKF-112" : {
+		"KR" : "내부CO2",
+		"EN" : "Internal Co2"
+	},
+	"KKF-113" : {
+		"KR" : "내부음압",
+		"EN" : "Internal sound pressure"
+	},
+	"KKF-114" : {
+		"KR" : "외부온도",
+		"EN" : "External temp"
+	},
+	"KKF-115" : {
+		"KR" : "외부습도",
+		"EN" : "External humidity"
+	},
+	"KKF-116" : {
+		"KR" : "외부NH3",
+		"EN" : "External Nh3"
+	},
+	"KKF-117" : {
+		"KR" : "외부H2S",
+		"EN" : "External H2s"
+	},
+	"KKF-118" : {
+		"KR" : "Unit ID",
+		"EN" : "Unit ID"
+	},
+	"KKF-119" : {
+		"KR" : "장치 속성",
+		"EN" : "Device Properties"
+	},
+	"KKF-120" : {
+		"KR" : "장치 구분",
+		"EN" : "Device"
+	},
+	"KKF-121" : {
+		"KR" : "상태",
+		"EN" : "Status"
+	},
+	"KKF-122" : {
+		"KR" : "사료빈 무게",
+		"EN" : "Food bin Weight"
+	},
+	"KKF-123" : {
+		"KR" : "현재값-직전값",
+		"EN" : "Current value – Prev. value"
+	},
+	"KKF-124" : {
+		"KR" : "유량센서값",
+		"EN" : "Flow Sensor value"
+	},
+	"KKF-125" : {
+		"KR" : "미세먼지",
+		"EN" : "Fine dust"
+	},
+	"KKF-126" : {
+		"KR" : "초미세먼지",
+		"EN" : "UltraFine dust"
+	},
+	"KKF-127" : {
+		"KR" : "풍향",
+		"EN" : "Wind direction"
+	},
+	"KKF-128" : {
+		"KR" : "풍속",
+		"EN" : "Wind Speed"
+	},
+	"KKF-129" : {
+		"KR" : "재산출 기록",
+		"EN" : "Recalculation records"
+	},
+	"KKF-130" : {
+		"KR" : "완료시간",
+		"EN" : "Finish time"
+	},
+	"KKF-131" : {
+		"KR" : "요청사항",
+		"EN" : "Requests"
+	},
+	"KKF-132" : {
+		"KR" : "변경사항",
+		"EN" : "Changes"
+	},
+	"KKF-133" : {
+		"KR" : "실측시간",
+		"EN" : "Actual measurement time"
+	},
+	"KKF-134" : {
+		"KR" : "실측값",
+		"EN" : "Actual measurement value"
+	},
+	"KKF-135" : {
+		"KR" : "재산출 전 예측",
+		"EN" : "Prediction before recalculation"
+	},
+	"KKF-136" : {
+		"KR" : "IP 카메라 확인",
+		"EN" : "IP Camera"
+	},
+	"KKF-137" : {
+		"KR" : "입출하 농장 수",
+		"EN" : "Farm Status"
+	},
+	"KKF-138" : {
+		"KR" : "입추예정",
+		"EN" : "Expected Entering"
+	},
+	"KKF-139" : {
+		"KR" : "출하예정",
+		"EN" : "Expected Release"
+	},
+	"KKF-140" : {
+		"KR" : "호수별 입추 수 (단위 : 1000마리)",
+		"EN" : "The number of chickens by size ( Unit : 1000 )"
+	},
+	"KKF-141" : {
+		"KR" : "11호",
+		"EN" : "size 11"
+	},
+	"KKF-142" : {
+		"KR" : "12호",
+		"EN" : "size 12"
+	},
+	"KKF-143" : {
+		"KR" : "13호",
+		"EN" : "size 13"
+	},
+	"KKF-144" : {
+		"KR" : "14호",
+		"EN" : "size 14"
+	},
+	"KKF-145" : {
+		"KR" : "15호",
+		"EN" : "size 15"
+	},
+	"KKF-146" : {
+		"KR" : "16호",
+		"EN" : "size 16"
+	},
+	"KKF-147" : {
+		"KR" : "17호",
+		"EN" : "size 17"
+	},
+	"KKF-148" : {
+		"KR" : "18호",
+		"EN" : "size 18"
+	},
+	"KKF-149" : {
+		"KR" : "19호",
+		"EN" : "size 19"
+	},
+	"KKF-150" : {
+		"KR" : "20호",
+		"EN" : "size 20"
+	},
+	"KKF-151" : {
+		"KR" : "21호",
+		"EN" : "size 21"
+	},
+	"KKF-152" : {
+		"KR" : "22호",
+		"EN" : "size 22"
+	},
+	"KKF-153" : {
+		"KR" : "입출하 일정",
+		"EN" : "Expected Release Schedule"
+	},
+	"KKF-154" : {
+		"KR" : "농가 지도",
+		"EN" : "Farm Map"
+	},
+	"KKF-155" : {
+		"KR" : "전체",
+		"EN" : "All"
+	},
+	"KKF-156" : {
+		"KR" : "세부현황",
+		"EN" : "Detail"
+	},
+	"KKF-157" : {
+		"KR" : "동 정보 요약",
+		"EN" : "Summary by Block"
+	},
+	"KKF-158" : {
+		"KR" : "농장 이름",
+		"EN" : "Farm Name"
+	},
+	"KKF-159" : {
+		"KR" : "변이계수",
+		"EN" : "Coefficient of variation"
+	},
+	"KKF-160" : {
+		"KR" : "출하 목표 일령",
+		"EN" : "Release D-Day"
+	},
+	"KKF-161" : {
+		"KR" : "환경경보",
+		"EN" : "Env. Alert"
+	},
+	"KKF-162" : {
+		"KR" : "이산화탄소",
+		"EN" : "Carbon dioxide"
+	},
+	"KKF-163" : {
+		"KR" : "암모니아",
+		"EN" : "Ammonia"
+	},
+	"KKF-164" : {
+		"KR" : "평균중량 현황",
+		"EN" : "Avg weight status"
+	},
+	"KKF-165" : {
+		"KR" : "환경센서 현황",
+		"EN" : "Env. Sensor Status"
+	},
+	"KKF-166" : {
+		"KR" : "실측중량",
+		"EN" : "Actual measured Weight"
+	},
+	"KKF-167" : {
+		"KR" : "비고",
+		"EN" : "Note"
+	},
+	"KKF-168" : {
+		"KR" : "급이량 현황",
+		"EN" : "Feeding amount status"
+	},
+	"KKF-169" : {
+		"KR" : "급수량 현황",
+		"EN" : "Watering amount Status"
+	},
+	"KKF-170" : {
+		"KR" : "평균중량 이력 비교",
+		"EN" : "Avg Weight history"
+	},
+	"KKF-171" : {
+		"KR" : "회차 선택",
+		"EN" : "Round"
+	},
+	"KKF-172" : {
+		"KR" : "1회차",
+		"EN" : "Round 1"
+	},
+	"KKF-173" : {
+		"KR" : "2회차",
+		"EN" : "Round 2"
+	},
+	"KKF-174" : {
+		"KR" : "3회차",
+		"EN" : "Round 3"
+	},
+	"KKF-175" : {
+		"KR" : "4회차",
+		"EN" : "Round 4"
+	},
+	"KKF-176" : {
+		"KR" : "5회차",
+		"EN" : "Round 5"
+	},
+	"KKF-177" : {
+		"KR" : "불러오기",
+		"EN" : "Search"
+	},
+	"KKF-178" : {
+		"KR" : "환경 센서 이력 비교",
+		"EN" : "Env. Sensor history"
+	},
+	"KKF-179" : {
+		"KR" : "입력",
+		"EN" : "Input"
+	},
+	"KKF-180" : {
+		"KR" : "결함 및 A/S 관리",
+		"EN" : "Defects & A/S Management"
+	},
+	"KKF-181" : {
+		"KR" : "※ 행을 더블클릭하면 해당 농장의 '농장별 동 관리'로 이동합니다.",
+		"EN" : "※ If you double-click the row, you will be directed to the 'Block Management' section of the corresponding Farm."
+	},
+	"KKF-182" : {
+		"KR" : "IP 카메라 관리",
+		"EN" : "IP Camera Management"
+	},
+	"KKF-183" : {
+		"KR" : "급이센서/급수센서 관리",
+		"EN" : "Feeding/Watering Sensor Management"
+	},
+	"KKF-184" : {
+		"KR" : "외기환경센서 관리",
+		"EN" : "External Env. Sensor Management"
+	},
+	"KKF-185" : {
+		"KR" : "펌웨어 버전",
+		"EN" : "Firmware version"
+	},
+	"KKF-186" : {
+		"KR" : "데이터 (온도/습도/CO2/NH3/중량)",
+		"EN" : "Data (temp/humidity/Co2/Nh3/weight)"
+	},
+	"KKF-187" : {
+		"KR" : "설치수",
+		"EN" : "Number of Device"
+	},
+	"KKF-188" : {
+		"KR" : "원격 업데이트 정상 실행 중(약 5분 소요)",
+		"EN" : "Remote update running normally(about 5 minutes)"
+	},
+	"KKF-189" : {
+		"KR" : "로그 삭제 중(약 30초 소요)",
+		"EN" : "Deleting Log Data(about 30 seconds)"
+	},
+	"KKF-190" : {
+		"KR" : "재부팅 명령 전송됨",
+		"EN" : "Reboot command sent"
+	},
+	"KKF-191" : {
+		"KR" : "동작온도 설정 완료",
+		"EN" : "Operating temp. Setting complete"
+	},
+	"KKF-192" : {
+		"KR" : "정지온도 설정 완료",
+		"EN" : "Stop(max) temp. Setting complete"
+	},
+	"KKF-193" : {
+		"KR" : "전송오류 혹은 응답이 존재하지 않는 명령",
+		"EN" : "Error! a command that doesn't exist."
+	},
+	"KKF-194" : {
+		"KR" : "이미 처리된 요청입니다",
+		"EN" : "This request is already processed."
+	},
+	"KKF-195" : {
+		"KR" : "로그인",
+		"EN" : "Login"
+	},
+	"KKF-196" : {
+		"KR" : "육계 - 생육관제 v3.0",
+		"EN" : "Broiler - growth control v3.0"
+	},
+	"KKF-197" : {
+		"KR" : "kokoFarm 홈페이지",
+		"EN" : "KoKoFarm Home"
+	},
+	"KKF-198" : {
+		"KR" : "계사 생육관제 모니터링 시스템 Copyright",
+		"EN" : ""
+	},
+	"KKF-199" : {
+		"KR" : "로그인 실패",
+		"EN" : "Login failed"
+	},
+	"KKF-200" : {
+		"KR" : "아이디 또는 비밀번호가 틀립니다. 다시 시도해 주시기 바랍니다.",
+		"EN" : "Wrong ID or Password. Try again."
+	},
+	"KKF-201" : {
+		"KR" : "실시간 평균",
+		"EN" : "Real-time average"
+	},
+	"KKF-202" : {
+		"KR" : "실시간 평균중량",
+		"EN" : "Real-time Avg Weight"
+	},
+	"KKF-203" : {
+		"KR" : "최소평체",
+		"EN" : "Avg Weight(min)"
+	},
+	"KKF-204" : {
+		"KR" : "현재평체",
+		"EN" : "Avg Weight"
+	},
+	"KKF-205" : {
+		"KR" : "최대평체",
+		"EN" : "Avg Weight(max)"
+	},
+	"KKF-206" : {
+		"KR" : "예측평체",
+		"EN" : "Expected Avg Weight"
+	},
+	"KKF-207" : {
+		"KR" : "16일령 이후 표시",
+		"EN" : "Check after 16 days"
+	},
+	"KKF-208" : {
+		"KR" : "저울 센서별 평균",
+		"EN" : "Avg by scale sensor"
+	},
+	"KKF-209" : {
+		"KR" : "급이 및 급수",
+		"EN" : "Feeding or Watering"
+	},
+	"KKF-210" : {
+		"KR" : "외기환경 센서",
+		"EN" : "External Env. Sersor"
+	},
+	"KKF-211" : {
+		"KR" : "황화수소",
+		"EN" : "Hydrogen sulfide"
+	},
+	"KKF-212" : {
+		"KR" : "북",
+		"EN" : "North"
+	},
+	"KKF-213" : {
+		"KR" : "북동",
+		"EN" : "Northeast"
+	},
+	"KKF-214" : {
+		"KR" : "동",
+		"EN" : "East"
+	},
+	"KKF-215" : {
+		"KR" : "남동",
+		"EN" : "Southeast"
+	},
+	"KKF-216" : {
+		"KR" : "남",
+		"EN" : "South"
+	},
+	"KKF-217" : {
+		"KR" : "남서",
+		"EN" : "Southwest"
+	},
+	"KKF-218" : {
+		"KR" : "서",
+		"EN" : "West"
+	},
+	"KKF-219" : {
+		"KR" : "북서",
+		"EN" : "Northwest"
+	},
+	"KKF-220" : {
+		"KR" : "현재 저울 상태",
+		"EN" : "Current Scale Status"
+	},
+	"KKF-221" : {
+		"KR" : "오늘 증체중량",
+		"EN" : "Today's weight gain"
+	},
+	"KKF-222" : {
+		"KR" : "일령별 환경센서",
+		"EN" : "Env. Sensor by Days"
+	},
+	"KKF-223" : {
+		"KR" : "입력된 값이 형식에 맞지 않습니다.",
+		"EN" : "The entered value format is incorrect."
+	},
+	"KKF-224" : {
+		"KR" : "입력된 달이 유효하지 않습니다.",
+		"EN" : "The entered month is invalid."
+	},
+	"KKF-225" : {
+		"KR" : "입력된 일이 유효하지 않습니다.",
+		"EN" : "The entered day is invalid."
+	},
+	"KKF-226" : {
+		"KR" : "입력된 시간이 유효하지 않습니다.",
+		"EN" : "The entered time is invalid."
+	},
+	"KKF-227" : {
+		"KR" : "입력된 분이 유효하지 않습니다.",
+		"EN" : "The entered minute is invalid."
+	},
+	"KKF-228" : {
+		"KR" : "입력된 초가 유효하지 않습니다.",
+		"EN" : "The entered seconds is invalid."
+	},
+	"KKF-229" : {
+		"KR" : "누적 급이량",
+		"EN" : "Accumulated Feeding amount"
+	},
+	"KKF-230" : {
+		"KR" : "누적 급수량",
+		"EN" : "Accumulated Watering amount"
+	},
+	"KKF-231" : {
+		"KR" : "오늘 급이량 변화",
+		"EN" : "Today's Feeding"
+	},
+	"KKF-232" : {
+		"KR" : "일령별 급이량 변화",
+		"EN" : "Feeding by Days"
+	},
+	"KKF-233" : {
+		"KR" : "오늘 급수량 변화",
+		"EN" : "Today's Watering"
+	},
+	"KKF-234" : {
+		"KR" : "일령별 급수량 변화",
+		"EN" : "Watering by Days"
+	},
+	"KKF-235" : {
+		"KR" : "일사량",
+		"EN" : "Insolation"
+	},
+	"KKF-236" : {
+		"KR" : "오늘 외기환경 변화",
+		"EN" : "Today's External Env. Sensor"
+	},
+	"KKF-237" : {
+		"KR" : "온/습도",
+		"EN" : "temp/humidity"
+	},
+	"KKF-238" : {
+		"KR" : "악취",
+		"EN" : "Nh3 & H2S"
+	},
+	"KKF-239" : {
+		"KR" : "풍향/풍속",
+		"EN" : "Wind direction & Wind speed"
+	},
+	"KKF-240" : {
+		"KR" : "일령별 외기환경 변화",
+		"EN" : "External Env. Change by days"
+	},
+	"KKF-241" : {
+		"KR" : "사육정보 변경",
+		"EN" : "Change Breeding Info."
+	},
+	"KKF-242" : {
+		"KR" : "일령변경",
+		"EN" : "Change Days"
+	},
+	"KKF-243" : {
+		"KR" : "현재 입추 시간",
+		"EN" : "Current Enter time"
+	},
+	"KKF-244" : {
+		"KR" : "입추시간",
+		"EN" : "Enter time"
+	},
+	"KKF-245" : {
+		"KR" : "사육변경",
+		"EN" : "Change Breeding"
+	},
+	"KKF-246" : {
+		"KR" : "축종",
+		"EN" : "Breeding Species"
+	},
+	"KKF-247" : {
+		"KR" : "실측일자",
+		"EN" : "Actual mesurement date"
+	},
+	"KKF-248" : {
+		"KR" : "평균준량 재산출은 20일령 이후에 입력 가능합니다.",
+		"EN" : "Recalculation of average weight can be entered after 20 days."
+	},
+	"KKF-249" : {
+		"KR" : "모든 변경사항은 관리자 승인 후에 적용됩니다.",
+		"EN" : "All changes take effect after admin approval."
+	},
+	"KKF-250" : {
+		"KR" : "요청",
+		"EN" : "Request"
+	},
+	"KKF-251" : {
+		"KR" : "실측값은 400 ~ 2500 사이의 값을 입력해주세요",
+		"EN" : "Please enter a value between 400-2500 for the actual value."
+	},
+	"KKF-252" : {
+		"KR" : "수정하여 적용할 값이 존재하지 않습니다.",
+		"EN" : "The value to be modified and applied does not exist."
+	},
+	"KKF-253" : {
+		"KR" : "아래의 변경사항을 적용하시겠습니까?",
+		"EN" : "Would you like to apply the changes below?"
+	},
+	"KKF-254" : {
+		"KR" : "존재하지 않는 계정입니다.",
+		"EN" : "The account doesn't exist."
+	},
+	"KKF-255" : {
+		"KR" : "관리자에게 문의 바랍니다.",
+		"EN" : "Please contact administrator."
+	},
+	"KKF-256" : {
+		"KR" : "전국 농장 센서 현황",
+		"EN" : "Nationwide Farm Sensor Status"
+	},
+	"KKF-257" : {
+		"KR" : "통신",
+		"EN" : "Communication"
+	},
+	"KKF-258" : {
+		"KR" : "지난 출하내역",
+		"EN" : "Release history"
+	},
+	"KKF-259" : {
+		"KR" : "승인",
+		"EN" : "Approval"
+	},
+	"KKF-260" : {
+		"KR" : "이미 처리된 요청입니다",
+		"EN" : "This Request has been already processed."
+	},
+	"KKF-261" : {
+		"KR" : "명령 전송 확인",
+		"EN" : "Check Command transmission"
+	},
+	"KKF-262" : {
+		"KR" : "명령을 전송 합니다",
+		"EN" : "Send command"
+	},
+	"KKF-263" : {
+		"KR" : "명령 전송 결과",
+		"EN" : "Result"
+	},
+	"KKF-264" : {
+		"KR" : "입출하 데이터 없음",
+		"EN" : "No Enter & Release Data"
+	},
+	"KKF-265" : {
+		"KR" : "선택된 농장의 입출하 데이터가 없습니다.",
+		"EN" : "There is no Enter & Release data for selected Farm"
+	},
+	"KKF-266" : {
+		"KR" : "발생일",
+		"EN" : "Date of occurrence"
+	},
+	"KKF-267" : {
+		"KR" : "종결일",
+		"EN" : "Completed date"
+	},
+	"KKF-268" : {
+		"KR" : "담당자",
+		"EN" : "Manager"
+	},
+	"KKF-269" : {
+		"KR" : "조치상태",
+		"EN" : "Action status"
+	},
+	"KKF-270" : {
+		"KR" : "작성구분",
+		"EN" : "Categories"
+	},
+	"KKF-271" : {
+		"KR" : "결함구분",
+		"EN" : "Defect"
+	},
+	"KKF-272" : {
+		"KR" : "발생장치",
+		"EN" : "Device"
+	},
+	"KKF-273" : {
+		"KR" : "버전(제품)",
+		"EN" : "Version(Product)"
+	},
+	"KKF-274" : {
+		"KR" : "문제점(현상)",
+		"EN" : "Problem"
+	},
+	"KKF-275" : {
+		"KR" : "원인(추정)",
+		"EN" : "Cause(Probable)"
+	},
+	"KKF-276" : {
+		"KR" : "조치내용",
+		"EN" : "Action details"
+	},
+	"KKF-277" : {
+		"KR" : "기타",
+		"EN" : "etc"
+	},
+	"KKF-278" : {
+		"KR" : "작성일",
+		"EN" : "writing date"
+	}
+}

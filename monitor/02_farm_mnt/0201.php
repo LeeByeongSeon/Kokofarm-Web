@@ -12,7 +12,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 		<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-home"></i>&nbsp;입출하 농장 수</h2>	
+					<h2><i class="fa fa-home"></i>&nbsp;<span class="KKF-137">입출하 농장 수</span></h2>	
 				</div>
 					
 				<!-- <div class="widget-toolbar ml-auto">
@@ -27,10 +27,10 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				<table id="in_out_farm" data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="10" data-toggle="table" style="font-size:14px;">
 					<thead>
 						<tr>
-							<th data-field='f1'  data-sortable='true' data-align='center'>입추</th>
-							<th data-field='f2'  data-sortable='true' data-align='center'>입추예정</th>
-							<th data-field='f3'  data-sortable='true' data-align='center'>출하예정</th>
-							<th data-field='f4'  data-sortable='true' data-align='center'>출하</th>
+							<th	data-field='f1'  data-sortable='true' data-align='center'><span class="KKF-29">입추</span></th>
+							<th data-field='f2'  data-sortable='true' data-align='center'><span class="KKF-138">입추예정</span></th>
+							<th	data-field='f3'  data-sortable='true' data-align='center'><span class="KKF-139">출하예정</span></th>
+							<th data-field='f4'  data-sortable='true' data-align='center'><span class="KKF-30">출하</span></th>
 						</tr>
 					</thead>
 				</table>
@@ -43,7 +43,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 		<div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-list"></i>&nbsp;호수별 입추 수 (단위 : 1000마리)</h2>	
+					<h2><i class="fa fa-list"></i>&nbsp;<span class="KKF-140">호수별 입추 수 (단위 : 1000마리)</span></h2>	
 				</div>
 			</header>
 
@@ -52,18 +52,18 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				<table id="ho_insu" data-page-list="[]" data-pagination="false" data-page-list="false" data-page-size="1" data-toggle="table" style="font-size:14px;">
 					<thead>
 						<tr>
-							<th data-field='f11' data-sortable='true' data-align='center'>11호</th>
-							<th data-field='f12' data-sortable='true' data-align='center'>12호</th>
-							<th data-field='f13' data-sortable='true' data-align='center'>13호</th>
-							<th data-field='f14' data-sortable='true' data-align='center'>14호</th>
-							<th data-field='f15' data-sortable='true' data-align='center'>15호</th>
-							<th data-field='f16' data-sortable='true' data-align='center'>16호</th>
-							<th data-field='f17' data-sortable='true' data-align='center'>17호</th>
-							<th data-field='f18' data-sortable='true' data-align='center'>18호</th>
-							<th data-field='f19' data-sortable='true' data-align='center'>19호</th>
-							<th data-field='f20' data-sortable='true' data-align='center'>20호</th>
-							<th data-field='f21' data-sortable='true' data-align='center'>21호</th>
-							<th data-field='f22' data-sortable='true' data-align='center'>22호</th>
+							<th data-field='f11' data-sortable='true' data-align='center'><span class="KKF-141">11호</span></th>
+							<th data-field='f12' data-sortable='true' data-align='center'><span class="KKF-142">12호</span></th>
+							<th data-field='f13' data-sortable='true' data-align='center'><span class="KKF-143">13호</span></th>
+							<th data-field='f14' data-sortable='true' data-align='center'><span class="KKF-144">14호</span></th>
+							<th data-field='f15' data-sortable='true' data-align='center'><span class="KKF-146">15호</span></th>
+							<th data-field='f16' data-sortable='true' data-align='center'><span class="KKF-146">16호</span></th>
+							<th data-field='f17' data-sortable='true' data-align='center'><span class="KKF-147">17호</span></th>
+							<th data-field='f18' data-sortable='true' data-align='center'><span class="KKF-148">18호</span></th>
+							<th data-field='f19' data-sortable='true' data-align='center'><span class="KKF-149">19호</span></th>
+							<th data-field='f20' data-sortable='true' data-align='center'><span class="KKF-150">20호</span></th>
+							<th data-field='f21' data-sortable='true' data-align='center'><span class="KKF-151">21호</span></th>
+							<th data-field='f22' data-sortable='true' data-align='center'><span class="KKF-152">22호</span></th>
 						</tr>
 					</thead>
 				</table>
@@ -101,12 +101,13 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 
 <!--입출하 일정 & 농가 지도-->
 <div class="row">
-	<article class="col-xl-7">
+	<article class="col-xl-8">
 		<div class="jarviswidget jarviswidget-color-white" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">
-					<span class="widget-icon"> <i class="fa fa-calendar text-primary"></i> </span>
-					<h2> 입출하 일정</h2>
+					<!-- <span class="widget-icon"> <i class="fa fa-calendar text-primary"></i> </span>
+					<h2 class="0201-03-hdr-title"> 입출하 일정</h2> -->
+					<h2><i class="fa fa-calendar text-primary"></i>&nbsp;<span class="KKF-153">입출하 일정</span></h2>	
 				</div>
 				<div class="widget-toolbar ml-auto" style="padding-top: 4px">
 					<!-- add: non-hidden - to disable auto hide -->
@@ -140,15 +141,15 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 		</div>
 	</article>
 
-	<article class="col-xl-5">
+	<article class="col-xl-4">
 		<div class="jarviswidget jarviswidget-color-white no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header>
 				<div class="widget-header">	
-					<h2><i class="fa fa-map-marker text-green"></i>&nbsp;농가 지도</h2>	
+					<h2><i class="fa fa-map-marker text-green"></i>&nbsp;<span class="KKF-154">농가 지도</span></h2>	
 				</div>
 				<div class="widget-toolbar ml-auto" style="cursor: default">
-					<span class='fa fa-map-marker text-blue'> </span>&nbsp;입추&nbsp;
-					<span class='fa fa-map-marker text-orange'> </span>&nbsp;출하&nbsp;
+					<span class='fa fa-map-marker text-blue'> </span>&nbsp;<span class="KKF-29">입추</span>&nbsp;
+					<span class='fa fa-map-marker text-orange'> </span>&nbsp;<span class="KKF-30">출하</span>&nbsp;
 				</div>
 			</header>
 				
@@ -162,7 +163,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 	</article>
 
 	<!--modal_box-->
-	<div id="modal_box" class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<!-- <div id="modal_box" class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content" style="top:20%">
 				<div class="modal-header">
@@ -254,7 +255,7 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- modal_box end -->
 
 </div>
@@ -294,7 +295,6 @@ include_once("../inc/bottom.php");
 		});
 
 		//pageSetUp();
-
 		"use strict";
 			
 			var date = new Date();

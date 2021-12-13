@@ -10,6 +10,7 @@ define("corr_temp", -1.2);	//저울-온도보정
 define("corr_humi", 7);		//저울-습도보정
 define("corr_co2", 0);		//저울-CO2보정
 define("corr_nh3", 0);		//저울-NH3보정
+define("feed_hunt", 10);	//사료빈 저울 헌팅값 제거
 
 function buffer_code(){
 	$query = "SELECT cmFarmid, cmDongid, MAX(cmCode) AS maxCode FROM comein_master GROUP BY cmFarmid, cmDongid";
@@ -489,7 +490,88 @@ function get_term_date($time, $term){
 	return $ret;
 }
 
+/* 초미세먼지 좋음, 나쁨 구분
+param
+- udust : 초미세먼지 수치
+return
+- ret : 기준시간에서 term을 계산한 시간
+*/
+function get_udust_status($udust){
+	$ret = "좋음";
 
+	if($udust >= 16 && $udust < 36)	{ $ret = "보통"; }
+	else if($udust >= 36 && $udust < 76)	{ $ret = "나쁨"; }
+	else if($udust >= 76)			{ $ret = "매우나쁨"; }
+	else if($udust < 0) 			{ $ret = "-"; }
+
+	return $ret;
+}
+
+/* 풍향 구분
+param
+- direction : 초미세먼지 수치
+return
+- ret : 기준시간에서 term을 계산한 시간
+*/
+function get_wind_status($direction){
+	$ret = "-";
+
+	$direction = sprintf('%d', $direction);
+
+	switch($direction){
+		case 0:
+		case 360:
+			$ret = "북";
+			break;
+		case 45:
+			$ret = "북동";
+			break;
+		case 90:
+			$ret = "동";
+			break;
+		case 135:
+			$ret = "남동";
+			break;
+		case 180:
+			$ret = "남";
+			break;
+		case 225:
+			$ret = "남서";
+			break;
+		case 270:
+			$ret = "서";
+			break;
+		case 315:
+			$ret = "북서";
+			break;
+		default : 
+			$ret ="-";
+			break;
+	}
+
+	return $ret;
+}
+
+/* 센서값 정규화
+param
+- udust : 초미세먼지 수치
+return
+- ret : 기준시간에서 term을 계산한 시간
+*/
+function check_sensor_val($format, $val){
+	$ret = sprintf($format, $val);
+
+	switch($val){
+		case 0 : $ret = "-";
+			break;
+		case -100 : $ret = "-";
+			break;
+		case -200 : $ret = "-";
+			break;
+	}
+
+	return $ret;
+}
 
 // 몽고db 관련---------------------------------------------------------------------------
 

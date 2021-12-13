@@ -20,11 +20,11 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 			<div class="jarviswidget jarviswidget-color-gray-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-tablet"></i>&nbsp;PLC 관리</h2>	
+						<h2><i class="fa fa-tablet"></i>&nbsp;<span class="KKF-19">PLC 관리</span></h2>	
 					</div>
 					<div class="widget-toolbar ml-auto" style="padding-top: 4px">
 						<div class="form-inline">
-							<button class="btn btn-secondary btn-labeled btn-sm" id="btn_excel"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button class="btn btn-secondary btn-labeled btn-sm" id="btn_excel"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</div>
 					</div>
 				</header>
@@ -57,6 +57,7 @@ include_once("../inc/bottom.php");
 
 		call_tree_view("", act_grid_data);
 		set_tree_search(act_grid_data);
+
 	});
 
 	function get_grid_data(){

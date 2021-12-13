@@ -21,11 +21,11 @@ $init_id = $init_farm != "" ? $init_farm : "";
 			<div class="jarviswidget jarviswidget-color-gray-dark no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-home"></i>&nbsp;농장별 동 관리</h2>	
+						<h2><i class="fa fa-home"></i>&nbsp;<span class="KKF-14">농장별 동 관리</span></h2>	
 					</div>
 					<div class="widget-toolbar ml-auto" style="padding-top: 4px">
 						<div class="form-inline">
-							<button class="btn btn-secondary btn-sm btn-labeled" id="btn_excel"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span>엑셀</button>
+							<button class="btn btn-secondary btn-sm btn-labeled" id="btn_excel"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</div>
 					</div>
 				</header>

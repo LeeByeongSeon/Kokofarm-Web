@@ -1,0 +1,9 @@
+{
+	"0101-hdr-title" : "Device Summary Status",
+	"0101-tb-normal" : "Normal",
+	"0101-tb-caution" : "Caution",
+	"0101-tb-warning" : "Warning",
+	"0101-tb-danger" : "Danger",
+	"0101-btn-search" : "Search",
+	"0101-btn-cancle" : "Cancle"
+}

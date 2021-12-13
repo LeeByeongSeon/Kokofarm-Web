@@ -1,3 +1,7 @@
+<?
+$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+
+?>
 <!DOCTYPE html>
 
 <html lang="en-us" class="smart-style-6">
@@ -12,7 +16,6 @@
 	<script src="../common/library/jquery/jquery.min.js"></script>						<!-- jQuery -->
 	<script src="../common/library/jquery/jquery-ui-1.10.3.min.js"></script>				<!-- jQuery UI-->
 	<script src="../common/library/bootstrap/bootstrap.min.js"></script>					<!-- BOOTSTRAP JS -->
-	<script src="../common/library/smartwidgets/jarvis.widget.min.js"></script>			<!-- JARVIS WIDGETS -->
 	
 	<!-- FAVICONS -->
 	<link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
@@ -21,9 +24,6 @@
 	<!-- BOOTSTRAP CSS -->
 	<link rel="stylesheet" type="text/css" media="screen" href="../common/library/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="../common/library/fonts/font-awesome.min.css">
-
-	<!-- myDefined JS-->
-	<link rel="stylesheet" type="text/css" href="../common/library/my_define/my_define.css">
 
 	<!--Template CSS-->
 	<link rel="stylesheet" media="screen, print" href="../common/library/vendors/vendors.bundle.css">
@@ -53,11 +53,11 @@
 							</div>
 							<div class="col-xl-7 p-3" id="login_form">
 								<table class="w-75 m-auto">
-									<tr><td><h1 class="font-weight-bold text-orange">로그인 <small> [육계 - 생육관제 V3.0]</small></h1></td></tr>
+									<tr><td><h1 class="font-weight-bold text-orange"><span class="KKF-195">로그인</span> <small> [<span class="KKF-196">육계 - 생육관제 v3.0</span>]</small></h1></td></tr>
 									<tr><td><input class="form-control mb-2" type="text"     name="id" placeholder=" 아이디"   maxlength="20" size="20" onkeyup="login_enter()"></td></tr>
 									<tr><td><input class="form-control mb-2" type="password" name="pw" placeholder=" 비밀번호" maxlength="20" size="20" onkeyup="login_enter()"></td></tr>
-									<tr><td><button class="btn btn-success w-100 mb-2" id="btn_login" type="submit"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;로그인&nbsp;&nbsp;</button></td></tr>
-									<tr><td><a class="text-secondary" href="http://kokofarm.co.kr" target="_blank"><i class="fa fa-angle-double-right"></i> kokoFarm 홈페이지</a></td></tr>
+									<tr><td><button class="btn btn-success w-100 mb-2" id="btn_login" type="submit"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="KKF-195">로그인</span>&nbsp;&nbsp;</button></td></tr>
+									<tr><td><a class="text-secondary" href="http://kokofarm.co.kr" target="_blank"><i class="fa fa-angle-double-right"></i> <span class="KKF-197">kokoFarm 홈페이지</span></a></td></tr>
 								</table>
 							</div>
 						</div>
@@ -93,7 +93,7 @@
 	<footer class="border-top border-warning sa-page-footer bg-white"> <!-- BEGIN .sa-page-footer -->
 		<div class="d-flex align-items-center w-100 h-100">
 			<div class="footer-left">
-				<span class="text-secondary">KOKOFARM <span class="hidden-xs"> : 계사 생육관제 모니터링 시스템 Copyright</span> © 2019 EMOTION Co., Ltd. All rights reserved.</span>
+				<span class="text-secondary">KOKOFARM <span class="hidden-xs"> : <span class="KKF-198">계사 생육관제 모니터링 시스템 Copyright</span></span> © 2019 EMOTION Co., Ltd. All rights reserved.</span>
 			</div>
 		</div>
 	</footer> <!-- END .sa-page-footer -->
@@ -134,6 +134,9 @@
 			});
 			return false;
 		});
+
+		change_lang(curr_lang);
+
 	});
 
 	// enter 누르고 로그인
@@ -164,6 +167,30 @@
 			});
 			return false;
 		}
+	}
+
+	var get_lang = get_lang().split("-"); // ko-KR
+	var curr_lang = get_lang[0];		  // ko
+	
+	// 현재 local language 가져옴
+	function get_lang(){
+		return navigator.language || navigator.userLanguage;
+	}
+
+	// 번역
+	function change_lang(lang){
+		$.getJSON("../common/kkf_lang/KKF_lang.json", function(data){
+			$.each(data, function(idx, obj){
+				switch(lang){
+					case "ko" :
+						$("."+idx).html(obj.KR);
+						break;
+					case "en" :
+						$("."+idx).html(obj.EN);
+						break;
+				}
+			})
+		});
 	}
 
 </script>

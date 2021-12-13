@@ -8,7 +8,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #558887;">
-					<h4 id="modal_detail_title" class="modal-title text-white font-weight-bold"><span id="fdName">농장명</sapn>&nbsp;&nbsp;<small class="text-white" id="dmDate">작성일 0000-00-00 00:00:00</small></h4>
+					<h4 id="modal_detail_title" class="modal-title text-white font-weight-bold"><span id="fdName">농장명</span>&nbsp;&nbsp;<small class="text-white" id="dmDate">작성일 0000-00-00 00:00:00</small></h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white">×</button>
 				</div>
 				<div id="modal_detail_body" class="modal-body" style="padding: 1rem;">

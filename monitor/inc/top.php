@@ -13,32 +13,32 @@
 	//메뉴 구성
 	$menu_struct = array(
 		//장치현황
-		array("01_device_mnt", "0101.php", "장치현황", "요약 현황", "Y", "fa fa-lg fa-fw fa-home"),
-		array("01_device_mnt", "0102.php", "장치현황", "동별 세부 현황", "", ""),
-		array("01_device_mnt", "0103.php", "장치현황", "IP 카메라 현황", "", ""),
+		array("01_device_mnt", "0101.php", "KKF-1", "KKF-2", "Y", "fa fa-lg fa-fw fa-home"),
+		array("01_device_mnt", "0102.php", "KKF-1", "KKF-3", "", ""),
+		array("01_device_mnt", "0103.php", "KKF-1", "KKF-4", "", ""),
 		
 		//농장현황
-		array("02_farm_mnt", "0201.php", "농장현황", "입출하 관리", "Y", "fa fa-lg fa-fw fa-bar-chart-o"),
-		array("02_farm_mnt", "0202.php", "농장현황", "전국 농장 현황", "", ""),
-		array("02_farm_mnt", "0203.php", "농장현황", "동별 세부 현황", "", ""),
-		array("02_farm_mnt", "0204.php", "농장현황", "출하이력", "", ""),
-		array("02_farm_mnt", "0205.php", "농장현황", "재산출 요청 관리", "", ""),
-		array("02_farm_mnt", "0206.php", "농장현황", "결함 및 A/S 관리", "", ""),
+		array("02_farm_mnt", "0202.php", "KKF-5", "KKF-6", "", ""),
+		array("02_farm_mnt", "0201.php", "KKF-5", "KKF-7", "Y", "fa fa-lg fa-fw fa-bar-chart-o"),
+		array("02_farm_mnt", "0203.php", "KKF-5", "KKF-8", "", ""),
+		array("02_farm_mnt", "0204.php", "KKF-5", "KKF-9", "", ""),
+		array("02_farm_mnt", "0205.php", "KKF-5", "KKF-10", "", ""),
+		array("02_farm_mnt", "0206.php", "KKF-5", "KKF-11", "", ""),
 		
 		//계정관리
-		array("03_account_mgr", "0301.php", "계정관리", "농장 계정 관리", "Y", "fa fa-lg fa-fw fa-group"),
-		array("03_account_mgr", "0302.php", "계정관리", "농장별 동 관리", "", ""),
-		array("03_account_mgr", "0303.php", "계정관리", "관리자 계정 관리", "", ""),
+		array("03_account_mgr", "0301.php", "KKF-12", "KKF-13", "Y", "fa fa-lg fa-fw fa-group"),
+		array("03_account_mgr", "0302.php", "KKF-12", "KKF-14", "", ""),
+		array("03_account_mgr", "0303.php", "KKF-12", "KKF-15", "", ""),
 		
 		//장치관리
-		array("04_device_mgr", "0401.php", "장치관리", "IoT 저울 관리", "Y", "fa fa-lg fa-fw fa-video-camera"),
-		array("04_device_mgr", "0402.php", "장치관리", "IP 카메라 관리", "", ""),
-		array("04_device_mgr", "0403.php", "장치관리", "PLC 관리", "", ""),
-		array("04_device_mgr", "0404.php", "장치관리", "급이/급수/외기 관리", "", ""),
+		array("04_device_mgr", "0401.php", "KKF-16", "KKF-17", "Y", "fa fa-lg fa-fw fa-video-camera"),
+		array("04_device_mgr", "0402.php", "KKF-16", "KKF-18", "", ""),
+		array("04_device_mgr", "0403.php", "KKF-16", "KKF-19", "", ""),
+		array("04_device_mgr", "0404.php", "KKF-16", "KKF-20", "", ""),
 
 		//옵션관리
-		array("05_option_mgr", "0501.php", "옵션관리", "상세 옵션 관리", "Y", "fa fa-lg fa-fw fa-cog"),
-		array("05_option_mgr", "0502.php", "옵션관리", "PLC Unit ID 관리", "", ""),
+		array("05_option_mgr", "0501.php", "KKF-21", "KKF-22", "Y", "fa fa-lg fa-fw fa-cog"),
+		array("05_option_mgr", "0502.php", "KKF-21", "KKF-23", "", ""),
 	);
   
     //현재 URL 확인 및 메뉴출력
@@ -54,12 +54,12 @@
 			case "Y":
 				if($depth_1_url == $value[0]){
 					$top_menu_html .= "<li class='active'>";
-					$top_menu_html .= " <a class='has-arrow' href='#'><span class='" .$value[5]. "'></span><span class='menu-item-parent'>" .$value[2]. "</span></a>";
+					$top_menu_html .= " <a class='has-arrow' href='#'><span class='" .$value[5]. "'></span><span class='menu-item-parent'><span class='" .$value[2]. "'></span></a>";
 					$top_menu_html .= "   <ul aria-expanded='true' class='sa-sub-nav collapse'>";
 				}
 				else{
 					$top_menu_html .= "<li class=''>";
-					$top_menu_html .= " <a class='has-arrow' href='#'><span class='" .$value[5]. "'></span><span class='menu-item-parent'>" .$value[2]. "</span></a>";
+					$top_menu_html .= " <a class='has-arrow' href='#'><span class='" .$value[5]. "'></span><span class='menu-item-parent'><span class='" .$value[2]. "'></span></a>";
 					$top_menu_html .= "   <ul aria-expanded='true' class='sa-sub-nav collapse'>";
 				}
 
@@ -67,10 +67,10 @@
 				for($i=0; $i<=count($menu_struct)-1; $i++){
 					if($menu_struct[$i][0]==$value[0]){
 						if($depth_1_url==$menu_struct[$i][0] && $depth_2_url==$menu_struct[$i][1]){
-							$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='../" . $menu_struct[$i][0] . "/" . $menu_struct[$i][1] . "' \">". $menu_struct[$i][3] ."</a></li>";
+							$top_menu_html .= "<li class='active'><a href='javascript:void(0)' onClick=\" location.href='../" . $menu_struct[$i][0] . "/" . $menu_struct[$i][1] . "' \"><span class='". $menu_struct[$i][3] ."'><span></a></li>";
 						}
 						else{
-							$top_menu_html .= "<li class=''><a href='javascript:void(0)' onClick=\" location.href='../" . $menu_struct[$i][0] . "/" . $menu_struct[$i][1] . "' \">" . $menu_struct[$i][3] . "</a></li>";
+							$top_menu_html .= "<li class=''><a href='javascript:void(0)' onClick=\" location.href='../" . $menu_struct[$i][0] . "/" . $menu_struct[$i][1] . "' \"><span class='" . $menu_struct[$i][3] . "'><span></a></li>";
 						}
 					}
 				}
@@ -97,7 +97,7 @@
 	$title_html = "";
 	foreach ($menu_struct as $value){
 		if($depth_1_url == $value[0] && $depth_2_url == $value[1]){
-			$title_html .= "<h4 class='page-header'><i class='fa-fw fa fa-th-large text-orange'></i> " .$value[2]. "<span style='color:#455a64'> <i class='fa-fw fa fa-angle-right'></i> <b>" .$value[3]. "</b></span></h4>";
+			$title_html .= "<h4 class='page-header'><i class='fa-fw fa fa-th-large text-orange'></i>&nbsp;<span class='" .$value[2]. " font-sm font-weight-bold'></span><span style='color:#455a64'> <i class='fa-fw fa fa-angle-right'></i> <b><span class='" .$value[3]. "'></span></b></span></h4>";
 		}
 	}
 
@@ -142,11 +142,6 @@
 	<script src='../common/library/editable_table/mindmup-editabletable.js'></script>
 	<script src='../common/library/editable_table/numeric-input-example.js'></script>
 	<script src="../common/library/editable_table/external/adamwdraper/numeral.min.js"></script>
-	
-	<!-- jQuery Grid -->
-	<script src="../common/library/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>     	<!--JQGrid-->
-	<script src="../common/library/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>  		<!--JQGrid:Language-->
-	<link rel="stylesheet" type="text/css" href="../common/library/jqgrid/ui.jqgrid-bootstrap.css">  	<!--JQGrid:CSS--->
 
 	<!--amChart-->
 	<script src="../common/library/amchart/amcharts.js" type="text/javascript"></script>
@@ -209,8 +204,9 @@
 							<div class="d-flex align-items-center w-100">
 								<div class="ml-auto sa-header-right-area">
 									<div class="form-inline text-dark font-weight-bold">
+										<!-- <button type="button" onClick="change_lang('en')">EN</button> -->
 										<i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;<?=$mgr_name?> - <?=$mgr_type?></span>&nbsp;&nbsp;&nbsp;&nbsp;
-										<a class="btn-sm text-secondary" href="../00_login/index_action.php?oper=logout" title="logout" role="button"> Logout <i class="glyphicon glyphicon-log-out"></i></a>
+										<a class="btn-sm text-secondary" href="../00_login/index_action.php?oper=logout" title="logout" role="button">&nbsp;Logout&nbsp;<i class="glyphicon glyphicon-log-out"></i></a>
 									</div>
 								</div>
 							</div>          
@@ -235,21 +231,22 @@
 					<ul class="metismenu sa-left-menu sa-sparks float-right" style="margin-top: revert;">
 						<li class="sparks-info">
 							<h5 class="text-white">
-								<div id="clockDate">오늘 : <?=date("Y-m-d")?></div>
+								<!-- <div><span class="top-info-today font-sm">오늘</span> : <?=date("Y-m-d")?></div> -->
+								<div><span class="font-sm"><?=date("Y-m-d")?></span></div>
 								<span class="text-white"><i class="fa fa-clock-o text-orange-dark"></i><span class="text-white" id="clock_now" style="display: inline"></span></span>
 							</h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 입추(동) <span class="text-white"><i class="fa fa-home text-orange-dark"></i>&nbsp;<?=$cnt_in?></span></h5>
+							<h5 class="text-white"><span class="KKF-24 font-sm">입추(동)</span><span class="text-white"><i class="fa fa-home text-orange-dark"></i>&nbsp;<?=$cnt_in?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 오류(동) <span class="text-white"><i class="fa fa-check-square text-orange-dark"></i>&nbsp;<?=$cnt_err?></span></h5>
+							<h5 class="text-white"><span class="KKF-25 font-sm">오류(동)</span><span class="text-white"><i class="fa fa-check-square text-orange-dark"></i>&nbsp;<?=$cnt_err?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 출하대기(동) <span class="text-white"><i class="fa fa-plus-square text-orange-dark"></i>&nbsp;<?=$cnt_wait?></span></h5>
+							<h5 class="text-white"><span class="KKF-26 font-sm">출하대기(동)</span><span class="text-white"><i class="fa fa-plus-square text-orange-dark"></i>&nbsp;<?=$cnt_wait?></span></h5>
 						</li>
 						<li class="sparks-info">
-							<h5 class="text-white"> 출하(동) <span class="text-white"><i class="fa fa-minus-square text-orange-dark"></i>&nbsp;<?=$cnt_out?></span></h5>
+							<h5 class="text-white"><span class="KKF-27 font-sm">출하(동)</span><span class="text-white"><i class="fa fa-minus-square text-orange-dark"></i>&nbsp;<?=$cnt_out?></span></h5>
 						</li>
 					</ul>
 				</div>
@@ -263,7 +260,7 @@
 
 						<!--화면 Title-->
 						<div>
-							<?=$title_html?>       
+							<?=$title_html?>
 						</div>
 
 					</div><!--END .d-flex w-100 home-header-->
@@ -279,11 +276,11 @@
 										<header>
 											<div class="widget-header">
 												<span class="widget-icon"> <i class="fa fa-list"></i> </span>
-												<h2>농가 목록 </h2>
+												<h2><span class="KKF-28">농가 목록<span></h2>
 											</div>
 											<div class="widget-toolbar ml-auto" style="cursor: default">
-												<span class='badge badge-primary'> </span>&nbsp;입추
-												<span class='badge badge-danger'> </span>&nbsp;출하
+												<span class='badge badge-primary'> </span>&nbsp;<span class="KKF-29">입추</span>
+												<span class='badge badge-danger'> </span>&nbsp;<span class="KKF-30">출하</span>
 											</div>
 										</header>
 							
@@ -294,7 +291,7 @@
 												<form class="form-inline" id="form_tree_search" role="form" onsubmit="return false;">
 													<div class="col-xl-12 input-group">
 														<input type="text" class="form-control" name="text_tree_search" placeholder="농장 이름" max-length="20">&nbsp;
-														<button type="button" class="btn btn-default btn-sm btn-labeled" id="btn_tree_search" style="margin-top: 1px"><span class="btn-label"><i class="fa fa-search text-primary"></i></span>검색</button>
+														<button type="button" class="btn btn-default btn-sm btn-labeled" id="btn_tree_search" style="margin-top: 1px"><span class="btn-label"><i class="fa fa-search text-primary"></i></span><span class="KKF-31">검색</span></button>
 													</div>
 												</form>
 											</div>

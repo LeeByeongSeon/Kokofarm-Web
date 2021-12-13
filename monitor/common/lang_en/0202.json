@@ -1,0 +1,13 @@
+{
+	"0202-hdr-title" : "All Farm Status",
+	"0202-tb-all" : "All",
+	"0202-tb-normal" : "Normal",
+	"0202-tb-caution" : "Caution",
+	"0202-tb-warning" : "Warning",
+	"0202-tb-danger" : "Danger",
+	"0202-tb-i" : "입추",
+	"0202-tb-o" : "출하",
+	"0202-btn-detail" : "Detail Status",
+	"0202-btn-history" : "출하 Records",
+	"0202-btn-close" : "Close"
+}

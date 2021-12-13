@@ -13,16 +13,16 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 			<div class="jarviswidget jarviswidget-color-darken no-padding" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 				<header>
 					<div class="widget-header">	
-						<h2><i class="fa fa-map-marker"></i>&nbsp;전국 농장 현황</h2>	
+						<h2><i class="fa fa-map-marker"></i>&nbsp;<span class="0202-hdr-title">전국 농장 현황</span></h2>	
 					</div>
 					<div class="widget-toolbar ml-auto" style="cursor: default">
-						전체 : <span class="badge badge-default" id="farm_cnt_total">&nbsp;</span>&nbsp;
-						정상 : <span class="badge badge-primary" id="farm_cnt_normal">&nbsp;</span>&nbsp;
-						주의 : <span class="badge badge-success" id="farm_cnt_caution">&nbsp;</span>&nbsp;
-						경고 : <span class="badge badge-warning" id="farm_cnt_warning">&nbsp;</span>&nbsp;
-						위험 : <span class="badge badge-danger"  id="farm_cnt_danger">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class='fa fa-map-marker text-blue'> </span>&nbsp;입추&nbsp;
-						<span class='fa fa-map-marker text-orange'> </span>&nbsp;출하&nbsp;
+						<span class="KKF-155">전체</span> : <span class="badge badge-default" id="farm_cnt_total">&nbsp;</span>&nbsp;
+						<span class="KKF-36">정상</span> : <span class="badge badge-primary" id="farm_cnt_normal">&nbsp;</span>&nbsp;
+						<span class="KKF-37">주의</span> : <span class="badge badge-success" id="farm_cnt_caution">&nbsp;</span>&nbsp;
+						<span class="KKF-38">경고</span> : <span class="badge badge-warning" id="farm_cnt_warning">&nbsp;</span>&nbsp;
+						<span class="KKF-39">위험</span> : <span class="badge badge-danger" id="farm_cnt_danger">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class='fa fa-map-marker text-blue'> </span>&nbsp;<span class="KKF-29">입추</span>&nbsp;
+						<span class='fa fa-map-marker text-orange'> </span>&nbsp;<span class="KKF-30">출하</span>&nbsp;
 					</div>
 				</header>
 					
@@ -59,9 +59,9 @@ $map_key="AIzaSyDhI36OUKqVjyFrUQYufwr80bon1Y0-hZ0";
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary float-left" id="detail_farm" onClick="page_move('../01_device_mnt/0102.php');">세부현황</button>
-				<button type="button" class="btn btn-primary float-left" id="out_farm" onClick="page_move('./0204.php');">출하이력</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-primary float-left" id="detail_farm" onClick="page_move('../01_device_mnt/0102.php');"><span class="KKF-156">세부현황</span></button>
+				<button type="button" class="btn btn-primary float-left" id="out_farm" onClick="page_move('./0204.php');"><span class="KKF-9">출하이력</span></button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="KKF-32">닫기</span></button>
 			</div>
 		</div>
 	</div>
@@ -86,7 +86,6 @@ include_once("../inc/bottom.php");
 		set_tree_search(get_map_data);
 
 		get_warn_data();
-
 	});
 	
 	//구글맵 출력
