@@ -75,6 +75,24 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 	</div>
 </div>
 
+<!--출하상태 표시 div-->		
+<div class="card border-danger mb-4 mx-auto" id="row_status_info">
+	<div class="card-header font-weight-bold text-primary pl-2"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
+	<div class="card-body">
+		<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">
+			<tr>
+				<td colspan="2" id="top_status_msg"></td>
+			</tr>
+			<tr>
+				<td class="w-50 font-md text-secondary" id="top_time_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_time"></td>
+			</tr>
+			<tr>
+				<td class="w-50 font-md text-secondary" id="top_avg_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_avg"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
 <!--실시간 평균-->
 <div class="row" id="row_summary" >
 	<div class="col-xs-12">
@@ -349,12 +367,16 @@ include_once("../inc/bottom.php")
 
 				// $("#row_feed_water").hide();
 				// $("#row_outsensor").hide();
+				let status = data.summary.summary_status;
+				let time   = data.summary.summary_time;
+				let avg	   = data.summary.summary_curr_avg_weight;
 
-				if(data.beStatus != "O"){
+				if(status != "O"){
 
 					$("#row_summary").show();
 					$("#row_avg_esti").show();
 					$("#row_cell_avg").show();
+					$("#row_status_info").hide();
 
 					//일령
 					let interm = data.summary.summary_interm;
@@ -405,6 +427,16 @@ include_once("../inc/bottom.php")
 					$("#row_cell_avg").hide();
 					$("#row_feed_water").hide();
 					$("#row_outsensor").hide();
+					$("#row_status_info").show();
+							
+					$("#top_status_info").removeClass('d-none');
+					$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-secondary no-margin'>현재 <span class='text-danger'>'출하 상태'</span>입니다</h3>").show();
+					$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 최종 출하 시간 : ");
+					$("#top_last_time").html(time);
+					$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
+					$("#top_last_avg").html(avg + "g");
+
+					
 				}
 				
 				//카메라

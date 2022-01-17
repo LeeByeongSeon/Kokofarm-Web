@@ -77,6 +77,41 @@ include_once("../inc/top.php")
 		</div>
 	</div>
 </div>
+	
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
+				<div class="widget-header">	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;중량별 정규분포
+						<span class="font-sm badge bg-orange">15일령 이후 표시</span>
+					</h2>
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="$('#weigth_ndis_table_div').toggle(700).focus()">표 출력</button>
+				</div>
+			</header>
+			<div class="widget-body no-padding weight_ndis_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div class="col-xs-12 no-padding">
+					<div id="weight_ndis_chart" style="height: 260px;"></div>
+				</div>
+				<div class="col-xs-12">
+					<div id="weigth_ndis_table_div" style="width:100%; display: none;" tabindex="-1">
+						<table id="weigth_ndis_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="10" data-sort-name="f1" data-sort-order="asc" data-toggle="table" style="font-size:14px">
+							<thead>
+								<tr>
+									<th data-field='f1' data-visible="true" data-sortable="true">구간(g)</th>
+									<th data-field='f2' data-visible="true" data-sortable="true">구간별 비율(%)</th>
+									<th data-field='f3' data-visible="true" data-sortable="true">비고</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!--일령별 환경센서 변화 -->
 <div class="row">
@@ -188,6 +223,8 @@ include_once("../inc/bottom.php")
 		//일령별 센서정보 가져오기
 		//$("#sensor_btn_group > button.btn:first").addClass("active");
 		$("#sensor_btn_group > button.btn:first").trigger('click');
+
+		get_ndis_data();
 	});
 
 	function get_avg_history(comm){
@@ -223,6 +260,85 @@ include_once("../inc/bottom.php")
 			}
 		});
 	};
+
+	//중량별 산포도
+	function get_ndis_data(){
+
+		let data_arr = {};
+		data_arr["oper"] = "get_ndis_chart";
+		data_arr["cmCode"] = select_code;
+
+		$.ajax({
+			url:"0106_action.php",
+			data:data_arr,
+			cache:false,
+			type:"post",
+			dataType:"json",
+			success: function(data){
+				let insu = data.ndis_data[0].cmInsu;	// cmInsu 입추 수
+				let ndis = data.ndis_data[0].awNdis;	// awNdis 정규분포
+				let arr  = ndis.split("|");
+
+				// awNdis 정규분포 총합계
+				let ret = arr.reduce(function add(sum, curr_val){
+					return sum + parseInt(curr_val);
+				}, 0);
+
+				console.log(ret);
+
+				let ndis_chart = [];	// chart data를 담을 배열
+				let ndis_table = [];	// table data 를 담을 배열
+				let widx = 500;			// 무게 index
+				let sidx = 0;			// start index
+				let eidx = 0;			// end index
+				
+				// sidx 구하는 for문
+				for(let s=0; s<arr.length; s++){
+					if(arr[s] != 0){
+						sidx = s-2;
+						break;
+					}
+				}
+
+				// eidx 구하는 for문
+				for(let e=(arr.length)-1; e>=0; e--){
+					if(arr[e] != 0){
+						eidx = e+3;
+						break;
+					}
+				}
+				for(let i=sidx; i<eidx; i++){
+					let val = ((parseInt(arr[i])/ret)*100).toFixed(1);
+
+					let obj_chart = {
+						"구간": String(widx+(50*i)),
+						"구간별 비율(%)": (val*insu)/100,
+						"": (val*insu)/100
+					}
+					ndis_chart[i-sidx] = obj_chart;
+
+					let obj_table = {
+						"f1": widx+(50*i),
+						"f2": parseInt(arr[i]),
+						"f3": val+"(%)"
+					}
+					ndis_table[i] = obj_table;
+				}
+
+				let params = {};
+				params["graph_color"] = ["#FF9900","#ff6600","#109618","#990099"];
+				params["font_size"] = 12;
+				params["is_zoom"] = true;
+				params["date_format"] = "입추수 " + insu;
+				params["chart_style"] = "세로-Bar";
+
+				$("#ndis_insu").html(insu+"수");
+				$("#weigth_ndis_table").bootstrapTable('load', ndis_table); 
+				draw_chart("weight_ndis_chart", ndis_chart, params);
+				if(ret == 0){$(".weight_ndis_body").css("display","none");}
+			}
+		});
+	}
 
 	function get_sensor_history(chart_name){
 

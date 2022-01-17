@@ -82,6 +82,20 @@ include_once("../common/php_module/common_func.php");
     
                 break;
 
+			case "get_ndis_chart":
+
+				// $select_query = "SELECT awNdis FROM avg_weight WHERE awFarmid = '". $farmID ."' AND awDongid = '". $dongID ."' ORDER BY awDate DESC LIMIT 1";
+				$select_query = "SELECT cm.cmInsu, aw.awNdis FROM comein_master AS cm
+								LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid WHERE cmCode = '".$cmCode."' ORDER BY aw.awDate DESC LIMIT 1";
+	
+				$select_data = get_select_data($select_query);
+	
+				$response["ndis_data"] = $select_data;
+	
+				echo json_encode($response);
+	
+				break;
+
             case "get_sensor_history":
                 $result = get_cell_history($code, "get_all");
     

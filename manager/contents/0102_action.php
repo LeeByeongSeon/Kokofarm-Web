@@ -48,12 +48,15 @@
 
 			$aw_data = get_select_data($select_sql);
 
-			$curr_interm = $buffer_data[0]["inTerm"];		 //현재 일령
-			$curr_weight = $buffer_data[0]["beAvgWeight"];	 //현재 평균중량
-			$curr_devi   = $buffer_data[0]["beDevi"];		 //현재 표준편차
+			$curr_status = $buffer_data[0]["beStatus"];		  //현재 상태
+			$curr_time 	 = $buffer_data[0]["beAvgWeightDate"];//최종 출하시간 
 
-			$daily_water = $buffer_data[0]["sfDailyWater"]; //일일 급수량
-			$daily_feed  = $buffer_data[0]["sfDailyFeed"];  //일일 급이량
+			$curr_interm = $buffer_data[0]["inTerm"];		  //현재 일령
+			$curr_weight = $buffer_data[0]["beAvgWeight"];	  //현재 평균중량
+			$curr_devi   = $buffer_data[0]["beDevi"];		  //현재 표준편차
+
+			$daily_water = $buffer_data[0]["sfDailyWater"];   //일일 급수량
+			$daily_feed  = $buffer_data[0]["sfDailyFeed"];    //일일 급이량
 
 			$posi = count($aw_data) - 1;
 
@@ -104,6 +107,8 @@
 			$summary = array(
 				//"top_interm"			=> $curr_interm,
 				//"top_avg"				=> sprintf('%0.1f', $curr_weight)."g",
+				"summary_status"		=> $curr_status,								/*현재 상태*/
+				"summary_time"			=> $curr_time,									/*최종 출하 시간*/
 
 				"summary_indate"    	=> substr($buffer_data[0]["cmIndate"], 0, 10),	/*입추일자*/ 
 				"summary_interm"    	=> $curr_interm,								/*현재 일령*/ 
