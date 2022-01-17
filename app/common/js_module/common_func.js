@@ -562,7 +562,7 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
 				graph_obj["valueField"] = key;
 				graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
 				graph_obj["bullet"] = "round";						/*꼭지점*/
-				graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+				graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
 				graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 
             if(is_label === "Y"){
@@ -571,16 +571,16 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
 
 			switch(chart_style){
 				case "라인차트":
-					graph_obj["type"] = "smoothedLine";					/*차트모양*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";				/*차트모양*/
+					graph_obj["lineThickness"] = 1;					/*라인굵기*/
 					break;
 				case "영역차트":
-					graph_obj["type"] = "smoothedLine";					/*smoothedLine*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";				/*smoothedLine*/
+					graph_obj["lineThickness"] = 1;					/*라인굵기*/
 					graph_obj["fillAlphas"] = 0.2;
 					break;
 				default:
-					graph_obj["type"] = "column";							/*차트모양*/
+					graph_obj["type"] = "column";					/*차트모양*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 
@@ -673,21 +673,21 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
             if(is_label === "Y"){
 				graph_obj["labelText"]="[[value]]";					/*값 출력*/
                 graph_obj["bullet"] = "round";						/*꼭지점*/
-                graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+                graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
                 graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 			}
 
 			switch(graph_cnt){
 				case 1:
-					graph_obj["type"] = "column";						/*차트모양*/
+					graph_obj["type"] = "column";					/*차트모양*/
 					graph_obj["lineColor"] = fisrt_color == "" ? graph_color[1] : fisrt_color;			/*라인컬라*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 					break;
 				case 2:
-					//graph_obj["type"] = "smoothedLine";				/*차트모양*/
-                    graph_obj["type"] = "column";				/*차트모양*/
-					graph_obj["lineColor"] = graph_color[3];			/*라인컬라*/
+					//graph_obj["type"] = "smoothedLine";			/*차트모양*/
+                    graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineColor"] = graph_color[3];		/*라인컬라*/
 					graph_obj["lineThickness"] = 3;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					break;
@@ -728,7 +728,7 @@ function draw_chart(chart_id, chart_data, params){
     let is_zoom = params.hasOwnProperty("is_zoom") ? params["is_zoom"] : false;
     let period = params.hasOwnProperty("period") ? params["period"] : "hh";
     let date_format = params.hasOwnProperty("date_format") ? params["date_format"] : "YYYY-MM-DD HH:NN";
-
+	
     for(key in chart_data[0]){
         graph_cnt++;
         if(graph_cnt == 0) { 
@@ -736,26 +736,39 @@ function draw_chart(chart_id, chart_data, params){
         }
         else{
             let graph_obj = {};
-            graph_obj["title"] = key; 
+            graph_obj["title"] = key;
             graph_obj["valueField"] = key;
             graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
 
             if(is_label === "Y"){
 				graph_obj["labelText"]="[[value]]";					/*값 출력*/
                 graph_obj["bullet"] = "round";						/*꼭지점*/
-                graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+                graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
                 graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 			}
 
-            graph_obj["type"] = "column";						/*차트모양*/
-            graph_obj["lineAlpha"] = 0.2;
-            graph_obj["fillAlphas"] = 0.9;
-            graph_obj["lineThickness"] = 3;					/*라인굵기*/
-            graph_obj["bulletBorderThickness"] = 3;
-
 			switch(params["chart_style"]){
 				default:
-                    graph_obj["lineColor"] = graph_color[graph_cnt - 1];			/*라인컬라*/
+                    graph_obj["lineColor"] = graph_color[graph_cnt - 1];	/*라인컬라*/
+					break;
+			}
+
+			switch(graph_cnt){
+				case 1:
+					graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineAlpha"] = 1;
+					graph_obj["fillAlphas"] = 1;
+					graph_obj["lineThickness"] = 5;					/*라인굵기*/
+					graph_obj["bulletBorderThickness"] = 3;
+					graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font><br><font style='font-size:"+font_size+"px'>[[percents]]%</font>";
+					break;
+				case 2:
+					graph_obj["type"] = "smoothedLine";				/*차트모양: 부드러운 곡선*/
+					graph_obj["lineAlpha"] = 0.9;
+					graph_obj["lineThickness"] = 2;					/*라인굵기*/
+					graph_obj["bulletBorderThickness"] = 3;
+					graph_obj["dashLengthField"] = "dashLengthLine";
+					graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'>[[[value]]]</font>";
 					break;
 			}
 			graph_json.push(graph_obj);
@@ -769,7 +782,7 @@ function draw_chart(chart_id, chart_data, params){
                         "dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
                         "chartCursor": {"categoryBalloonDateFormat": date_format, "cursorPosition": "mouse"},					  /*가이드라인*/
                         "legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"},  /*범례*/
-                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0} /*가로눈금==>매우중요*/
+                        "categoryAxis":{ "minPeriod": period, "parseDates": true, "gridPosition" : "start" , "gridAlpha" : 0, "labelRotation" : 45} /*가로눈금==>매우중요*/
 	};
 
     switch(chart_style){
