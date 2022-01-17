@@ -10,9 +10,78 @@ define("corr_temp", -1.2);	//저울-온도보정
 define("corr_humi", 7);		//저울-습도보정
 define("corr_co2", 0);		//저울-CO2보정
 define("corr_nh3", 0);		//저울-NH3보정
+define("feed_hunt", 10);	//사료빈 저울 헌팅값 제거
 
-function run_query($query){
-	sql_conn::get_inst()->run_query($query);
+function buffer_code(){
+	$query = "SELECT cmFarmid, cmDongid, MAX(cmCode) AS maxCode FROM comein_master GROUP BY cmFarmid, cmDongid";
+
+	$farm_arr = get_select_data($query);
+
+	foreach($farm_arr as $row){
+		$update_map = array();
+		$update_map["beComeinCode"] = $row["maxCode"];
+
+		$where = "beFarmid = '" . $row["cmFarmid"] . "' AND beDongid = '" . $row["cmDongid"] . "'";
+
+		run_sql_update("buffer_sensor_status", $update_map, $where);
+
+	}
+}
+
+function test_insert(){
+
+	for($k=104; $k<=150; $k++){
+		$farmID = "KF" . sprintf("%04d", $k);
+		$dongID = "01";
+		
+		$insert_map = array();
+		$insert_map["fID"] = "kk" . sprintf("%04d", $k);
+		$insert_map["fPW"] = "kk" . sprintf("%04d", $k);
+		$insert_map["fGroupName"] = "이모션";
+		$insert_map["fFarmid"] = $farmID;
+
+		run_sql_insert("farm", $insert_map);
+
+		// $insert_map = array();
+		// $insert_map["fdFarmid"] = $farmID;
+		// $insert_map["fdDongid"] = $dongID;
+		// $insert_map["fdName"] 	= "테스터-" . $farmID;
+		// $insert_map["fdTel"] 	= "010-5022-1684";
+		// $insert_map["fdType"] 	= "육계";
+		// $insert_map["fdScale"] 	= "30000";
+		// $insert_map["fdAddr"] 	= "연구소";
+
+		// run_sql_insert("farm_detail", $insert_map);
+
+		// // 버퍼테이블 생성
+		// $insert_map = array();
+		// $insert_map["beFarmid"] = $farmID;
+		// $insert_map["beDongid"] = $dongID;
+
+		// run_sql_insert("buffer_sensor_status", $insert_map);
+		
+		// // 디폴트로 저울 3개를 insert
+		// $insert_map = array();
+		// $now = date('Y-m-d H:i:s');
+		// $insert_map["siFarmid"] = $farmID;
+		// $insert_map["siDongid"] = $dongID;
+		// $insert_map["siDate"] = $now;
+		// for($i=1; $i<=3; $i++){
+		// 	$insert_map["siCellid"] = sprintf('%02d', $i);
+		// 	run_sql_insert("set_iot_cell", $insert_map);
+		// }
+
+		// // 디폴트로 카메라 1개 insert
+		// $insert_map = array();
+		// $insert_map["scFarmid"] = $farmID;
+		// $insert_map["scDongid"] = $dongID;
+		// $insert_map["scPort"] = "150" . $dongID;
+		// $insert_map["scUrl"] = "/stw-cgi/video.cgi?msubmenu=snapshot&action=view&Resolution=640x480";
+		// $insert_map["scId"] = "admin";
+		// $insert_map["scPw"] = "kokofarm5561";
+		// run_sql_insert("set_camera", $insert_map);
+	}
+
 }
 
 // select 결과 데이터 반환
@@ -290,7 +359,7 @@ function convert_excel($data, $field_data, $title, $option, $ret=false){
 
 	$html  = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>";
 	$html .= "<html>";
-	$html .= "<head><meta http-equiv='Content-Type' content='application/vnd.ms-excel; charset=UTF-8;'></head>";
+	$html .= "<head><meta http-equiv='Content-Type' content='application/vnd.ms-excel; charset=utf-8;'></head>";
 	$html .= "<style> #excel_table th {background:#A0B3B3; text-align:center; color:white;} </style>";
 	$html .= "<body style='border:solid 0.1pt #CCCCCC; font-size:14px'>";
 	$html .= "<table id='excel_table' border='1' style='width:100%; font-size:14px'>";
@@ -421,6 +490,88 @@ function get_term_date($time, $term){
 	return $ret;
 }
 
+/* 초미세먼지 좋음, 나쁨 구분
+param
+- udust : 초미세먼지 수치
+return
+- ret : 기준시간에서 term을 계산한 시간
+*/
+function get_udust_status($udust){
+	$ret = "좋음";
+
+	if($udust >= 16 && $udust < 36)	{ $ret = "보통"; }
+	else if($udust >= 36 && $udust < 76)	{ $ret = "나쁨"; }
+	else if($udust >= 76)			{ $ret = "매우나쁨"; }
+	else if($udust < 0) 			{ $ret = "-"; }
+
+	return $ret;
+}
+
+/* 풍향 구분
+param
+- direction : 초미세먼지 수치
+return
+- ret : 기준시간에서 term을 계산한 시간
+*/
+function get_wind_status($direction){
+	$ret = "-";
+
+	$direction = sprintf('%d', $direction);
+
+	switch($direction){
+		case 0:
+		case 360:
+			$ret = "북";
+			break;
+		case 45:
+			$ret = "북동";
+			break;
+		case 90:
+			$ret = "동";
+			break;
+		case 135:
+			$ret = "남동";
+			break;
+		case 180:
+			$ret = "남";
+			break;
+		case 225:
+			$ret = "남서";
+			break;
+		case 270:
+			$ret = "서";
+			break;
+		case 315:
+			$ret = "북서";
+			break;
+		default : 
+			$ret ="-";
+			break;
+	}
+
+	return $ret;
+}
+
+/* 센서값 정규화
+param
+- udust : 초미세먼지 수치
+return
+- ret : 기준시간에서 term을 계산한 시간
+*/
+function check_sensor_val($format, $val){
+	$ret = sprintf($format, $val);
+
+	switch($val){
+		case 0 : $ret = "-";
+			break;
+		case -100 : $ret = "-";
+			break;
+		case -200 : $ret = "-";
+			break;
+	}
+
+	return $ret;
+}
 
 
 // 몽고db 관련---------------------------------------------------------------------------
@@ -510,9 +661,14 @@ function get_feed_history($code, $type){
 
 			$json = json_decode($val["shFeedData"]);
 
+			// 2021-11-11 이병선 시간 60분전으로 계산
 			$sensor_date = $val["shDate"];
+			//$sensor_date = get_term_date($val["shDate"], -60);
 			$feed = $json->feed_feed;
 			$water = $json->feed_water;
+
+			// 2021-11-08 이병선 급이 (-) 값 수정
+			$feed = abs($feed) <= feed_hunt ? 0 : $feed;
 			
 			$date = substr($sensor_date, 0, 10);
 			$day_map[$date]["feed"] = isset($day_map[$date]["feed"]) ? $day_map[$date]["feed"] + $feed : $feed;
@@ -520,24 +676,24 @@ function get_feed_history($code, $type){
 
 			$chart_feed[] = array(
 				"시간" => $sensor_date,
-				"급이량" => $feed,
+				"급이량(kg)" => $feed,
 			);
 
 			$chart_water[] = array(
 				"시간" => $sensor_date,
-				"급수량" => $water,
+				"급수량(L)" => $water,
 			);
 
 			$feed_stack = $feed_stack + $feed;
 			$chart_feed_stack[] = array(
 				"시간" => $sensor_date,
-				"누적급이량" => $feed_stack,
+				"누적급이량(kg)" => $feed_stack,
 			);
 
 			$water_stack = $water_stack + $water;
 			$chart_water_stack[] = array(
 				"시간" => $sensor_date,
-				"누적급수량" => $water_stack,
+				"누적급수량(L)" => $water_stack,
 			);
 
 			$table[] = array(
@@ -548,13 +704,14 @@ function get_feed_history($code, $type){
 		}
 
 		foreach($day_map as $key => $val){
+
 			$chart_feed_daily[] = array(
 				"시간" => $key,
-				"급이량" => $val["feed"],
+				"급이량(kg)" => $val["feed"],
 			);
 			$chart_water_daily[] = array(
 				"시간" => $key,
-				"급수량" => $val["water"],
+				"급수량(L)" => $val["water"],
 			);
 		}
 
@@ -1203,5 +1360,89 @@ function get_cell_history($code, $type){
 
 // 	return $ret;
 // }
+
+/* 구간별 평균중량 데이터 가져오기
+param
+- farm : 농장 ID
+- dong : 동 ID
+- term : 1시간, 1일 중 어떤 간격으로 가져올지
+- count : 몇회차 비교할지
+return
+- ret : 평균중량 데이터
+*/
+function get_avg_compare($farm, $dong, $term, $count){
+
+	$ret = array();
+
+	// 회차별 code 가져오기
+	$query = "SELECT * FROM comein_master WHERE cmFarmid = \"" .$farm. "\" AND cmDongid = \"" .$dong. "\" ORDER BY cmIndate DESC LIMIT " . $count;
+
+	$code_data = get_select_data($query);
+
+	
+
+	$now = date("Y-m-d H:i:s");
+
+	$term_query = $term == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
+
+	$type_query = " AND (aw.awDate BETWEEN cm.cmIndate AND 
+							(CASE WHEN (cm.cmOutdate is null) THEN NOW() 
+								WHEN (cm.cmOutdate = '2000-01-01 00:00:00') THEN NOW() 
+							ELSE cm.cmOutdate END))";
+
+	$select_query = "SELECT cm.cmCode, DATEDIFF(aw.awDate, cm.cmIndate) + 1 AS days, aw.*, c.cName3 AS refWeight, fd.fdName FROM comein_master AS cm 
+						JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
+                        JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " . $term_query . $type_query ." 
+                        LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
+                        WHERE cm.cmCode = \"" .$comein_code. "\" ORDER BY aw.awDate ASC";
+	
+	$select_data = get_select_data($select_query);
+
+	$chart = array();		// 차트에 사용할 데이터
+	$increase = array();	// 증체 차트에 사용할 데이터
+	$table = array();		// 테이블에 사용할 데이터
+
+	$first = $select_data[0]["awWeight"];
+	$last = 0;
+
+	$remark = $type == "all" ? "일령" : "시간";
+
+	foreach($select_data as $val){
+
+		$inc_val = $val["awWeight"] - $first;				// 증체값 계산
+		$inc_val = $inc_val >= $last ? $inc_val : $last;	// 계산된 값이 마지막 증체값 보다 작으면 마지막 증체값으로 사용
+
+		$last = $inc_val;		// 마지막 증체값 저장
+
+		$chart[] = array(
+			//$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
+			$remark => $val["awDate"],
+			"평균중량" => sprintf('%0.1f', $val["awWeight"]),
+			"권고중량" => sprintf('%0.1f', $val["refWeight"])
+		);
+
+		$increase[] = array(
+			//$remark => substr($val["awDate"], 5, $term == "time" ? 11 : 5),
+			$remark => $val["awDate"],
+			"증체중량" => sprintf('%0.1f', $inc_val)
+		);
+
+		$table[] = array(
+			"f1" => $val["awDate"],
+			"f2" => $val["days"],
+			"f3" => sprintf('%0.1f', $val["awWeight"]),
+			"f4" => sprintf('%0.1f', $val["refWeight"])
+		);
+	}
+
+	$ret["name"] = $select_data[0]["fdName"];
+	$ret["query"] = $select_query;
+	$ret["chart"] = $chart;
+	$ret["increase"] = $increase;
+	$ret["table"] = $table;
+
+	return $ret;
+}
+
 
 ?>
