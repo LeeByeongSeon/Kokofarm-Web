@@ -728,7 +728,7 @@ function draw_chart(chart_id, chart_data, params){
     let is_zoom = params.hasOwnProperty("is_zoom") ? params["is_zoom"] : false;
     let period = params.hasOwnProperty("period") ? params["period"] : "hh";
     let date_format = params.hasOwnProperty("date_format") ? params["date_format"] : "YYYY-MM-DD HH:NN";
-	
+
     for(key in chart_data[0]){
         graph_cnt++;
         if(graph_cnt == 0) { 
@@ -760,7 +760,6 @@ function draw_chart(chart_id, chart_data, params){
 					graph_obj["fillAlphas"] = 1;
 					graph_obj["lineThickness"] = 5;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
-					graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font><br><font style='font-size:"+font_size+"px'>[[percents]]%</font>";
 					break;
 				case 2:
 					graph_obj["type"] = "smoothedLine";				/*차트모양: 부드러운 곡선*/
@@ -768,7 +767,6 @@ function draw_chart(chart_id, chart_data, params){
 					graph_obj["lineThickness"] = 2;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					graph_obj["dashLengthField"] = "dashLengthLine";
-					graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'>[[[value]]]</font>";
 					break;
 			}
 			graph_json.push(graph_obj);

@@ -457,8 +457,8 @@ function draw_chart(chart_id, chart_data, params){
 			switch(graph_cnt){
 				case 1:
 					graph_obj["type"] = "column";					/*차트모양*/
-					graph_obj["lineAlpha"] = 0.5;
-					graph_obj["fillAlphas"] = 0.9;
+					graph_obj["lineAlpha"] = 1;
+					graph_obj["fillAlphas"] = 1;
 					graph_obj["lineThickness"] = 5;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					break;
