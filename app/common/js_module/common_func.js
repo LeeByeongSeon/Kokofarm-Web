@@ -877,8 +877,8 @@ function draw_chart_detail(chart_id, chart_data, params){
                         let dc = item.dataContext;
                         let balloon = "";
 
-                        balloon = "<span style='font-size:" + font_size + "px'>" + dc["title0"] + " : <b>" + dc["value0"] + "</b></span><br/>"
-					            + "<span style='font-size:" + font_size + "px'>" + dc.pers + "%</span>";
+                        balloon = "<span style='font-size:" + font_size + "px'>" + dc["title0"] + "<br><b>" + dc["value0"] + "</b></span>"
+					            + "<span style='font-size:" + font_size + "px'>&nbsp;<b>(" + dc.pers + "%)</b></span>";
 
                         return balloon;
                     };

@@ -311,9 +311,12 @@ include_once("../inc/bottom.php")
 					let val = ((parseInt(arr[i])/ret)*100).toFixed(1);
 
 					let obj_chart = {
-						"구간": String(widx+(50*i)),
-						"구간별 비율(%)": (val*insu)/100,
-						"": (val*insu)/100
+						"category": String(widx+(50*i)),
+						"title0" : "구간별 마리 수",
+						"value0": ((val*insu)/100).toFixed(1),
+						"pers": val,
+						"title1" : "",
+						"value1": ((val*insu)/100).toFixed(1)
 					}
 					ndis_chart[i-sidx] = obj_chart;
 
@@ -334,7 +337,7 @@ include_once("../inc/bottom.php")
 
 				$("#ndis_insu").html(insu+"수");
 				$("#weigth_ndis_table").bootstrapTable('load', ndis_table); 
-				draw_chart("weight_ndis_chart", ndis_chart, params);
+				draw_chart_detail("weight_ndis_chart", ndis_chart, params);
 				if(ret == 0){$(".weight_ndis_body").css("display","none");}
 			}
 		});
