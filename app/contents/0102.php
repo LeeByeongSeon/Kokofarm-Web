@@ -99,8 +99,8 @@ include_once("../inc/top.php")
 							<thead>
 								<tr>
 									<th data-field='f1' data-visible="true" data-sortable="true">구간(g)</th>
-									<th data-field='f2' data-visible="true" data-sortable="true">값(마리)</th>
-									<th data-field='f3' data-visible="true" data-sortable="true">구간별 마리 수</th>
+									<th data-field='f2' data-visible="true" data-sortable="true">구간별 마리 수</th>
+									<th data-field='f3' data-visible="true" data-sortable="true">구간별 비율(%)</th>
 								</tr>
 							</thead>
 						</table>
@@ -121,7 +121,7 @@ include_once("../inc/top.php")
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 no-padding">
-				<div id="today_inc_chart" style="height: 260px;"></div>
+					<div id="today_inc_chart" style="height: 260px;"></div>
 				</div>
 			</div>
 		</div>
@@ -277,12 +277,17 @@ include_once("../inc/bottom.php")
 				let ndis = data.ndis_data[0].awNdis;	// awNdis 정규분포
 				let arr  = ndis.split("|");
 
+				let pers_list = {};
+
 				// awNdis 정규분포 총합계
 				let ret = arr.reduce(function add(sum, curr_val){
 					return sum + parseInt(curr_val);
 				}, 0);
 
-				console.log(ret);
+				for(let z=0; z<arr.length; z++){
+					let temp = (arr[z] / ret) * 100;
+					pers_list[z] = temp.toFixed(1);
+				}
 
 				let ndis_chart = [];	// chart data를 담을 배열
 				let ndis_table = [];	// table data 를 담을 배열
@@ -294,6 +299,7 @@ include_once("../inc/bottom.php")
 				for(let s=0; s<arr.length; s++){
 					if(arr[s] != 0){
 						sidx = s-2;
+						sidx = sidx < 0 ? 0 : sidx;
 						break;
 					}
 				}
@@ -302,28 +308,31 @@ include_once("../inc/bottom.php")
 				for(let e=(arr.length)-1; e>=0; e--){
 					if(arr[e] != 0){
 						eidx = e+3;
+						eidx = eidx > 50 ? 50 : eidx;
 						break;
 					}
 				}
 				for(let i=sidx; i<eidx; i++){
-					let val = ((parseInt(arr[i])/ret)*100).toFixed(1);
+					//let val = ((parseInt(arr[i])/insu)*100).toFixed(1);
+					let val = insu * pers_list[i] / 100;
+					val  = val.toFixed(1);
 
 					let obj_chart = {
 						"category": String(widx+(50*i)),
-						"title0" : "구간별 마리 수",
-						"value0": ((val*insu)/100).toFixed(1),
-						"pers": val,
+						"title0" : "마리 수",
+						"value0": val,
+						"pers": pers_list[i],
 						"title1" : "",
-						"value1": ((val*insu)/100).toFixed(1)
+						"value1": val
 					}
 					ndis_chart[i-sidx] = obj_chart;
 
 					let obj_table = {
 						"f1": widx+(50*i),
-						"f2": parseInt(arr[i]),
-						"f3": val+"(%)"
+						"f2": (insu * pers_list[i] / 100).toFixed(0),
+						"f3": pers_list[i]
 					}
-					ndis_table[i] = obj_table;
+					ndis_table[i-sidx] = obj_table;
 				}
 
 				let params = {};
@@ -337,6 +346,7 @@ include_once("../inc/bottom.php")
 				$("#weigth_ndis_table").bootstrapTable('load', ndis_table); 
 				draw_chart_detail("weight_ndis_chart", ndis_chart, params);
 				if(ret == 0){$(".weight_ndis_body").css("display","none");}
+				
 			}
 		});
 	}

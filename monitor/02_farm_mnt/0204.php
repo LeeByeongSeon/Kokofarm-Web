@@ -49,8 +49,8 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 
 					<div class="widget-toolbar ml-auto">
 						<div class="form-inline">
-							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')"><span class="KKF-67">일령별</span></button>&nbsp;
-							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')"><span class="KKF-68">시간별</span></button>&nbsp;
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('day')"  id="btn_day_avg"><span class="KKF-67">일령별</span></button>&nbsp;
+							<button type="button" class="btn btn-default btn-sm" onClick="get_avg_data('time')" id="btn_time_avg"><span class="KKF-68">시간별</span></button>&nbsp;
 							<button type="button" class="btn btn-warning btn-sm btn-labeled" onClick="$('#avg_weight_table_div').toggle(400)"><span class="btn-label"><i class="fa fa-table"></i></span><span class="KKF-69">표 출력</span></button>&nbsp;
 							<button type="button" class="btn btn-secondary btn-sm btn-labeled" onClick="get_avg_data('excel')" selection="day" id="btn_excel_avg"><span class="btn-label"><i class="fa fa-file-excel-o"></i></span><span class="KKF-70">엑셀</span></button>
 						</div>
@@ -109,6 +109,41 @@ $init_id = $init_farm != "" ? $init_farm . "|" . $init_dong : "";
 					
 				</div>
 						
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="jarviswidget jarviswidget-color-white" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+				<header>
+					<div class="widget-header">
+						<h2><i class="fa fa-file-text-o text-red"></i>&nbsp;<span>정규분포</span>
+							<span class="font-sm badge bg-orange">15일령 이후 표시</span>
+						</h2>
+					</div>
+					<div class="widget-toolbar ml-auto">
+						<button type="button" class="btn btn-xl btn-default" style="height: 25px" onClick="$('#weigth_ndis_table_div').toggle(700).focus()">표 출력</button>
+					</div>
+				</header>
+				<div class="widget-body p-2">
+					<div class="col-xl-12 no-padding">
+						<div id="weight_ndis_chart" style="height: 260px;"></div>
+					</div>
+					<div class="col-xl-12">
+						<div id="weigth_ndis_table_div" style="width:100%; display: none;" tabindex="-1">
+							<table id="weigth_ndis_table"  data-page-list="[]" data-pagination="true" data-page-list="false" data-page-size="50" data-sort-name="f1" data-sort-order="asc" data-toggle="table" style="font-size:14px">
+								<thead>
+									<tr>
+										<th data-field='f1' data-visible="true" data-sortable="true">구간(g)</th>
+										<th data-field='f2' data-visible="true" data-sortable="true">구간별 마리 수</th>
+										<th data-field='f3' data-visible="true" data-sortable="true">구간별 비율(%)</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -338,6 +373,7 @@ include_once("../inc/bottom.php");
 		get_avg_data("day");
 		get_error_data();
 		get_request_data();
+		get_ndis_data();
 	};
 
 	// 동 선택 변경 시 검색 초기화
@@ -426,7 +462,7 @@ include_once("../inc/bottom.php");
 			default:
 				reloaded = true;
 				jQuery("#jqgrid").jqGrid('setGridParam', {postData:{"select" : action}}).trigger("reloadGrid");	//POST 형식의 parameter 추가
-				
+				load_data();
 				break;
 		}
 	};
@@ -451,7 +487,7 @@ include_once("../inc/bottom.php");
 					data_arr['comm'] = "excel";
 					break;
 			}
-
+			console.log(code);
 			data_arr['term'] = $("#btn_excel_avg").attr("selection");
 			
 			$.ajax({url:'0204_action.php',data:data_arr,cache:false,type:'post',dataType:'json',
@@ -594,6 +630,99 @@ include_once("../inc/bottom.php");
 			});
 		}
 	};
+
+	//중량별 산포도
+	function get_ndis_data(){
+		if(code != null && code != ""){			// "" or null 체크
+			var data_arr = {};
+			data_arr["oper"] = "get_ndis_chart";
+			data_arr["code"] = code;
+
+			$.ajax({
+				url:"0204_action.php",
+				data:data_arr,
+				cache:false,
+				type:"post",
+				dataType:"json",
+				success: function(data){
+					let insu = data.ndis_data[0].cmInsu;	// cmInsu 입추 수
+					let ndis = data.ndis_data[0].awNdis;	// awNdis 정규분포
+					let arr  = ndis.split("|");
+
+					let pers_list = {};
+
+					// awNdis 정규분포 총합계
+					let ret = arr.reduce(function add(sum, curr_val){
+						return sum + parseInt(curr_val);
+					}, 0);
+
+					for(let z=0; z<arr.length; z++){
+						let temp = (arr[z] / ret) * 100;
+						pers_list[z] = temp.toFixed(1);
+					}
+
+					let ndis_chart = [];	// chart data를 담을 배열
+					let ndis_table = [];	// table data 를 담을 배열
+					let widx = 500;			// 무게 index
+					let sidx = 0;			// start index
+					let eidx = 0;			// end index
+					
+					// sidx 구하는 for문
+					for(let s=0; s<arr.length; s++){
+						if(arr[s] != 0){
+							sidx = s-2;
+							sidx = sidx < 0 ? 0 : sidx;
+							break;
+						}
+					}
+
+					// eidx 구하는 for문
+					for(let e=(arr.length)-1; e>=0; e--){
+						if(arr[e] != 0){
+							eidx = e+3;
+							eidx = eidx > 50 ? 50 : eidx;
+							break;
+						}
+					}
+					for(let i=sidx; i<eidx; i++){
+						//let val = ((parseInt(arr[i])/insu)*100).toFixed(1);
+						let val = insu * pers_list[i] / 100;
+						val  = val.toFixed(1);
+
+						let obj_chart = {
+							"category": String(widx+(50*i)),
+							"title0" : "마리 수",
+							"value0": val,
+							"pers": pers_list[i],
+							"title1" : "",
+							"value1": val
+						}
+						ndis_chart[i-sidx] = obj_chart;
+
+						let obj_table = {
+							"f1": widx+(50*i),
+							"f2": (insu * pers_list[i] / 100).toFixed(0),
+							"f3": pers_list[i]
+						}
+						ndis_table[i-sidx] = obj_table;
+					}
+
+					let params = {};
+					params["graph_color"] = ["#FF9900","#ff6600","#109618","#990099"];
+					params["font_size"] = 12;
+					params["is_zoom"] = true;
+					params["date_format"] = "입추수 " + insu;
+					params["chart_style"] = "세로-Bar";
+
+					$("#ndis_insu").html(insu+"수");
+					$("#weigth_ndis_table").bootstrapTable('load', ndis_table); 
+					draw_chart_detail("weight_ndis_chart", ndis_chart, params);
+					if(ret == 0){$(".weight_ndis_body").css("display","none");}
+					
+				}
+			});
+		}
+	}
 
 	// 로우데이터 검색 이벤트
 	function search_raw_data(action){

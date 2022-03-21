@@ -24,6 +24,7 @@ if(isset($_REQUEST["code"])){
     $dongID = substr($id, 6);
 }
 
+
 switch($oper){
 
     default:
@@ -116,6 +117,8 @@ switch($oper){
                 // //echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
                 // convert_excel(get_select_data($avg_history["query"]), $field_data, $title, $code);
                 // break;
+
+
                 $excel_title = date('Ymd_His') . "_" . $avg_history["name"] . "_평균중량.xls";
 				
 				$field_data = array(
@@ -126,18 +129,35 @@ switch($oper){
 					array("농장명", "fdName", "STR", "center"),
 					array("일령", "awDays", "STR", "center"),
 					array("산출시간", "awDate", "STR", "center"),
-					array("예측중량", "awWeight", "STR", "center"),
+					array("평균중량", "awWeight", "STR", "center"),
 					array("권고중량", "refWeight", "STR", "center"),
 					array("표준편차", "awDevi", "STR", "center"),
 					array("변이계수", "awVc", "STR", "center"),
 					array("+1 예측", "awEstiT1", "STR", "center"),
 					array("+2 예측", "awEstiT2", "STR", "center"),
 					array("+3 예측", "awEstiT3", "STR", "center"),
-					//array("정규분포", "awNdis", "STR", "left"),
+					// array("정규분포", "awNdis", "STR", "left"),
 				);
 
 				// echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
-				$excel_html = convert_excel(get_select_data($avg_history["query"]), $field_data, $excel_title, $code, false);
+
+				$select_query = "SELECT aw.* FROM avg_weight AS aw 
+									JOIN (
+									SELECT awFarmid, awDongid, MAX(awDate) AS max_date FROM comein_master AS cm 
+									JOIN avg_weight AS aw 
+										ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid 
+										AND (
+											aw.awDate BETWEEN cm.cmIndate AND (
+												CASE WHEN (cm.cmOutdate is null) THEN NOW() 
+												WHEN (cm.cmOutdate = '2000-01-01 00:00:00') THEN NOW() ELSE cm.cmOutdate END
+											)
+										) 
+									WHERE cm.cmCode = \"".$code."\"
+										GROUP BY awFarmid, awDongid, LEFT(awDate, 10)
+									) AS mx ON aw.awFarmid = mx.awFarmid AND aw.awDongid = mx.awDongid 
+									WHERE aw.awDate = mx.max_date";
+
+				$excel_html = convert_excel(get_select_data($select_query), $field_data, $excel_title, $code, false);
                 
                 $response["excel_title"] = $excel_title; 
 				$response["excel_html"]  = $excel_html;
@@ -291,6 +311,25 @@ switch($oper){
         echo json_encode($response);
 
         break;
+
+	case "get_ndis_chart":
+
+		// $select_query = "SELECT awNdis FROM avg_weight WHERE awFarmid = '". $farmID ."' AND awDongid = '". $dongID ."' ORDER BY awDate DESC LIMIT 1";
+		$select_query = "SELECT cm.cmInsu, aw.awNdis FROM comein_master AS cm
+						LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid
+						AND (aw.awDate BETWEEN cm.cmIndate AND 
+							(CASE WHEN (cm.cmOutdate is null) THEN NOW() 
+								WHEN (cm.cmOutdate = '2000-01-01 00:00:00') THEN NOW() 
+							ELSE cm.cmOutdate END))
+						WHERE cmCode = '".$code."' ORDER BY aw.awDate DESC LIMIT 1";
+						
+		$select_data = get_select_data($select_query);
+
+		$response["ndis_data"] = $select_data;
+
+		echo json_encode($response);
+
+		break;
 
     case "get_raw_data":          //로우데이터
 

@@ -84,7 +84,12 @@ include_once("../common/php_module/common_func.php");
 
 			// $select_query = "SELECT awNdis FROM avg_weight WHERE awFarmid = '". $farmID ."' AND awDongid = '". $dongID ."' ORDER BY awDate DESC LIMIT 1";
 			$select_query = "SELECT cm.cmInsu, aw.awNdis FROM comein_master AS cm
-							LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid WHERE cmCode = '".$cmCode."' ORDER BY aw.awDate DESC LIMIT 1";
+						LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid
+						AND (aw.awDate BETWEEN cm.cmIndate AND 
+							(CASE WHEN (cm.cmOutdate is null) THEN NOW() 
+								WHEN (cm.cmOutdate = '2000-01-01 00:00:00') THEN NOW() 
+							ELSE cm.cmOutdate END))
+						WHERE cmCode = '".$cmCode."' ORDER BY aw.awDate DESC LIMIT 1";
 
 			$select_data = get_select_data($select_query);
 

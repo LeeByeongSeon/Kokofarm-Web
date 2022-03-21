@@ -758,13 +758,13 @@ function draw_chart(chart_id, chart_data, params){
 					graph_obj["type"] = "column";					/*차트모양*/
 					graph_obj["lineAlpha"] = 1;
 					graph_obj["fillAlphas"] = 1;
-					graph_obj["lineThickness"] = 5;					/*라인굵기*/
+					graph_obj["lineThickness"] = 0.5;					/*라인굵기*/ // 2022-03-11 라인굵기 수정
 					graph_obj["bulletBorderThickness"] = 3;
 					break;
 				case 2:
 					graph_obj["type"] = "smoothedLine";				/*차트모양: 부드러운 곡선*/
 					graph_obj["lineAlpha"] = 0.9;
-					graph_obj["lineThickness"] = 2;					/*라인굵기*/
+					graph_obj["lineThickness"] = 1;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					graph_obj["dashLengthField"] = "dashLengthLine";
 					break;

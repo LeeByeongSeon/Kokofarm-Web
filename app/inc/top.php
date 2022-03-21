@@ -5,7 +5,7 @@
 	$userPW = check_str($_REQUEST["userPW"]);
 
 	// 농장 정보 확인
-	$select_query = "SELECT f.fID, f.fPW, f.fName, fd.*, be.beStatus, be.beComeinCode, be.beAvgWeight, be.beAvgWeightDate, rc.rcStatus, sf.sfFarmid, so.soFarmid, 
+	$select_query = "SELECT f.fID, f.fPW, f.fName, fd.*, be.beStatus, be.beComeinCode, be.beAvgWeight, be.beAvgWeightDate, rc.rcStatus, sf.sfFarmid, sf.sfFeed, sf.sfDailyFeed, sf.sfAllFeed, so.soFarmid, 
 					IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
 					JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
 					JOIN buffer_sensor_status AS be ON be.beFarmid = fd.fdFarmid AND be.beDongid = fd.fdDongid 
@@ -66,6 +66,7 @@
 	
 	//메뉴 구성
 	$menu_struct = array();
+	$menu_struct[] = array("0000.php", "사육일지");
 	$menu_struct[] = array("0101.php", "요약현황");
 	$menu_struct[] = array("0102.php", "IoT저울");
 	if($exist_feed){ $menu_struct[] = array("0103.php", "급이/급수"); }

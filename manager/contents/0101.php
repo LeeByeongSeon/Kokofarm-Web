@@ -44,10 +44,10 @@ $mgrPW = $_SESSION["mgrPW"];
 							data-page-list="[]" data-toggle="table" style="font-size:14px; cursor:pointer">
 					<thead>
 						<tr>
-							<th data-field='f_no'		 data-cell-style="css_padding" data-align="center" data-visible='false'>No</th>
+							<th data-field='f_no'		 data-cell-style="css_padding" data-align="center" data-visible='true'>No</th>
 							<th data-field='f_interm'	 data-cell-style="css_padding" data-align="center" >일령</th>
 							<th data-field='f_name'		 data-cell-style="css_padding" data-align="center" data-sortable="true">농장명</th>
-							<th data-field='f_error'	 data-cell-style="css_padding" data-align="center" data-sortable="true">오류(수)</th>
+							<th data-field='f_error'	 data-cell-style="css_padding" data-align="center" data-sortable="true">오류</th>
 							<th data-field='f_sensor'	 data-cell-style="css_padding" data-align="center" >저울</th>
 							<th data-field='f_network'	 data-cell-style="css_padding" data-align="center" >통신</th>
 							<th data-field='f_code'		 data-cell-style="css_padding" data-align="center" data-visible='false'>f_code</th>
@@ -240,7 +240,7 @@ include_once("../inc/bottom.php")
 	function css_padding(value, row, index){
 		return {
 			css: {
-				padding: '1px'
+				padding: '0.5px'
 			}
 		}
 	};
