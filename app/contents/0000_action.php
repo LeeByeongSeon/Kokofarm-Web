@@ -14,35 +14,90 @@
 	}
 
 	switch($oper){
-		// case "get_dong_list":
+		case "get_buffer":
+			
+			$now = date("Y-m-d H:i:s");
 
-		// 	$select_query = "SELECT fd.fdDongid, be.beAvgWeight, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
-		// 					LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid
-		// 					LEFT JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid
-		// 					WHERE cmCode=\"$cmCode\"";
+			// 농장 데이터
+			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, f.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS inTerm FROM buffer_sensor_status AS be 
+						JOIN farm AS f ON f.fFarmid = be.beFarmid 
+						LEFT JOIN comein_master AS cm ON cm.cmFarmid = be.beFarmid AND cm.cmDongid = be.beDongid AND cm.cmCode = be.beComeinCode 
+						LEFT JOIN set_light AS sl ON sl.slFarmid = be.beFarmid AND sl.slDongid = be.beDongid 
+						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = be.beFarmid AND sf.sfDongid = be.beDongid 
+						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid 
+						WHERE beFarmid = \"" .$farmID. "\"" ;
 
-		// 	$get_data = get_select_data($select_query);
+			$buffer_data = get_select_data($select_sql);
 
-		// 	// $curr_interm = $get_data[0]["inTerm"];
+			$summary = array();
+			
+			// 평균중량
+			$farm_weight = 0;
+			$farm_devi = 0;
+			$farm_vc = 0;
 
-		// 	// $response["summary"] = $curr_interm;
+			// 급이량
+			$curr_feed = 0;
+			$prev_feed = 0;
+			$all_feed = 0;
 
-		// 	foreach($get_data as $val){
-		// 		$dong_data[] = array(
-		// 			'f1' => $val["fDongid"],
-		// 			'f2' => $val["inTerm"],
-		// 			'f3' => sprintf('%0.1f', $val["beAvgWeight"]),
-		// 			'f4' => $val[""],
-		// 			'f5' => $val[""],
-		// 			'f6' => $val[""],
-		// 		);
-		// 	}
+			// 급수량
+			$curr_water = 0;
+			$prev_water = 0;
+			$all_water = 0;
 
-		// 	$responsep["summary"] = $dong_data;
+			// 사육관련
+			$comein_count = 0;
+			$death_count = 0;
+			$cull_count = 0;
+			$thinout_count = 0;
 
-		// 	echo json_encode($response);
+			foreach($buffer_data as $row){
+				$farm_weight += $row["beAvgWeight"];
+				$farm_devi += $row["beDevi"];
+				$farm_vc += $row["beVc"];
 
-		// 	break;
+				$curr_feed += $row["sfDailyFeed"];
+				$prev_feed += $row["sfPrevFeed"];
+				$all_feed += $row["sfAllFeed"];
+				
+				$curr_water += $row["sfDailyWater"];
+				$prev_water += $row["sfPrevWater"];
+				$all_water += $row["sfAllWater"];
+
+				$comein_count += $row["cmInsu"];
+				$death_count += $row["cmDeathCount"];
+				$cull_count += $row["cmCullCount"];
+				$thinout_count += $row["cmThinoutCount"];
+			}
+
+			$dong_count = count($buffer_data);
+
+			$summary["summary_farm_weight"] = sprintf('%0.1f', $farm_weight / $dong_count);				// 전체 평균중량
+			$summary["summary_farm_devi"] = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);	// 전체 표준편차
+			$summary["summary_farm_vc"] = sprintf('%0.1f', $farm_vc / $dong_count);						// 전체 변이계수
+
+			$summary["summary_curr_feed"] = $curr_feed;
+			$summary["summary_prev_feed"] = $prev_feed;
+			$summary["summary_all_feed"] = $all_feed;
+			
+			$summary["summary_curr_water"] = $curr_water;
+			$summary["summary_prev_water"] = $prev_water;
+			$summary["summary_all_water"] = $all_water;
+
+			$summary["summary_comein_count"] = $comein_count;
+			$summary["summary_death_count"] = $death_count;
+			$summary["summary_cull_count"] = $cull_count;
+			$summary["summary_thinout_count"] = $thinout_count;
+
+			$summary["farm_name"] = $buffer_data[0]["fName"];
+			$summary["dong_count"] = $dong_count;
+
+			$response["summary"] = $summary;
+
+			echo json_encode($response);
+
+			break;
 
 		case "chart":
 			break;

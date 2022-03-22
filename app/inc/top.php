@@ -195,7 +195,7 @@
 		
 			<div class="sa-content-wrapper m-0">
         
-				<nav class="navbar bg-light no-padding m-0 top_nav" style="overflow-x: scroll; white-space: nowrap; min-height: 0; justify-content: start;">
+				<nav class="navbar bg-light no-padding m-0 top_nav" style="overflow-x: scroll; white-space: nowrap; min-height: 0; justify-content: start;" id="top_navbar">
 					<ul class="nav nav-pills d-flex flex-nowrap" id="top_select">
 						<?=$select_html?>
 					</ul>
