@@ -66,8 +66,8 @@
 	
 	//메뉴 구성
 	$menu_struct = array();
-	$menu_struct[] = array("0000.php", "사육일지");
-	$menu_struct[] = array("0101.php", "요약현황");
+	$menu_struct[] = array("0000.php", "농장현황");
+	$menu_struct[] = array("0101.php", "동별현황");
 	$menu_struct[] = array("0102.php", "IoT저울");
 	if($exist_feed){ $menu_struct[] = array("0103.php", "급이/급수"); }
 	if($exist_out){ $menu_struct[] = array("0104.php", "외기환경"); }
@@ -90,7 +90,7 @@
 	}
 
 	// 농장 이름 선택 시 요약 화면으로 복귀
-	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='font-weight-bold' style='margin:0; font-size:23px; line-height:initial; color: #0c6ad0;' onClick=\" location.href='0101.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
+	$farm_name = "<a href='javascript:void(0)' id='btn_home' class='font-weight-bold' style='margin:0; font-size:23px; line-height:initial; color: #0c6ad0;' onClick=\" location.href='0000.php".$add_url."'\">".$init_data[0]["fName"]."</a>";
 	
 ?>
 

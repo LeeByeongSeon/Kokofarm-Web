@@ -64,6 +64,48 @@
         </div><!--modal-dialog -->
     </div><!--modal -->
 
+	<!--Modal breed 사육일지 모달-->
+	<div id="modal_breed" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:20%">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="modal_breed_title" class="modal-title float-left font-weight-bold text-primary">사육일지 작성</h4>
+					<button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div id="modal_breed_body" class="modal-body">
+					<form id="breed_form" onsubmit="return false;">
+						<div class="col-xs-12 text-center no-padding" id="breed_alarm"></div>
+						<div class="col-xs-12 text-center">
+							<!-- <h3 class="font-weight-bold text-primary" style="margin:0.5rem">사육일지</h3> -->
+							<div class="input-group mb-3">
+								<span class="input-group-text font-weight-bold" style="width: 73.5px">입추</span>
+								<input type="number" pattern="\d*" class="form-control" name="comein_count" placeholder="입추 수" min="" max="">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text font-weight-bold" style="width: 73.5px">폐사</span>
+								<input type="number" pattern="\d*" class="form-control" name="death_count" placeholder="폐사 수" min="" max="">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text font-weight-bold" style="width: 73.5px">도태</span>
+								<input type="number" pattern="\d*" class="form-control" name="cull_count" placeholder="도태 수" min="" max="">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text font-weight-bold" style="width: 73.5px">솎기</span>
+								<input type="number" pattern="\d*" class="form-control" name="thinout_count" placeholder="솎기 수" min="" max="">
+							</div>
+
+							<div class="col-xs-12 text-center no-padding" id="breed_opt_alarm"></div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_breed_ok">적용</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" id="modal_breed_cancle">취소</button>
+				</div>
+			</div><!--modal-content -->
+		</div><!--modal-dialog -->
+	</div><!--modal -->
+
 	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 6%; right: 3%; display:none;"><span class="fa fa-arrow-up font-weight-bold font-lg pt-3"></span></a>
 	
 </body>
@@ -158,7 +200,7 @@
 		top_be_status = option.attr("data-bestatus");
 		top_name 	  = option.attr("data-name");
 
-		$("#btn_home").html(top_name);
+		// $("#btn_home").html(top_name);
 
 		//alert(top_code+" / "+top_avg+" / "+top_time+" / "+top_interm+" / "+top_rc_status+" / "+top_be_status+" / "+top_name);
 		

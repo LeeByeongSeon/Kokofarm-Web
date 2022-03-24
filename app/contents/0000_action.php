@@ -29,6 +29,8 @@
 
 			$buffer_data = get_select_data($select_sql);
 
+			// echo json_encode($buffer_data);
+
 			$summary = array();
 			
 			// 평균중량
@@ -47,10 +49,10 @@
 			$all_water = 0;
 
 			// 사육관련
-			$comein_count = 0;
-			$death_count = 0;
-			$cull_count = 0;
-			$thinout_count = 0;
+			$comein_count = 0;	//생존수
+			$death_count = 0;	//폐사
+			$cull_count = 0;	//도태
+			$thinout_count = 0;	//솎기
 
 			foreach($buffer_data as $row){
 				$farm_weight += $row["beAvgWeight"];
@@ -69,6 +71,9 @@
 				$death_count += $row["cmDeathCount"];
 				$cull_count += $row["cmCullCount"];
 				$thinout_count += $row["cmThinoutCount"];
+
+				$feed_max += $row["sfFeedMax"];
+				$feed_remain += $row["sfFeed"];
 			}
 
 			$dong_count = count($buffer_data);
@@ -77,10 +82,15 @@
 			$summary["summary_farm_devi"] = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);	// 전체 표준편차
 			$summary["summary_farm_vc"] = sprintf('%0.1f', $farm_vc / $dong_count);						// 전체 변이계수
 
+			$percent = $feed_remain / $feed_max;
+			$percent = round($percent * 100);
+			$summary["summary_feed_percent"] = $percent . "%";
+			$summary["summary_feed_remain"] = $feed_remain;
+
 			$summary["summary_curr_feed"] = $curr_feed;
 			$summary["summary_prev_feed"] = $prev_feed;
 			$summary["summary_all_feed"] = $all_feed;
-			
+
 			$summary["summary_curr_water"] = $curr_water;
 			$summary["summary_prev_water"] = $prev_water;
 			$summary["summary_all_water"] = $all_water;
