@@ -276,7 +276,41 @@ include_once("../inc/bottom.php")
 					//각 요약정보[summary]
 					$.each(data.summary, function(key, val){	$("#" + key).html(val); });
 
+					//어제평균중량 산출 시간 표현
+					let prev_date = data.summary.summary_day_inc1;
+					prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
+					$("#summary_day_inc1").html(prev_date);
 
+					// 급이, 급수, 외기 창 표시할지 선택
+					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
+					if(data.extra.hasOwnProperty("extra_curr_feed")){
+						
+						let per = data.extra.extra_feed_percent;
+						per = parseInt(per);
+						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
+						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
+						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
+						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
+						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
+
+						//$("#row_feed_water").show();
+						$("#row_feed_water").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						$("#row_feed_water").find(".widget-body").show();
+					}
+					if(data.extra.hasOwnProperty("extra_out_temp")){
+						//$("#row_outsensor").show();
+
+						$("#row_outsensor").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						$("#row_outsensor").find(".widget-body").show();
+					}
+
+				}
+				else{
+					$("#row_summary").hide();
+					$("#row_avg_esti").hide();
+					$("#row_cell_avg").hide();
+					$("#row_feed_water").hide();
+					$("#row_outsensor").hide();
 				}
 				
 				//카메라

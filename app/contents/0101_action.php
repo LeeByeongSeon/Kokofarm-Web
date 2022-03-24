@@ -17,6 +17,7 @@
 		case "get_buffer":
 			
 			$now = date("Y-m-d H:i:s");
+			$time_1 = date("Y-m-d H:i:s", strtotime("-1 hours"));
 			$to_day = substr($now, 0, 10);
 			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
@@ -31,7 +32,7 @@
 						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid 
 						LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
 						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
-						LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND shDate = \"" . substr($now, 0, 13) . ":00:00\" 
+						LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND shDate = \"" . substr($time_1, 0, 13) . ":00:00\" 
 						WHERE cmCode = \"" .$cmCode. "\"";
 
 						//LEFT JOIN request_calculate AS rc ON rc.rcCode = \"" .$cmCode. "\" 
