@@ -141,6 +141,9 @@ include_once("../inc/top.php")
 						<button type="button" class="btn btn-xs btn-default" style="height: 25px"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
 					</div>
 				</div> -->
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="send_excel_data('환경센서')"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+				</div>
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; border-top: 0;">
 
@@ -159,6 +162,7 @@ include_once("../inc/top.php")
 							<i class="fa fa-warning text-danger"></i>&nbsp;&nbsp;암모니아
 						</button>
 					</div>
+
 				</div><!--widget-body-toolbar-->
 
 				<!-- <div class="row">
@@ -399,6 +403,18 @@ include_once("../inc/bottom.php")
 			draw_select_chart("daily_sensor_chart", sensor_chart_data[chart_name], "영역차트", "Y", "N", 12, "hh");
 		}
 	};
+
+	function send_excel_data(title){
+		title = top_name + "_" + top_code + "_" + title;
+
+		let date_time = get_now_datetime();
+		let header = ["측정시간", "온도", "습도", "이산화탄소", "암모니아"];
+		let json_data = JSON.stringify(sensor_chart_data["table"]);
+
+		json_data = JSON.stringify(sensor_chart_data["table"]);
+
+		window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
+	}
 
 	function convert_excel(title, table_id){
 		title = top_name + "_" + top_code + "_" + title;

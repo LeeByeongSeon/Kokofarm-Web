@@ -62,6 +62,9 @@ include_once("../inc/top.php")
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;일령별 급이량 변화</h2>	
 				</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="send_excel_data('일령별급이량')"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+				</div>
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div id="daily_feed_chart" style="height: 260px;"></div>
@@ -92,6 +95,9 @@ include_once("../inc/top.php")
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;일령별 급수량 변화</h2>	
 				</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="send_excel_data('일령별급수량')"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+				</div>
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div id="daily_water_chart" style="height: 260px;"></div>
@@ -106,6 +112,8 @@ include_once("../inc/bottom.php")
 ?>
 
 <script language="javascript">
+
+	var sensor_chart_data = null;
 
 	function get_dong_data(){
 		get_buffer();
@@ -151,6 +159,9 @@ include_once("../inc/bottom.php")
 			data:data_arr,
 			dataType:'json',
 			success: function(data){
+
+				sensor_chart_data = data;
+
 				let params = {};
 				params["graph_color"] = ["#FF9900","#2FB5F0","#109618","#990099"];
 				params["font_size"] = 12;
@@ -184,4 +195,44 @@ include_once("../inc/bottom.php")
 			}
 		});
 	};
+
+	function send_excel_data(title){
+
+		let date_time = get_now_datetime();
+		let header = [];
+		let json_data = [];
+
+		let target_data = [];
+
+		switch(title){
+			case "일령별급이량":
+				header = ["날짜", "급이량(kg)"];
+				target_data = sensor_chart_data["chart_feed_daily"];
+				//json_data = JSON.stringify(sensor_chart_data["chart_feed_daily"]);
+				break;
+
+			case "일령별급수량":
+				header = ["날짜", "급수량(L)"];
+				target_data = sensor_chart_data["chart_water_daily"];
+				break;
+		}
+
+		for(let idx in target_data){
+			let row = target_data[idx];
+			let n = 1;
+			let data = {};
+			for(let key in row){
+				data["f" + n] = row[key];
+				n++;
+			}
+			json_data.push(data);
+		}
+
+		json_data = JSON.stringify(json_data);
+
+		title = top_name + "_" + top_code + "_" + title;
+
+		window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
+	}
+
 </script>
