@@ -36,7 +36,7 @@ foreach($init_data as $val){
 			<div class="widget-body p-1" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 d-flex align-items-center pt-3 pb-3">
 					<div class="col-xs-6 float-left text-center no-padding">
-						<span class="font-md">평균중량</span><br>
+						<span class="font-weight-bold" style="font-size: 20px">전체 평균중량</span><br>
 						<span class="font-weight-bold text-danger" style="font-size: 45px" id="summary_farm_weight">-</span>
 						<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
 					</div>

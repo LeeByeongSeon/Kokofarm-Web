@@ -38,6 +38,10 @@
 			$farm_devi = 0;
 			$farm_vc = 0;
 
+			// 동별 편차
+			$weight_arr = array();
+			$farm_diff = 0;
+
 			// 급이량
 			$curr_feed = 0;
 			$prev_feed = 0;
@@ -55,6 +59,9 @@
 			$thinout_count = 0;	//솎기
 
 			foreach($buffer_data as $row){
+
+				$weight_arr[] = $row["beAvgWeight"];
+ 
 				$farm_weight += $row["beAvgWeight"];
 				$farm_devi += $row["beDevi"];
 				$farm_vc += $row["beVc"];
@@ -81,6 +88,17 @@
 			$summary["summary_farm_weight"] = sprintf('%0.1f', $farm_weight / $dong_count);				// 전체 평균중량
 			$summary["summary_farm_devi"] = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);	// 전체 표준편차
 			$summary["summary_farm_vc"] = sprintf('%0.1f', $farm_vc / $dong_count);						// 전체 변이계수
+
+			// 동별 편차 구하기
+			$t = 0;
+			for($i=0; $i<$dong_count; $i++){
+				$b = $summary["summary_farm_weight"] - $weight_arr[$i];
+				$t += pow($b, 2);
+			}
+			$farm_diff = $t / $dong_count;
+			$farm_diff = sprintf('%0.1f', sqrt($farm_diff));	
+
+			$summary["summary_farm_diff"] = $farm_diff;						// 동별 표준편차
 
 			$percent = $feed_remain / $feed_max;
 			$percent = round($percent * 100);
