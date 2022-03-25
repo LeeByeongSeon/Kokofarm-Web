@@ -34,46 +34,32 @@ foreach($init_data as $val){
 				</div>
 			</header>
 			<div class="widget-body p-1" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
-				<div class="col-xs-12 d-flex align-items-center pt-3 pb-3">
-					<div class="col-xs-6 float-left text-center no-padding">
+				<div class="col-xs-12 d-flex align-items-center pt-3 mb-1">
+					<div class="col-xs-3 float-left text-center p-1">
+						<span class="font-md text-secondary">최소<br><span class="font-md font-weight-bold" id="summary_min_weight"></span></span>
+					</div>
+					<div class="col-xs-6 float-center text-center no-padding">
 						<span class="font-weight-bold" style="font-size: 20px">전체 평균중량</span><br>
 						<span class="font-weight-bold text-danger" style="font-size: 45px" id="summary_farm_weight">-</span>
 						<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
 					</div>
-					<div class="col-xs-3 float-center text-center p-1">
-						<span class="font-md text-secondary">표준편차<br><span class="font-md font-weight-bold" id="summary_farm_devi"></span></span>
-					</div>
 					<div class="col-xs-3 float-right text-center p-1">
-						<span class="font-md text-secondary">변이계수<br><span class="font-md font-weight-bold" id="summary_farm_vc"></span></span>
+						<span class="font-md text-secondary">최대<br><span class="font-md font-weight-bold" id="summary_max_weight"></span></span>
 					</div>
 				</div>
-				<div class="col-xs-12 mb-3">
-					<div id="accordion">
-						<div>
-							<h4>전체 사육 수</h4>
-							<div class="col-xs-12 no-padding">
-								<!-- <div class="col-xs-6 text-center no-padding">생존수<br><span class="font-lg" id="summary_comein_count">0</span></div>
-								<div class="col-xs-2 text-center no-padding">폐사<br><span class="font-lg" id="summary_death_count">0</span></div>
-								<div class="col-xs-2 text-center no-padding">도태<br><span class="font-lg" id="summary_cull_count">0</span></div>
-								<div class="col-xs-2 text-center no-padding">솎기<br><span class="font-lg" id="summary_thinout_count">0</span></div> -->
-
-								<table class="table table-bordered text-center m-0">
-									<thead>
-										<tr>
-											<th>생존 수</th><th>폐사 수</th><th>도태 수</th><th>솎기 수</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><span class="font-lg" id="summary_comein_count">0</span></td>
-											<td><span class="font-lg" id="summary_death_count">0</span></td>
-											<td><span class="font-lg" id="summary_cull_count">0</span></td>
-											<td><span class="font-lg" id="summary_thinout_count">0</span></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+				<div class="col-xs-12 text-center mb-3">
+					<span class="text-secondary font-md">동별 표준 편차&nbsp;<span class="font-weight-bold" id="summary_farm_diff">0</span></span>
+				</div>
+				<div class="col-xs-12 text-center d-flex align-items-center mb-3">
+					<div class="col-xs-6">
+						<div class="col-xs-12">
+							<span class="font-md"><p>생존 수</p><span class="font-lg" id="summary_comein_count">0</span></span>
 						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="col-xs-12"><span class="font-md">폐사 수&nbsp;<span id="summary_death_count">0</span></span></div>
+						<div class="col-xs-12"><span class="font-md">도태 수&nbsp;<span id="summary_cull_count">0</span></span></div>
+						<div class="col-xs-12"><span class="font-md">솎기 수&nbsp;<span id="summary_thinout_count">0</span></span></div>
 					</div>
 				</div>
 			</div>	
@@ -95,37 +81,37 @@ foreach($init_data as $val){
 					</div>
 				</div>
 			</header>
-			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
+			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
 				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
-					<div class="col-xs-3 no-padding">
+					<div class="col-xs-3 no-padding text-center">
 						<img id="feed_img" src="../images/feed-04.png" style="width: 7rem;"><br>
 						<div class="carousel-caption mb-4"><h3 class="font-weight-bold text-secondary" id="summary_feed_percent">-%</h3></div>
 						<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="summary_feed_remain">-</span>(Kg)</span></div>
 					</div>
 					<div class="col-xs-3 no-padding text-right">
-						<span style="font-size:12px">전체</span>(kg)<br><span id="summary_all_feed" style="font-size:23px">-</span>
+						<span style="font-size:12px">전체</span>(kg)<br><span id="summary_all_feed" style="font-size:21px">-</span>
 					</div>
 					<div class="col-xs-3 no-padding text-right">
-						<span style="font-size:12px">오늘</span>(kg)<br><span id="summary_curr_feed" style="font-size:23px">-</span>
+						<span style="font-size:12px">오늘</span>(kg)<br><span id="summary_curr_feed" style="font-size:21px">-</span>
 					</div>
 					<div class="col-xs-3 no-padding text-right">
-						<span style="font-size:12px">전일</span>(kg)<br><span id="summary_prev_feed" style="font-size:23px">-</span>
+						<span style="font-size:12px">전일</span>(kg)<br><span id="summary_prev_feed" style="font-size:21px">-</span>
 					</div>
 				</div>
 				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
 				<div  class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
-					<div class="col-xs-3 no-padding">
+					<div class="col-xs-3 no-padding text-center">
 						<img src="../images/water-02.png" style="width: 5rem;"><br><span></span>
 					<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="summary_water_per_hour">-</span>(L)</span></div>
 					</div>
 					<div class="col-xs-3 no-padding text-right">
-						<span style="font-size:12px">전체</span>(L)<br><span id="summary_all_water" style="font-size:23px">-</span>
+						<span style="font-size:12px">전체</span>(L)<br><span id="summary_all_water" style="font-size:21px">-</span>
 					</div>
 					<div class="col-xs-3 no-padding text-right">
-						<span style="font-size:12px">오늘</span>(L)<br><span id="summary_curr_water" style="font-size:23px">-</span>
+						<span style="font-size:12px">오늘</span>(L)<br><span id="summary_curr_water" style="font-size:21px">-</span>
 					</div>
 					<div class="col-xs-3 no-padding text-right">
-						<span style="font-size:12px">전일</span>(L)<br><span id="summary_prev_water" style="font-size:23px">-</span>
+						<span style="font-size:12px">전일</span>(L)<br><span id="summary_prev_water" style="font-size:21px">-</span>
 					</div>
 				</div>
 			</div>

@@ -85,9 +85,13 @@
 
 			$dong_count = count($buffer_data);
 
-			$summary["summary_farm_weight"] = sprintf('%0.1f', $farm_weight / $dong_count);				// 전체 평균중량
-			$summary["summary_farm_devi"] = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);	// 전체 표준편차
-			$summary["summary_farm_vc"] = sprintf('%0.1f', $farm_vc / $dong_count);						// 전체 변이계수
+			$all_farm_devi = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);
+
+			$summary["summary_farm_weight"] = sprintf('%0.1f', $farm_weight / $dong_count);					  // 전체 평균중량
+			$summary["summary_min_weight"] = sprintf('%0.1f', ($farm_weight / $dong_count) - $all_farm_devi); // 최소 평균중량
+			$summary["summary_max_weight"] = sprintf('%0.1f', ($farm_weight / $dong_count) + $all_farm_devi); // 최대 평균중량
+			// $summary["summary_farm_devi"] = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);	  // 전체 표준편차
+			// $summary["summary_farm_vc"] = sprintf('%0.1f', $farm_vc / $dong_count);						  // 전체 변이계수
 
 			// 동별 편차 구하기
 			$t = 0;
