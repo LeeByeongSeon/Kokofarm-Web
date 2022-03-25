@@ -74,9 +74,25 @@
 				</div>
 				<div id="modal_breed_body" class="modal-body">
 					<form id="breed_form" onsubmit="return false;">
-						<div class="col-xs-12 text-center no-padding" id="breed_alarm"></div>
-						<div class="col-xs-12 text-center">
-							<!-- <h3 class="font-weight-bold text-primary" style="margin:0.5rem">사육일지</h3> -->
+						<div class="col-xs-12 text-left">
+							<h5 class="font-weight-bold text-secondary" style="margin:0.5rem">기준시간</h5>
+							<div class="input-group mb-3">
+								<select class="form-control w-25" name="breed_indate">
+									<option value="2021-04-26" selected>0000-00-00</option>
+								</select>
+								<select class="form-control" name="breed_hour">
+									<option value="00" selected>00시</option>
+								</select>
+								<select class="form-control" name="breed_minute">
+									<option value="00">00분</option>
+									<option value="10">10분</option>
+									<option value="20">20분</option>
+									<option value="30">30분</option>
+									<option value="40">40분</option>
+									<option value="50">50분</option>
+								</select>
+							</div>
+							<hr>
 							<div class="input-group mb-3">
 								<span class="input-group-text font-weight-bold" style="width: 73.5px">입추</span>
 								<input type="number" pattern="\d*" class="form-control" name="comein_count" placeholder="입추 수" min="" max="">
