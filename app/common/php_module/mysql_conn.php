@@ -169,6 +169,11 @@ class sql_conn{
     // }
 
     // insert 메소드
+    public function run_query($excute_sql){
+        $this->local_db_conn->query($excute_sql);
+    }
+
+    // insert 메소드
     public function insert($table_name, $data_arr){
         $temp_left  = ""; 
         $temp_right = "";

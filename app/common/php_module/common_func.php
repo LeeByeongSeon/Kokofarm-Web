@@ -28,62 +28,6 @@ function buffer_code(){
 	}
 }
 
-function test_insert(){
-
-	for($k=104; $k<=150; $k++){
-		$farmID = "KF" . sprintf("%04d", $k);
-		$dongID = "01";
-		
-		$insert_map = array();
-		$insert_map["fID"] = "kk" . sprintf("%04d", $k);
-		$insert_map["fPW"] = "kk" . sprintf("%04d", $k);
-		$insert_map["fGroupName"] = "이모션";
-		$insert_map["fFarmid"] = $farmID;
-
-		run_sql_insert("farm", $insert_map);
-
-		// $insert_map = array();
-		// $insert_map["fdFarmid"] = $farmID;
-		// $insert_map["fdDongid"] = $dongID;
-		// $insert_map["fdName"] 	= "테스터-" . $farmID;
-		// $insert_map["fdTel"] 	= "010-5022-1684";
-		// $insert_map["fdType"] 	= "육계";
-		// $insert_map["fdScale"] 	= "30000";
-		// $insert_map["fdAddr"] 	= "연구소";
-
-		// run_sql_insert("farm_detail", $insert_map);
-
-		// // 버퍼테이블 생성
-		// $insert_map = array();
-		// $insert_map["beFarmid"] = $farmID;
-		// $insert_map["beDongid"] = $dongID;
-
-		// run_sql_insert("buffer_sensor_status", $insert_map);
-		
-		// // 디폴트로 저울 3개를 insert
-		// $insert_map = array();
-		// $now = date('Y-m-d H:i:s');
-		// $insert_map["siFarmid"] = $farmID;
-		// $insert_map["siDongid"] = $dongID;
-		// $insert_map["siDate"] = $now;
-		// for($i=1; $i<=3; $i++){
-		// 	$insert_map["siCellid"] = sprintf('%02d', $i);
-		// 	run_sql_insert("set_iot_cell", $insert_map);
-		// }
-
-		// // 디폴트로 카메라 1개 insert
-		// $insert_map = array();
-		// $insert_map["scFarmid"] = $farmID;
-		// $insert_map["scDongid"] = $dongID;
-		// $insert_map["scPort"] = "150" . $dongID;
-		// $insert_map["scUrl"] = "/stw-cgi/video.cgi?msubmenu=snapshot&action=view&Resolution=640x480";
-		// $insert_map["scId"] = "admin";
-		// $insert_map["scPw"] = "kokofarm5561";
-		// run_sql_insert("set_camera", $insert_map);
-	}
-
-}
-
 // select 결과 데이터 반환
 function get_select_data($query){
     $ret = sql_conn::get_inst()->select($query);
@@ -100,6 +44,14 @@ function get_select_count($query){
 function check_str($str){
     $ret = sql_conn::get_inst()->check_str($str);
 	return $ret;
+}
+
+/* 직접 입력 쿼리 수행
+param
+- query : 실행할 쿼리문
+*/
+function run_query($query){
+    sql_conn::get_inst()->run_query($query);
 }
 
 /* insert 쿼리 수행

@@ -1,5 +1,11 @@
 <?
 include_once("../inc/top.php");
+
+if(isset($_REQUEST["request_dong"])){
+	//$("#top_select li").eq($_REQUEST["request_dong"]).click();
+	$request_dong = $_REQUEST["request_dong"];
+}
+
 ?>
 
 <style>
@@ -124,6 +130,17 @@ include_once("../inc/top.php");
 				</div>
 			</header>
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
+				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">마리 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="dong_per_feed"></span></span>
+					</div>
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">마리 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="dong_per_water"></span></span>
+					</div>
+				</div>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
 					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-00.png" style="width: 7rem;"><br>
 						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
@@ -321,6 +338,31 @@ include_once("../inc/bottom.php")
 				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
 			}
 		});
+
+		get_feed_per_count();
 	}
+
+	function get_feed_per_count(){
+		
+		let data_arr = {};
+		data_arr["oper"] = "get_feed_per_count";
+		data_arr["cmCode"] = top_code;		//등록코드
+		
+		$.ajax({
+			url:'0101_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+
+				$("#dong_per_feed").html(data.dong_per_feed + "g");
+				$("#dong_per_water").html(data.dong_per_water + "L");
+			},
+			error: function(request,status,error){
+				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+			}
+		});
+	};
 
 </script>

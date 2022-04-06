@@ -75,44 +75,42 @@
 				<div id="modal_breed_body" class="modal-body">
 					<form id="breed_form" onsubmit="return false;">
 						<div class="col-xs-12 text-left">
-							<h5 class="font-weight-bold text-secondary" style="margin:0.5rem">기준시간</h5>
 							<div class="input-group mb-3">
-								<select class="form-control w-25" name="breed_indate">
+								<h5 class="font-weight-bold text-secondary" style="margin:0.5rem">기준일자</h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<select class="form-control w-25" name="breed_input_date">
 									<option value="2021-04-26" selected>0000-00-00</option>
 								</select>
-								<select class="form-control" name="breed_hour">
-									<option value="00" selected>00시</option>
-								</select>
-								<select class="form-control" name="breed_minute">
-									<option value="00">00분</option>
-									<option value="10">10분</option>
-									<option value="20">20분</option>
-									<option value="30">30분</option>
-									<option value="40">40분</option>
-									<option value="50">50분</option>
-								</select>
+								&nbsp;&nbsp;
+								<h5 class="font-weight-bold text-secondary" style="margin:0.5rem">축종 </h5>
+								&nbsp;&nbsp;
+								<h5 class="font-weight-bold text-danger" id="modal_breed_type" style="margin:0.5rem">산란계 종계 </h5>
 							</div>
 							<hr>
 							<div class="input-group mb-3">
 								<span class="input-group-text font-weight-bold" style="width: 73.5px">입추</span>
-								<input type="number" pattern="\d*" class="form-control" name="comein_count" placeholder="입추 수" min="" max="">
+								<input type="number" pattern="\d*" class="form-control" name="breed_comein_count" placeholder="입추 수" min="" max="">
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text font-weight-bold" style="width: 73.5px">폐사</span>
-								<input type="number" pattern="\d*" class="form-control" name="death_count" placeholder="폐사 수" min="" max="">
+								<input type="number" pattern="\d*" class="form-control" name="breed_death_count" placeholder="폐사 수" min="" max="">
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text font-weight-bold" style="width: 73.5px">도태</span>
-								<input type="number" pattern="\d*" class="form-control" name="cull_count" placeholder="도태 수" min="" max="">
+								<input type="number" pattern="\d*" class="form-control" name="breed_cull_count" placeholder="도태 수" min="" max="">
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text font-weight-bold" style="width: 73.5px">솎기</span>
-								<input type="number" pattern="\d*" class="form-control" name="thinout_count" placeholder="솎기 수" min="" max="">
+								<input type="number" pattern="\d*" class="form-control" name="breed_thinout_count" placeholder="솎기 수" min="" max="">
 							</div>
 
 							<div class="col-xs-12 text-center no-padding" id="breed_opt_alarm"></div>
 						</div>
 					</form>
+
+					<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 입추수는 최초 입추 기준</label></div>
+					<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 폐사, 도태, 솎기 수는 해당 일자에 발생된 것만 기록 (누적 X)</label></div>
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" id="modal_breed_ok">적용</button>
@@ -190,6 +188,10 @@
 		});
 
 		// 처음 시작 시 강제 클릭
+		if(!!"<?=$request_dong?>"){
+			$("#top_select li").eq("<?=$request_dong?>" - 1).click();
+		}
+
 		if(curr_item == null){
 			$("#top_select li").first().click();
 		}

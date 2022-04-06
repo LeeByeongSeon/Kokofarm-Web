@@ -297,6 +297,37 @@ var confirm_event = function (work){
 	});
 };
 
+/* 사육일지 팝업 - 확인
+	param
+	- title : 모달 상단 제목 string
+	- msg : 모달에 표시될 내용
+	- wokr : 확인/취소 버튼 클릭 시 실행될 함수
+	*/
+function popup_breed(title, work, ok_msg = "저장", cancle_msg = "취소"){
+
+    $("#modal_breed_ok").html(ok_msg);				
+    $("#modal_breed_cancle").html(cancle_msg);			
+
+    $("#modal_breed_title").html(title);					//modal title
+    //$("#modal_breed_body").html("<p>" + msg + "</p>");		//modal 내용
+    $("#modal_breed").modal('show');						//modal open
+
+    breed_confirm_event(work);
+};
+
+// 확인 및 취소 버튼 클릭 시 실행 할 작업을 바인딩 함
+var breed_confirm_event = function (work){
+	$("#modal_breed_ok").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
+		work(true);
+		$("#modal_breed").modal('hide');
+	});
+	
+	$("#modal_breed_cancle").off("click").on("click", function(){
+		work(false);
+		$("#modal_breed").modal('hide');
+	});
+};
+
 // 날짜 유효성 검사
 function date_valid_check(input){
     let [date_arr, time_arr] = input.split(" ");
@@ -1083,6 +1114,8 @@ function send_excel_android(title, table_id){
 	$("#" + table_id).find("th").each(function(key, val){ 
 		header.push( $.trim($(this).text()) );
 	});
+
+    console.log(json_data);
 	
 	window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
 }

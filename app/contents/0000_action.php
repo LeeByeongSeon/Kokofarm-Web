@@ -17,15 +17,17 @@
 		case "get_buffer":
 			
 			$now = date("Y-m-d H:i:s");
+			$time_1 = date("Y-m-d H:i:s", strtotime("-1 hours"));
 
 			// 농장 데이터
-			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, f.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS inTerm FROM buffer_sensor_status AS be 
+			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, f.*, sh.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS inTerm FROM buffer_sensor_status AS be 
 						JOIN farm AS f ON f.fFarmid = be.beFarmid 
 						LEFT JOIN comein_master AS cm ON cm.cmFarmid = be.beFarmid AND cm.cmDongid = be.beDongid AND cm.cmCode = be.beComeinCode 
 						LEFT JOIN set_light AS sl ON sl.slFarmid = be.beFarmid AND sl.slDongid = be.beDongid 
 						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = be.beFarmid AND sf.sfDongid = be.beDongid 
 						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid 
-						WHERE beFarmid = \"" .$farmID. "\"" ;
+						LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND shDate = \"" . substr($time_1, 0, 13) . ":00:00\" 
+						WHERE beFarmid = \"" .$farmID. "\" ORDER BY cmDongid DESC" ;
 
 			$buffer_data = get_select_data($select_sql);
 
@@ -52,11 +54,18 @@
 			$prev_water = 0;
 			$all_water = 0;
 
+			$water_per_hour = 0;
+
 			// 사육관련
 			$comein_count = 0;	//생존수
 			$death_count = 0;	//폐사
 			$cull_count = 0;	//도태
 			$thinout_count = 0;	//솎기
+
+			// 그래프 데이터
+			$feed_chart = array();
+			$water_chart = array();
+			$weight_chart = array();
 
 			foreach($buffer_data as $row){
 
@@ -81,6 +90,24 @@
 
 				$feed_max += $row["sfFeedMax"];
 				$feed_remain += $row["sfFeed"];
+
+				$feed_json = json_decode($buffer_data[0]["shFeedData"]);
+				$water_per_hour += $feed_json->feed_water;
+
+				$weight_chart[] = array(
+					"동" => $row["beDongid"] ."동",
+					"평균중량" => $row["beAvgWeight"],
+				);
+
+				$feed_chart[] = array(
+					"동" => $row["beDongid"] ."동",
+					"급이량" => $row["sfDailyFeed"],
+				);
+
+				$water_chart[] = array(
+					"동" => $row["beDongid"] ."동",
+					"급수량" => $row["sfDailyWater"],
+				);
 			}
 
 			$dong_count = count($buffer_data);
@@ -117,6 +144,8 @@
 			$summary["summary_prev_water"] = $prev_water;
 			$summary["summary_all_water"] = $all_water;
 
+			$summary["summary_water_per_hour"] = $water_per_hour;
+
 			$summary["summary_comein_count"] = $comein_count;
 			$summary["summary_death_count"] = $death_count;
 			$summary["summary_cull_count"] = $cull_count;
@@ -126,12 +155,114 @@
 			$summary["dong_count"] = $dong_count;
 
 			$response["summary"] = $summary;
+			$response["weight_chart"] = $weight_chart;
+			$response["feed_chart"] = $feed_chart;
+			$response["water_chart"] = $water_chart;
 
 			echo json_encode($response);
 
 			break;
 
-		case "chart":
+		case "get_feed_per_count":
+			$select_sql = "SELECT fe.*, cd.* FROM (
+							SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
+							SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, cm.cmCode, cm.cmInsu 
+							FROM buffer_sensor_status AS be 
+							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
+							LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND sh.shDate 
+								BETWEEN cm.cmIndate AND IF(cm.cmOutdate is null, now(), cm.cmOutdate)
+							WHERE be.beFarmid = \"" .$farmID. "\" GROUP BY cm.cmCode, shFarmid, shDongid, LEFT(shDate, 10)
+							) AS fe
+							LEFT JOIN comein_detail AS cd ON cd.cdCode = fe.cmCode AND cd.cdDate = shDate";
+
+			$feed_data = get_select_data($select_sql);
+
+			$dong_per_feed = array();
+			$dong_per_water = array();
+			$dong_in = array();
+			$dong_out = array();
+
+			// 전체 농장별로 구하기 위한 날짜별 배열
+			$daily_feed_data = array();
+			
+			foreach($feed_data as $row){
+
+				$date = $row["shDate"];
+
+				if(!array_key_exists($date, $daily_feed_data)){
+					$daily_feed_data[$date] = array();
+				}
+
+				$daily_feed_data[$date][$row["shDongid"]] = $row;
+
+				// 동별 계산
+				$key = $row["shDongid"];
+
+				if(!array_key_exists($key, $dong_per_feed)){
+					$dong_per_feed[$key] = 0;
+					$dong_per_water[$key] = 0;
+					$dong_in[$key] = $row["cmInsu"];
+					$dong_out[$key] = 0;
+				}
+
+				$feed = $row["feed"] * 1000;  // g으로 단위 환산
+				$water = $row["feed"];  // 
+
+				$live = $dong_in[$key] - $dong_out[$key];
+
+				$per_feed = $feed / $live;
+				$per_water = $water / $live;
+				$dong_per_feed[$key] += $per_feed;
+				$dong_per_water[$key] += $per_water;
+
+				//echo($key . " live : " . $live . " out : " . $dong_out[$key] . " per_feed : " . $per_feed . "\n");
+
+				$dong_out[$key] += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
+			}
+
+			// 전체 농장 합산 계산
+			$total_per_feed = 0;
+			$total_per_water = 0;
+			$total_in = 0;
+			$total_out = 0;
+			foreach($daily_feed_data as $date_data){
+
+				if($total_in == 0){
+					foreach($date_data as $row){
+						$total_in += $row["cmInsu"];
+					}
+				}
+
+				$feed = 0;
+				$water = 0;
+				$out = 0;
+
+				foreach($date_data as $row){
+					$feed += $row["feed"] * 1000;
+					$water += $row["water"];
+					$out += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
+				}
+
+				$live = $total_in - $total_out;
+				$per_feed = $feed / $live;
+				$per_water = $water / $live;
+
+				$total_per_feed += $per_feed;
+				$total_per_water += $per_water;
+
+				//echo(" live : " . $live . " out : " . $total_out . " per_feed : " . $per_feed . " per_water : " . $per_water ."\n");
+
+				$total_out += $out;
+
+			}
+
+			$response["total_per_feed"] = sprintf('%0.1f', $total_per_feed);	
+			$response["total_per_water"] = sprintf('%0.3f', $total_per_water);	
+			$response["dong_per_feed"] = $dong_per_feed;
+			$response["dong_per_water"] = $dong_per_water;
+
+			echo json_encode($response);
+
 			break;
 	}
 ?>

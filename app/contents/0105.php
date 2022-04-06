@@ -5,7 +5,47 @@ include_once("../inc/top.php");
 $type_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"생계구분\"";
 $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "육계");
 
+if(isset($_REQUEST["request_dong"])){
+	//$("#top_select li").eq($_REQUEST["request_dong"]).click();
+	$request_dong = $_REQUEST["request_dong"];
+}
+
 ?>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
+				<div class="widget-header">	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-home"></i>&nbsp;사육일지&nbsp;</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="convert_excel('사육일지', 'breed_table')"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+				</div>
+			</header>
+			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+
+				<!-- <table id="breed_table" class="table table-bordered table-hover"
+							data-detail-view="true" data-detail-formatter="get_detail_info" 
+							data-page-list="[]" data-toggle="table" style="font-size:14px; cursor:pointer"> -->
+				<table id="breed_table" class="table table-bordered table-hover"
+							data-page-list="[]" data-toggle="table" style="font-size:13px; cursor:pointer">
+					<thead>
+						<tr>
+							<th data-field='f_interm'	 data-align="center" >일령</th>
+							<th data-field='f_date'	 	 data-cell-style="css_padding" data-align="center" >일자</th>
+							<th data-field='f_live'	 	 data-cell-style="css_padding" data-align="center" >생존 수</th>
+							<th data-field='f_death'	 data-cell-style="css_padding" data-align="center" >폐사 수</th>
+							<th data-field='f_cull'	 	 data-cell-style="css_padding" data-align="center" >도태 수</th>
+							<th data-field='f_thinout'	 data-cell-style="css_padding" data-align="center" >솎기 수</th>
+						</tr>
+					</thead>
+				</table>
+				
+			</div>	
+		</div>
+	</div>
+</div>
 	
 <div class="row" id="row_request_form" style="display:none;">
 	<div class="col-xs-12">
@@ -66,10 +106,10 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 									<input type="radio" class="form-check-input" name="change_intype" value="토종닭"><span>&nbsp;토종닭</span>
 								</label> -->
 						</div>
-						<div class="input-group mb-3">
+						<!-- <div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">입추 수</span>
 							<input type="number" pattern="\d*" class="form-control" aria-label="입추 수" name="change_insu" min="0" max="99999" value="">
-						</div>
+						</div> -->
 					</div>
 
 					<div class="col-xs-12 text-center">
@@ -137,6 +177,89 @@ include_once("../inc/bottom.php")
 			if(!["R", "A", "W", "C"].includes(top_rc_status)){
 				$("#row_request_form").show();
 				get_info();
+				get_breed_data();
+			}
+		}
+	};
+
+	function get_breed_data(){
+
+		let data_arr = {};
+		data_arr["oper"] = "get_breed_data";
+		data_arr["cmCode"] = top_code;
+		
+		$.ajax({
+			url:'0105_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+
+				comein_intype = data.comein_data["cmIntype"];
+				comein_indate = data.comein_data["cmIndate"];
+				comein_insu = data.comein_data["cmInsu"];
+
+				$("#breed_table").bootstrapTable("load",data.breed_table);
+			}
+		});
+	};
+
+	$('#breed_table').on('click-cell.bs.table', function (e, field, value, row) { 
+		popup_input(top_code, comein_insu, row);
+	});
+
+	function popup_input(code, insu, row){
+
+		let dong = code.slice(-2);
+		
+		let title = dong + "동 사육일지 입력";
+
+		let now = get_now_datetime();
+
+		$("#modal_breed_type").html(comein_intype);
+
+		$("#breed_form [name=breed_input_date]").html(make_date_combo(row.f_date, -3));
+		$("#breed_form [name=breed_comein_count]").val(insu);
+		$("#breed_form [name=breed_death_count]").val(row.f_death);
+		$("#breed_form [name=breed_cull_count]").val(row.f_cull);
+		$("#breed_form [name=breed_thinout_count]").val(row.f_thinout);
+
+		popup_breed(title, function(confirm){
+			if(confirm){
+				let data_arr = {};
+				data_arr["oper"] = "save_breed_data";
+				data_arr["cmCode"] = code;
+				data_arr["comein_count"] = $("#breed_form [name=breed_comein_count]").val();
+				data_arr["death_count"] = $("#breed_form [name=breed_death_count]").val();
+				data_arr["cull_count"] = $("#breed_form [name=breed_cull_count]").val();
+				data_arr["thinout_count"] = $("#breed_form [name=breed_thinout_count]").val();
+				data_arr["date"] = $("#breed_form [name=breed_input_date]").val();
+
+				$.ajax({
+					url:'0105_action.php',
+					data:data_arr,
+					cache:false,
+					type:'post',
+					dataType:'json',
+					success: function(data){
+
+						get_breed_data();
+
+					},
+					error: function(request,status,error){
+						//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+					}
+				});
+			}
+		});
+	}
+
+	// 테이블 패딩 조정
+	function css_padding(value, row, index){
+		return {
+			css: {
+				padding: '0.5px'
 			}
 		}
 	};
@@ -394,6 +517,12 @@ include_once("../inc/bottom.php")
 			);
 		}
 	});
+
+	function convert_excel(title, table_id){
+		title = top_name + "_" + top_code + "_" + title;
+
+		send_excel_android(title, table_id);
+	};
 	
 	
 </script>

@@ -11,7 +11,7 @@ if(isset($_REQUEST["cmCode"])){
 	$dongID = substr($id, 6);
 };
 
-$response   = array();
+$response = array();
 
 switch($oper){
 
@@ -22,6 +22,94 @@ switch($oper){
 		$comein_data = get_select_data($select_query);
 		
 		$response["comein_data"] = $comein_data[0];
+
+		echo json_encode($response);
+
+		break;
+
+	case "get_breed_data":
+
+		$breed_table = array();
+
+		$select_query = "SELECT cm.*, cd.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS inTerm 
+						FROM comein_master AS cm LEFT JOIN comein_detail AS cd ON cd.cdCode = cm.cmCode WHERE cm.cmCode = \"" .$code. "\" ";
+						
+		$breed_data = get_select_data($select_query);
+
+		$start_date = substr($breed_data[0]["cmIndate"], 0, 10);
+		$now_date = date("Y-m-d");
+
+		$date_list = array();
+
+		foreach($breed_data as $row){
+			$date_list[$row["cdDate"]] = $row;
+		}
+
+		$day = 1;
+		$live = $row["cmInsu"];
+
+		while(true){
+			if(array_key_exists($start_date, $date_list)){
+
+				$live = $live - $row["cdDeath"] - $row["cdCull"] - $row["cdThinout"];
+				$row = $date_list[$start_date];
+				$breed_table[] = array(
+					'f_interm' 		=> $day++,
+					'f_date' 		=> $start_date,
+					'f_live' 		=> $live,
+					'f_death' 		=> $row["cdDeath"],
+					'f_cull' 		=> $row["cdCull"],
+					'f_thinout' 	=> $row["cdThinout"]
+				);
+			}
+			else{
+				$breed_table[] = array(
+					'f_interm' 		=> $day++,
+					'f_date' 		=> $start_date,
+					'f_live' 		=> $live,
+					'f_death' 		=> 0,
+					'f_cull' 		=> 0,
+					'f_thinout' 	=> 0
+				);
+			}
+
+			if($start_date == $now_date){
+				break;
+			}
+
+			$start_date = date("Y-m-d", strtotime($start_date . " +1 days"));
+		}
+
+		$response["comein_data"] = $breed_data[0];
+		$response["breed_table"] = $breed_table;
+
+		echo json_encode($response);
+
+		break;
+
+	case "save_breed_data":
+
+		$insert_map = array();
+
+		$insert_map["cdCode"] 	    	= $code; 								//입출하 코드
+		$insert_map["cdDate"] 	    	= $_REQUEST["date"]; 					//입력 기준시간
+
+		$insert_map["cdDeath"] 	 		= check_str($_REQUEST["death_count"]); 			//폐사 수
+		$insert_map["cdCull"]   		= check_str($_REQUEST["cull_count"]); 			//도태 수
+		$insert_map["cdThinout"]    	= check_str($_REQUEST["thinout_count"]); 		//솎기 수
+		$insert_map["cdInputDate"]  	= date("Y-m-d H:i:s");
+
+		run_sql_insert("comein_detail", $insert_map);
+
+		// 입추수 변경
+		$update_query = "UPDATE comein_master SET ";
+		$update_query .= " cmInsu = " . check_str($_REQUEST["comein_count"]);
+		$update_query .= ", cmDeathCount = cmDeathCount + " . check_str($_REQUEST["death_count"]);
+		$update_query .= ", cmCullCount = cmCullCount + " . check_str($_REQUEST["cull_count"]);
+		$update_query .= ", cmThinoutCount = cmThinoutCount + " . check_str($_REQUEST["thinout_count"]);
+
+		$update_query .= " WHERE cmCode = \"".$code."\"";
+		run_query($update_query);
 
 		echo json_encode($response);
 
