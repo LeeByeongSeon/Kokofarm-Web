@@ -99,7 +99,7 @@ switch($oper){
 		$insert_map["cdThinout"]    	= check_str($_REQUEST["thinout_count"]); 		//솎기 수
 		$insert_map["cdInputDate"]  	= date("Y-m-d H:i:s");
 
-		run_sql_insert("comein_detail", $insert_map);
+		run_sql_upsert("comein_detail", $insert_map, array("cdCode", "cdDate"));
 
 		// 입추수 변경
 		$update_query = "UPDATE comein_master SET ";

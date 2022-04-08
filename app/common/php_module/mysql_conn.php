@@ -189,6 +189,27 @@ class sql_conn{
         $this->local_db_conn->query($excute_sql);
     }
 
+    public function upsert($table_name, $data_arr, $key_arr){
+        $temp_left  = ""; 
+        $temp_right = "";
+        $duplicate_sql = "ON DUPLICATE KEY UPDATE ";
+
+        foreach($data_arr as $key => $val){ 
+            if(strlen($val) > 0){  
+                $temp_left  .= $key . ", ";
+                $temp_right .= "\"$val\", ";
+
+                if(!in_array($key, $key_arr)){
+                    $duplicate_sql .= $key . " = " . "\"$val\", ";
+                }
+            } 
+        }
+
+        $excute_sql = "INSERT INTO " . $table_name . "(" . substr($temp_left, 0, -2) . ") VALUES(" . substr($temp_right, 0, -2) . ") " . substr($duplicate_sql, 0, -2) . ";";
+
+        $this->local_db_conn->query($excute_sql);
+    }
+
     // update 메소드
     public function update($table_name, $data_arr, $where_str){
         $temp = "";
