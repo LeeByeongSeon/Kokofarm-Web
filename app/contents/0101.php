@@ -132,10 +132,10 @@ if(isset($_REQUEST["request_dong"])){
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
 				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
 					<div class="col-xs-6 no-padding text-center">
-						<span class="font-md text-secondary">마리 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="dong_per_feed"></span></span>
+						<span class="font-md text-secondary">수 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="dong_per_feed"></span></span>
 					</div>
 					<div class="col-xs-6 no-padding text-center">
-						<span class="font-md text-secondary">마리 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="dong_per_water"></span></span>
+						<span class="font-md text-secondary">수 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="dong_per_water"></span></span>
 					</div>
 				</div>
 

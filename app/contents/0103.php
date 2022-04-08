@@ -8,32 +8,61 @@ include_once("../inc/top.php")
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;급이 및 급수</h2>	
+					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;급이량 및 급수량
+						<!-- <span class="font-sm badge bg-orange">마리당 급이량 : <span id="total_per_feed"> 0 </span>g</span> -->
+					</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+					</div>
 				</div>
 			</header>
-			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
-				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-00.png" style="width: 7rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
+			<div class="widget-body p-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
+				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">수 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="dong_per_feed"></span></span>
 					</div>
-					<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(Kg)</span></div>
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">수 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="dong_per_water"></span></span>
+					</div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 25px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">오늘 급이량</span>(Kg)<br><span id="extra_curr_feed" style="font-size:28px">-</span></div>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
+				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
+					<div class="col-xs-3 no-padding text-center">
+						<img id="feed_img" src="../images/feed-04.png" style="width: 7rem;"><br>
+						<div class="carousel-caption mb-4"><h3 class="font-weight-bold text-secondary" id="extra_feed_percent">-%</h3></div>
+						<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(Kg)</span></div>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전체</span>(kg)<br><span id="extra_all_feed" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">오늘</span>(kg)<br><span id="extra_curr_feed" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전일</span>(kg)<br><span id="extra_prev_feed" style="font-size:21px">-</span>
+					</div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 25px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급이량</span>(Kg)<br><span id="extra_prev_feed" style="font-size:28px">-</span></div>
-				</div>
-				<div style="clear:both"></div><hr style="margin-top:0px">
-				<div class="col-xs-4 no-padding" style="margin-top: 5px">
-					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
+				<div  class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
+					<div class="col-xs-3 no-padding text-center">
+						<img src="../images/water-02.png" style="width: 5rem;"><br><span></span>
 					<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
-				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 15px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">오늘 급수량</span>(L)<br><span id="extra_curr_water" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 15px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급수량</span>(L)<br><span id="extra_prev_water" style="font-size:28px">-</span></div>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전체</span>(L)<br><span id="extra_all_water" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">오늘</span>(L)<br><span id="extra_curr_water" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전일</span>(L)<br><span id="extra_prev_water" style="font-size:21px">-</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -119,6 +148,7 @@ include_once("../inc/bottom.php")
 		get_buffer();
 		get_all();
 		get_today();
+		get_feed_per_count();
 	};
 
 	function get_buffer(){
@@ -234,5 +264,28 @@ include_once("../inc/bottom.php")
 
 		window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
 	}
+
+	function get_feed_per_count(){
+		
+		let data_arr = {};
+		data_arr["oper"] = "get_feed_per_count";
+		data_arr["cmCode"] = top_code;		//등록코드
+		
+		$.ajax({
+			url:'0101_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+
+				$("#dong_per_feed").html(data.dong_per_feed + "g");
+				$("#dong_per_water").html(data.dong_per_water + "L");
+			},
+			error: function(request,status,error){
+				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+			}
+		});
+	};
 
 </script>

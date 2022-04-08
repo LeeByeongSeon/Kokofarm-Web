@@ -9,25 +9,26 @@ foreach($init_data as $val){
 	$dong_list_html .= "<div class='row'>";
 	$dong_list_html .= "	<div class='col-xs-12'>";
 	$dong_list_html .= "		<div class='jarviswidget jarviswidget-color-white no-padding mb-3' data-widget-editbutton='false' data-widget-colorbutton='false' data-widget-deletebutton='false' data-widget-fullscreenbutton='false' data-widget-togglebutton='false'>";
-	$dong_list_html .= "			<div class='widget-body no-padding form-inline' style='border-radius: 10px; border : 4px solid #eee; border-top: 0;'>";
+	$dong_list_html .= "			<div class='widget-body no-padding form-inline move_dong' style='border-radius: 10px; border : 4px solid #eee; border-top: 0;' onClick='move_dong(\"".$val["fdDongid"]."\")'>";
 	$dong_list_html .= "				<div class='col-xs-2 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:20px'>".$val["fdDongid"]."동</span></p><span id=''>".$val["interm"]."일령</span></div>";
 	$dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px' >평균중량</span></p><span class='font-lg text-danger font-weight-bold'>".sprintf('%0.1f', $val["beAvgWeight"])."g</span></div>";
 	$dong_list_html .= "				<div class='col-xs-1 text-center no-padding'><i class='fa fa-circle text-success'></i></div>";
 	//$dong_list_html .= "<div class='col-xs-3 text-center no-padding'><img src='../images/feed-00.png' style='width:40px'></div>";
 	$dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><img src='";
-
-	$per = round($val["sfFeed"] / $val["sfFeedMax"] * 100);
-	if($per <= 10)					$dong_list_html .= "../images/feed-00.png' style='width:40px";
+	if($val["sfFeed"]>0){
+		$per = round($val["sfFeed"] / $val["sfFeedMax"] * 100);
+	}
+	if($per <= 10)						$dong_list_html .= "../images/feed-00.png' style='width:40px";
 	else if($per > 10 && $per <= 35)	$dong_list_html .= "../images/feed-01.png' style='width:40px";
 	else if($per > 35 && $per <= 65)	$dong_list_html .= "../images/feed-02.png' style='width:40px";
 	else if($per > 65 && $per <= 90)	$dong_list_html .= "../images/feed-03.png' style='width:40px";
-	else if($per > 90)				$dong_list_html .= "../images/feed-04.png' style='width:40px";
+	else if($per > 90)					$dong_list_html .= "../images/feed-04.png' style='width:40px";
 	$dong_list_html .= "' style='width:40px'> <p><span class='fong-md font-weight-bold' style='font-size:12px'>" . $val["sfFeed"] . "(Kg)</span></p> </div>";
 
 	$live_count = $val["cmInsu"] - $val["cmDeathCount"] - $val["cmCullCount"] - $val["cmThinoutCount"];
 
 	$dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px'>생존수 : ".$live_count."</span></p>";
-	$dong_list_html .= 					"<button class='btn btn-default' onClick='move_breed(\"".$val["fdDongid"]."\")' style='border-color:white'><i class='fa fa-pencil-square-o font-lg text-secondary'></i></button></div>"; 
+	$dong_list_html .= 					"<button class='btn btn-default move_breed' onClick='move_breed(\"".$val["fdDongid"]."\")' style='border-color:white'><i class='fa fa-pencil-square-o font-lg text-secondary'></i></button></div>"; 
 	$dong_list_html .= "</div></div></div></div>";
 }
 
@@ -94,13 +95,13 @@ foreach($init_data as $val){
 					</div>
 				</div>
 			</header>
-			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
+			<div class="widget-body p-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
 				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
 					<div class="col-xs-6 no-padding text-center">
-						<span class="font-md text-secondary">마리 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="total_per_feed"></span></span>
+						<span class="font-md text-secondary">수 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="total_per_feed"></span></span>
 					</div>
 					<div class="col-xs-6 no-padding text-center">
-						<span class="font-md text-secondary">마리 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="total_per_water"></span></span>
+						<span class="font-md text-secondary">수 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="total_per_water"></span></span>
 					</div>
 				</div>
 
@@ -170,7 +171,7 @@ foreach($init_data as $val){
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 평균중량 비교</h2>	
 				</div>
 			</header>
-			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body no-padding dong_weight_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 no-padding">
 					<div id="dong_weight_chart" style="height: 260px;"></div>
 				</div>
@@ -188,7 +189,7 @@ foreach($init_data as $val){
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 급이량 비교</h2>	
 				</div>
 			</header>
-			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body no-padding dong_feed_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 no-padding">
 					<div id="dong_feed_chart" style="height: 260px;"></div>
 				</div>
@@ -206,7 +207,7 @@ foreach($init_data as $val){
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 급수량 비교</h2>	
 				</div>
 			</header>
-			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body no-padding dong_water_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 no-padding">
 					<div id="dong_water_chart" style="height: 260px;"></div>
 				</div>
@@ -243,6 +244,11 @@ include_once("../inc/bottom.php")
 			$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
 			$(this).parents(".jarviswidget").children(".widget-body").toggle();
 		});
+		
+		// 동별 이동과 사육일지 이동 클릭이벤트 분리
+		$(".move_dong").children().find(".move_breed").click(function(e){
+			return false;
+		});
 	});
 
 	function get_dong_data(){
@@ -277,12 +283,27 @@ include_once("../inc/bottom.php")
 				let dong_feed_chart = [];
 				let dong_water_chart = [];
 
+				let feed_chart_count = 0;
+				let water_chart_count = 0;
+
 				let len = data.weight_chart.length;
 				for(let i=0; i<len; i++){
 					dong_weight_chart[i] = data.weight_chart[len - i - 1];
 					dong_feed_chart[i] = data.feed_chart[len - i - 1];
 					dong_water_chart[i] = data.water_chart[len - i - 1];
+
+					let feed = data.feed_chart[i]["급이량"];
+					let water = data.water_chart[i]["급수량"];
+					feed_chart_count += feed;
+					water_chart_count += water;
 				}
+
+				if(feed_chart_count == 0 && water_chart_count == 0){
+					$(".dong_feed_chart").css("display", "none");
+					$(".dong_water_chart").css("display", "none");
+				}
+
+				// alert(JSON.stringify(data.water_chart));
 
 				simple_chart("dong_weight_chart", dong_weight_chart, "#6E6E6E");
 				simple_chart("dong_feed_chart", dong_feed_chart, "#FF9900");
@@ -340,7 +361,7 @@ include_once("../inc/bottom.php")
 				graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
 
 				// if(is_label === "Y"){
-				// 	graph_obj["labelText"]="[[value]]";					/*값 출력*/
+				// 	graph_obj["labelText"]="[[value]]";					/*Bar 상단에 value 출력*/
 				// 	graph_obj["bullet"] = "round";						/*꼭지점*/
 				// 	graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
 				// 	graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
@@ -352,6 +373,7 @@ include_once("../inc/bottom.php")
 				graph_obj["fillAlphas"] = 1;
 				graph_obj["lineThickness"] = 0.3;					/*라인굵기*/ // 2022-03-11 라인굵기 수정
 				graph_obj["bulletBorderThickness"] = 3;
+				graph_obj["labelText"]="[[value]]";					/*Bar 상단에 value 출력*/
 
 				graph_json.push(graph_obj);
 			}

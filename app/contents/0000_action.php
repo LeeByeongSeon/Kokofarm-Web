@@ -131,7 +131,9 @@
 
 			$summary["summary_farm_diff"] = $farm_diff;						// 동별 표준편차
 
-			$percent = $feed_remain / $feed_max;
+			if($feed_remain > 0){
+				$percent = $feed_remain / $feed_max;
+			}
 			$percent = round($percent * 100);
 			$summary["summary_feed_percent"] = $percent . "%";
 			$summary["summary_feed_remain"] = $feed_remain;
