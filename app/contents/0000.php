@@ -32,10 +32,22 @@ foreach($init_data as $val){
 	$dong_list_html .= "</div></div></div></div>";
 }
 
+// 급이 급수 없을때
+	// $dong_list_html .= "<div class='row'>";
+	// $dong_list_html .= "	<div class='col-xs-12'>";
+	// $dong_list_html .= "		<div class='jarviswidget jarviswidget-color-white no-padding mb-3' data-widget-editbutton='false' data-widget-colorbutton='false' data-widget-deletebutton='false' data-widget-fullscreenbutton='false' data-widget-togglebutton='false'>";
+	// $dong_list_html .= "			<div class='widget-body no-padding form-inline move_dong' style='border-radius: 10px; border : 4px solid #eee; border-top: 0;' onClick='move_dong(\"".$val["fdDongid"]."\")'>";
+	// $dong_list_html .= "				<div class='col-xs-2 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:20px'>".$val["fdDongid"]."동</span></p><span id=''>".$val["interm"]."일령</span></div>";
+	// $dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px' >평균중량</span></p><span class='font-lg text-danger font-weight-bold'>".sprintf('%0.1f', $val["beAvgWeight"])."g</span></div>";
+	// $dong_list_html .= "				<div class='col-xs-1 text-center no-padding'><i class='fa fa-circle text-success'></i></div>";
+	// $dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px'>" . $val["sfFeed"] . "(Kg)</span></p> </div>";
+	// $dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px'>생존수 : ".$live_count."</span></p>";
+	// $dong_list_html .= "				<button class='btn btn-default move_breed' onClick='move_breed(\"".$val["fdDongid"]."\")' style='border-color:white'><i class='fa fa-pencil-square-o font-lg text-secondary'></i></button></div>"; 
+	// $dong_list_html .= "</div></div></div></div>";
 ?>
 
 <!--농장 전체 평균-->
-<div class="row" id="row_summary" >
+<div class='row' id="row_summary" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
@@ -95,7 +107,7 @@ foreach($init_data as $val){
 					</div>
 				</div>
 			</header>
-			<div class="widget-body p-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
+			<div class="widget-body p-3 feed_data_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
 				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
 					<div class="col-xs-6 no-padding text-center">
 						<span class="font-md text-secondary">수 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="total_per_feed"></span></span>
@@ -298,7 +310,10 @@ include_once("../inc/bottom.php")
 					water_chart_count += water;
 				}
 
+				// 급이 급수 없으면 안보이게
 				if(feed_chart_count == 0 && water_chart_count == 0){
+					$(".feed_data_body").toggle();
+
 					$(".dong_feed_chart").css("display", "none");
 					$(".dong_water_chart").css("display", "none");
 				}
