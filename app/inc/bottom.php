@@ -254,7 +254,10 @@
 		let notice = "<span class='font-xs text-secondary'> ※해당 상태가 지속되면 관리자에게 문의 바랍니다.</span>";
 
 		$("#top_status_info").addClass('d-none');
-		switch(top_be_status){
+
+		if("<?=$depth_1_url?>" != "0000.php"){
+
+			switch(top_be_status){
 			case "O": //출하
 				
 				$("#top_status_info").removeClass('d-none');
@@ -286,6 +289,7 @@
 				$("#top_last_avg").html(top_avg + "g");
 				$("#top_notice").html(notice);
 				break;
+			}
 		}
 
 		get_dong_data();		// 각 페이지 별로 선언 필요

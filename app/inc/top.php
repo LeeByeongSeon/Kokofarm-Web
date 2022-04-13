@@ -6,7 +6,7 @@
 
 	// 농장 정보 확인
 	$select_query = "SELECT f.fID, f.fPW, f.fName, fd.*, be.beStatus, be.beComeinCode, be.beAvgWeight, be.beAvgWeightDate, be.beAvgTemp, rc.rcStatus, sf.*, so.soFarmid, cm.*, 
-					IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
+					IFNULL(DATEDIFF(IF(cm.cmOutdate is null, current_date(), cm.cmOutdate), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
 					JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
 					JOIN buffer_sensor_status AS be ON be.beFarmid = fd.fdFarmid AND be.beDongid = fd.fdDongid 
 					LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 

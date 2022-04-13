@@ -102,13 +102,17 @@ switch($oper){
 		run_sql_upsert("comein_detail", $insert_map, array("cdCode", "cdDate"));
 
 		// 입추수 변경
-		$update_query = "UPDATE comein_master SET ";
-		$update_query .= " cmInsu = " . check_str($_REQUEST["comein_count"]);
-		$update_query .= ", cmDeathCount = cmDeathCount + " . check_str($_REQUEST["death_count"]);
-		$update_query .= ", cmCullCount = cmCullCount + " . check_str($_REQUEST["cull_count"]);
-		$update_query .= ", cmThinoutCount = cmThinoutCount + " . check_str($_REQUEST["thinout_count"]);
-
-		$update_query .= " WHERE cmCode = \"".$code."\"";
+		$update_query = "UPDATE comein_master AS cm 
+							JOIN (
+								SELECT cm.*, SUM(cd.cdDeath) AS cdDeath, SUM(cd.cdCull) AS cdCull, SUM(cd.cdThinout) AS cdThinout FROM comein_master AS cm 
+								LEFT JOIN comein_detail AS cd ON cd.cdCode = cm.cmCode
+								WHERE cmCode = \"".$code."\" GROUP BY cm.cmCode
+							) AS t ON cm.cmCode = t.cmCode SET ";
+		$update_query .= " cm.cmInsu = " . check_str($_REQUEST["comein_count"]);
+		$update_query .= ", cm.cmDeathCount = t.cdDeath";
+		$update_query .= ", cm.cmCullCount = t.cdCull";
+		$update_query .= ", cm.cmThinoutCount = t.cdThinout";
+		$update_query .= " WHERE cm.cmCode = \"".$code."\"";
 		run_query($update_query);
 
 		echo json_encode($response);

@@ -14,8 +14,13 @@ foreach($init_data as $val){
 	$dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px' >평균중량</span></p><span class='font-lg text-danger font-weight-bold'>".sprintf('%0.1f', $val["beAvgWeight"])."g</span></div>";
 	//$dong_list_html .= "				<div class='col-xs-1 text-center no-padding'><i class='fa fa-circle text-success'></i></div>";
 
+	if($val["cmOutdate"] != ""){
+		$dong_list_html .= "			<div class='col-xs-3 text-center no-padding'>
+											<span class='font-lg text-danger font-weight-bold'>출하상태</span>
+										</div>";
+	}
 	// 사료빈 데이터가 있으면
-	if($val["sfDongid"] == ""){
+	else if($val["sfDongid"] == ""){
 		$dong_list_html .= "			<div class='col-xs-3 text-center no-padding'>
 											<p><span class='fong-md font-weight-bold' style='font-size:12px' >평균온도</span></p>
 											<span class='font-lg font-weight-bold'>".sprintf('%0.1f', $val["beAvgTemp"])."℃</span>
@@ -44,18 +49,6 @@ foreach($init_data as $val){
 	$dong_list_html .= "</div></div></div></div>";
 }
 
-// 급이 급수 없을때
-	// $dong_list_html .= "<div class='row'>";
-	// $dong_list_html .= "	<div class='col-xs-12'>";
-	// $dong_list_html .= "		<div class='jarviswidget jarviswidget-color-white no-padding mb-3' data-widget-editbutton='false' data-widget-colorbutton='false' data-widget-deletebutton='false' data-widget-fullscreenbutton='false' data-widget-togglebutton='false'>";
-	// $dong_list_html .= "			<div class='widget-body no-padding form-inline move_dong' style='border-radius: 10px; border : 4px solid #eee; border-top: 0;' onClick='move_dong(\"".$val["fdDongid"]."\")'>";
-	// $dong_list_html .= "				<div class='col-xs-2 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:20px'>".$val["fdDongid"]."동</span></p><span id=''>".$val["interm"]."일령</span></div>";
-	// $dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px' >평균중량</span></p><span class='font-lg text-danger font-weight-bold'>".sprintf('%0.1f', $val["beAvgWeight"])."g</span></div>";
-	// $dong_list_html .= "				<div class='col-xs-1 text-center no-padding'><i class='fa fa-circle text-success'></i></div>";
-	// $dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px'>" . $val["sfFeed"] . "(Kg)</span></p> </div>";
-	// $dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px'>생존수 : ".$live_count."</span></p>";
-	// $dong_list_html .= "				<button class='btn btn-default move_breed' onClick='move_breed(\"".$val["fdDongid"]."\")' style='border-color:white'><i class='fa fa-pencil-square-o font-lg text-secondary'></i></button></div>"; 
-	// $dong_list_html .= "</div></div></div></div>";
 ?>
 
 <!--농장 전체 평균-->
