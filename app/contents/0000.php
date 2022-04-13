@@ -307,9 +307,6 @@ include_once("../inc/bottom.php")
 				let dong_feed_chart = [];
 				let dong_water_chart = [];
 
-				let feed_chart_count = 0;
-				let water_chart_count = 0;
-
 				let len = data.weight_chart.length;
 				for(let i=0; i<len; i++){
 					dong_weight_chart[i] = data.weight_chart[len - i - 1];
@@ -318,12 +315,10 @@ include_once("../inc/bottom.php")
 
 					let feed = data.feed_chart[i]["급이량"];
 					let water = data.water_chart[i]["급수량"];
-					feed_chart_count += feed;
-					water_chart_count += water;
 				}
 
 				// 급이 급수 없으면 안보이게
-				if(feed_chart_count == 0 && water_chart_count == 0){
+				if(data.set_feed_id == ""){
 					// 급이량 및 급수량
 					$(".feed_data_body").css("display", "none").prev("header").css("background", "#A6ACAF");
 					

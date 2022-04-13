@@ -67,7 +67,12 @@
 			$water_chart = array();
 			$weight_chart = array();
 
+			// 사료빈 유무 확인
+			$set_feeder_id = "";
+
 			foreach($buffer_data as $row){
+
+				$set_feeder_id .= $row["sfDongid"];
 
 				$weight_arr[] = $row["beAvgWeight"];
  
@@ -160,6 +165,8 @@
 			$response["weight_chart"] = $weight_chart;
 			$response["feed_chart"] = $feed_chart;
 			$response["water_chart"] = $water_chart;
+
+			$response["set_feeder_id"] = $set_feeder_id;
 
 			echo json_encode($response);
 
