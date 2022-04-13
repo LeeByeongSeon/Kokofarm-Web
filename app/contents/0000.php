@@ -108,7 +108,7 @@ foreach($init_data as $val){
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -187,6 +187,11 @@ foreach($init_data as $val){
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 평균중량 비교</h2>	
 				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+					</div>
+				</div>
 			</header>
 			<div class="widget-body no-padding dong_weight_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 no-padding">
@@ -204,6 +209,11 @@ foreach($init_data as $val){
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 급이량 비교</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+					</div>
 				</div>
 			</header>
 			<div class="widget-body no-padding dong_feed_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
@@ -223,6 +233,11 @@ foreach($init_data as $val){
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 급수량 비교</h2>	
 				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+					</div>
+				</div>
 			</header>
 			<div class="widget-body no-padding dong_water_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 no-padding">
@@ -239,27 +254,19 @@ include_once("../inc/bottom.php")
 
 <script language="javascript">
 
-	// 아코디언
-	let accordionIcons = {
-		header: "fa fa-plus",
-		activeHeader: "fa fa-minus"
-	};
-	$("#accordion").accordion({
-		autoHeight : false,
-		heightStyle : "content",
-		collapsible : true,
-		animate : 300,
-		icons: accordionIcons,
-		header : "h4",
-	});
-
 	$(document).ready(function(){
 
 		$("#top_navbar").hide();
 
 		$(".btn_display_toggle").off("click").on("click", function(){
-			$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
-			$(this).parents(".jarviswidget").children(".widget-body").toggle();
+			$(this).children("i").toggleClass("fa-plus").toggleClass("fa-minus");
+			$(this).parents(".jarviswidget").children(".widget-body").toggle(function(e){
+				if($(this).parents(".jarviswidget").children(".widget-body").css("display") === "none" ){
+					$(this).prev("header").css("background", "#A6ACAF");
+				} else {
+					$(this).prev("header").css("background", "#0c6ad0");
+				}
+			});
 		});
 		
 		// 동별 이동과 사육일지 이동 클릭이벤트 분리
@@ -317,13 +324,13 @@ include_once("../inc/bottom.php")
 
 				// 급이 급수 없으면 안보이게
 				if(feed_chart_count == 0 && water_chart_count == 0){
-					$(".feed_data_body").toggle();
-
-					$(".dong_feed_chart").css("display", "none");
-					$(".dong_water_chart").css("display", "none");
+					// 급이량 및 급수량
+					$(".feed_data_body").css("display", "none").prev("header").css("background", "#A6ACAF");
+					
+					// 동별 급이량 비교, 급수량 비교
+					$(".dong_feed_chart").css("display", "none").prev("header").css("background", "#A6ACAF");
+					$(".dong_water_chart").css("display", "none").prev("header").css("background", "#A6ACAF");
 				}
-
-				// alert(JSON.stringify(data.water_chart));
 
 				simple_chart("dong_weight_chart", dong_weight_chart, "#6E6E6E");
 				simple_chart("dong_feed_chart", dong_feed_chart, "#FF9900");
