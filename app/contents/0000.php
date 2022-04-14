@@ -318,7 +318,7 @@ include_once("../inc/bottom.php")
 				}
 
 				// 급이 급수 없으면 안보이게
-				if(data.set_feed_id == ""){
+				if(data.set_feeder_id == ""){
 					// 급이량 및 급수량
 					$(".feed_data_body").css("display", "none").prev("header").css("background", "#A6ACAF");
 					
