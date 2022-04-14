@@ -37,7 +37,7 @@ switch($oper){
 		$breed_data = get_select_data($select_query);
 
 		$start_date = substr($breed_data[0]["cmIndate"], 0, 10);
-		$now_date = date("Y-m-d");
+		$now_date = $breed_data[0]["cmOutdate"] == "" ? date("Y-m-d") : substr($breed_data[0]["cmOutdate"], 0, 10);
 
 		$date_list = array();
 

@@ -177,9 +177,10 @@ include_once("../inc/bottom.php")
 			if(!["R", "A", "W", "C"].includes(top_rc_status)){
 				$("#row_request_form").show();
 				get_info();
-				get_breed_data();
 			}
 		}
+
+		get_breed_data();
 	};
 
 	function get_breed_data(){
