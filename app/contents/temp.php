@@ -1,6 +1,6 @@
 
 
-<form id="redirec_form" action="0101.php" method="post">
+<form id="redirec_form" action="0000.php" method="post">
 
 <?
 	include_once("../common/php_module/common_func.php");
@@ -17,6 +17,9 @@
 			break;
 		case "p3166375":
 			$id = "kk0055";
+			break;
+		case "p379507":
+			$id = "kk0043";
 			break;
 	}
 
