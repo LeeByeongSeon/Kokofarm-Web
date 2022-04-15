@@ -120,7 +120,7 @@
 		</div><!--modal-dialog -->
 	</div><!--modal -->
 
-	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 6%; right: 3%; display:none;"><span class="fa fa-arrow-up font-weight-bold font-lg pt-3"></span></a>
+	<a id="scroll_top_btn" href="#" class="btn btn-lg btn-circle bg-orange text-white" role="button" style="cursor: pointer; position: fixed; bottom: 3%; right: 3%; display:none; z-index:999; opacity:0.9"><span class="fa fa-arrow-up font-md pt-3"></span></a>
 	
 </body>
 </html>
@@ -145,13 +145,14 @@
 	var prev_item;
 
 	$(document).ready(function(){
-
+		
 		// TOP버튼
 		$(window).scroll(function(){
 			if($(this).scrollTop() > 50) {
-				$('#scroll_top_btn').fadeIn();
+				// $('#scroll_top_btn').fadeIn().hide(3000, 'linear');
+				$('#scroll_top_btn').show().delay(2000).fadeOut();
 			}
-			else{
+			else {
 				$('#scroll_top_btn').fadeOut();
 			}
 		});
