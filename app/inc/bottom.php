@@ -92,16 +92,31 @@
 								<input type="number" pattern="\d*" class="form-control" name="breed_comein_count" placeholder="입추 수" min="" max="">
 							</div>
 							<div class="input-group mb-3">
-								<span class="input-group-text font-weight-bold" style="width: 73.5px">폐사</span>
-								<input type="number" pattern="\d*" class="form-control" name="breed_death_count" placeholder="폐사 수" min="" max="">
+								<div class="col-xs-6 d-flex no-padding">
+									<span class="input-group-text font-weight-bold" style="width: 140px">폐사</span>
+									<input type="number" pattern="\d*" class="form-control" name="breed_death_count" placeholder="폐사 수" min="" max="">
+								</div>
+								<div class="col-xs-6 d-flex p-2 align-items-center">
+									<span class="font-weight-bold" style="width: 150px;">오늘 폐사 수 : </span><span class="font-weight-bold text-danger">0</span>
+								</div>
 							</div>
 							<div class="input-group mb-3">
-								<span class="input-group-text font-weight-bold" style="width: 73.5px">도태</span>
-								<input type="number" pattern="\d*" class="form-control" name="breed_cull_count" placeholder="도태 수" min="" max="">
+								<div class="col-xs-6 d-flex no-padding">
+									<span class="input-group-text font-weight-bold" style="width: 140px">도태</span>
+									<input type="number" pattern="\d*" class="form-control" name="breed_cull_count" placeholder="도태 수" min="" max="">
+								</div>
+								<div class="col-xs-6 d-flex p-2 align-items-center">
+									<span class="font-weight-bold" style="width: 150px;">오늘 도태 수 : </span><span class="font-weight-bold text-danger">0</span>
+								</div>
 							</div>
 							<div class="input-group mb-3">
-								<span class="input-group-text font-weight-bold" style="width: 73.5px">솎기</span>
-								<input type="number" pattern="\d*" class="form-control" name="breed_thinout_count" placeholder="솎기 수" min="" max="">
+								<div class="col-xs-6 d-flex no-padding">
+									<span class="input-group-text font-weight-bold" style="width: 140px">솎기</span>
+									<input type="number" pattern="\d*" class="form-control" name="breed_thinout_count" placeholder="솎기 수" min="" max="">
+								</div>
+								<div class="col-xs-6 d-flex p-2 align-items-center">
+									<span class="font-weight-bold" style="width: 150px;">오늘 솎기 수 : </span><span class="font-weight-bold text-danger">0</span>
+								</div>
 							</div>
 
 							<div class="col-xs-12 text-center no-padding" id="breed_opt_alarm"></div>
