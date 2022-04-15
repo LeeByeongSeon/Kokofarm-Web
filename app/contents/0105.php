@@ -29,10 +29,10 @@ if(isset($_REQUEST["request_dong"])){
 							data-detail-view="true" data-detail-formatter="get_detail_info" 
 							data-page-list="[]" data-toggle="table" style="font-size:14px; cursor:pointer"> -->
 				<table id="breed_table" class="table table-bordered table-hover"
-							data-page-list="[]" data-toggle="table" style="font-size:13px; cursor:pointer">
+							data-page-list="[]" data-toggle="table" style="font-size:13px; cursor:pointer" data-sort-name="f_interm" data-sort-order="desc">
 					<thead>
 						<tr>
-							<th data-field='f_interm'	 data-align="center" >일령</th>
+							<th data-field='f_interm'	 data-align="center" data-sortable="true">일령</th>
 							<th data-field='f_date'	 	 data-cell-style="css_padding" data-align="center" >일자</th>
 							<th data-field='f_live'	 	 data-cell-style="css_padding" data-align="center" >생존 수</th>
 							<th data-field='f_death'	 data-cell-style="css_padding" data-align="center" >폐사 수</th>
@@ -226,15 +226,21 @@ include_once("../inc/bottom.php")
 		$("#breed_form [name=breed_cull_count]").val(row.f_cull);
 		$("#breed_form [name=breed_thinout_count]").val(row.f_thinout);
 
+		$("#breed_form [name=breed_death_input]").val(0);
+		$("#breed_form [name=breed_cull_input]").val(0);
+		$("#breed_form [name=breed_thinout_input]").val(0);
+
 		popup_breed(title, function(confirm){
+
 			if(confirm){
+
 				let data_arr = {};
 				data_arr["oper"] = "save_breed_data";
 				data_arr["cmCode"] = code;
 				data_arr["comein_count"] = $("#breed_form [name=breed_comein_count]").val();
-				data_arr["death_count"] = $("#breed_form [name=breed_death_count]").val();
-				data_arr["cull_count"] = $("#breed_form [name=breed_cull_count]").val();
-				data_arr["thinout_count"] = $("#breed_form [name=breed_thinout_count]").val();
+				data_arr["death_count"] = Number($("#breed_form [name=breed_death_count]").val()) + Number($("#breed_form [name=breed_death_input]").val());
+				data_arr["cull_count"] = Number($("#breed_form [name=breed_cull_count]").val()) + Number($("#breed_form [name=breed_cull_input]").val());
+				data_arr["thinout_count"] = Number($("#breed_form [name=breed_thinout_count]").val()) + Number($("#breed_form [name=breed_thinout_input]").val());
 				data_arr["date"] = $("#breed_form [name=breed_input_date]").val();
 
 				$.ajax({
