@@ -121,11 +121,9 @@ include_once("../inc/top.php")
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;일령별 환경센서</h2>	
 				</div>
-				<!-- <div class="widget-toolbar ml-auto">
-					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-default" style="height: 25px"><span class="fa fa-file-excel-o"></span>&nbsp;&nbsp;Excel</button>
-					</div>
-				</div> -->
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="send_excel_data('환경센서')"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+				</div>
 			</header>
 			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; border-top: 0;">
 
@@ -440,8 +438,6 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 
-				console.log(data);
-
 				feed_chart_data = data;
 
 				let params = {};
@@ -480,6 +476,11 @@ include_once("../inc/bottom.php")
 			case "일령별급수량":
 				header = ["날짜", "급수량(L)"];
 				target_data = feed_chart_data["chart_water_daily"];
+				break;
+
+			case "환경센서":
+				header = ["측정시간", "온도", "습도", "이산화탄소", "암모니아"];
+				target_data = sensor_chart_data["table"];
 				break;
 		}
 
