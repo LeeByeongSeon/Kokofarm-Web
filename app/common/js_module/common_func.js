@@ -873,7 +873,7 @@ function draw_chart_detail(chart_id, chart_data, params){
 
     let category = "category";
 
-    console.log(chart_data);
+    //console.log(chart_data);
 
     while(true){
         let title_field = "title" + graph_idx;

@@ -174,6 +174,42 @@ include_once("../inc/top.php")
 	</div><!--col-xs-12-->
 </div><!--row-->
 
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
+				<div class="widget-header">	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;일령별 급이량 변화</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="send_excel_data('일령별급이량')"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+				</div>
+			</header>
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div id="daily_feed_chart" style="height: 260px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
+				<div class="widget-header">	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;일령별 급수량 변화</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<button type="button" class="btn btn-xs btn-default" style="height: 25px" onClick="send_excel_data('일령별급수량')"><span class="fa fa-file-excel-o"></span>&nbsp;Excel</button>
+				</div>
+			</header>
+			<div class="widget-body no-padding" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div id="daily_water_chart" style="height: 260px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?
 include_once("../inc/bottom.php")
 ?>
@@ -182,6 +218,7 @@ include_once("../inc/bottom.php")
 
 	var select_code = "";
 	var sensor_chart_data = null;
+	var feed_chart_data = null;
 
 	$(document).ready(function(){
 
@@ -225,6 +262,7 @@ include_once("../inc/bottom.php")
 		$("#sensor_btn_group > button.btn:first").trigger('click');
 
 		get_ndis_data();
+		get_feed_history();
 	});
 
 	function get_avg_history(comm){
@@ -255,7 +293,7 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data) {
 				$('#avg_weight_table').bootstrapTable('load', data.avg_weight_table); 
-				console.log(data.avg_weight_chart[0]);
+				//console.log(data.avg_weight_chart[0]);
 				draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12, "hh");
 			}
 		});
@@ -386,5 +424,81 @@ include_once("../inc/bottom.php")
 
 		send_excel_android(title, table_id);
 	};
+
+	function get_feed_history(){
+		
+		let data_arr = {};
+		data_arr["oper"]   = "get_feed_history";
+		data_arr["sub"]   = "get_all";
+		data_arr["cmCode"] = select_code;
+
+		$.ajax({
+			url:'0106_action.php',
+			type:'post',
+			cache:false,
+			data:data_arr,
+			dataType:'json',
+			success: function(data){
+
+				console.log(data);
+
+				feed_chart_data = data;
+
+				let params = {};
+				params["graph_color"] = ["#FF9900","#2FB5F0","#109618","#990099"];
+				params["font_size"] = 12;
+				params["is_zoom"] = true;
+				params["period"] = "DD";
+				params["date_format"] = "YYYY-MM-DD";
+				//draw_bar_line_chart("daily_feed_chart", data.chart_feed, "Y", "N", 12, "DD");
+				//draw_bar_line_chart("daily_water_chart", data.chart_water, "Y", "N", 12, "DD", "#2FB5F0");
+				draw_chart("daily_feed_chart", data.chart_feed_daily, params);
+				params["graph_color"] = ["#2FB5F0","#FF9900","#109618","#990099"];
+				draw_chart("daily_water_chart", data.chart_water_daily, params);
+			},
+			error: function(request,status,error){
+				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+			}
+		});
+	};
+
+	function send_excel_data(title){
+
+		let date_time = get_now_datetime();
+		let header = [];
+		let json_data = [];
+
+		let target_data = [];
+
+		switch(title){
+			case "일령별급이량":
+				header = ["날짜", "급이량(kg)"];
+				target_data = feed_chart_data["chart_feed_daily"];
+				//json_data = JSON.stringify(sensor_chart_data["chart_feed_daily"]);
+				break;
+
+			case "일령별급수량":
+				header = ["날짜", "급수량(L)"];
+				target_data = feed_chart_data["chart_water_daily"];
+				break;
+		}
+
+		for(let idx in target_data){
+			let row = target_data[idx];
+			let n = 1;
+			let data = {};
+			for(let key in row){
+				data["f" + n] = row[key];
+				n++;
+			}
+			json_data.push(data);
+		}
+
+		json_data = JSON.stringify(json_data);
+
+		title = top_name + "_" + top_code + "_" + title;
+
+		window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
+	}
 
 </script>

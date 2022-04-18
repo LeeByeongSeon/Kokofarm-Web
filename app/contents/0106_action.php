@@ -112,6 +112,14 @@ include_once("../common/php_module/common_func.php");
     
                 echo json_encode($response);
                 break;
+
+            case "get_feed_history":
+                $result = get_feed_history($code, $_REQUEST["sub"]);
+                $response["chart_feed_daily"] = $result["chart_feed_daily"];
+                $response["chart_water_daily"] = $result["chart_water_daily"];
+
+                echo json_encode($response);
+                break;
 		}
 	
 	};
