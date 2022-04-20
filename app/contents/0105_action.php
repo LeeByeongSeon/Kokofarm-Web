@@ -32,7 +32,7 @@ switch($oper){
 		$breed_table = array();
 
 		$select_query = "SELECT cm.*, cd.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS inTerm 
-						FROM comein_master AS cm LEFT JOIN comein_detail AS cd ON cd.cdCode = cm.cmCode WHERE cm.cmCode = \"" .$code. "\" ";
+						FROM comein_master AS cm LEFT JOIN comein_detail AS cd ON cd.cdCode = cm.cmCode WHERE cm.cmCode = \"" .$code. "\" ORDER BY cdDate";
 						
 		$breed_data = get_select_data($select_query);
 
@@ -46,13 +46,15 @@ switch($oper){
 		}
 
 		$day = 1;
-		$live = $row["cmInsu"];
+		$live = $breed_data[0]["cmInsu"];
 
 		while(true){
+
 			if(array_key_exists($start_date, $date_list)){
 
-				$live = $live - $row["cdDeath"] - $row["cdCull"] - $row["cdThinout"];
 				$row = $date_list[$start_date];
+				$live = $live - $row["cdDeath"] - $row["cdCull"] - $row["cdThinout"];
+
 				$breed_table[] = array(
 					'f_interm' 		=> $day++,
 					'f_date' 		=> $start_date,
