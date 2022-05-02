@@ -564,6 +564,7 @@ function get_sensor_history_row($code, $type){
 		$comein_data = get_select_data($select_query)[0];
 
 		$now = date("Y-m-d H:i:s");
+		$yester = date("Y-m-d H:i:s", strtotime("-1 days"));
 
 		$start_time = $comein_data["cmIndate"];
 		$end_time = $comein_data["cmOutdate"] == "" ? $now : $comein_data["cmOutdate"];
@@ -579,7 +580,9 @@ function get_sensor_history_row($code, $type){
 				break;
 			
 			case "get_today":
-				$history_query .= " (shDate BETWEEN \"" . substr($now, 0, 10) . " 00:00:00\" AND \"" . substr($now, 0, 10) . " 23:59:59\")";
+				//$history_query .= " (shDate BETWEEN \"" . substr($now, 0, 10) . " 00:00:00\" AND \"" . substr($now, 0, 10) . " 23:59:59\")";
+				// 2022-04-26 --- 24시간 기준으로 계속 나오도록 요청받음
+				$history_query .= " (shDate BETWEEN \"" . $yester . "\" AND \"" . $now . "\")";
 				break;
 		}
 
