@@ -34,25 +34,30 @@
 
 	switch($setComm){
 
-		case "home":
+		case "buffer":
 
 			$time_1 = date("Y-m-d H:i:s", strtotime("-1 hours"));
 
-			$select_query = "SELECT f.fName, fd.fdFarmid, fd.fdDongid, be.*, cm.*, sf.*, so.soFarmid, 
+			$select_query = "SELECT f.fName, fd.fdFarmid, fd.fdDongid, be.*, cm.*, sf.*, sh.*, 
 							IFNULL(DATEDIFF(IF(cm.cmOutdate is null, current_date(), cm.cmOutdate), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
 							JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
 							JOIN buffer_sensor_status AS be ON be.beFarmid = fd.fdFarmid AND be.beDongid = fd.fdDongid 
 							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 							LEFT JOIN set_feeder AS sf ON sf.sfFarmid = fd.fdFarmid AND sf.sfDongid = fd.fdDongid 
-							LEFT JOIN set_outsensor AS so ON so.soFarmid = fd.fdFarmid AND so.soDongid = fd.fdDongid 
 							LEFT JOIN sensor_history AS sh ON sh.shFarmid = fd.fdFarmid AND sh.shDongid = fd.fdDongid AND shDate = \"" . substr($time_1, 0, 13) . ":00:00\" 
 							WHERE f.fID = \"" .$userID. "\"";
 
 			$select_data = get_select_data($select_query);
 
+			$ret_data = array();
+
+			foreach($select_data as $row){
+				$ret_data[$row["fdFarmid"] . $row["fdDongid"]] = $row;
+			}
+
 			$ret["errCode"] = "00";
-			$ret["errMsg"] = "";
-			$ret["retData"] = $select_data;
+			$ret["errMsg"] = ""; 
+			$ret["retData"] = $ret_data;
 			break;
 
 		case "avgWeight":
@@ -82,6 +87,31 @@
 			$ret["errCode"] = "00";
 			$ret["errMsg"] = "";
 			$ret["first"] = $select_data[0]["awDate"];
+			$ret["retData"] = $ret_data;
+			break;
+
+		case "cell":
+
+			$select_query = "SELECT f.fName, fd.fdFarmid, fd.fdDongid, si.* FROM farm AS f 
+							JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
+							LEFT JOIN set_iot_cell AS si ON si.siFarmid = fd.fdFarmid AND si.siDongid = fd.fdDongid 
+							WHERE f.fID = \"" .$userID. "\"";
+
+			$select_data = get_select_data($select_query);
+
+			$ret_data = array();
+
+			foreach($select_data as $row){
+				$id = $row["siFarmid"] . $row["siDongid"];
+				
+				if(!array_key_exists($id, $ret_data)){
+					$ret_data[$id] = array();
+				}
+				$ret_data[$id][$row["siCellid"]] = $row;
+			}
+
+			$ret["errCode"] = "00";
+			$ret["errMsg"] = ""; 
 			$ret["retData"] = $ret_data;
 			break;
 

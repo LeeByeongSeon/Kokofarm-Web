@@ -154,6 +154,7 @@
 			$summary["summary_water_per_hour"] = $water_per_hour;
 
 			$summary["summary_comein_count"] = $comein_count;
+			$summary["summary_live_count"] = $comein_count - $death_count - $cull_count - $thinout_count;
 			$summary["summary_death_count"] = $death_count;
 			$summary["summary_cull_count"] = $cull_count;
 			$summary["summary_thinout_count"] = $thinout_count;

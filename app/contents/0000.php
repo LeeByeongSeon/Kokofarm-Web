@@ -79,10 +79,16 @@ foreach($init_data as $val){
 				<div class="col-xs-12 text-center mb-3">
 					<span class="text-secondary font-md">동별 표준 편차&nbsp;<span class="font-weight-bold" id="summary_farm_diff">0</span></span>
 				</div>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
+				<div class="col-xs-12 text-center mb-3">
+					<span class="font-md">총 입추 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
+				</div>
 				<div class="col-xs-12 text-center d-flex align-items-center mb-3">
 					<div class="col-xs-6">
 						<div class="col-xs-12">
-							<span class="font-md"><p>생존 수</p><span class="font-lg" id="summary_comein_count">0</span></span>
+							<span class="font-md"><p>생존 수(%)</p><span class="font-md" id="summary_live_count">0</span>&nbsp;<span class="font-md" id="summary_live_count">0</span></span>
 						</div>
 					</div>
 					<div class="col-xs-6">
