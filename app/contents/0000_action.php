@@ -155,6 +155,7 @@
 
 			$summary["summary_comein_count"] = $comein_count;
 			$summary["summary_live_count"] = $comein_count - $death_count - $cull_count - $thinout_count;
+			$summary["summary_live_percent"] = sprintf('%0.1f', ($summary["summary_live_count"] / $comein_count) * 100);	
 			$summary["summary_death_count"] = $death_count;
 			$summary["summary_cull_count"] = $cull_count;
 			$summary["summary_thinout_count"] = $thinout_count;

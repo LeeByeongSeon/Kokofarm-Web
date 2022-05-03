@@ -93,7 +93,7 @@ foreach($init_data as $val){
 					</div>
 					<div class="col-xs-3 no-padding">
 						<div class="col-xs-12 no-padding">
-							<span class="font-md"><p>생존율</p><span class="font-md" id="summary_live_percent">99.1%</span></span>
+							<span class="font-md"><p>생존율</p><span class="font-md" id="summary_live_percent">0</span>%</span>
 						</div>
 					</div>
 					<div class="col-xs-5 no-padding">
