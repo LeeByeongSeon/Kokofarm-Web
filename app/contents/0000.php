@@ -86,15 +86,20 @@ foreach($init_data as $val){
 					<span class="font-md">총 입추 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
 				</div>
 				<div class="col-xs-12 text-center d-flex align-items-center mb-3">
-					<div class="col-xs-6">
-						<div class="col-xs-12">
-							<span class="font-md"><p>생존 수(%)</p><span class="font-md" id="summary_live_count">0</span>&nbsp;<span class="font-md" id="summary_live_count">0</span></span>
+					<div class="col-xs-4 no-padding">
+						<div class="col-xs-12 no-padding">
+							<span class="font-md"><p>생존 수</p><span class="font-md" id="summary_live_count">0</span></span>
 						</div>
 					</div>
-					<div class="col-xs-6">
-						<div class="col-xs-12"><span class="font-md">폐사 수&nbsp;<span id="summary_death_count">0</span></span></div>
-						<div class="col-xs-12"><span class="font-md">도태 수&nbsp;<span id="summary_cull_count">0</span></span></div>
-						<div class="col-xs-12"><span class="font-md">솎기 수&nbsp;<span id="summary_thinout_count">0</span></span></div>
+					<div class="col-xs-3 no-padding">
+						<div class="col-xs-12 no-padding">
+							<span class="font-md"><p>생존율</p><span class="font-md" id="summary_live_percent">99.1%</span></span>
+						</div>
+					</div>
+					<div class="col-xs-5 no-padding">
+						<div class="col-xs-12"><span class="font-md float-left">폐사 수&nbsp;<span id="summary_death_count">0</span></span></div>
+						<div class="col-xs-12"><span class="font-md float-left">도태 수&nbsp;<span id="summary_cull_count">0</span></span></div>
+						<div class="col-xs-12"><span class="font-md float-left">솎기 수&nbsp;<span id="summary_thinout_count">0</span></span></div>
 					</div>
 				</div>
 			</div>	
