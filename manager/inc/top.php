@@ -26,10 +26,14 @@
 	// 메뉴 구성
 	$menu_struct = array(
 		array("0101.php", "농장별 장치현황"),
-		array("0102.php", "농장별 세부현황"),
-		array("0103.php", "농장별 출하내역"),
-		array("0104.php", "재산출 요청 관리"),
-		//array("1001.php", "설정")
+		array("0102.php", "농장현황"),
+		array("0103.php", "동별현황"),
+		array("0104.php", "IoT저울"),
+		array("0105.php", "급이/급수"),
+		array("0106.php", "외기환경"),
+		array("0107.php", "사육정보"),
+		array("0108.php", "농장별 출하내역"),
+		array("0109.php", "재산출 요청 관리"),
 	);
 
 	// 상단 메뉴 html 동적 생성

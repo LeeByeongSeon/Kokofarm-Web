@@ -28,62 +28,6 @@ function buffer_code(){
 	}
 }
 
-function test_insert(){
-
-	for($k=104; $k<=150; $k++){
-		$farmID = "KF" . sprintf("%04d", $k);
-		$dongID = "01";
-		
-		$insert_map = array();
-		$insert_map["fID"] = "kk" . sprintf("%04d", $k);
-		$insert_map["fPW"] = "kk" . sprintf("%04d", $k);
-		$insert_map["fGroupName"] = "이모션";
-		$insert_map["fFarmid"] = $farmID;
-
-		run_sql_insert("farm", $insert_map);
-
-		// $insert_map = array();
-		// $insert_map["fdFarmid"] = $farmID;
-		// $insert_map["fdDongid"] = $dongID;
-		// $insert_map["fdName"] 	= "테스터-" . $farmID;
-		// $insert_map["fdTel"] 	= "010-5022-1684";
-		// $insert_map["fdType"] 	= "육계";
-		// $insert_map["fdScale"] 	= "30000";
-		// $insert_map["fdAddr"] 	= "연구소";
-
-		// run_sql_insert("farm_detail", $insert_map);
-
-		// // 버퍼테이블 생성
-		// $insert_map = array();
-		// $insert_map["beFarmid"] = $farmID;
-		// $insert_map["beDongid"] = $dongID;
-
-		// run_sql_insert("buffer_sensor_status", $insert_map);
-		
-		// // 디폴트로 저울 3개를 insert
-		// $insert_map = array();
-		// $now = date('Y-m-d H:i:s');
-		// $insert_map["siFarmid"] = $farmID;
-		// $insert_map["siDongid"] = $dongID;
-		// $insert_map["siDate"] = $now;
-		// for($i=1; $i<=3; $i++){
-		// 	$insert_map["siCellid"] = sprintf('%02d', $i);
-		// 	run_sql_insert("set_iot_cell", $insert_map);
-		// }
-
-		// // 디폴트로 카메라 1개 insert
-		// $insert_map = array();
-		// $insert_map["scFarmid"] = $farmID;
-		// $insert_map["scDongid"] = $dongID;
-		// $insert_map["scPort"] = "150" . $dongID;
-		// $insert_map["scUrl"] = "/stw-cgi/video.cgi?msubmenu=snapshot&action=view&Resolution=640x480";
-		// $insert_map["scId"] = "admin";
-		// $insert_map["scPw"] = "kokofarm5561";
-		// run_sql_insert("set_camera", $insert_map);
-	}
-
-}
-
 // select 결과 데이터 반환
 function get_select_data($query){
     $ret = sql_conn::get_inst()->select($query);
@@ -102,6 +46,14 @@ function check_str($str){
 	return $ret;
 }
 
+/* 직접 입력 쿼리 수행
+param
+- query : 실행할 쿼리문
+*/
+function run_query($query){
+    sql_conn::get_inst()->run_query($query);
+}
+
 /* insert 쿼리 수행
 param
 - table : insert를 수행할 테이블
@@ -109,6 +61,16 @@ param
 */
 function run_sql_insert($table, $data_map){
     sql_conn::get_inst()->insert($table, $data_map);
+}
+
+/* upsert 쿼리 수행
+param
+- table : insert를 수행할 테이블
+- data_map : insert될 필드명-값 쌍 (연관배열)
+- key_arr : primary key 배열 
+*/
+function run_sql_upsert($table, $data_map, $key_arr){
+    sql_conn::get_inst()->upsert($table, $data_map, $key_arr);
 }
 
 /* update 쿼리 수행
@@ -573,6 +535,7 @@ function check_sensor_val($format, $val){
 	return $ret;
 }
 
+
 // 몽고db 관련---------------------------------------------------------------------------
 
 /* aggregate 하여 데이터를 가져옴
@@ -601,6 +564,7 @@ function get_sensor_history_row($code, $type){
 		$comein_data = get_select_data($select_query)[0];
 
 		$now = date("Y-m-d H:i:s");
+		$yester = date("Y-m-d H:i:s", strtotime("-1 days"));
 
 		$start_time = $comein_data["cmIndate"];
 		$end_time = $comein_data["cmOutdate"] == "" ? $now : $comein_data["cmOutdate"];
@@ -616,7 +580,9 @@ function get_sensor_history_row($code, $type){
 				break;
 			
 			case "get_today":
-				$history_query .= " (shDate BETWEEN \"" . substr($now, 0, 10) . " 00:00:00\" AND \"" . substr($now, 0, 10) . " 23:59:59\")";
+				//$history_query .= " (shDate BETWEEN \"" . substr($now, 0, 10) . " 00:00:00\" AND \"" . substr($now, 0, 10) . " 23:59:59\")";
+				// 2022-04-26 --- 24시간 기준으로 계속 나오도록 요청받음
+				$history_query .= " (shDate BETWEEN \"" . $yester . "\" AND \"" . $now . "\")";
 				break;
 		}
 
@@ -660,9 +626,14 @@ function get_feed_history($code, $type){
 
 			$json = json_decode($val["shFeedData"]);
 
+			// 2021-11-11 이병선 시간 60분전으로 계산
 			$sensor_date = $val["shDate"];
+			//$sensor_date = get_term_date($val["shDate"], -60);
 			$feed = $json->feed_feed;
 			$water = $json->feed_water;
+
+			// 2021-11-08 이병선 급이 (-) 값 수정
+			$feed = abs($feed) <= feed_hunt ? 0 : $feed;
 			
 			$date = substr($sensor_date, 0, 10);
 			$day_map[$date]["feed"] = isset($day_map[$date]["feed"]) ? $day_map[$date]["feed"] + $feed : $feed;
@@ -670,24 +641,24 @@ function get_feed_history($code, $type){
 
 			$chart_feed[] = array(
 				"시간" => $sensor_date,
-				"급이량" => $feed,
+				"급이량(kg)" => $feed,
 			);
 
 			$chart_water[] = array(
 				"시간" => $sensor_date,
-				"급수량" => $water,
+				"급수량(L)" => $water,
 			);
 
 			$feed_stack = $feed_stack + $feed;
 			$chart_feed_stack[] = array(
 				"시간" => $sensor_date,
-				"누적급이량" => $feed_stack,
+				"누적급이량(kg)" => $feed_stack,
 			);
 
 			$water_stack = $water_stack + $water;
 			$chart_water_stack[] = array(
 				"시간" => $sensor_date,
-				"누적급수량" => $water_stack,
+				"누적급수량(L)" => $water_stack,
 			);
 
 			$table[] = array(
@@ -698,13 +669,14 @@ function get_feed_history($code, $type){
 		}
 
 		foreach($day_map as $key => $val){
+
 			$chart_feed_daily[] = array(
 				"시간" => $key,
-				"급이량" => $val["feed"],
+				"급이량(kg)" => $val["feed"],
 			);
 			$chart_water_daily[] = array(
 				"시간" => $key,
-				"급수량" => $val["water"],
+				"급수량(L)" => $val["water"],
 			);
 		}
 

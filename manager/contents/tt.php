@@ -3,7 +3,7 @@ include_once("../inc/top.php");
 
 $inout = isset($_REQUEST["inout"]) ? $_REQUEST["inout"] : "입추";
 $code = isset($_REQUEST["code"]) ? $_REQUEST["code"] : "";
-//$name = isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
+$name = isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
 
 $list_query = "SELECT be.beStatus, be.beComeinCode, fd.fdName FROM buffer_sensor_status AS be 
 				LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid ORDER BY fdName ASC";
@@ -14,7 +14,7 @@ $list_combo = array();
 
 // 입출하 상태에 따라 콤보박스 생성
 foreach($result as $row){
-	$option = "<option value=\"" . $row["fdName"] . "\" comein_code=\"" . $row["beComeinCode"] . "\" " .($row["beComeinCode"] == $code ? "selected" : ""). ">" . $row["fdName"] . "</option>";
+	$option = "<option value=\"" . $row["fdName"] . "\" comein_code=\"" . $row["beComeinCode"] . "\" " .($row["fdName"] == $name ? "selected" : ""). ">" . $row["fdName"] . "</option>";
 	
 	if($row["beStatus"] == "O"){
 		$list_combo["out"] .= $option;
@@ -76,7 +76,7 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 </div>
 
 <!--출하상태 표시 div-->		
-<div class="card border-danger mb-4 mx-auto d-none" id="top_status_info">
+<div class="card border-danger mb-4 mx-auto" id="row_status_info">
 	<div class="card-header font-weight-bold text-primary pl-2"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
 	<div class="card-body">
 		<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">
@@ -136,8 +136,8 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
 					<h2 class="font-weight-bold text-white"><i class="fa fa-calendar"></i>&nbsp;예측평체&nbsp;
-					<span class="font-sm badge bg-orange">16일령 이후 표시</span>
-				</h2>	
+						<span class="font-sm badge bg-orange">16일령 이후 표시</span>
+					</h2>	
 				</div>
 			</header>
 			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
@@ -205,17 +205,6 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 				</div>
 			</header>
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
-				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
-					<div class="col-xs-6 no-padding text-center">
-						<span class="font-md text-secondary">수 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="dong_per_feed"></span></span>
-					</div>
-					<div class="col-xs-6 no-padding text-center">
-						<span class="font-md text-secondary">수 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="dong_per_water"></span></span>
-					</div>
-				</div>
-
-				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
-
 				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
 					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-00.png" style="width: 7rem;"><br>
 						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
@@ -254,7 +243,7 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -327,27 +316,15 @@ include_once("../inc/bottom.php")
 
 	$(document).ready(function(){
 
+		list_combo = <?=$list_combo?>;
+		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
+		get_dong_data(comein_code);
+
 		$(".btn_display_toggle").off("click").on("click", function(){
 
-			//$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
+			$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
 			$(this).parents(".jarviswidget").children(".widget-body").toggle();
 		});
-
-		list_combo = <?=$list_combo?>;
-
-		let cookie_code = get_cookie("code");
-		if("<?=$code?>" == "" && cookie_code != null){
-			comein_code = cookie_code;
-			$("#search_form [name=search_list]").val(get_cookie("name"));
-		}
-		else{
-			comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
-			let name = $("#search_form [name=search_list] option:selected").val();
-			set_cookie("code", comein_code, 1);
-			set_cookie("name", name, 1);
-		}
-
-		get_dong_data();
 
 	});
 
@@ -370,21 +347,18 @@ include_once("../inc/bottom.php")
 
 	$("#search_form [name=search_list]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
 		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
-		let name = $("#search_form [name=search_list] option:selected").val();
-		set_cookie("code", comein_code, 1);
-		set_cookie("name", name, 1);
 
-		get_dong_data();
+		get_dong_data(comein_code);
 	});
 
-	function get_dong_data(){
-		
+	function get_dong_data(comein_code){
+
 		let data_arr = {};
-		data_arr["oper"] = "get_buffer";	//등록코드
+		data_arr["oper"] = "get_buffer";
 		data_arr["cmCode"] = comein_code;	//등록코드
-		
+
 		$.ajax({
-			url:'0103_action.php',
+			url:'0102_action.php',
 			data:data_arr,
 			cache:false,
 			type:'post',
@@ -394,12 +368,15 @@ include_once("../inc/bottom.php")
 				// $("#row_feed_water").hide();
 				// $("#row_outsensor").hide();
 				let status = data.summary.summary_status;
+				let time   = data.summary.summary_time;
+				let avg	   = data.summary.summary_curr_avg_weight;
 
 				if(status != "O"){
 
 					$("#row_summary").show();
 					$("#row_avg_esti").show();
 					$("#row_cell_avg").show();
+					$("#row_status_info").hide();
 
 					//일령
 					let interm = data.summary.summary_interm;
@@ -433,13 +410,13 @@ include_once("../inc/bottom.php")
 						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
 
 						//$("#row_feed_water").show();
-						//$("#row_feed_water").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						$("#row_feed_water").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
 						$("#row_feed_water").find(".widget-body").show();
 					}
 					if(data.extra.hasOwnProperty("extra_out_temp")){
 						//$("#row_outsensor").show();
 
-						//$("#row_outsensor").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						$("#row_outsensor").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
 						$("#row_outsensor").find(".widget-body").show();
 					}
 
@@ -450,13 +427,16 @@ include_once("../inc/bottom.php")
 					$("#row_cell_avg").hide();
 					$("#row_feed_water").hide();
 					$("#row_outsensor").hide();
-
+					$("#row_status_info").show();
+							
 					$("#top_status_info").removeClass('d-none');
 					$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-secondary no-margin'>현재 <span class='text-danger'>'출하 상태'</span>입니다</h3>").show();
 					$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 최종 출하 시간 : ");
-					$("#top_last_time").html(data.summary.summary_avg_time);
+					$("#top_last_time").html(time);
 					$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
-					$("#top_last_avg").html(data.summary.summary_avg_weight + "g");
+					$("#top_last_avg").html(avg + "g");
+
+					
 				}
 				
 				//카메라
@@ -467,31 +447,6 @@ include_once("../inc/bottom.php")
 				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
 			}
 		});
-
-		get_feed_per_count();
 	}
-
-	function get_feed_per_count(){
-		
-		let data_arr = {};
-		data_arr["oper"] = "get_feed_per_count";
-		data_arr["cmCode"] = comein_code;		//등록코드
-		
-		$.ajax({
-			url:'0103_action.php',
-			data:data_arr,
-			cache:false,
-			type:'post',
-			dataType:'json',
-			success: function(data){
-
-				$("#dong_per_feed").html(data.dong_per_feed + "g");
-				$("#dong_per_water").html(data.dong_per_water + "L");
-			},
-			error: function(request,status,error){
-				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
-			}
-		});
-	};
 
 </script>

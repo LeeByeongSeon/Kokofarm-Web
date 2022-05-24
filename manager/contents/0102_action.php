@@ -18,185 +18,259 @@
 			
 			$now = date("Y-m-d H:i:s");
 			$time_1 = date("Y-m-d H:i:s", strtotime("-1 hours"));
-			$to_day = substr($now, 0, 10);
-			$yester_day = date("Y-m-d", strtotime("-1 Days"));
 
-			$day_plus_1 = date("Y-m-d", strtotime("+1 Days"));
-			$day_plus_2 = date("Y-m-d", strtotime("+2 Days"));
-
-			// 버퍼 및 입추정보, 카메라 데이터
-			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, sc.*, so.*, fd.fdName, sh.shFeedData, IFNULL(DATEDIFF(current_date(), cmIndate) + 1, 0) AS inTerm FROM comein_master AS cm
-						JOIN buffer_sensor_status AS be ON be.beFarmid = cm.cmFarmid AND be.beDongid = cm.cmDongid 
-						LEFT JOIN set_light AS sl ON sl.slFarmid = cm.cmFarmid AND sl.slDongid = cm.cmDongid 
-						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = cm.cmFarmid AND sf.sfDongid = cm.cmDongid 
-						LEFT JOIN set_outsensor AS so ON so.soFarmid = cm.cmFarmid 
-						LEFT JOIN set_camera AS sc ON sc.scFarmid = cm.cmFarmid AND sc.scDongid = cm.cmDongid 
-						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
-						LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND shDate = \"" . substr($time_1, 0, 13) . ":00:00\" 
-						WHERE cmCode = \"" .$cmCode. "\"";
-
-						//LEFT JOIN request_calculate AS rc ON rc.rcCode = \"" .$cmCode. "\" 
+			// 농장 데이터
+			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, f.*, sh.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS inTerm FROM buffer_sensor_status AS be 
+						JOIN farm AS f ON f.fFarmid = be.beFarmid 
+						LEFT JOIN comein_master AS cm ON cm.cmFarmid = be.beFarmid AND cm.cmDongid = be.beDongid AND cm.cmCode = be.beComeinCode 
+						LEFT JOIN set_light AS sl ON sl.slFarmid = be.beFarmid AND sl.slDongid = be.beDongid 
+						LEFT JOIN set_feeder AS sf ON sf.sfFarmid = be.beFarmid AND sf.sfDongid = be.beDongid 
+						LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid 
+						LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND shDate = \"" . substr($time_1, 0, 13) . ":00:00\" 
+						WHERE beFarmid = \"" .$farmID. "\" ORDER BY cmDongid DESC" ;
 
 			$buffer_data = get_select_data($select_sql);
 
-			// 어제 및 오늘 평균중량 데이터
-			$select_sql = "SELECT aw.* FROM 
-								(SELECT awFarmid, awDongid, MAX(awDate) AS maxDate
-								FROM avg_weight WHERE awFarmid = \"" .$farmID. "\" AND awDongid = \"" .$dongID. "\" AND 
-								awDate BETWEEN \"" .$yester_day. " 00:00:00\" AND \"" .$to_day. " 23:59:00\"
-								GROUP BY awFarmid, awDongid, LEFT(awDate, 10) ORDER BY maxDate DESC) AS maw
-							JOIN avg_weight AS aw ON aw.awFarmid = maw.awFarmid AND aw.awDongid = maw.awDongid AND aw.awDate = maw.maxDate";
+			// echo json_encode($buffer_data);
 
-			$aw_data = get_select_data($select_sql);
+			$summary = array();
+			
+			// 평균중량
+			$farm_weight = 0;
+			$farm_devi = 0;
+			$farm_vc = 0;
 
-			$curr_status = $buffer_data[0]["beStatus"];		  //현재 상태
-			$curr_time 	 = $buffer_data[0]["beAvgWeightDate"];//최종 출하시간 
+			// 동별 편차
+			$weight_arr = array();
+			$farm_diff = 0;
 
-			$curr_interm = $buffer_data[0]["inTerm"];		  //현재 일령
-			$curr_weight = $buffer_data[0]["beAvgWeight"];	  //현재 평균중량
-			$curr_devi   = $buffer_data[0]["beDevi"];		  //현재 표준편차
+			// 급이량
+			$curr_feed = 0;
+			$prev_feed = 0;
+			$all_feed = 0;
 
-			$daily_water = $buffer_data[0]["sfDailyWater"];   //일일 급수량
-			$daily_feed  = $buffer_data[0]["sfDailyFeed"];    //일일 급이량
+			// 급수량
+			$curr_water = 0;
+			$prev_water = 0;
+			$all_water = 0;
 
-			$posi = count($aw_data) - 1;
+			$water_per_hour = 0;
 
-			if($posi > -1){			// 어제 또는 오늘 데이터가 존재하는 경우
-				$prev_weight = sprintf('%0.1f', $aw_data[$posi]["awWeight"]);	 //어제 평균중량
-				$prev_esti1  = sprintf('%0.1f', $aw_data[$posi]["awEstiT1"]);	 //어제 +1 예측
-				$prev_esti2  = sprintf('%0.1f', $aw_data[$posi]["awEstiT2"]);	 //어제 +2 예측
-				$prev_esti3  = sprintf('%0.1f', $aw_data[$posi]["awEstiT3"]);	 //어제 +3 예측
-				$prev_date   = sprintf('%0.1f', $aw_data[$posi]["awDate"]);	 //어제 마지막 산출 시간
-			}
-			else{					// 없는 경우
-				$prev_weight = 0.0;	 //어제 평균중량
-				$prev_esti1  = 0.0;	 //어제 +1 예측
-				$prev_esti2  = 0.0;	 //어제 +2 예측
-				$prev_esti3  = 0.0;	 //어제 +3 예측
-				$prev_date   = "-";	 //어제 마지막 산출 시간
-			}
+			// 사육관련
+			$comein_count = 0;	//생존수
+			$death_count = 0;	//폐사
+			$cull_count = 0;	//도태
+			$thinout_count = 0;	//솎기
 
-			if($curr_interm > 15){
-				$prev_avg_inc_2 = sprintf('%0.1f', $prev_esti2 - $prev_esti1);
-				$prev_avg_inc_3 = sprintf('%0.1f', $prev_esti3 - $prev_esti2);
+			// 그래프 데이터
+			$feed_chart = array();
+			$water_chart = array();
+			$weight_chart = array();
 
-				if($curr_weight < $prev_weight){
-					$curr_weight = $prev_weight;
-				}
-			}
-			else{
-				$prev_weight = "-";
-				$prev_esti1  = "-";
-				$prev_esti2  = "-";
-				$prev_esti3  = "-";
+			// 사료빈 유무 확인
+			$set_feeder_id = "";
 
-				$prev_avg_inc_2 = "0.0";
-				$prev_avg_inc_3 = "0.0";
-			}
+			foreach($buffer_data as $row){
 
-			// 1일령인 경우
-			if($curr_interm < 2){
-				$curr_min_weight = "-";
-				$curr_max_weight = "-";
-				$prev_date = "-";
-			}
-			else{
-				$curr_min_weight = sprintf('%0.1f', $curr_weight - ($curr_devi * corr_devi) );
-				$curr_max_weight = sprintf('%0.1f', $curr_weight + ($curr_devi * corr_devi) );
-			}
+				$set_feeder_id .= $row["sfDongid"];
 
-			$summary = array(
-				//"top_interm"			=> $curr_interm,
-				//"top_avg"				=> sprintf('%0.1f', $curr_weight)."g",
-				"summary_status"		=> $curr_status,								/*현재 상태*/
-				"summary_time"			=> $curr_time,									/*최종 출하 시간*/
+				$weight_arr[] = $row["beAvgWeight"];
+ 
+				$farm_weight += $row["beAvgWeight"];
+				$farm_devi += $row["beDevi"];
+				$farm_vc += $row["beVc"];
 
-				"summary_indate"    	=> substr($buffer_data[0]["cmIndate"], 0, 10),	/*입추일자*/ 
-				"summary_interm"    	=> $curr_interm,								/*현재 일령*/ 
-				"summary_intype"    	=> $buffer_data[0]["cmIntype"]." - ",			/*입추형식-육계,토종계,삼계,산란계*/
-				"summary_insu"      	=> $buffer_data[0]["cmInsu"]." 수",				/*입추수량*/
-				"summary_avg_weight"	=> sprintf('%0.1f', $curr_weight),				/*실시간 평균중량*/
-				"summary_devi"      	=> sprintf('%0.1f', $curr_devi * corr_devi),	/*실시간 표준편차*/
-				"summary_vc"        	=> sprintf('%0.1f', $buffer_data[0]["beVc"]),	/*실시간 변이계수*/
-
-				"summary_min_avg_weight"	=>  $curr_min_weight,						/*실시간 min 평체*/
-				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight),			/*실시간 평균중량*/
-				"summary_max_abg_weight"	=>  $curr_max_weight,						/*실시간 max 평체*/
-
-				"summary_date_term1"		=>  substr($yester_day, 5),					/*어제 날짜*/
-				"summary_date_term2"		=>  substr($day_plus_1, 5),					/*내일 날짜*/
-				"summary_date_term3"		=>  substr($day_plus_2, 5),					/*모레 날짜*/
-
-				"summary_day_term1"		=>  ($curr_interm - 1)."일령",					/*어제 일령*/
-				"summary_day_term2"		=>  ($curr_interm + 1)."일령",					/*내일 일령*/
-				"summary_day_term3"		=>  ($curr_interm + 2)."일령",					/*모레 일령*/
-
-				"summary_day_1"			=>  $prev_weight,								/*어제 예측평체*/
-				"summary_day_2"			=>  $prev_esti2,								/*내일 예측평체*/
-				"summary_day_3"			=>  $prev_esti3,								/*모레 예측평체*/
-
-				"summary_day_inc1"		=> $prev_date,									/*어제 마지막 평균중량 산출 시간*/
-				"summary_day_inc2"		=> $prev_avg_inc_2,								/*2일차 중량증가량*/
-				"summary_day_inc3"		=> $prev_avg_inc_3,								/*1일차 중량증가량*/
-
-				"summary_day_water"		=> $daily_water."L",							/*일일 급수량*/
-				"summary_day_feed"		=> $daily_feed."Kg",							/*일일 급이량*/
+				$curr_feed += $row["sfDailyFeed"];
+				$prev_feed += $row["sfPrevFeed"];
+				$all_feed += $row["sfAllFeed"];
 				
-				"summary_avg_temp" 		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgTemp"] + corr_temp),	/*현재 온도 센서 평균*/
-				"summary_avg_humi" 		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgHumi"] + corr_humi),	/*현재 습도 센서 평균*/
-				"summary_avg_co2"  		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgCo2"] + corr_co2),	/*현재 이산화탄소 센서 평균*/
-				"summary_avg_nh3"  		=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgNh3"] + corr_nh3),	/*현재 암모니아 센서 평균*/
-				"summary_avg_dust"  	=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgDust"]),				/*현재 미세먼지 센서 평균*/
-				"summary_avg_light"  	=> check_sensor_val('%0.1f', $buffer_data[0]["slLight01"]),	
-			);
+				$curr_water += $row["sfDailyWater"];
+				$prev_water += $row["sfPrevWater"];
+				$all_water += $row["sfAllWater"];
+
+				$comein_count += $row["cmInsu"];
+				$death_count += $row["cmDeathCount"];
+				$cull_count += $row["cmCullCount"];
+				$thinout_count += $row["cmThinoutCount"];
+
+				$feed_max += $row["sfFeedMax"];
+				$feed_remain += $row["sfFeed"];
+
+				$feed_json = json_decode($row["shFeedData"]);
+				$water_per_hour += $feed_json->feed_water;
+
+				$weight_chart[] = array(
+					"동" => $row["beDongid"] ."동",
+					"평균중량" => $row["beAvgWeight"],
+				);
+
+				$feed_chart[] = array(
+					"동" => $row["beDongid"] ."동",
+					"급이량" => $row["sfDailyFeed"],
+				);
+
+				$water_chart[] = array(
+					"동" => $row["beDongid"] ."동",
+					"급수량" => $row["sfDailyWater"],
+				);
+			}
+
+			$dong_count = count($buffer_data);
+
+			$all_farm_devi = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);
+
+			$summary["summary_farm_weight"] = sprintf('%0.1f', $farm_weight / $dong_count);					  // 전체 평균중량
+			$summary["summary_min_weight"] = sprintf('%0.1f', ($farm_weight / $dong_count) - $all_farm_devi); // 최소 평균중량
+			$summary["summary_max_weight"] = sprintf('%0.1f', ($farm_weight / $dong_count) + $all_farm_devi); // 최대 평균중량
+			// $summary["summary_farm_devi"] = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);	  // 전체 표준편차
+			// $summary["summary_farm_vc"] = sprintf('%0.1f', $farm_vc / $dong_count);						  // 전체 변이계수
+
+			// 동별 편차 구하기
+			$t = 0;
+			for($i=0; $i<$dong_count; $i++){
+				$b = $summary["summary_farm_weight"] - $weight_arr[$i];
+				$t += pow($b, 2);
+			}
+			$farm_diff = $t / $dong_count;
+			$farm_diff = sprintf('%0.1f', sqrt($farm_diff));	
+
+			$summary["summary_farm_diff"] = $farm_diff;						// 동별 표준편차
+
+			if($feed_remain > 0){
+				$percent = $feed_remain / $feed_max;
+			}
+			$percent = round($percent * 100);
+			$summary["summary_feed_percent"] = $percent . "%";
+			$summary["summary_feed_remain"] = $feed_remain;
+
+			$summary["summary_curr_feed"] = $curr_feed;
+			$summary["summary_prev_feed"] = $prev_feed;
+			$summary["summary_all_feed"] = $all_feed;
+
+			$summary["summary_curr_water"] = $curr_water;
+			$summary["summary_prev_water"] = $prev_water;
+			$summary["summary_all_water"] = $all_water;
+
+			$summary["summary_water_per_hour"] = $water_per_hour;
+
+			$summary["summary_comein_count"] = $comein_count;
+			$summary["summary_live_count"] = $comein_count - $death_count - $cull_count - $thinout_count;
+			$summary["summary_live_percent"] = sprintf('%0.1f', ($summary["summary_live_count"] / $comein_count) * 100);	
+			$summary["summary_death_count"] = $death_count;
+			$summary["summary_cull_count"] = $cull_count;
+			$summary["summary_thinout_count"] = $thinout_count;
+
+			$summary["farm_name"] = $buffer_data[0]["fName"];
+			$summary["dong_count"] = $dong_count;
+
 			$response["summary"] = $summary;
+			$response["weight_chart"] = $weight_chart;
+			$response["feed_chart"] = $feed_chart;
+			$response["water_chart"] = $water_chart;
 
-			$extra = array();
-			if($buffer_data[0]["sfFarmid"] != ""){		// 급이 데이터가 있으면
-				$extra["extra_curr_feed"] = $buffer_data[0]["sfDailyFeed"] < 0 ? 0 : $buffer_data[0]["sfDailyFeed"];
-				$extra["extra_prev_feed"] = $buffer_data[0]["sfPrevFeed"] < 0 ? 0 : $buffer_data[0]["sfPrevFeed"];
-				$extra["extra_curr_water"] = $buffer_data[0]["sfDailyWater"] < 0 ? 0 : $buffer_data[0]["sfDailyWater"];
-				$extra["extra_prev_water"] = $buffer_data[0]["sfPrevWater"] < 0 ? 0 : $buffer_data[0]["sfPrevWater"];
-				$extra["extra_feed_remain"] = $buffer_data[0]["sfFeed"];
+			$response["set_feeder_id"] = $set_feeder_id;
 
-				$feed_json = json_decode($buffer_data[0]["shFeedData"]);
-				$extra["extra_water_per_hour"] = $feed_json->feed_water;
+			echo json_encode($response);
 
-				// 남은 사료빈 용량 확인
-				$feed_max = $buffer_data[0]["sfFeedMax"];
-				$curr_feed = $buffer_data[0]["sfFeed"];
+			break;
 
-				$percent = $curr_feed / $feed_max;
+		case "get_feed_per_count":
+			$select_sql = "SELECT fe.*, cd.* FROM (
+							SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
+							SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, cm.cmCode, cm.cmInsu 
+							FROM buffer_sensor_status AS be 
+							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
+							LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND sh.shDate 
+								BETWEEN cm.cmIndate AND IF(cm.cmOutdate is null, now(), cm.cmOutdate)
+							WHERE be.beFarmid = \"" .$farmID. "\" GROUP BY cm.cmCode, shFarmid, shDongid, LEFT(shDate, 10)
+							) AS fe
+							LEFT JOIN comein_detail AS cd ON cd.cdCode = fe.cmCode AND cd.cdDate = shDate";
 
-				$percent = round($percent * 100);
+			$feed_data = get_select_data($select_sql);
 
-				$extra["extra_feed_percent"] = $percent . "%";
+			$dong_per_feed = array();
+			$dong_per_water = array();
+			$dong_in = array();
+			$dong_out = array();
+
+			// 전체 농장별로 구하기 위한 날짜별 배열
+			$daily_feed_data = array();
+			
+			foreach($feed_data as $row){
+
+				$date = $row["shDate"];
+
+				if(!array_key_exists($date, $daily_feed_data)){
+					$daily_feed_data[$date] = array();
+				}
+
+				$daily_feed_data[$date][$row["shDongid"]] = $row;
+
+				// 동별 계산
+				$key = $row["shDongid"];
+
+				if(!array_key_exists($key, $dong_per_feed)){
+					$dong_per_feed[$key] = 0;
+					$dong_per_water[$key] = 0;
+					$dong_in[$key] = $row["cmInsu"];
+					$dong_out[$key] = 0;
+				}
+
+				$feed = $row["feed"] * 1000;  // g으로 단위 환산
+				$water = $row["feed"];  // 
+
+				$live = $dong_in[$key] - $dong_out[$key];
+
+				$per_feed = $feed / $live;
+				$per_water = $water / $live;
+				$dong_per_feed[$key] += $per_feed;
+				$dong_per_water[$key] += $per_water;
+
+				//echo($key . " live : " . $live . " out : " . $dong_out[$key] . " per_feed : " . $per_feed . "\n");
+
+				$dong_out[$key] += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
 			}
 
-			if($buffer_data[0]["soFarmid"] != ""){		// 외기 데이터가 있으면
-				$extra["extra_out_temp"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soTemp"]);
-				$extra["extra_out_humi"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soHumi"]);
-				$extra["extra_out_nh3"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soNh3"]);
-				$extra["extra_out_h2s"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soH2s"]);
-				$extra["extra_out_dust"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soDust"]);
-				$extra["extra_out_udust"] = 	get_udust_status($buffer_data[0]["soUDust"]);
-				$extra["extra_out_wind"] = 		check_sensor_val('%0.1f', $buffer_data[0]["soWindSpeed"]);
-				$extra["extra_out_solar"] = 	check_sensor_val('%0.1f', $buffer_data[0]["soSolar"]);
-				$extra["extra_out_direction"] = get_wind_status($buffer_data[0]["soWindDirection"]);
+			// 전체 농장 합산 계산
+			$total_per_feed = 0;
+			$total_per_water = 0;
+			$total_in = 0;
+			$total_out = 0;
+			foreach($daily_feed_data as $date_data){
+
+				if($total_in == 0){
+					foreach($date_data as $row){
+						$total_in += $row["cmInsu"];
+					}
+				}
+
+				$feed = 0;
+				$water = 0;
+				$out = 0;
+
+				foreach($date_data as $row){
+					$feed += $row["feed"] * 1000;
+					$water += $row["water"];
+					$out += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
+				}
+
+				$live = $total_in - $total_out;
+				$per_feed = $feed / $live;
+				$per_water = $water / $live;
+
+				$total_per_feed += $per_feed;
+				$total_per_water += $per_water;
+
+				//echo(" live : " . $live . " out : " . $total_out . " per_feed : " . $per_feed . " per_water : " . $per_water ."\n");
+
+				$total_out += $out;
+
 			}
 
-			$response["extra"] = $extra;
-
-			$name = $buffer_data[0]["fdName"];
-
-			// 테스트농장 카메라 임시조치
-			if($buffer_data[0]["beIPaddr"] == "220.124.186.151"){ $buffer_data[0]["beIPaddr"] = "221.159.10.251";}
-			$img_url = "../common/php_module/camera_func.php?ip=" .$buffer_data[0]["beIPaddr"]. "&port=" .$buffer_data[0]["scPort"]. "&url=" .urlencode($buffer_data[0]["scUrl"]). "&id=" .$buffer_data[0]["scId"]. "&pw=" .$buffer_data[0]["scPw"];
-			
-			$camera_zone = "<img src='".$img_url."' onError=\" $(this).attr('src','../images/noimage.jpg'); $('#cameraIcon').hide();\">
-							<img id='cameraIcon' src='../images/play.png' class='fadeIn animated' onClick=\"camera_modal('" .$name. "','" .$img_url. "'); \">";
-			
-			$response["camera_zone"] = $camera_zone;
+			$response["total_per_feed"] = sprintf('%0.1f', $total_per_feed);	
+			$response["total_per_water"] = sprintf('%0.3f', $total_per_water);	
+			$response["dong_per_feed"] = $dong_per_feed;
+			$response["dong_per_water"] = $dong_per_water;
 
 			echo json_encode($response);
 

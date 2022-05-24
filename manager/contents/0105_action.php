@@ -47,6 +47,19 @@ include_once("../common/php_module/common_func.php");
 
 					$extra["extra_feed_percent"] = $percent . "%";
 				}
+				else{
+					$extra["extra_curr_feed"] = "-";
+					$extra["extra_prev_feed"] = "-";
+					$extra["extra_all_feed"] = "-";
+					$extra["extra_curr_water"] = "-";
+					$extra["extra_prev_water"] = "-";
+					$extra["extra_all_water"] = "-";
+					$extra["extra_feed_remain"] = "-";
+
+					$extra["extra_water_per_hour"] = "-";
+
+					$extra["extra_feed_percent"] = "-%";;
+				}
 
 				$response["extra"] = $extra;
 				break;

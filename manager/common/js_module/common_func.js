@@ -297,6 +297,37 @@ var confirm_event = function (work){
 	});
 };
 
+/* 사육일지 팝업 - 확인
+	param
+	- title : 모달 상단 제목 string
+	- msg : 모달에 표시될 내용
+	- wokr : 확인/취소 버튼 클릭 시 실행될 함수
+	*/
+function popup_breed(title, work, ok_msg = "저장", cancle_msg = "취소"){
+
+    $("#modal_breed_ok").html(ok_msg);				
+    $("#modal_breed_cancle").html(cancle_msg);			
+
+    $("#modal_breed_title").html(title);					//modal title
+    //$("#modal_breed_body").html("<p>" + msg + "</p>");		//modal 내용
+    $("#modal_breed").modal('show');						//modal open
+
+    breed_confirm_event(work);
+};
+
+// 확인 및 취소 버튼 클릭 시 실행 할 작업을 바인딩 함
+var breed_confirm_event = function (work){
+	$("#modal_breed_ok").off("click").on("click", function(){		// off로 이벤트 중복을 방지함
+		work(true);
+		$("#modal_breed").modal('hide');
+	});
+	
+	$("#modal_breed_cancle").off("click").on("click", function(){
+		work(false);
+		$("#modal_breed").modal('hide');
+	});
+};
+
 // 날짜 유효성 검사
 function date_valid_check(input){
     let [date_arr, time_arr] = input.split(" ");
@@ -436,7 +467,7 @@ function get_now_time(){
 
 // gap 만큼 더하거나 뺀 시간을 리턴
 function get_gap_time(origin, gap){
-	var origin_date = new Date(origin);
+	var origin_date = new Date(origin.replace(/-/g, "/"));
 	var ret = origin_date.getTime() + gap;
 	var return_date = new Date(ret);
 
@@ -562,7 +593,7 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
 				graph_obj["valueField"] = key;
 				graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
 				graph_obj["bullet"] = "round";						/*꼭지점*/
-				graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+				graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
 				graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 
             if(is_label === "Y"){
@@ -571,16 +602,16 @@ function draw_select_chart(chart_id, chart_data, chart_style, is_zoom, is_label,
 
 			switch(chart_style){
 				case "라인차트":
-					graph_obj["type"] = "smoothedLine";					/*차트모양*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";				/*차트모양*/
+					graph_obj["lineThickness"] = 1;					/*라인굵기*/
 					break;
 				case "영역차트":
-					graph_obj["type"] = "smoothedLine";					/*smoothedLine*/
-					graph_obj["lineThickness"] = 1;						/*라인굵기*/
+					graph_obj["type"] = "smoothedLine";				/*smoothedLine*/
+					graph_obj["lineThickness"] = 1;					/*라인굵기*/
 					graph_obj["fillAlphas"] = 0.2;
 					break;
 				default:
-					graph_obj["type"] = "column";							/*차트모양*/
+					graph_obj["type"] = "column";					/*차트모양*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 
@@ -649,7 +680,7 @@ param
 - is_label : Label 출력 여부
 - font_size : 차트의 출력되는 font size
 */
-function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period = "hh"){
+function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size, period = "hh", fisrt_color = ""){
     if(chart_data.length <= 0){ return false; }
 
     //console.log(JSON.stringify(chart_data));
@@ -673,21 +704,21 @@ function draw_bar_line_chart(chart_id, chart_data, is_zoom, is_label, font_size,
             if(is_label === "Y"){
 				graph_obj["labelText"]="[[value]]";					/*값 출력*/
                 graph_obj["bullet"] = "round";						/*꼭지점*/
-                graph_obj["bulletSize"] = 4;							/*차트 꼭지점 Size*/
+                graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
                 graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
 			}
 
 			switch(graph_cnt){
 				case 1:
-					graph_obj["type"] = "column";						/*차트모양*/
-					graph_obj["lineColor"] = graph_color[1];			/*라인컬라*/
+					graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineColor"] = fisrt_color == "" ? graph_color[1] : fisrt_color;			/*라인컬라*/
 					graph_obj["lineAlpha"] = 0.2;
 					graph_obj["fillAlphas"] = 0.9;
 					break;
 				case 2:
-					//graph_obj["type"] = "smoothedLine";				/*차트모양*/
-                    graph_obj["type"] = "column";				/*차트모양*/
-					graph_obj["lineColor"] = graph_color[3];			/*라인컬라*/
+					//graph_obj["type"] = "smoothedLine";			/*차트모양*/
+                    graph_obj["type"] = "column";					/*차트모양*/
+					graph_obj["lineColor"] = graph_color[3];		/*라인컬라*/
 					graph_obj["lineThickness"] = 3;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					break;
@@ -736,7 +767,7 @@ function draw_chart(chart_id, chart_data, params){
         }
         else{
             let graph_obj = {};
-            graph_obj["title"] = key; 
+            graph_obj["title"] = key;
             graph_obj["valueField"] = key;
             graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
 
@@ -758,13 +789,13 @@ function draw_chart(chart_id, chart_data, params){
 					graph_obj["type"] = "column";					/*차트모양*/
 					graph_obj["lineAlpha"] = 1;
 					graph_obj["fillAlphas"] = 1;
-					graph_obj["lineThickness"] = 5;					/*라인굵기*/
+					graph_obj["lineThickness"] = 0.5;					/*라인굵기*/ // 2022-03-11 라인굵기 수정
 					graph_obj["bulletBorderThickness"] = 3;
 					break;
 				case 2:
 					graph_obj["type"] = "smoothedLine";				/*차트모양: 부드러운 곡선*/
 					graph_obj["lineAlpha"] = 0.9;
-					graph_obj["lineThickness"] = 2;					/*라인굵기*/
+					graph_obj["lineThickness"] = 1;					/*라인굵기*/
 					graph_obj["bulletBorderThickness"] = 3;
 					graph_obj["dashLengthField"] = "dashLengthLine";
 					break;
@@ -842,7 +873,7 @@ function draw_chart_detail(chart_id, chart_data, params){
 
     let category = "category";
 
-    console.log(chart_data);
+    //console.log(chart_data);
 
     while(true){
         let title_field = "title" + graph_idx;
@@ -1083,6 +1114,8 @@ function send_excel_android(title, table_id){
 	$("#" + table_id).find("th").each(function(key, val){ 
 		header.push( $.trim($(this).text()) );
 	});
+
+    console.log(json_data);
 	
 	window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
 }

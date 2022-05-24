@@ -1,16 +1,87 @@
 <?
 include_once("../inc/top.php");
 
-// 생계구분 콤보박스
-$type_query = "SELECT cName1 FROM codeinfo WHERE cGroup= \"생계구분\"";
-$type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "육계");
+$inout = isset($_REQUEST["inout"]) ? $_REQUEST["inout"] : "입추";
+$code = isset($_REQUEST["code"]) ? $_REQUEST["code"] : "";
+//$name = isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
 
-if(isset($_REQUEST["request_dong"])){
-	//$("#top_select li").eq($_REQUEST["request_dong"]).click();
-	$request_dong = $_REQUEST["request_dong"];
+$list_query = "SELECT be.beStatus, be.beComeinCode, fd.fdName FROM buffer_sensor_status AS be 
+				LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid ORDER BY fdName ASC";
+
+$result = get_select_data($list_query);
+
+$list_combo = array();
+
+// 입출하 상태에 따라 콤보박스 생성
+foreach($result as $row){
+	$option = "<option value=\"" . $row["fdName"] . "\" comein_code=\"" . $row["beComeinCode"] . "\" " .($row["beComeinCode"] == $code ? "selected" : ""). ">" . $row["fdName"] . "</option>";
+	
+	if($row["beStatus"] == "O"){
+		$list_combo["out"] .= $option;
+	}
+	else{
+		$list_combo["in"] .= $option;
+	}
+
+	$list_combo["all"] .= $option;
 }
 
+$view_list_combo = "<select class=\"form-control w-auto\" name=\"search_list\">";
+switch($inout){
+	case "":
+		$view_list_combo .= $list_combo["all"];
+		break;
+	case "입추":
+		$view_list_combo .= $list_combo["in"];
+		break;
+	case "출하":
+		$view_list_combo .= $list_combo["out"];
+		break;
+}
+$view_list_combo .= "</select>";		// 처음에 출력될 콤보
+
+$list_combo = json_encode($list_combo);	// javascript 에서 활용할 콤보 배열
+
+$inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
+					<option value='' " .($inout == "" ? "selected" : ""). ">전체</option>
+					<option value='입추' " .($inout == "입추" ? "selected" : ""). ">입추</option>
+					<option value='출하' " .($inout == "출하" ? "selected" : ""). ">출하</option>
+				</select>";
+
 ?>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="widget-body border" style="padding:0.5rem; min-height: 0;">
+				<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
+					<span class="font-weight-bold text-primary"><i class="fa fa-home"></i>&nbsp;&nbsp;농장 검색 : </span>&nbsp;&nbsp;
+					<?=$inout_combo?>&nbsp;&nbsp;
+					<?=$view_list_combo?>
+					<!-- <button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-check"></span>&nbsp;&nbsp;확인</button>&nbsp;&nbsp; -->
+				</form>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<!--출하상태 표시 div-->		
+<div class="card border-danger mb-4 mx-auto d-none" id="top_status_info">
+	<div class="card-header font-weight-bold text-primary pl-2"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
+	<div class="card-body">
+		<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">
+			<tr>
+				<td colspan="2" id="top_status_msg"></td>
+			</tr>
+			<tr>
+				<td class="w-50 font-md text-secondary" id="top_time_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_time"></td>
+			</tr>
+			<tr>
+				<td class="w-50 font-md text-secondary" id="top_avg_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_avg"></td>
+			</tr>
+		</table>
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-xs-12">
@@ -95,6 +166,16 @@ if(isset($_REQUEST["request_dong"])){
 						<div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold" id="basic-addon1" style="width: 73.5px">축종</span>
 							<?=$type_combo?>
+							<!-- <span class="input-group-text font-weight-bold" id="basic-addon1" style="width: 73.5px">축종</span>
+								<label class="radio-inline" style="padding-left: 2.5rem; padding-top:0.5rem;">
+									<input type="radio" class="form-check-input" name="change_intype" value="육계"><span>&nbsp;육계</span>
+								</label>&nbsp;
+								<label class="radio-inline" style="padding-left: 2.5rem; padding-top:0.5rem;">
+									<input type="radio" class="form-check-input" name="change_intype" value="삼계"><span>&nbsp;삼계</span>
+								</label>&nbsp;
+								<label class="radio-inline" style="padding-left: 2.5rem; padding-top:0.5rem;">
+									<input type="radio" class="form-check-input" name="change_intype" value="토종닭"><span>&nbsp;토종닭</span>
+								</label> -->
 						</div>
 						<!-- <div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">입추 수</span>
@@ -103,7 +184,7 @@ if(isset($_REQUEST["request_dong"])){
 					</div>
 
 					<div class="col-xs-12 text-center">
-						<!-- <h3 class="font-weight-bold text-primary" style="margin:0.5rem">평균중량 재산출</h3>
+						<h3 class="font-weight-bold text-primary" style="margin:0.5rem">평균중량 재산출</h3>
 
 						<div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold">실측일자</span>
@@ -131,11 +212,11 @@ if(isset($_REQUEST["request_dong"])){
 						<div class="input-group mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">실측값</span>
 							<input type="number" pattern="\d*" class="form-control" name="measure_val" placeholder="실측중량" min="400" max="2500">
-						</div> -->
+						</div>
 
 						<div class="col-xs-12 text-center no-padding" id="request_opt_alarm"></div>
 
-						<!-- <div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 평균중량 재산출은 20일령 이후에 입력가능합니다.</label></div> -->
+						<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 평균중량 재산출은 20일령 이후에 입력가능합니다.</label></div>
 						<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 모든 변경사항은 관리자 승인 후에 적용됩니다.</label></div>
 						<div class="col-xs-12 text-right no-padding">
 							<button type="button" class="btn btn-primary" id="request_ok">요청</button>
@@ -153,22 +234,79 @@ include_once("../inc/bottom.php")
 
 <script language="javascript">
 
+	var sensor_chart_data = null;
+
+    var comein_code = "";
+	var list_combo = "";
+
 	var comein_intype = "";
 	var comein_indate = "";
 	var comein_insu = "";
+
+	$(document).ready(function(){
+
+		$(".btn_display_toggle").off("click").on("click", function(){
+
+			//$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
+			$(this).parents(".jarviswidget").children(".widget-body").toggle();
+		});
+
+		list_combo = <?=$list_combo?>;
+		
+		let cookie_code = get_cookie("code");
+		if("<?=$code?>" == "" && cookie_code != null){
+			comein_code = cookie_code;
+			$("#search_form [name=search_list]").val(get_cookie("name"));
+		}
+		else{
+			comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
+			let name = $("#search_form [name=search_list] option:selected").val();
+			set_cookie("code", comein_code, 1);
+			set_cookie("name", name, 1);
+		}
+
+		get_dong_data();
+
+	});
+
+	$("#search_form [name=search_inout]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+		let inout = $("#search_form [name=search_inout] option:selected").val();
+
+		switch(inout){
+			default:
+				$("#search_form [name=search_list]").html(list_combo["all"]);
+				break;
+			case "입추":
+				$("#search_form [name=search_list]").html(list_combo["in"]);
+				break;
+			case "출하":
+				$("#search_form [name=search_list]").html(list_combo["out"]);
+				break;
+
+		}
+	});
+
+	$("#search_form [name=search_list]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
+		let name = $("#search_form [name=search_list] option:selected").val();
+		set_cookie("code", comein_code, 1);
+		set_cookie("name", name, 1);
+
+		get_dong_data();
+	});
 	
 	function get_dong_data(){
 
 		// 입추상태인 경우에만 표시
-		if(top_be_status == "O"){
-			$("#row_request_form").hide();
-		}
-		else{
-			if(!["R", "A", "W", "C"].includes(top_rc_status)){
-				$("#row_request_form").show();
-				get_info();
-			}
-		}
+		// if(top_be_status == "O"){
+		// 	$("#row_request_form").hide();
+		// }
+		// else{
+		// 	if(!["R", "A", "W", "C"].includes(top_rc_status)){
+		// 		$("#row_request_form").show();
+		// 		get_info();
+		// 	}
+		// }
 
 		get_breed_data();
 	};
@@ -177,10 +315,10 @@ include_once("../inc/bottom.php")
 
 		let data_arr = {};
 		data_arr["oper"] = "get_breed_data";
-		data_arr["cmCode"] = top_code;
+		data_arr["cmCode"] = comein_code;
 		
 		$.ajax({
-			url:'0105_action.php',
+			url:'0107_action.php',
 			data:data_arr,
 			cache:false,
 			type:'post',
@@ -197,7 +335,7 @@ include_once("../inc/bottom.php")
 	};
 
 	$('#breed_table').on('click-cell.bs.table', function (e, field, value, row) { 
-		popup_input(top_code, comein_insu, row);
+		popup_input(comein_code, comein_insu, row);
 	});
 
 	function popup_input(code, insu, row){
@@ -234,7 +372,7 @@ include_once("../inc/bottom.php")
 				data_arr["date"] = $("#breed_form [name=breed_input_date]").val();
 
 				$.ajax({
-					url:'0105_action.php',
+					url:'0107_action.php',
 					data:data_arr,
 					cache:false,
 					type:'post',
@@ -265,10 +403,10 @@ include_once("../inc/bottom.php")
 		
 		let data_arr = {};
 		data_arr["oper"] = "get_info";
-		data_arr["cmCode"] = top_code;
+		data_arr["cmCode"] = comein_code;
 
 		$.ajax({
-			url:"0105_action.php",
+			url:"0107_action.php",
 			type:"post",
 			data:data_arr,
 			dataType:"json",
@@ -281,7 +419,7 @@ include_once("../inc/bottom.php")
 
 				// 기존 (수정 전)데이터 가져옴
 				$("#request_form [name=change_intype]").val(comein_intype).prop("selected", true);
-				//$("#request_form [name=change_insu]").val(comein_insu);
+				$("#request_form [name=change_insu]").val(comein_insu);
 
 				comein_indate = comein_indate.substr(0, 15) + "0:00";
 				let in_date = comein_indate.substr(0, 10);
@@ -380,13 +518,13 @@ include_once("../inc/bottom.php")
 	};
 	
 	//입추수량을 숫자만 입력
-	// $("#request_form [name=change_insu]").on("keyup", function() {
-	// 	let temp = $(this).val();
-	// 	temp = temp.replace(/[^0-9]/g,"");
-	// 	temp = temp.length > 5 ? temp.substr(0, 5) : temp;
+	$("#request_form [name=change_insu]").on("keyup", function() {
+		let temp = $(this).val();
+		temp = temp.replace(/[^0-9]/g,"");
+		temp = temp.length > 5 ? temp.substr(0, 5) : temp;
 
-	// 	$(this).val(temp);
-	// });
+		$(this).val(temp);
+	});
 
 	//실측값을 숫자만 입력
 	$("#request_form [name=measure_val]").on("keyup", function() {
@@ -420,9 +558,9 @@ include_once("../inc/bottom.php")
 
 		let change_date   = $("#request_form [name=change_indate]").val() + " " + $("#request_form [name=change_hour]").val() + ":" + $("#request_form [name=change_minute]").val() + ":00";
 		let change_type   = $("#request_form [name=change_intype]").val();
-		//let change_insu  = $("#request_form [name=change_insu]").val();
-		//let measure_date = $("#request_form [name=measure_date]").val() + " " + $("#request_form [name=measure_hour]").val() + ":" + $("#request_form [name=measure_minute]").val()  + ":00";
-		//let measure_val  = $("#request_form [name=measure_val]").val();
+		let change_insu  = $("#request_form [name=change_insu]").val();
+		let measure_date = $("#request_form [name=measure_date]").val() + " " + $("#request_form [name=measure_hour]").val() + ":" + $("#request_form [name=measure_minute]").val()  + ":00";
+		let measure_val  = $("#request_form [name=measure_val]").val();
 
 		// alert("origin : " + origin + "\ntr_date : " + tr_date + "\ntr_type : " + tr_type  + "\nmeasure_date : " + measure_date + "\nmeasure_val : " + measure_val);
 
@@ -438,9 +576,9 @@ include_once("../inc/bottom.php")
 		}
 
 		// 입추수 변경
-		// if(comein_insu != change_insu){
-		// 	msg += "- 입추수를 <span style='font-weight:bold;'>\"" + comein_insu + "\"</span>에서 <span style='font-weight:bold;'>\"" + change_insu + "\"</span>으로 변경<br><br>";
-		// }
+		if(comein_insu != change_insu){
+			msg += "- 입추수를 <span style='font-weight:bold;'>\"" + comein_insu + "\"</span>에서 <span style='font-weight:bold;'>\"" + change_insu + "\"</span>으로 변경<br><br>";
+		}
 
 		// 입추일자 오류처리
 		if(comein_indate != change_date){
@@ -454,16 +592,16 @@ include_once("../inc/bottom.php")
 		}
 
 		// 최적화 오류처리
-		// if(measure_val.length != 0){
+		if(measure_val.length != 0){
 
-		// 	if(parseInt(measure_val) < 400 || parseInt(measure_val) > 2500){
-		// 		view_alarm("request_opt_alarm", "실측값은 400 ~ 2500 사이의 값을 입력해주세요</label>");
-		// 		return;
-		// 	}
+			if(parseInt(measure_val) < 400 || parseInt(measure_val) > 2500){
+				view_alarm("request_opt_alarm", "실측값은 400 ~ 2500 사이의 값을 입력해주세요</label>");
+				return;
+			}
 
-		// 	msg += "- 평균중량 재산출을 <span style='font-weight:bold;'>\"" + get_korea_date(measure_date) + "\"</span>에 측정한 <span style='font-weight:bold;'>" + measure_val + "g</span>으로 진행<br><br>";
-		// 	rc_comm += "Opt|";
-		// }
+			msg += "- 평균중량 재산출을 <span style='font-weight:bold;'>\"" + get_korea_date(measure_date) + "\"</span>에 측정한 <span style='font-weight:bold;'>" + measure_val + "g</span>으로 진행<br><br>";
+			rc_comm += "Opt|";
+		}
 
 		// 에러 확인 완료 후 적용될 값이 있으면 confirm창 출력
 		if(msg.length < 1){
@@ -471,7 +609,7 @@ include_once("../inc/bottom.php")
 			return;
 		}
 		else{
-			msg = "- " + top_name + "의 데이터를 변경<br><br>" + msg;
+			msg = "- " + $("#search_form [name=search_list] option:selected").val() + "의 데이터를 변경<br><br>" + msg;
 
 			popup_confirm("아래의 변경사항을 적용하시겠습니까?", msg, function(confirm) {
 					
@@ -481,7 +619,7 @@ include_once("../inc/bottom.php")
 						let data_arr = {};
 						data_arr["oper"] = "request";
 						
-						data_arr["cmCode"]    = top_code;			//입추코드
+						data_arr["cmCode"]    = comein_code;			//입추코드
 						data_arr["rcCommand"] = rc_comm.length > 2 ? rc_comm.substr(0, rc_comm.length-1) : "";	//변경 명령이 존재하지 않으면 입추수만 변경으로 판단
 
 						data_arr["rcPrevLst"]   = comein_intype;	//변경 전 축종
@@ -490,16 +628,16 @@ include_once("../inc/bottom.php")
 						data_arr["rcPrevDate"]   = comein_indate;	//변경 전 입추시간
 						data_arr["rcChangeDate"] = change_date;		//변경 후 입추시간
 
-						//data_arr["rcMeasureDate"] = measure_date.length > 3 ? measure_date : "";		// 실측 시간
-						//data_arr["rcMeasureVal"]  = measure_date.length > 3 ? measure_val : "";	// 실측 중량
+						data_arr["rcMeasureDate"] = measure_date.length > 3 ? measure_date : "";		// 실측 시간
+						data_arr["rcMeasureVal"]  = measure_date.length > 3 ? measure_val : "";	// 실측 중량
 
-						//data_arr["change_insu"] = change_insu;
+						data_arr["change_insu"] = change_insu;
 
 						set_cookie("is_opt_com", "yes", 1);
 
 						set_cookie("is_end_request", "no", 2);
 
-						$.ajax({url:'0105_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
+						$.ajax({url:'0107_action.php', data:data_arr, cache:false, type:'post', dataType:'json',
 							success: function(data) {
 								//$("#request_form").each(function() {	this.reset();  });
 								//$("#change_insu").val(data.change_insu);	//입추수만 변경
@@ -516,10 +654,9 @@ include_once("../inc/bottom.php")
 	});
 
 	function convert_excel(title, table_id){
-		title = top_name + "_" + top_code + "_" + title;
+		title = $("#search_form [name=search_list] option:selected").val() + "_" + comein_code + "_" + title;
 
 		send_excel_android(title, table_id);
 	};
-	
-	
+
 </script>

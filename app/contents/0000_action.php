@@ -96,7 +96,7 @@
 				$feed_max += $row["sfFeedMax"];
 				$feed_remain += $row["sfFeed"];
 
-				$feed_json = json_decode($buffer_data[0]["shFeedData"]);
+				$feed_json = json_decode($row["shFeedData"]);
 				$water_per_hour += $feed_json->feed_water;
 
 				$weight_chart[] = array(

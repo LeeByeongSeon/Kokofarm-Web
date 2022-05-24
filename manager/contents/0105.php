@@ -1,6 +1,87 @@
 <?
-include_once("../inc/top.php")
+include_once("../inc/top.php");
+
+$inout = isset($_REQUEST["inout"]) ? $_REQUEST["inout"] : "입추";
+$code = isset($_REQUEST["code"]) ? $_REQUEST["code"] : "";
+//$name = isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
+
+$list_query = "SELECT be.beStatus, be.beComeinCode, fd.fdName FROM buffer_sensor_status AS be 
+				LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid ORDER BY fdName ASC";
+
+$result = get_select_data($list_query);
+
+$list_combo = array();
+
+// 입출하 상태에 따라 콤보박스 생성
+foreach($result as $row){
+	$option = "<option value=\"" . $row["fdName"] . "\" comein_code=\"" . $row["beComeinCode"] . "\" " .($row["beComeinCode"] == $code ? "selected" : ""). ">" . $row["fdName"] . "</option>";
+	
+	if($row["beStatus"] == "O"){
+		$list_combo["out"] .= $option;
+	}
+	else{
+		$list_combo["in"] .= $option;
+	}
+
+	$list_combo["all"] .= $option;
+}
+
+$view_list_combo = "<select class=\"form-control w-auto\" name=\"search_list\">";
+switch($inout){
+	case "":
+		$view_list_combo .= $list_combo["all"];
+		break;
+	case "입추":
+		$view_list_combo .= $list_combo["in"];
+		break;
+	case "출하":
+		$view_list_combo .= $list_combo["out"];
+		break;
+}
+$view_list_combo .= "</select>";		// 처음에 출력될 콤보
+
+$list_combo = json_encode($list_combo);	// javascript 에서 활용할 콤보 배열
+
+$inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
+					<option value='' " .($inout == "" ? "selected" : ""). ">전체</option>
+					<option value='입추' " .($inout == "입추" ? "selected" : ""). ">입추</option>
+					<option value='출하' " .($inout == "출하" ? "selected" : ""). ">출하</option>
+				</select>";
+
 ?>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="widget-body border" style="padding:0.5rem; min-height: 0;">
+				<form id="search_form" class="form-inline mr-auto" onsubmit="return false;">&nbsp;&nbsp;
+					<span class="font-weight-bold text-primary"><i class="fa fa-home"></i>&nbsp;&nbsp;농장 검색 : </span>&nbsp;&nbsp;
+					<?=$inout_combo?>&nbsp;&nbsp;
+					<?=$view_list_combo?>
+					<!-- <button type="button" class="btn btn-primary btn-sm" onClick="search_action('search')"><span class="fa fa-check"></span>&nbsp;&nbsp;확인</button>&nbsp;&nbsp; -->
+				</form>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<!--출하상태 표시 div-->		
+<div class="card border-danger mb-4 mx-auto d-none" id="top_status_info">
+	<div class="card-header font-weight-bold text-primary pl-2"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
+	<div class="card-body">
+		<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">
+			<tr>
+				<td colspan="2" id="top_status_msg"></td>
+			</tr>
+			<tr>
+				<td class="w-50 font-md text-secondary" id="top_time_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_time"></td>
+			</tr>
+			<tr>
+				<td class="w-50 font-md text-secondary" id="top_avg_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_avg"></td>
+			</tr>
+		</table>
+	</div>
+</div>
 
 <!--일일 급이 / 급수량-->
 <div class="row" id="row_feed_water">
@@ -135,7 +216,6 @@ include_once("../inc/top.php")
 	</div>
 </div>
 
-
 <?
 include_once("../inc/bottom.php")
 ?>
@@ -143,6 +223,59 @@ include_once("../inc/bottom.php")
 <script language="javascript">
 
 	var sensor_chart_data = null;
+
+    var comein_code = "";
+	var list_combo = "";
+
+	$(document).ready(function(){
+
+		$(".btn_display_toggle").off("click").on("click", function(){
+
+			//$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
+			$(this).parents(".jarviswidget").children(".widget-body").toggle();
+		});
+
+		list_combo = <?=$list_combo?>;
+
+		let cookie_code = get_cookie("code");
+		if(cookie_code != null){
+			comein_code = cookie_code;
+			$("#search_form [name=search_list]").val(get_cookie("name"));
+		}
+		else{
+			comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
+			set_cookie("code", comein_code, 1);
+		}
+
+		get_dong_data();
+
+	});
+
+	$("#search_form [name=search_inout]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+		let inout = $("#search_form [name=search_inout] option:selected").val();
+
+		switch(inout){
+			default:
+				$("#search_form [name=search_list]").html(list_combo["all"]);
+				break;
+			case "입추":
+				$("#search_form [name=search_list]").html(list_combo["in"]);
+				break;
+			case "출하":
+				$("#search_form [name=search_list]").html(list_combo["out"]);
+				break;
+
+		}
+	});
+
+	$("#search_form [name=search_list]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
+		let name = $("#search_form [name=search_list] option:selected").val();
+		set_cookie("code", comein_code, 1);
+		set_cookie("name", name, 1);
+
+		get_dong_data();
+	});
 
 	function get_dong_data(){
 		get_buffer();
@@ -154,10 +287,10 @@ include_once("../inc/bottom.php")
 	function get_buffer(){
 		let data_arr = {};
 		data_arr["oper"] = "get_buffer";	
-		data_arr["cmCode"] = top_code;	//등록코드
+		data_arr["cmCode"] = comein_code;	//등록코드
 		
 		$.ajax({
-			url:'0103_action.php',
+			url:'0105_action.php',
 			data:data_arr,
 			cache:false,
 			type:'post',
@@ -180,10 +313,10 @@ include_once("../inc/bottom.php")
 		
 		let data_arr = {};
 		data_arr["oper"]   = "get_all";
-		data_arr["cmCode"] = top_code;
+		data_arr["cmCode"] = comein_code;
 
 		$.ajax({
-			url:'0103_action.php',
+			url:'0105_action.php',
 			type:'post',
 			cache:false,
 			data:data_arr,
@@ -211,10 +344,10 @@ include_once("../inc/bottom.php")
 		
 		let data_arr = {};
 		data_arr["oper"]   = "get_today";
-		data_arr["cmCode"] = top_code;
+		data_arr["cmCode"] = comein_code;
 
 		$.ajax({
-			url:'0103_action.php',
+			url:'0105_action.php',
 			type:'post',
 			cache:false,
 			data:data_arr,
@@ -260,7 +393,7 @@ include_once("../inc/bottom.php")
 
 		json_data = JSON.stringify(json_data);
 
-		title = top_name + "_" + top_code + "_" + title;
+		title = $("#search_form [name=search_list] option:selected").val() + "_" + comein_code + "_" + title;
 
 		window.Android.convert_excel(date_time + "_" + title + ".xls", header, json_data);
 	}
@@ -269,10 +402,10 @@ include_once("../inc/bottom.php")
 		
 		let data_arr = {};
 		data_arr["oper"] = "get_feed_per_count";
-		data_arr["cmCode"] = top_code;		//등록코드
+		data_arr["cmCode"] = comein_code;		//등록코드
 		
 		$.ajax({
-			url:'0103_action.php',
+			url:'0105_action.php',
 			data:data_arr,
 			cache:false,
 			type:'post',

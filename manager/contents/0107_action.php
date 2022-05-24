@@ -149,10 +149,10 @@ switch($oper){
 		}
 
 		// 입추수 변경
-		// $update_map = array();
-		// $update_map["cmInsu"] = check_str($_REQUEST["change_insu"]);
-		// $where_query = "cmCode = \"".$code."\"";
-		// run_sql_update("comein_master", $update_map, $where_query);
+		$update_map = array();
+		$update_map["cmInsu"] = check_str($_REQUEST["change_insu"]);
+		$where_query = "cmCode = \"".$code."\"";
+		run_sql_update("comein_master", $update_map, $where_query);
 
 		$response["ok"] = true;
 

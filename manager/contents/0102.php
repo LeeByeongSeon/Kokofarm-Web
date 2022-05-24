@@ -5,22 +5,33 @@ $inout = isset($_REQUEST["inout"]) ? $_REQUEST["inout"] : "입추";
 $code = isset($_REQUEST["code"]) ? $_REQUEST["code"] : "";
 $name = isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
 
-$list_query = "SELECT be.beStatus, be.beComeinCode, fd.fdName FROM buffer_sensor_status AS be 
-				LEFT JOIN farm_detail AS fd ON fd.fdFarmid = be.beFarmid AND fd.fdDongid = be.beDongid ORDER BY fdName ASC";
+$list_query = "SELECT be.beFarmid, f.fName, ANY_VALUE(be.beComeinCode) AS beComeinCode, GROUP_CONCAT(be.beStatus) AS beStatus FROM buffer_sensor_status AS be 
+				LEFT JOIN farm AS f ON fFarmid = be.beFarmid GROUP BY be.beFarmid, f.fName ORDER BY f.fName";
 
 $result = get_select_data($list_query);
+
+$farm = explode("_", $code)[1];
+$farm = substr($farm, 0, 6);
 
 $list_combo = array();
 
 // 입출하 상태에 따라 콤보박스 생성
 foreach($result as $row){
-	$option = "<option value=\"" . $row["fdName"] . "\" comein_code=\"" . $row["beComeinCode"] . "\" " .($row["fdName"] == $name ? "selected" : ""). ">" . $row["fdName"] . "</option>";
+	$option = "<option value=\"" . $row["fName"] . "\" comein_code=\"" . $row["beComeinCode"] . "\" " .($row["beFarmid"] == $farm ? "selected" : ""). ">" . $row["fName"] . "</option>";
 	
-	if($row["beStatus"] == "O"){
-		$list_combo["out"] .= $option;
+	$is_in = false;
+	foreach(explode(",", $row["beStatus"]) as $s){
+		if($s != "O"){
+			$is_in = true;
+			break;
+		}
+	}
+
+	if($is_in){
+		$list_combo["in"] .= $option;
 	}
 	else{
-		$list_combo["in"] .= $option;
+		$list_combo["out"] .= $option;
 	}
 
 	$list_combo["all"] .= $option;
@@ -75,117 +86,58 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 	</div>
 </div>
 
-<!--출하상태 표시 div-->		
-<div class="card border-danger mb-4 mx-auto" id="row_status_info">
-	<div class="card-header font-weight-bold text-primary pl-2"><i class="fa fa-bell-o text-orange swing animated"></i> 상태 알림</div>
-	<div class="card-body">
-		<table class="table-borderless w-100 text-center" style="line-height: 2.5rem;">
-			<tr>
-				<td colspan="2" id="top_status_msg"></td>
-			</tr>
-			<tr>
-				<td class="w-50 font-md text-secondary" id="top_time_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_time"></td>
-			</tr>
-			<tr>
-				<td class="w-50 font-md text-secondary" id="top_avg_info"></td><td class="w-50 font-md text-danger font-weight-bold" id="top_last_avg"></td>
-			</tr>
-		</table>
-	</div>
-</div>
-
-<!--실시간 평균-->
-<div class="row" id="row_summary" >
+<!--농장 전체 평균-->
+<div class='row' id="row_summary" >
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
-				<div class="widget-header" style="max-width: 100%;">	
-					<h2 class="font-weight-bold text-white avg"><i class="fa fa-clock-o"></i>&nbsp;실시간 평균&nbsp;
-						<span class="font-sm badge bg-orange">입추 <span id="summary_indate"> - </span> </span>
-						<span class="font-sm badge bg-orange"><span id="summary_intype"></span><span id="summary_insu"></span></span>
-					</h2>	
+				<div class="widget-header" style="max-width: 100%;">
+					<h2 class="font-weight-bold text-white avg"><i class="fa fa-home"></i>&nbsp;<span class="font-weight-bold" id="summary_farm_name">농장</span> 현황&nbsp;
+						<span class="font-sm badge bg-orange">총 <span id="summary_dong_count"> 0 </span>개 동</span>
+					</h2>
 				</div>
 			</header>
 			<div class="widget-body p-1" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
-				<div class="col-xs-3 float-left text-center px-1 pt-4">
-					<img class="img-reponsive henImage">
-					<div class="carousel-caption henInterm"><span class="font-weight-bold" style="font-size: 25px"> <span id="summary_interm"></span>일 </span></div>
+				<div class="col-xs-12 d-flex align-items-center pt-3 mb-1">
+					<div class="col-xs-3 float-left text-center p-1">
+						<span class="font-md text-secondary">최소<br><span class="font-md font-weight-bold" id="summary_min_weight"></span></span>
+					</div>
+					<div class="col-xs-6 float-center text-center no-padding">
+						<span class="font-weight-bold" style="font-size: 20px">전체 평균중량</span><br>
+						<span class="font-weight-bold text-danger" style="font-size: 45px" id="summary_farm_weight">-</span>
+						<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
+					</div>
+					<div class="col-xs-3 float-right text-center p-1">
+						<span class="font-md text-secondary">최대<br><span class="font-md font-weight-bold" id="summary_max_weight"></span></span>
+					</div>
 				</div>
-				<div class="col-xs-6 text-center no-padding" style="margin-top: 7%">
-					<span class="font-weight-bold text-danger" style="font-size: 17px">실시간 평균중량</span><br>
-					<span class="font-weight-bold text-danger" style="margin-top: 20%; font-size: 47px" id="summary_avg_weight">-</span>
-					<!-- <span class="font-weight-bold text-secondary" style="font-size:15px;">입추일<br><span id="summary_indate"> - </span></span> -->
+				<div class="col-xs-12 text-center mb-3">
+					<span class="text-secondary font-md">동별 표준 편차&nbsp;<span class="font-weight-bold" id="summary_farm_diff">0</span></span>
 				</div>
-				<div class="col-xs-3 float-right text-center p-1" style="margin-top: 5%">
-					<span class="font-weight-bold text-secondary" style="font-size: 18px">표준편차<br><span id="summary_devi"></span></span><br>
-					<span class="font-weight-bold text-secondary" style="font-size: 18px">변이계수<br><span id="summary_vc"></span></span>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
+				<div class="col-xs-12 text-center mb-3">
+					<span class="font-md">총 입추 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
 				</div>
-				<div class="col-xs-12 d-flex flex-row justify-content-around no-padding">
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최소평체</span><br><span style="font-size: 23px" id="summary_min_avg_weight">-</span></div>
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">현재평체</span><br><span style="font-size: 23px" id="summary_curr_avg_weight">-</span></div>
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대평체</span><br><span style="font-size: 23px" id="summary_max_abg_weight">-</span></div>
+				<div class="col-xs-12 text-center d-flex align-items-center mb-3">
+					<div class="col-xs-4 no-padding">
+						<div class="col-xs-12 no-padding">
+							<span class="font-md"><p>생존 수</p><span class="font-md" id="summary_live_count">0</span></span>
+						</div>
+					</div>
+					<div class="col-xs-3 no-padding">
+						<div class="col-xs-12 no-padding">
+							<span class="font-md"><p>생존율</p><span class="font-md" id="summary_live_percent">0</span>%</span>
+						</div>
+					</div>
+					<div class="col-xs-5 no-padding">
+						<div class="col-xs-12"><span class="font-md float-left">폐사 수&nbsp;<span id="summary_death_count">0</span></span></div>
+						<div class="col-xs-12"><span class="font-md float-left">도태 수&nbsp;<span id="summary_cull_count">0</span></span></div>
+						<div class="col-xs-12"><span class="font-md float-left">솎기 수&nbsp;<span id="summary_thinout_count">0</span></span></div>
+					</div>
 				</div>
 			</div>	
-		</div>
-	</div>
-</div>
-
-<!--예측평체-->
-<div class="row" id="row_avg_esti">
-	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
-				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white"><i class="fa fa-calendar"></i>&nbsp;예측평체&nbsp;
-						<span class="font-sm badge bg-orange">16일령 이후 표시</span>
-					</h2>	
-				</div>
-			</header>
-			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
-				<div class="d-flex flex-row justify-content-around">
-					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;"><span id="summary_date_term1"></span>(<span id="summary_day_term1"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_1"></span></p><span style="font-size: 13px;" id="summary_day_inc1"></span></div>
-					<div class="col-xs-4 p-2 text-center border-right"><span style="font-size: 14px;"><span id="summary_date_term2"></span>(<span id="summary_day_term2"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_2"></span></p><i class="fa fa-plus text-green"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc2"></span></div>
-					<div class="col-xs-4 p-2 text-center"><span style="font-size: 14px;"><span id="summary_date_term3"></span>(<span id="summary_day_term3"></span>)</span><p><span style="font-size: 27px;" class="text-secondary" id="summary_day_3"></span></p><i class="fa fa-plus text-info"></i>&nbsp;&nbsp;<span style="font-size: 13px;" id="summary_day_inc3"></span></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!--현재 센서별 평균정보-->	
-<div class="row" id="row_cell_avg">
-	<div class="col-xs-12">
-		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
-			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
-				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white sensor"><i class="fa fa-info-circle"></i>&nbsp;저울 센서별 평균</h2>	
-				</div>
-			</header>
-			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
-				<div class="col-xs-6 p-2 border-bottom border-right">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/temp.png" style="height:66px; width:66px;"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">온도</span>(℃)<br><span id="summary_avg_temp" style="font-size:27px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/humi.png" style="height:66px; width:66px;"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">습도</span>(％)<br><span id="summary_avg_humi" style="font-size:27px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom border-right">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/co2.png" style="height:66px; width:66px;"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:13px">이산화탄소</span>(ppm)<br><span id="summary_avg_co2" style="font-size:27px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/nh3.png" style="height:66px; width:66px;"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="summary_avg_nh3" style="font-size:27px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-right">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/pm10.png" style="height:66px; width:66px;"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">미세먼지</span><br><span id="summary_avg_dust" style="font-size:27px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2">
-					<div class="col-xs-4 no-padding" style="text-align:center"><img src="../images/lux.png" style="height:66px; width:66px;"><br><span></span></div>
-					<div class="col-xs-8 no-padding" style="text-align:right"><span style="font-size:15px">조도</span>(lux)<br><span id="summary_avg_light" style="font-size:27px">-</span></div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>
@@ -196,7 +148,9 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;급이 및 급수</h2>	
+					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;급이량 및 급수량
+						<!-- <span class="font-sm badge bg-orange">마리당 급이량 : <span id="total_per_feed"> 0 </span>g</span> -->
+					</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
@@ -204,102 +158,137 @@ $inout_combo = "<select class=\"form-control w-auto\" name=\"search_inout\">
 					</div>
 				</div>
 			</header>
-			<div class="widget-body pt-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem;">
-				<div class="col-xs-4 no-padding" style="margin-bottom: 15px">
-					<div class="col-xs-12 text-center no-padding"><img id="feed_img" src="../images/feed-00.png" style="width: 7rem;"><br>
-						<div class="carousel-caption"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
+			<div class="widget-body p-3 feed_data_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
+				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">수 당 급이량 <br><span class="font-md text-danger font-weight-bold" id="total_per_feed"></span></span>
 					</div>
-					<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="extra_feed_remain">-</span>(Kg)</span></div>
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">수 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="total_per_water"></span></span>
+					</div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 25px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">오늘 급이량</span>(Kg)<br><span id="extra_curr_feed" style="font-size:28px">-</span></div>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
+				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
+					<div class="col-xs-3 no-padding text-center">
+						<img id="feed_img" src="../images/feed-04.png" style="width: 7rem;"><br>
+						<div class="carousel-caption mb-4"><h3 class="font-weight-bold text-secondary" id="summary_feed_percent">-%</h3></div>
+						<div class="col-xs-12 text-center no-padding"><span>사료잔량 <span id="summary_feed_remain">-</span>(Kg)</span></div>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전체</span>(kg)<br><span id="summary_all_feed" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">오늘</span>(kg)<br><span id="summary_curr_feed" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전일</span>(kg)<br><span id="summary_prev_feed" style="font-size:21px">-</span>
+					</div>
 				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 25px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급이량</span>(Kg)<br><span id="extra_prev_feed" style="font-size:28px">-</span></div>
-				</div>
-				<div style="clear:both"></div><hr style="margin-top:0px">
-				<div class="col-xs-4 no-padding" style="margin-top: 5px">
-					<div class="col-xs-12 text-center"><img src="../images/water-02.png" style="width: 6rem;"><br><span></span></div>
-					<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="extra_water_per_hour">-</span>(L)</span></div>
-				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 15px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">오늘 급수량</span>(L)<br><span id="extra_curr_water" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-4 no-padding" style="margin-top: 15px">
-					<div class="col-xs-12 no-padding text-right"><span style="font-size:15px">전일 급수량</span>(L)<br><span id="extra_prev_water" style="font-size:28px">-</span></div>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
+				<div  class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
+					<div class="col-xs-3 no-padding text-center">
+						<img src="../images/water-02.png" style="width: 5rem;"><br><span></span>
+					<div class="col-xs-12 text-center no-padding"><span>시간당 급수량 <span id="summary_water_per_hour">-</span>(L)</span></div>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전체</span>(L)<br><span id="summary_all_water" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">오늘</span>(L)<br><span id="summary_curr_water" style="font-size:21px">-</span>
+					</div>
+					<div class="col-xs-3 no-padding text-right">
+						<span style="font-size:12px">전일</span>(L)<br><span id="summary_prev_water" style="font-size:21px">-</span>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<!--현재 외기환경 센서 정보-->
-<div class="row" id="row_outsensor">
+<div id="dong_list"></div>
+
+<!-- <div class="row" id="">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">
+			<div class="widget-body no-padding form-inline" style="border-radius: 10px; border : 4px solid #eee; border-top: 0;">
+				<div class="col-xs-2 text-center"><p><span class="fong-md font-weight-bold" style="font-size:15px">동</span></p><span id="">일령</span></div>
+				<div class="col-xs-4 text-center"><span class="font-lg text-danger font-weight-bold">평균체중</span></div>
+				<div class="col-xs-1 text-center"><i class='fa fa-circle text-success'></i></div>
+				<div class="col-xs-3 text-center"><img src='../images/feed-00.png' style='width:40px'></div>
+				<div class="col-xs-2 text-center"><button class='btn btn-default' onClick='set_breed_data()' style='border-color:white'><i class="fa fa-pencil-square-o font-lg text-secondary"></i></button></div>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<!--차트-->
+<div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white sensor"><i class="fa fa-info-circle"></i>&nbsp;외기환경 센서</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 평균중량 비교</h2>	
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
-			<div class="widget-body p-2" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; display: none;">
-				<div class="col-xs-6 p-2 border-bottom border-right">
-					<div class="col-xs-4 no-padding text-center text-danger"><img src="../images/temp.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">온도</span>(℃)<br><span id="extra_out_temp" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/humi.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">습도</span>(％)<br><span id="extra_out_humi" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom border-right">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/nh3.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">암모니아</span>(ppm)<br><span id="extra_out_nh3" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/h2s.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">황화수소</span>(ppm)<br><span id="extra_out_h2s" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom border-right">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/pm10.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">미세먼지</span><br><span id="extra_out_dust" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/pm2.5.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">초미세먼지</span><br><span id="extra_out_udust" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-right border-bottom">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/wind-direction.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍향</span><br><span id="extra_out_direction" style="font-size:25px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-bottom">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/wind.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">풍속</span>(m/s)<br><span id="extra_out_wind" style="font-size:28px">-</span></div>
-				</div>
-				<div class="col-xs-6 p-2 border-right">
-					<div class="col-xs-4 no-padding text-center"><img src="../images/solar.png"><br><span></span></div>
-					<div class="col-xs-8 no-padding text-right"><span style="font-size:15px">일사량</span>(W/㎡)<br><span id="extra_out_solar" style="font-size:28px">-</span></div>
+			<div class="widget-body no-padding dong_weight_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div class="col-xs-12 no-padding">
+					<div id="dong_weight_chart" style="height: 260px;"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<!--IP 카메라-->
-<div class="row" id="row_camera_view" >
+<!--차트-->
+<div class="row">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white"><i class="fa fa-camera"></i>&nbsp;IP 카메라</h2>	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 급이량 비교</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+					</div>
 				</div>
 			</header>
-			<div class="widget-body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:1rem" id="camera_zone">
+			<div class="widget-body no-padding dong_feed_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div class="col-xs-12 no-padding">
+					<div id="dong_feed_chart" style="height: 260px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
+<!--차트-->
+<div class="row">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
+				<div class="widget-header">	
+					<h2 class="font-weight-bold text-white"><i class="fa fa-bar-chart-o"></i>&nbsp;동별 급수량 비교</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+					</div>
+				</div>
+			</header>
+			<div class="widget-body no-padding dong_water_chart" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+				<div class="col-xs-12 no-padding">
+					<div id="dong_water_chart" style="height: 260px;"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -316,15 +305,20 @@ include_once("../inc/bottom.php")
 
 	$(document).ready(function(){
 
+		$(".btn_display_toggle").off("click").on("click", function(){
+			//$(this).children("i").toggleClass("fa-plus").toggleClass("fa-minus");
+			$(this).parents(".jarviswidget").children(".widget-body").toggle(function(e){
+				if($(this).parents(".jarviswidget").children(".widget-body").css("display") === "none" ){
+					$(this).prev("header").css("background", "#A6ACAF");
+				} else {
+					$(this).prev("header").css("background", "#0c6ad0");
+				}
+			});
+		});
+
 		list_combo = <?=$list_combo?>;
 		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
-		get_dong_data(comein_code);
-
-		$(".btn_display_toggle").off("click").on("click", function(){
-
-			$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
-			$(this).parents(".jarviswidget").children(".widget-body").toggle();
-		});
+		get_dong_data();
 
 	});
 
@@ -348,15 +342,15 @@ include_once("../inc/bottom.php")
 	$("#search_form [name=search_list]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
 		comein_code = $("#search_form [name=search_list] option:selected").attr("comein_code");
 
-		get_dong_data(comein_code);
+		get_dong_data();
 	});
 
-	function get_dong_data(comein_code){
-
+	function get_dong_data(){
+		
 		let data_arr = {};
 		data_arr["oper"] = "get_buffer";
-		data_arr["cmCode"] = comein_code;	//등록코드
-
+		data_arr["cmCode"] = comein_code;		//등록코드
+		
 		$.ajax({
 			url:'0102_action.php',
 			data:data_arr,
@@ -365,88 +359,168 @@ include_once("../inc/bottom.php")
 			dataType:'json',
 			success: function(data){
 
-				// $("#row_feed_water").hide();
-				// $("#row_outsensor").hide();
-				let status = data.summary.summary_status;
-				let time   = data.summary.summary_time;
-				let avg	   = data.summary.summary_curr_avg_weight;
+				//각 요약정보[summary]
+				$.each(data.summary, function(key, val){	$("#" + key).html(val); });
 
-				if(status != "O"){
+				$("#summary_farm_name").html(data.summary.farm_name);
+				$("#summary_dong_count").html(data.summary.dong_count);
 
-					$("#row_summary").show();
-					$("#row_avg_esti").show();
-					$("#row_cell_avg").show();
-					$("#row_status_info").hide();
+				let per = data.summary.summary_feed_percent;
+				per = parseInt(per);
+				if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
+				if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
+				if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
+				if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
+				if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
 
-					//일령
-					let interm = data.summary.summary_interm;
+				let dong_weight_chart = [];
+				let dong_feed_chart = [];
+				let dong_water_chart = [];
 
-					//일령기간별 이미지
-					// if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");  $(".henInterm").addClass("p-4");}
-					// if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");  $(".henInterm").addClass("p-2");}
-					// if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png"); $(".henInterm").addClass("p-2"); }
-					if(interm <= 10){ $(".henImage").attr("src","../images/hen-scale1.png");}
-					if(interm >= 11 && interm <= 20){ $(".henImage").attr("src","../images/hen-scale2.png");}
-					if(interm >= 21){ $(".henImage").attr("src","../images/hen-scale3.png");}
+				let len = data.weight_chart.length;
+				for(let i=0; i<len; i++){
+					dong_weight_chart[i] = data.weight_chart[len - i - 1];
+					dong_feed_chart[i] = data.feed_chart[len - i - 1];
+					dong_water_chart[i] = data.water_chart[len - i - 1];
 
-					//각 요약정보[summary]
-					$.each(data.summary, function(key, val){	$("#" + key).html(val); });
+					let feed = data.feed_chart[i]["급이량"];
+					let water = data.water_chart[i]["급수량"];
+				}
 
-					//어제평균중량 산출 시간 표현
-					let prev_date = data.summary.summary_day_inc1;
-					prev_date = prev_date.length > 15 ? "기준 " + prev_date.substr(11, 2) + "시 " + prev_date.substr(14, 2) + "분" : "-";
-					$("#summary_day_inc1").html(prev_date);
-
-					// 급이, 급수, 외기 창 표시할지 선택
-					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
-					if(data.extra.hasOwnProperty("extra_curr_feed")){
-						
-						let per = data.extra.extra_feed_percent;
-						per = parseInt(per);
-						if(per <= 10){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-00.png"); }
-						if(per > 10 && per <= 35){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-01.png"); }
-						if(per > 35 && per <= 65){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-02.png"); }
-						if(per > 65 && per <= 90){ 	document.getElementById("feed_img").setAttribute("src", "../images/feed-03.png"); }
-						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
-
-						//$("#row_feed_water").show();
-						$("#row_feed_water").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
-						$("#row_feed_water").find(".widget-body").show();
-					}
-					if(data.extra.hasOwnProperty("extra_out_temp")){
-						//$("#row_outsensor").show();
-
-						$("#row_outsensor").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
-						$("#row_outsensor").find(".widget-body").show();
-					}
-
+				// 급이 급수 없으면 안보이게
+				if(data.set_feeder_id == ""){
+					// 급이량 및 급수량
+					$(".feed_data_body").css("display", "none").prev("header").css("background", "#A6ACAF");
+					
+					// 동별 급이량 비교, 급수량 비교
+					$(".dong_feed_chart").css("display", "none").prev("header").css("background", "#A6ACAF");
+					$(".dong_water_chart").css("display", "none").prev("header").css("background", "#A6ACAF");
 				}
 				else{
-					$("#row_summary").hide();
-					$("#row_avg_esti").hide();
-					$("#row_cell_avg").hide();
-					$("#row_feed_water").hide();
-					$("#row_outsensor").hide();
-					$("#row_status_info").show();
-							
-					$("#top_status_info").removeClass('d-none');
-					$("#top_status_msg").html("<h3 class='font-weight-bold text-center text-secondary no-margin'>현재 <span class='text-danger'>'출하 상태'</span>입니다</h3>").show();
-					$("#top_time_info").html("<i class='fa fa-clock-o text-secondary'></i> 최종 출하 시간 : ");
-					$("#top_last_time").html(time);
-					$("#top_avg_info").html("<i class='fa fa-database text-secondary'></i> 최종 평균 중량 : ");
-					$("#top_last_avg").html(avg + "g");
-
+					// 급이량 및 급수량
+					$(".feed_data_body").css("display", "block").prev("header").css("background", "#0c6ad0");
 					
+					// 동별 급이량 비교, 급수량 비교
+					$(".dong_feed_chart").css("display", "block").prev("header").css("background", "#0c6ad0");
+					$(".dong_water_chart").css("display", "block").prev("header").css("background", "#0c6ad0");
 				}
-				
-				//카메라
-				$("#camera_zone").html(data.camera_zone);
+
+				simple_chart("dong_weight_chart", dong_weight_chart, "#6E6E6E");
+				simple_chart("dong_feed_chart", dong_feed_chart, "#FF9900");
+				simple_chart("dong_water_chart", dong_water_chart, "#2FB5F0");
 
 			},
 			error: function(request,status,error){
 				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
 			}
 		});
+
+		get_dong_list();
+		get_feed_per_count();
+	};
+
+	function get_dong_list(){
+		let data_arr = {};
+		data_arr["oper"] = "get_feed_per_count";
+		data_arr["code"] = comein_code;		//등록코드
+		
+		$.ajax({
+			url:'0102_dong.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+				$("#dong_list").html(data);
+
+				// 동별 이동과 사육일지 이동 클릭이벤트 분리
+				$(".move_dong").children().find(".move_breed").off("click").on("click", function(){
+					return false;
+				});
+			},
+			error: function(request,status,error){
+				alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+			}
+		});
 	}
+
+	function get_feed_per_count(){
+		
+		let data_arr = {};
+		data_arr["oper"] = "get_feed_per_count";
+		data_arr["cmCode"] = comein_code;		//등록코드
+		
+		$.ajax({
+			url:'0102_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+				$("#total_per_feed").html(data.total_per_feed + "g");
+				$("#total_per_water").html(data.total_per_water + "L");
+			},
+			error: function(request,status,error){
+				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+			}
+		});
+	};
+
+	function simple_chart(chart_id, chart_data, graph_color){
+		if(chart_data.length <= 0){ return false; }
+
+		let graph_json = [];
+		let category = "";
+		let graph_cnt = -1;
+
+		let font_size = 12;
+
+		for(key in chart_data[0]){
+			graph_cnt++;
+			if(graph_cnt == 0) { 
+				category = key; 
+			}
+			else{
+				let graph_obj = {};
+				graph_obj["title"] = key;
+				graph_obj["valueField"] = key;
+				graph_obj["balloonText"] = "<font style='font-size:" + font_size + "px'><b>[[title]]</b><br>[[[value]]]</font>";	/*마우스 Over Label*/
+
+				// if(is_label === "Y"){
+				// 	graph_obj["labelText"]="[[value]]";					/*Bar 상단에 value 출력*/
+				// 	graph_obj["bullet"] = "round";						/*꼭지점*/
+				// 	graph_obj["bulletSize"] = 4;						/*차트 꼭지점 Size*/
+				// 	graph_obj["useLineColorForBulletBorder"] = "true";	/*꼭지점*/
+				// }
+
+				graph_obj["lineColor"] = graph_color;
+				graph_obj["type"] = "column";					/*차트모양*/
+				graph_obj["lineAlpha"] = 1;
+				graph_obj["fillAlphas"] = 1;
+				graph_obj["lineThickness"] = 0.3;					/*라인굵기*/ // 2022-03-11 라인굵기 수정
+				graph_obj["bulletBorderThickness"] = 3;
+				graph_obj["labelText"]="[[value]]";					/*Bar 상단에 value 출력*/
+
+				graph_json.push(graph_obj);
+			}
+		}
+
+		//차트옵션 정하기
+		let chart_option = {"type": "serial", "theme": "light", "language":"ko", "marginRight":20, "fontSize":font_size,
+							"dataProvider": chart_data, "categoryField":category, "graphs": graph_json,
+							"legend":{"bulletType":"round", "valueWidths":"false", "useGraphSettings":true, "color":"black", "align":"center"}
+		};
+
+		//차트 그리기
+		let chart = AmCharts.makeChart(chart_id, chart_option);
+	};
+
+	function move_dong(code){
+		location.href = "0103.php<?=$add_url?>&code=" + code;
+	};
+
+	function move_breed(code){
+		location.href = "0107.php<?=$add_url?>&code=" + code;
+	};
 
 </script>
