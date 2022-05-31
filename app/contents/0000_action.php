@@ -177,7 +177,8 @@
 		case "get_feed_per_count":
 			$select_sql = "SELECT fe.*, cd.* FROM (
 							SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
-							SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, cm.cmCode, cm.cmInsu 
+								SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, 
+								cm.cmCode, cm.cmInsu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
 							FROM buffer_sensor_status AS be 
 							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 							LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND sh.shDate 
@@ -187,6 +188,14 @@
 							LEFT JOIN comein_detail AS cd ON cd.cdCode = fe.cmCode AND cd.cdDate = shDate";
 
 			$feed_data = get_select_data($select_sql);
+
+			$select_sql = "SELECT * FROM fcr_info WHERE fiType = \"cobb500\"";
+			$f_data = get_select_data($select_sql);
+			$fcr_table = array();
+
+			foreach($f_data as $row){
+				$fcr_table[$row["fiDay"]] = $row["fiFcr"];
+			}
 
 			$dong_per_feed = array();
 			$dong_per_water = array();
@@ -216,8 +225,13 @@
 					$dong_out[$key] = 0;
 				}
 
+				// 입추 전 사료 투입량
+				if($date == $row["cmIndate"]){
+					$feed += $row["cmAlreadyFeed"] * 1000;
+				}
+
 				$feed = $row["feed"] * 1000;  // g으로 단위 환산
-				$water = $row["feed"];  // 
+				$water = $row["water"];  // 
 
 				$live = $dong_in[$key] - $dong_out[$key];
 
@@ -236,7 +250,12 @@
 			$total_per_water = 0;
 			$total_in = 0;
 			$total_out = 0;
-			foreach($daily_feed_data as $date_data){
+
+			$interm = 0;
+
+			foreach($daily_feed_data as $date => $date_data){
+
+				$interm++;
 
 				if($total_in == 0){
 					foreach($date_data as $row){
@@ -249,6 +268,11 @@
 				$out = 0;
 
 				foreach($date_data as $row){
+
+					if($date == $row["cmIndate"]){
+						$feed += $row["cmAlreadyFeed"] * 1000;
+					}
+
 					$feed += $row["feed"] * 1000;
 					$water += $row["water"];
 					$out += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
@@ -266,6 +290,11 @@
 				$total_out += $out;
 
 			}
+
+			$interm = $interm <= 60 ? $interm : 60;
+
+			$response["total_fcr_weight"] = sprintf('%0.1f', $total_per_feed / $fcr_table[$interm]);
+			$response["total_fcr"] = sprintf('%0.3f', $fcr_table[$interm]);
 
 			$response["total_per_feed"] = sprintf('%0.1f', $total_per_feed);	
 			$response["total_per_water"] = sprintf('%0.3f', $total_per_water);	

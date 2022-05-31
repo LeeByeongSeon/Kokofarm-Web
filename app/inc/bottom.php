@@ -86,10 +86,33 @@
 								&nbsp;&nbsp;
 								<h5 class="font-weight-bold text-danger" id="modal_breed_type" style="margin:0.5rem">산란계 종계 </h5>
 							</div>
+
 							<hr>
+
 							<div class="input-group mb-3">
-								<span class="input-group-text font-weight-bold" style="width: 74.5px">입추</span>
-								<input type="number" pattern="\d*" class="form-control" name="breed_comein_count" placeholder="입추 수" min="" max="">
+								<!-- <span class="input-group-text font-weight-bold" style="width: 74.5px">입추</span>
+								<input type="number" pattern="\d*" class="form-control" name="breed_comein_count" placeholder="입추 수" min="" max=""> -->
+								<div class="col-xs-12 d-flex no-padding">
+									<span class="input-group-text font-weight-bold" style="width: 200px">입추 전 사료 투입량 (Kg)</span>
+									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_already_feed" placeholder="입추 전 사료 투입량" min="" max="">
+								</div>
+
+							</div>
+
+							<hr>
+
+							<div class="input-group mb-3">
+								<!-- <span class="input-group-text font-weight-bold" style="width: 74.5px">입추</span>
+								<input type="number" pattern="\d*" class="form-control" name="breed_comein_count" placeholder="입추 수" min="" max=""> -->
+								<div class="col-xs-6 d-flex no-padding">
+									<span class="input-group-text font-weight-bold" style="width: 140px">입추</span>
+									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_comein_count" placeholder="입추 수" min="" max="">
+								</div>
+								<div class="col-xs-6 d-flex no-padding">
+									<span class="input-group-text font-weight-bold" style="width: 140px">덤 수</span>
+									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_extra_input" placeholder="덤 수" min="" max="">
+								</div>
+
 							</div>
 							<div class="input-group mb-3">
 								<div class="col-xs-6 d-flex no-padding">
