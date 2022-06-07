@@ -1477,17 +1477,20 @@ caption {
   left: 0px; }
 
 .ui-spinner-up, .ui-spinner-down {
-  background: #739e73;
+  /* background: #a90329; */
+  background: #197de9;
   border-radius: 0px; }
 
 .ui-spinner-up:hover, .ui-spinner-up:active, .ui-spinner-up:focus {
-  background: #5b835b; }
+  /* background: #bd1e43; */
+  background: #0c6ad0;
+ }
 
 .ui-spinner-down:hover, .ui-spinner-down:active, .ui-spinner-down:focus {
-  background: #77021d; }
+  background: #827c80; }
 
 .ui-spinner-down {
-  background: #c2032f; }
+  background: #afacaf; }
 
 .ui-spinner-up:before, .ui-spinner-down:before {
   display: inline-block;
@@ -1497,13 +1500,16 @@ caption {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  content: "\f067";
+  /* content: "\f067"; */
+  content: "\f062";
   color: #fff;
   font-size: 1.07692rem;
   margin-top: 2px; }
 
 .ui-spinner-down:before {
-  content: "\f068"; }
+  /* content: "\f068"; */
+  content: "\f063";
+ }
 
 .ui-spinner-up > :first-child, .ui-spinner-down > :first-child {
   display: none; }

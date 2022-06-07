@@ -62,7 +62,7 @@ foreach($init_data as $val){
 					</h2>
 				</div>
 			</header>
-			<div class="widget-body p-1" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
+			<div class="widget-body p-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0;">
 				<div class="col-xs-12 d-flex align-items-center pt-3 mb-1">
 					<div class="col-xs-3 float-left text-center p-1">
 						<span class="font-md text-secondary">최소<br><span class="font-md font-weight-bold" id="summary_min_weight"></span></span>
@@ -82,8 +82,13 @@ foreach($init_data as $val){
 
 				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
 
-				<div class="col-xs-12 text-center mb-3">
-					<span class="font-md">총 입추 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
+				<div class="col-xs-12 d-flex justify-content-center mb-3">
+					<div class="col-xs-7 text-center">
+						<span class="font-md">총 입추 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
+					</div>
+					<div class="col-xs-5 text-center">
+						<span class="font-md">덤 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
+					</div>
 				</div>
 				<div class="col-xs-12 text-center d-flex align-items-center mb-3">
 					<div class="col-xs-4 no-padding">
@@ -124,18 +129,51 @@ foreach($init_data as $val){
 				</div>
 			</header>
 			<div class="widget-body p-3 feed_data_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
-
-				<div class="col-xs-12 d-flex align-items-center justify-content-between no-padding">
-					<div class="col-xs-6 no-padding text-center">
-						<span class="font-md text-secondary">FCR 기반 평균중량 <br><span class="font-md text-danger font-weight-bold" id="total_fcr_weight">0</span></span>
-					</div>
+				<div class="col-xs-12 d-flex align-items-center justify-content-center no-padding">
 					<div class="col-xs-6 no-padding text-center">
 						<span class="font-md text-secondary">표준 FCR <br><span class="font-md text-primary font-weight-bold" id="total_fcr"></span></span>
+					</div>
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">FCR 기반 평균중량 <br><span class="font-md text-danger font-weight-bold" id="total_fcr_weight">0</span></span>
 					</div>
 				</div>
 
 				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
-				
+
+				<div class="row justify-content-center no-padding">
+					<div class="col-xs-12 form-group">
+						<input id="range-slider-2" type="text" name="range_2a" value="">
+					</div>
+					<div class="col-xs-12 d-flex align-items-center justify-content-between mb-3">
+						<div class="col-xs-6 text-center"><span class="font-md text-secondary font-weight-bold">FCR</span></div>
+						<div class="col-xs-6 text-center"><span class="font-md text-secondary font-weight-bold">예측중량</span></div>
+					</div>
+					<div class="col-xs-10 d-flex align-items-center justify-content-center pt-2 pb-2 pr-0 pl-0 m-2" style="border: 5px outset lightgray; border-radius: 10px;">
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">1.967</span></div>
+						<div class="col-xs-4"><hr style="border-style: dotted; border-color: #585858;"></div>
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">728.4g</span></div>
+					</div>
+					<div class="col-xs-10 d-flex align-items-center justify-content-center pt-2 pb-2 pr-0 pl-0 m-2" style="border: 5px outset lightgray; border-radius: 10px;">
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">1.967</span></div>
+						<div class="col-xs-4"><hr style="border-style: dotted; border-color: #585858;"></div>
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">728.4g</span></div>
+					</div>
+					<div class="col-xs-12 d-flex align-items-center justify-content-center pt-2 pb-2 pr-0 pl-0 m-2" style="border: 5px outset #A90329; border-radius: 10px;">
+						<div class="col-xs-3 text-center"><span class="font-lg font-weight-bold">1.967</span></div>
+						<div class="col-xs-4"><hr style="border-style: dotted; border-color: #585858;"></div>
+						<div class="col-xs-3 text-center"><span class="font-lg font-weight-bold">728.4g</span></div>
+					</div>
+					<div class="col-xs-10 d-flex align-items-center justify-content-center pt-2 pb-2 pr-0 pl-0 m-2" style="border: 5px outset lightgray; border-radius: 10px;">
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">1.967</span></div>
+						<div class="col-xs-4"><hr style="border-style: dotted; border-color: #585858;"></div>
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">728.4g</span></div>
+					</div>
+					<div class="col-xs-10 d-flex align-items-center justify-content-center pt-2 pb-2 pr-0 pl-0 m-2" style="border: 5px outset lightgray; border-radius: 10px;">
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">1.967</span></div>
+						<div class="col-xs-4"><hr style="border-style: dotted; border-color: #585858;"></div>
+						<div class="col-xs-2 text-center"><span class="font-md text-secondary">728.4g</span></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -318,6 +356,49 @@ include_once("../inc/bottom.php")
 		// 동별 이동과 사육일지 이동 클릭이벤트 분리
 		$(".move_dong").children().find(".move_breed").click(function(e){
 			return false;
+		});
+		
+		// Spinner
+		$("#spinner-currency").spinner({
+			min: 0.7,
+			max: 2,
+			step: 0.001,
+			start: 0.7,
+			numberFormat: "n"	/** 숫자 형식 "n" - 십진수, "C" - 통화값 */
+		});
+			
+		// Slider https://github.com/IonDen/ion.rangeSlider
+		$("#range-slider-3").ionRangeSlider({
+			min: 0.7,				/** 최소값 */
+			max: 2, 			/** 최대값 */
+			from: 1.10, 		/** 로딩 후 세팅 값 */
+			// from_min: 0.7, 
+			// from_max: 1.5,
+			from_shadow: "true",
+			type: "single",		/** 슬라이더 유형 single or double */
+			step: 0.001,		/** 슬라이더 단계 */
+			prefix: "", 		/** 접두사 표기 */
+			postfix: "", 		/** 접미사 표기 */
+			prettify: false,	/** 슬라이더 꾸미기 */
+			grid: true,			/** 슬라이더 위의 값 그리드 */
+			inputValuesSeparator: ";"
+		});
+		
+		// 예시 슬라이더
+		$("#range-slider-2").ionRangeSlider({
+			min: 0.7,				/** 최소값 */
+			max: 2, 			/** 최대값 */
+			from: 1.10, 		/** 로딩 후 세팅 값 */
+			// from_min: 0.7, 
+			// from_max: 1.5,
+			from_shadow: "true",
+			type: "single",		/** 슬라이더 유형 single or double */
+			step: 0.001,		/** 슬라이더 단계 */
+			prefix: "FCR ", 	/** 접두사 표기 */
+			postfix: "", 		/** 접미사 표기 */
+			prettify: false,	/** 슬라이더 꾸미기 */
+			grid: true,			/** 슬라이더 위의 값 그리드 */
+			inputValuesSeparator: ";"
 		});
 	});
 

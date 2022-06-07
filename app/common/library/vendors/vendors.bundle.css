@@ -825,7 +825,8 @@ button.ui-button::-moz-focus-inner {
 	border-right-style: none;
 }
 .ui-spinner-up {
-	top: 0;
+	/* top: 0; */
+	bottom: 0;
 }
 .ui-spinner-down {
 	bottom: 0;
@@ -19219,7 +19220,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .irs-from, .irs-to, .irs-single {
     color: #fff;
-    font-size: 10px; line-height: 1.333;
+    /* font-size: 10px; */
+	line-height: 1.333;
     text-shadow: none;
     padding: 1px 5px;
     background: #ed5565;
