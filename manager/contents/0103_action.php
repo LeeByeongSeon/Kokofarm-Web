@@ -224,7 +224,12 @@
 			foreach($feed_data as $row){
 
 				$feed = $row["feed"] * 1000;  // g으로 단위 환산
-				$water = $row["water"];  // 
+				$water = $row["water"]; 
+
+				// 입추 전 사료 투입량
+				if($row["shDate"] == $row["cmIndate"]){
+					$feed += $row["cmAlreadyFeed"] * 1000;
+				}
 
 				$live = $dong_in - $dong_out;
 

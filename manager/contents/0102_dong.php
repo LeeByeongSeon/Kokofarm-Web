@@ -6,7 +6,7 @@ $farm = explode("_", $code)[1];
 $farm = substr($farm, 0, 6);
 
 $select_query = "SELECT be.*, IFNULL(DATEDIFF(IF(cm.cmOutdate is null, current_date(), cm.cmOutdate), cm.cmIndate) + 1, 0) AS interm, 
-                cm.cmInsu, cm.cmDeathCount, cm.cmCullCount, cm.cmThinoutCount, sf.sfFeed, sf.sfFeedMax
+                cm.cmInsu, cm.cmDeathCount, cm.cmCullCount, cm.cmThinoutCount, sf.sfDongid, sf.sfFeed, sf.sfFeedMax
                 FROM buffer_sensor_status AS be
                 LEFT JOIN set_feeder AS sf ON sf.sfFarmid = be.beFarmid AND sf.sfDongid = be.beDongid
                 LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode
@@ -17,20 +17,22 @@ $init_data = get_select_data($select_query);
 $dong_list_html="";
 
 foreach($init_data as $val){
+
+	$inout = $val["beStatus"] == "O" ? "출하" : "입추";
+
 	$dong_list_html .= "<div class='row'>";
 	$dong_list_html .= "	<div class='col-xs-12'>";
 	$dong_list_html .= "		<div class='jarviswidget jarviswidget-color-white no-padding mb-3' data-widget-editbutton='false' data-widget-colorbutton='false' data-widget-deletebutton='false' data-widget-fullscreenbutton='false' data-widget-togglebutton='false'>";
-	$dong_list_html .= "			<div class='widget-body no-padding form-inline move_dong' style='border-radius: 10px; border : 4px solid #eee; border-top: 0;' onClick='move_dong(\"".$val["beComeinCode"]."\")'>";
+	$dong_list_html .= "			<div class='widget-body no-padding form-inline move_dong' style='border-radius: 10px; border : 4px solid #eee; border-top: 0;' onClick='move_dong(\"".$val["beComeinCode"]."\", \"". $inout ."\" )'>";
 	$dong_list_html .= "				<div class='col-xs-2 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:20px'>".$val["beDongid"]."동</span></p><span id=''>".$val["interm"]."일령</span></div>";
 	$dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px' >평균중량</span></p><span class='font-lg text-danger font-weight-bold'>".sprintf('%0.1f', $val["beAvgWeight"])."g</span></div>";
 	//$dong_list_html .= "				<div class='col-xs-1 text-center no-padding'><i class='fa fa-circle text-success'></i></div>";
 
-	if($val["cmOutdate"] != ""){
+	if($val["beStatus"] == "O"){
 		$dong_list_html .= "			<div class='col-xs-3 text-center no-padding'>
 											<span class='font-lg text-danger font-weight-bold'>출하상태</span>
 										</div>";
 	}
-	// 사료빈 데이터가 있으면
 	else if($val["sfDongid"] == ""){
 		$dong_list_html .= "			<div class='col-xs-3 text-center no-padding'>
 											<p><span class='fong-md font-weight-bold' style='font-size:12px' >평균온도</span></p>
@@ -56,7 +58,7 @@ foreach($init_data as $val){
 	$live_count = $val["cmInsu"] - $val["cmDeathCount"] - $val["cmCullCount"] - $val["cmThinoutCount"];
 
 	$dong_list_html .= "				<div class='col-xs-3 text-center no-padding'><p><span class='fong-md font-weight-bold' style='font-size:12px'>생존수 : ".$live_count."</span></p>";
-	$dong_list_html .= 					"<button class='btn btn-default move_breed' onClick='move_breed(\"".$val["beComeinCode"]."\")' style='border-color:white'><i class='fa fa-pencil-square-o font-lg text-secondary'></i></button></div>"; 
+	$dong_list_html .= 					"<button class='btn btn-default move_breed' onClick='move_breed(\"".$val["beComeinCode"]."\", \"". $inout ."\" )' style='border-color:white'><i class='fa fa-pencil-square-o font-lg text-secondary'></i></button></div>"; 
 	$dong_list_html .= "</div></div></div></div>";
 }
 

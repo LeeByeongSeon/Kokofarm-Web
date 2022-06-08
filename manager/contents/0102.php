@@ -515,12 +515,12 @@ include_once("../inc/bottom.php")
 		let chart = AmCharts.makeChart(chart_id, chart_option);
 	};
 
-	function move_dong(code){
-		location.href = "0103.php<?=$add_url?>&code=" + code;
+	function move_dong(code, inout){
+		location.href = "0103.php<?=$add_url?>&code=" + code + "&inout=" + inout;
 	};
 
-	function move_breed(code){
-		location.href = "0107.php<?=$add_url?>&code=" + code;
+	function move_breed(code, inout){
+		location.href = "0107.php<?=$add_url?>&code=" + code + "&inout=" + inout;
 	};
 
 </script>

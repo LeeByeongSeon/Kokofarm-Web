@@ -216,8 +216,13 @@
 					$dong_out[$key] = 0;
 				}
 
+				// 입추 전 사료 투입량
+				if($date == $row["cmIndate"]){
+					$feed += $row["cmAlreadyFeed"] * 1000;
+				}
+
 				$feed = $row["feed"] * 1000;  // g으로 단위 환산
-				$water = $row["feed"];  // 
+				$water = $row["water"];   
 
 				$live = $dong_in[$key] - $dong_out[$key];
 
@@ -249,6 +254,11 @@
 				$out = 0;
 
 				foreach($date_data as $row){
+
+					if($date == $row["cmIndate"]){
+						$feed += $row["cmAlreadyFeed"] * 1000;
+					}
+
 					$feed += $row["feed"] * 1000;
 					$water += $row["water"];
 					$out += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];

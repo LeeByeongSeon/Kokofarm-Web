@@ -237,6 +237,26 @@ include_once("../inc/bottom.php")
 
 		list_combo = <?=$list_combo?>;
 
+		// 입출하 콤보박스 설정
+		let cookie_inout = get_cookie("inout");
+		if(cookie_inout != null){
+			$("#search_form [name=search_inout]").val(cookie_inout);
+
+			switch(cookie_inout){
+				default:
+					$("#search_form [name=search_list]").html(list_combo["all"]);
+					break;
+				case "입추":
+					$("#search_form [name=search_list]").html(list_combo["in"]);
+					break;
+				case "출하":
+					$("#search_form [name=search_list]").html(list_combo["out"]);
+					break;
+
+			}
+		}
+
+		// 선택된 동 콤보박스 설정
 		let cookie_code = get_cookie("code");
 		if(cookie_code != null){
 			comein_code = cookie_code;
@@ -253,6 +273,8 @@ include_once("../inc/bottom.php")
 
 	$("#search_form [name=search_inout]").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
 		let inout = $("#search_form [name=search_inout] option:selected").val();
+
+		set_cookie("inout", inout, 1);
 
 		switch(inout){
 			default:
