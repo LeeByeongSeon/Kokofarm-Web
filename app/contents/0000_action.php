@@ -88,7 +88,8 @@
 				$prev_water += $row["sfPrevWater"];
 				$all_water += $row["sfAllWater"];
 
-				$comein_count += $row["cmInsu"];
+				$comein_count += $row["cmInsu"] + $row["cmExtraSu"];
+				$extra_count += $row["cmExtraSu"];
 				$death_count += $row["cmDeathCount"];
 				$cull_count += $row["cmCullCount"];
 				$thinout_count += $row["cmThinoutCount"];
@@ -154,6 +155,7 @@
 			$summary["summary_water_per_hour"] = $water_per_hour;
 
 			$summary["summary_comein_count"] = $comein_count;
+			$summary["summary_extra_count"] = $extra_count;
 			$summary["summary_live_count"] = $comein_count - $death_count - $cull_count - $thinout_count;
 			$summary["summary_live_percent"] = sprintf('%0.1f', ($summary["summary_live_count"] / $comein_count) * 100);	
 			$summary["summary_death_count"] = $death_count;

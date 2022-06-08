@@ -87,7 +87,7 @@ foreach($init_data as $val){
 						<span class="font-md">총 입추 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
 					</div>
 					<div class="col-xs-5 text-center">
-						<span class="font-md">덤 수 : &nbsp;<span class="font-weight-bold" id="summary_comein_count">0</span></span>
+						<span class="font-md">덤 수 : &nbsp;<span class="font-weight-bold" id="summary_extra_count">0</span></span>
 					</div>
 				</div>
 				<div class="col-xs-12 text-center d-flex align-items-center mb-3">
@@ -118,7 +118,7 @@ foreach($init_data as $val){
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header">	
-					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;FCR (사료요구율)
+					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;사료요구율(FCR)
 						<!-- <span class="font-sm badge bg-orange">마리당 급이량 : <span id="total_per_feed"> 0 </span>g</span> -->
 					</h2>	
 				</div>
@@ -142,13 +142,19 @@ foreach($init_data as $val){
 
 				<div class="row justify-content-center no-padding">
 					<div class="col-xs-12 form-group">
-						<input id="range-slider-2" type="text" name="range_2a" value="">
+						<input id="fcr_slider" type="text" name="fcr_val" value="">
 					</div>
 					<div class="col-xs-12 d-flex align-items-center justify-content-between mb-3">
-						<div class="col-xs-6 text-center"><span class="font-md text-secondary font-weight-bold">FCR</span></div>
-						<div class="col-xs-6 text-center"><span class="font-md text-secondary font-weight-bold">예측중량</span></div>
+						<div class="col-xs-6 text-center">
+							<span class="font-md text-secondary font-weight-bold">FCR
+							<br><span class="font-md font-weight-bold" id="select_fcr">1.111</span></span>
+						</div>
+						<div class="col-xs-6 text-center">
+							<span class="font-md text-secondary font-weight-bold">예측중량
+							<br><span class="font-md font-weight-bold" id="select_weight">1500</span></span>
+						</div>
 					</div>
-					<div class="col-xs-10 d-flex align-items-center justify-content-center pt-2 pb-2 pr-0 pl-0 m-2" style="border: 5px outset lightgray; border-radius: 10px;">
+					<!-- <div class="col-xs-10 d-flex align-items-center justify-content-center pt-2 pb-2 pr-0 pl-0 m-2" style="border: 5px outset lightgray; border-radius: 10px;">
 						<div class="col-xs-2 text-center"><span class="font-md text-secondary">1.967</span></div>
 						<div class="col-xs-4"><hr style="border-style: dotted; border-color: #585858;"></div>
 						<div class="col-xs-2 text-center"><span class="font-md text-secondary">728.4g</span></div>
@@ -172,7 +178,7 @@ foreach($init_data as $val){
 						<div class="col-xs-2 text-center"><span class="font-md text-secondary">1.967</span></div>
 						<div class="col-xs-4"><hr style="border-style: dotted; border-color: #585858;"></div>
 						<div class="col-xs-2 text-center"><span class="font-md text-secondary">728.4g</span></div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -359,33 +365,33 @@ include_once("../inc/bottom.php")
 		});
 		
 		// Spinner
-		$("#spinner-currency").spinner({
-			min: 0.7,
-			max: 2,
-			step: 0.001,
-			start: 0.7,
-			numberFormat: "n"	/** 숫자 형식 "n" - 십진수, "C" - 통화값 */
-		});
+		// $("#spinner-currency").spinner({
+		// 	min: 0.7,
+		// 	max: 2,
+		// 	step: 0.001,
+		// 	start: 0.7,
+		// 	numberFormat: "n"	/** 숫자 형식 "n" - 십진수, "C" - 통화값 */
+		// });
 			
-		// Slider https://github.com/IonDen/ion.rangeSlider
-		$("#range-slider-3").ionRangeSlider({
-			min: 0.7,				/** 최소값 */
-			max: 2, 			/** 최대값 */
-			from: 1.10, 		/** 로딩 후 세팅 값 */
-			// from_min: 0.7, 
-			// from_max: 1.5,
-			from_shadow: "true",
-			type: "single",		/** 슬라이더 유형 single or double */
-			step: 0.001,		/** 슬라이더 단계 */
-			prefix: "", 		/** 접두사 표기 */
-			postfix: "", 		/** 접미사 표기 */
-			prettify: false,	/** 슬라이더 꾸미기 */
-			grid: true,			/** 슬라이더 위의 값 그리드 */
-			inputValuesSeparator: ";"
-		});
+		// // Slider https://github.com/IonDen/ion.rangeSlider
+		// $("#range-slider-3").ionRangeSlider({
+		// 	min: 0.7,				/** 최소값 */
+		// 	max: 2, 			/** 최대값 */
+		// 	from: 1.10, 		/** 로딩 후 세팅 값 */
+		// 	// from_min: 0.7, 
+		// 	// from_max: 1.5,
+		// 	from_shadow: "true",
+		// 	type: "single",		/** 슬라이더 유형 single or double */
+		// 	step: 0.001,		/** 슬라이더 단계 */
+		// 	prefix: "", 		/** 접두사 표기 */
+		// 	postfix: "", 		/** 접미사 표기 */
+		// 	prettify: false,	/** 슬라이더 꾸미기 */
+		// 	grid: true,			/** 슬라이더 위의 값 그리드 */
+		// 	inputValuesSeparator: ";"
+		// });
 		
 		// 예시 슬라이더
-		$("#range-slider-2").ionRangeSlider({
+		$("#fcr_slider").ionRangeSlider({
 			min: 0.7,				/** 최소값 */
 			max: 2, 			/** 최대값 */
 			from: 1.10, 		/** 로딩 후 세팅 값 */
@@ -400,7 +406,26 @@ include_once("../inc/bottom.php")
 			grid: true,			/** 슬라이더 위의 값 그리드 */
 			inputValuesSeparator: ";"
 		});
+
+		$("#fcr_slider").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+			let v = $(this).val();
+
+			set_select_fcr(v);
+		});
+
 	});
+
+	function set_select_fcr(v){
+		$("#select_fcr").html(v);
+
+		let feed = $("#total_per_feed").html();
+		feed = parseFloat(feed);
+		let weight = Math.floor(feed / v * 10) / 10;
+		$("#select_weight").html(weight);
+
+		//console.log("v : " + v + " / feed : " + feed + " / weight : " + weight);
+
+	};
 
 	function get_dong_data(){
 		
@@ -485,6 +510,11 @@ include_once("../inc/bottom.php")
 
 				$("#total_fcr_weight").html(data.total_fcr_weight + "g");
 				$("#total_fcr").html(data.total_fcr);
+
+				$("#fcr_slider").data("ionRangeSlider").update({
+					from: data.total_fcr,
+				});
+				set_select_fcr(data.total_fcr);
 			},
 			error: function(request,status,error){
 				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
