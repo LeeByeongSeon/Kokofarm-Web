@@ -250,8 +250,7 @@ include_once("../inc/bottom.php")
 	$(document).ready(function(){
 
 		$(".btn_display_toggle").off("click").on("click", function(){
-
-			$(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
+			// $(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
 			$(this).parents(".jarviswidget").children(".widget-body").toggle();
 		});
 	});
