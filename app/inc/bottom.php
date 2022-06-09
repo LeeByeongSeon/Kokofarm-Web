@@ -110,7 +110,7 @@
 								</div>
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 140px">덤 수</span>
-									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_extra_input" placeholder="덤 수" min="" max="">
+									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_extra_count" placeholder="덤 수" min="" max="">
 								</div>
 
 							</div>

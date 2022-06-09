@@ -46,7 +46,9 @@ switch($oper){
 		}
 
 		$day = 1;
-		$live = $breed_data[0]["cmInsu"];
+		$live = $breed_data[0]["cmInsu"] + $breed_data[0]["cmExtraSu"];
+		$extra = $breed_data[0]["cmExtraSu"];
+		$already = $breed_data[0]["cmAlreadyFeed"];
 
 		while(true){
 
@@ -61,7 +63,9 @@ switch($oper){
 					'f_live' 		=> $live,
 					'f_death' 		=> $row["cdDeath"],
 					'f_cull' 		=> $row["cdCull"],
-					'f_thinout' 	=> $row["cdThinout"]
+					'f_thinout' 	=> $row["cdThinout"],
+					'f_extra' 		=> $extra,
+					'f_already' 	=> $already
 				);
 			}
 			else{
@@ -71,7 +75,9 @@ switch($oper){
 					'f_live' 		=> $live,
 					'f_death' 		=> 0,
 					'f_cull' 		=> 0,
-					'f_thinout' 	=> 0
+					'f_thinout' 	=> 0,
+					'f_extra' 		=> $extra,
+					'f_already' 	=> $already
 				);
 			}
 
@@ -114,6 +120,8 @@ switch($oper){
 		$update_query .= ", cm.cmDeathCount = t.cdDeath";
 		$update_query .= ", cm.cmCullCount = t.cdCull";
 		$update_query .= ", cm.cmThinoutCount = t.cdThinout";
+		$update_query .= ", cm.cmExtraSu = " . check_str($_REQUEST["extra_count"]);
+		$update_query .= ", cm.cmAlreadyFeed = " . check_str($_REQUEST["already_feed"]);
 		$update_query .= " WHERE cm.cmCode = \"".$code."\"";
 		run_query($update_query);
 

@@ -38,6 +38,8 @@ if(isset($_REQUEST["request_dong"])){
 							<th data-field='f_death'	 data-cell-style="css_padding" data-align="center" >폐사 수</th>
 							<th data-field='f_cull'	 	 data-cell-style="css_padding" data-align="center" >도태 수</th>
 							<th data-field='f_thinout'	 data-cell-style="css_padding" data-align="center" >솎기 수</th>
+							<th data-field='f_extra'	 data-cell-style="css_padding" data-visible='false' ></th>
+							<th data-field='f_already'	 data-cell-style="css_padding" data-visible='false' ></th>
 						</tr>
 					</thead>
 				</table>
@@ -220,6 +222,9 @@ include_once("../inc/bottom.php")
 		$("#breed_form [name=breed_cull_input]").val(0);
 		$("#breed_form [name=breed_thinout_input]").val(0);
 
+		$("#breed_form [name=breed_extra_count]").val(row.f_extra);
+		$("#breed_form [name=breed_already_feed]").val(row.f_already);
+
 		popup_breed(title, function(confirm){
 
 			if(confirm){
@@ -232,6 +237,9 @@ include_once("../inc/bottom.php")
 				data_arr["cull_count"] = Number($("#breed_form [name=breed_cull_count]").val()) + Number($("#breed_form [name=breed_cull_input]").val());
 				data_arr["thinout_count"] = Number($("#breed_form [name=breed_thinout_count]").val()) + Number($("#breed_form [name=breed_thinout_input]").val());
 				data_arr["date"] = $("#breed_form [name=breed_input_date]").val();
+
+				data_arr["extra_count"] = Number($("#breed_form [name=breed_extra_count]").val());
+				data_arr["already_feed"] = Number($("#breed_form [name=breed_already_feed]").val());
 
 				$.ajax({
 					url:'0105_action.php',
