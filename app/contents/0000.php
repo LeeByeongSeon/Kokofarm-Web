@@ -124,7 +124,7 @@ foreach($init_data as $val){
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -197,7 +197,7 @@ foreach($init_data as $val){
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -302,7 +302,7 @@ foreach($init_data as $val){
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -325,7 +325,7 @@ foreach($init_data as $val){
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -349,7 +349,7 @@ include_once("../inc/bottom.php")
 		$("#top_navbar").hide();
 
 		$(".btn_display_toggle").off("click").on("click", function(){
-			$(this).children("i").toggleClass("fa-plus").toggleClass("fa-minus");
+			// $(this).children("i").toggleClass("fa-plus").toggleClass("fa-minus");
 			$(this).parents(".jarviswidget").children(".widget-body").toggle(function(e){
 				if($(this).parents(".jarviswidget").children(".widget-body").css("display") === "none" ){
 					$(this).prev("header").css("background", "#A6ACAF");
