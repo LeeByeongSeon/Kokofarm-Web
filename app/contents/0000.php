@@ -58,7 +58,8 @@ foreach($init_data as $val){
 			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
 				<div class="widget-header" style="max-width: 100%;">
 					<h2 class="font-weight-bold text-white avg"><i class="fa fa-home"></i>&nbsp;<span class="font-weight-bold" id="summary_farm_name">농장</span> 현황&nbsp;
-						<span class="font-sm badge bg-orange">총 <span id="summary_dong_count"> 0 </span>개 동</span>
+						<!-- <span class="font-sm badge bg-orange"><span id="summary_dong_count"> 0 </span></span> -->
+						<span id="summary_dong_count"> 0 </span>
 					</h2>
 				</div>
 			</header>
@@ -129,6 +130,9 @@ foreach($init_data as $val){
 				</div>
 			</header>
 			<div class="widget-body p-3 feed_data_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
+		
+				<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 15일령 이후 계산</label></div>
+			
 				<div class="col-xs-12 d-flex align-items-center justify-content-center no-padding">
 					<div class="col-xs-6 no-padding text-center">
 						<span class="font-md text-secondary">표준 FCR <br><span class="font-md text-primary font-weight-bold" id="total_fcr"></span></span>

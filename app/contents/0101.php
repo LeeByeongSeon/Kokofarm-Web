@@ -115,6 +115,57 @@ if(isset($_REQUEST["request_dong"])){
 	</div>
 </div>
 
+<!--FCR-->
+<div class="row" id="row_fcr_weight">
+	<div class="col-xs-12">
+		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
+			<header style="border-radius: 10px 10px 0px 0px; border : 4px solid #eee; border-bottom: 0; background-color: #0c6ad0;">
+				<div class="widget-header">	
+					<h2 class="font-weight-bold text-white feeder"><i class="fa fa-info-circle"></i>&nbsp;사료요구율(FCR)
+						<!-- <span class="font-sm badge bg-orange">마리당 급이량 : <span id="total_per_feed"> 0 </span>g</span> -->
+					</h2>	
+				</div>
+				<div class="widget-toolbar ml-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
+					</div>
+				</div>
+			</header>
+			<div class="widget-body p-3 feed_data_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
+		
+				<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 15일령 이후 계산</label></div>
+			
+				<div class="col-xs-12 d-flex align-items-center justify-content-center no-padding">
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">표준 FCR <br><span class="font-md text-primary font-weight-bold" id="total_fcr"></span></span>
+					</div>
+					<div class="col-xs-6 no-padding text-center">
+						<span class="font-md text-secondary">FCR 기반 평균중량 <br><span class="font-md text-danger font-weight-bold" id="total_fcr_weight">0</span></span>
+					</div>
+				</div>
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
+				<div class="row justify-content-center no-padding">
+					<div class="col-xs-12 form-group">
+						<input id="fcr_slider" type="text" name="fcr_val" value="">
+					</div>
+					<div class="col-xs-12 d-flex align-items-center justify-content-between mb-3">
+						<div class="col-xs-6 text-center">
+							<span class="font-md text-secondary font-weight-bold">FCR
+							<br><span class="font-md font-weight-bold" id="select_fcr">1.111</span></span>
+						</div>
+						<div class="col-xs-6 text-center">
+							<span class="font-md text-secondary font-weight-bold">예측중량
+							<br><span class="font-md font-weight-bold" id="select_weight">1500</span></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!--일일 급이 / 급수량-->
 <div class="row" id="row_feed_water">
 	<div class="col-xs-12">

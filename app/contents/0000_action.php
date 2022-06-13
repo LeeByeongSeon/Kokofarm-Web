@@ -20,7 +20,8 @@
 			$time_1 = date("Y-m-d H:i:s", strtotime("-1 hours"));
 
 			// 농장 데이터
-			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, f.*, sh.*, IFNULL(DATEDIFF(current_date(), cm.cmIndate) + 1, 0) AS inTerm FROM buffer_sensor_status AS be 
+			$select_sql = "SELECT be.*, sl.*, sf.*, cm.*, f.*, sh.*, 
+						IFNULL(DATEDIFF(IF(cm.cmOutdate is null, current_date(), cm.cmOutdate), cm.cmIndate) + 1, 0) AS inTerm FROM buffer_sensor_status AS be 
 						JOIN farm AS f ON f.fFarmid = be.beFarmid 
 						LEFT JOIN comein_master AS cm ON cm.cmFarmid = be.beFarmid AND cm.cmDongid = be.beDongid AND cm.cmCode = be.beComeinCode 
 						LEFT JOIN set_light AS sl ON sl.slFarmid = be.beFarmid AND sl.slDongid = be.beDongid 
@@ -70,7 +71,12 @@
 			// 사료빈 유무 확인
 			$set_feeder_id = "";
 
+			// 일령별로 동 묶기위한 배열
+			$day_arr = array();
+
 			foreach($buffer_data as $row){
+
+				$day_arr[$row["inTerm"]] = isset($day_arr[$row["inTerm"]]) ? $day_arr[$row["inTerm"]] + 1 : 1;
 
 				$set_feeder_id .= $row["sfDongid"];
 
@@ -117,6 +123,10 @@
 			}
 
 			$dong_count = count($buffer_data);
+			$interm_info = "";
+			foreach($day_arr as $key => $val){
+				$interm_info .= "<span class='font-sm badge bg-orange'>" . $key . "일령(" . $val . "개동) </span> &nbsp";
+			}
 
 			$all_farm_devi = sprintf('%0.1f', ($farm_devi * corr_devi) / $dong_count);
 
@@ -163,7 +173,7 @@
 			$summary["summary_thinout_count"] = $thinout_count;
 
 			$summary["farm_name"] = $buffer_data[0]["fName"];
-			$summary["dong_count"] = $dong_count;
+			$summary["dong_count"] = $interm_info;
 
 			$response["summary"] = $summary;
 			$response["weight_chart"] = $weight_chart;
@@ -295,8 +305,14 @@
 
 			$interm = $interm <= 60 ? $interm : 60;
 
-			$response["total_fcr_weight"] = sprintf('%0.1f', $total_per_feed / $fcr_table[$interm]);
-			$response["total_fcr"] = sprintf('%0.3f', $fcr_table[$interm]);
+			if($interm >= 15){
+				$response["total_fcr_weight"] = sprintf('%0.1f', $total_per_feed / $fcr_table[$interm]);
+				$response["total_fcr"] = sprintf('%0.3f', $fcr_table[$interm]);
+			}
+			else{
+				$response["total_fcr_weight"] = " - ";
+				$response["total_fcr"] = " - ";
+			}
 
 			$response["total_per_feed"] = sprintf('%0.1f', $total_per_feed);	
 			$response["total_per_water"] = sprintf('%0.3f', $total_per_water);	
