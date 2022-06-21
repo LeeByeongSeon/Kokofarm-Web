@@ -131,9 +131,9 @@ if(isset($_REQUEST["request_dong"])){
 					</div>
 				</div>
 			</header>
-			<div class="widget-body p-3 feed_data_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
+			<div class="widget-body p-3" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
 		
-				<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 15일령 이후 계산</label></div>
+				<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 16일령 이후 계산</label></div>
 			
 				<div class="col-xs-12 d-flex align-items-center justify-content-center no-padding">
 					<div class="col-xs-6 no-padding text-center">
@@ -230,7 +230,7 @@ if(isset($_REQUEST["request_dong"])){
 				</div>
 				<div class="widget-toolbar ml-auto">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-plus"></i>&nbsp;</button>
+						<button type="button" class="btn btn-xs btn-light text-primary btn_display_toggle" style="height: 25px">&nbsp;<i class="fa fa-minus"></i>&nbsp;</button>
 					</div>
 				</div>
 			</header>
@@ -304,7 +304,42 @@ include_once("../inc/bottom.php")
 			// $(this).children("i").toggleClass("fa-minus").toggleClass("fa-plus");
 			$(this).parents(".jarviswidget").children(".widget-body").toggle();
 		});
+
+		// 예시 슬라이더
+		$("#fcr_slider").ionRangeSlider({
+			min: 0.7,				/** 최소값 */
+			max: 2, 			/** 최대값 */
+			from: 1.10, 		/** 로딩 후 세팅 값 */
+			// from_min: 0.7, 
+			// from_max: 1.5,
+			from_shadow: "true",
+			type: "single",		/** 슬라이더 유형 single or double */
+			step: 0.001,		/** 슬라이더 단계 */
+			prefix: "FCR ", 	/** 접두사 표기 */
+			postfix: "", 		/** 접미사 표기 */
+			prettify: false,	/** 슬라이더 꾸미기 */
+			grid: true,			/** 슬라이더 위의 값 그리드 */
+			inputValuesSeparator: ";"
+		});
+
+		$("#fcr_slider").off("change").on("change", function(){		// off로 이벤트 중복을 방지함
+			let v = $(this).val();
+
+			set_select_fcr(v);
+		});
 	});
+
+	function set_select_fcr(v){
+		$("#select_fcr").html(v);
+
+		let feed = $("#total_per_feed").html();
+		feed = parseFloat(feed);
+		let weight = Math.floor(feed / v * 10) / 10;
+		$("#select_weight").html(weight);
+
+		//console.log("v : " + v + " / feed : " + feed + " / weight : " + weight);
+
+	};
 
 	function get_dong_data(){
 		
@@ -328,6 +363,7 @@ include_once("../inc/bottom.php")
 					$("#row_summary").show();
 					$("#row_avg_esti").show();
 					$("#row_cell_avg").show();
+					$("#row_fcr_weight").find(".widget-body").hide();
 
 					//일령
 					let interm = data.summary.summary_interm;
@@ -361,13 +397,14 @@ include_once("../inc/bottom.php")
 						if(per > 90){ 				document.getElementById("feed_img").setAttribute("src", "../images/feed-04.png"); }
 
 						//$("#row_feed_water").show();
-						$("#row_feed_water").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						//$("#row_feed_water").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
 						$("#row_feed_water").find(".widget-body").show();
+						$("#row_fcr_weight").find(".widget-body").show();
 					}
 					if(data.extra.hasOwnProperty("extra_out_temp")){
 						//$("#row_outsensor").show();
 
-						$("#row_outsensor").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
+						//$("#row_outsensor").find(".btn_display_toggle").children("i").removeClass("fa-plus").addClass("fa-minus");
 						$("#row_outsensor").find(".widget-body").show();
 					}
 
@@ -376,6 +413,7 @@ include_once("../inc/bottom.php")
 					$("#row_summary").hide();
 					$("#row_avg_esti").hide();
 					$("#row_cell_avg").hide();
+					$("#row_fcr_weight").hide();
 					$("#row_feed_water").hide();
 					$("#row_outsensor").hide();
 				}
@@ -408,6 +446,15 @@ include_once("../inc/bottom.php")
 
 				$("#dong_per_feed").html(data.dong_per_feed + "g");
 				$("#dong_per_water").html(data.dong_per_water + "L");
+
+				$("#total_fcr_weight").html(data.total_fcr_weight + "g");
+				$("#total_fcr").html(data.total_fcr);
+
+				$("#fcr_slider").data("ionRangeSlider").update({
+					from: data.total_fcr,
+				});
+				set_select_fcr(data.total_fcr);
+
 			},
 			error: function(request,status,error){
 				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
