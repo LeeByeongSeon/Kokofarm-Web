@@ -110,18 +110,18 @@
 								</div>
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 140px">덤 수</span>
-									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_extra_count" placeholder="덤 수" min="" max="">
+									<input inputmode="numeric" value="0" pattern="\d*" class="form-control" name="breed_extra_count" placeholder="덤 수" min="" max="">
 								</div>
 
 							</div>
 							<div class="input-group mb-3">
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 140px">폐사</span>
-									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_death_input" placeholder="폐사 수" min="" max="">
+									<input inputmode="numeric" value="0" pattern="\d*" class="form-control" name="breed_death_input" placeholder="폐사 수" min="" max="">
 								</div>
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 200px">오늘 폐사 수</span>
-									<input type="number" pattern="\d*" class="form-control" name="breed_death_count" placeholder="오늘 폐사 수" readonly>
+									<input type="number" pattern="\d*" class="form-control" name="breed_death_count" placeholder="오늘 폐사 수" disabled style="opacity: 0.5">
 								</div>
 								<!-- <div class="col-xs-6 d-flex p-2 align-items-center">
 									<span class="font-weight-bold" style="width: 150px;">오늘 폐사 수 : </span><span class="font-weight-bold text-danger">0</span>
@@ -130,21 +130,21 @@
 							<div class="input-group mb-3">
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 140px">도태</span>
-									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_cull_input" placeholder="도태 수" min="" max="">
+									<input inputmode="numeric" value="0" pattern="\d*" class="form-control" name="breed_cull_input" placeholder="도태 수" min="" max="">
 								</div>
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 200px">오늘 도태 수</span>
-									<input type="number" pattern="\d*" class="form-control" name="breed_cull_count" placeholder="오늘 도태 수" readonly>
+									<input type="number" pattern="\d*" class="form-control" name="breed_cull_count" placeholder="오늘 도태 수" disabled style="opacity: 0.5">
 								</div>
 							</div>
 							<div class="input-group mb-3">
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 140px">솎기</span>
-									<input type="number" value="0" pattern="\d*" class="form-control" name="breed_thinout_input" placeholder="솎기 수" min="" max="">
+									<input inputmode="numeric" value="0" pattern="\d*" class="form-control" name="breed_thinout_input" placeholder="솎기 수" min="" max="">
 								</div>
 								<div class="col-xs-6 d-flex no-padding">
 									<span class="input-group-text font-weight-bold" style="width: 200px">오늘 솎기 수</span>
-									<input type="number" pattern="\d*" class="form-control" name="breed_thinout_count" placeholder="오늘 솎기 수" readonly>
+									<input type="number" pattern="\d*" class="form-control" name="breed_thinout_count" placeholder="오늘 솎기 수" disabled style="opacity: 0.5">
 								</div>
 							</div>
 
@@ -154,6 +154,7 @@
 
 					<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 입추수는 최초 입추 기준 (덤 포함)</label></div>
 					<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 폐사, 도태, 솎기 수는 해당 일자에 발생된 것만 기록</label></div>
+					<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 초과 입력 시 음수를 입력하여 조정</label></div>
 					
 				</div>
 				<div class="modal-footer">
