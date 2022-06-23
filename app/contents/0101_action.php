@@ -201,7 +201,8 @@
 
 			$select_sql = "SELECT fe.*, cd.* FROM (
 								SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
-								SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, cm.cmCode , cmInsu 
+								SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, 
+								cm.cmCode , cmInsu, cm.cmExtraSu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
 								FROM comein_master AS cm 
 								LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND sh.shDate 
 									BETWEEN cm.cmIndate AND IF(cm.cmOutdate is null, now(), cm.cmOutdate)
@@ -211,15 +212,24 @@
 
 			$feed_data = get_select_data($select_sql);
 
+			$select_sql = "SELECT * FROM fcr_info WHERE fiType = \"cobb500\"";
+			$f_data = get_select_data($select_sql);
+			$fcr_table = array();
+
+			foreach($f_data as $row){
+				$fcr_table[$row["fiDay"]] = $row["fiFcr"];
+			}
+
 			$dong_per_feed = 0;
 			$dong_per_water = 0;
-			$dong_in = $feed_data[0]["cmInsu"];
+			$dong_in = $feed_data[0]["cmInsu"] + $feed_data[0]["cmExtraSu"];
 			$dong_out = 0;
 
-			// 전체 농장별로 구하기 위한 날짜별 배열
-			$daily_feed_data = array();
+			$interm = 0;
 			
 			foreach($feed_data as $row){
+				
+				$interm++;
 
 				$feed = $row["feed"] * 1000;  // g으로 단위 환산
 				$water = $row["water"]; 
@@ -237,6 +247,17 @@
 				$dong_per_water += $per_water;
 
 				$dong_out += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
+			}
+
+			$interm = $interm <= 60 ? $interm : 60;
+
+			if($interm > 15){
+				$response["total_fcr_weight"] = sprintf('%0.1f', $total_per_feed / $fcr_table[$interm]);
+				$response["total_fcr"] = sprintf('%0.3f', $fcr_table[$interm]);
+			}
+			else{
+				$response["total_fcr_weight"] = " - ";
+				$response["total_fcr"] = " - ";
 			}
 
 			$response["dong_per_feed"] = sprintf('%0.1f', $dong_per_feed);	

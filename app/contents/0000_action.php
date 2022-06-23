@@ -190,7 +190,7 @@
 			$select_sql = "SELECT fe.*, cd.* FROM (
 							SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
 								SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, 
-								cm.cmCode, cm.cmInsu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
+								cm.cmCode, cm.cmInsu, cm.cmExtraSu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
 							FROM buffer_sensor_status AS be 
 							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 							LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND sh.shDate 
@@ -233,7 +233,7 @@
 				if(!array_key_exists($key, $dong_per_feed)){
 					$dong_per_feed[$key] = 0;
 					$dong_per_water[$key] = 0;
-					$dong_in[$key] = $row["cmInsu"];
+					$dong_in[$key] = $row["cmInsu"] + $row["cmExtraSu"];
 					$dong_out[$key] = 0;
 				}
 
@@ -271,7 +271,7 @@
 
 				if($total_in == 0){
 					foreach($date_data as $row){
-						$total_in += $row["cmInsu"];
+						$total_in += $row["cmInsu"] + $row["cmExtraSu"];
 					}
 				}
 
@@ -305,7 +305,7 @@
 
 			$interm = $interm <= 60 ? $interm : 60;
 
-			if($interm >= 15){
+			if($interm > 15){
 				$response["total_fcr_weight"] = sprintf('%0.1f', $total_per_feed / $fcr_table[$interm]);
 				$response["total_fcr"] = sprintf('%0.3f', $fcr_table[$interm]);
 			}

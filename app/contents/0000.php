@@ -113,7 +113,7 @@ foreach($init_data as $val){
 	</div>
 </div>
 
-<!--일일 급이 / 급수량-->
+<!--FCR-->
 <div class="row" id="row_fcr_weight">
 	<div class="col-xs-12">
 		<div class="jarviswidget jarviswidget-color-white no-padding mb-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-togglebutton="false">							
@@ -131,7 +131,7 @@ foreach($init_data as $val){
 			</header>
 			<div class="widget-body p-3 feed_data_body" style="border-radius: 0px 0px 10px 10px; border : 4px solid #eee; border-top: 0; padding:0.5rem;">
 		
-				<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 15일령 이후 계산</label></div>
+				<div class="col-xs-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding">※ 16일령 이후 계산</label></div>
 			
 				<div class="col-xs-12 d-flex align-items-center justify-content-center no-padding">
 					<div class="col-xs-6 no-padding text-center">
