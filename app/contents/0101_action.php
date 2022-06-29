@@ -252,7 +252,7 @@
 			$interm = $interm <= 60 ? $interm : 60;
 
 			if($interm > 15){
-				$response["total_fcr_weight"] = sprintf('%0.1f', $total_per_feed / $fcr_table[$interm]);
+				$response["total_fcr_weight"] = sprintf('%0.1f', $dong_per_feed / $fcr_table[$interm]);
 				$response["total_fcr"] = sprintf('%0.3f', $fcr_table[$interm]);
 			}
 			else{

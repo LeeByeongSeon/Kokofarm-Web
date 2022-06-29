@@ -332,7 +332,7 @@ include_once("../inc/bottom.php")
 	function set_select_fcr(v){
 		$("#select_fcr").html(v);
 
-		let feed = $("#total_per_feed").html();
+		let feed = $("#dong_per_feed").html();
 		feed = parseFloat(feed);
 		let weight = Math.floor(feed / v * 10) / 10;
 		$("#select_weight").html(weight);

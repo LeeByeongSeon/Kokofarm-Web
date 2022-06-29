@@ -75,6 +75,23 @@
 				</div>
 			</header>
 			<div class="widget-body pt-3" style="border-radius: 0px 0px 15px 15px; border : 4px solid #E6E6E6; border-top: 0; min-height:0;">
+
+				<div class="col-sm-3 no-padding text-center" style="border-right:1px solid #C2C2C2">
+					<span class="font-md text-secondary">표준 FCR <br><span class="font-md font-weight-bold" id="total_fcr"></span></span>
+				</div>
+				<div class="col-sm-3 no-padding text-center" style="border-right:1px solid #C2C2C2">
+					<span class="font-md text-secondary">FCR 기반 중량 <br><span class="font-md text-danger font-weight-bold" id="total_fcr_weight"></span></span>
+				</div>
+				<div class="col-sm-3 no-padding text-center" style="border-right:1px solid #C2C2C2">
+					<span class="font-md text-secondary">수 당 급이량 <br><span class="font-md font-weight-bold" id="dong_per_feed"></span></span>
+				</div>
+				<div class="col-sm-3 no-padding text-center">
+					<span class="font-md text-secondary">수 당 급수량 <br><span class="font-md text-primary font-weight-bold" id="dong_per_water"></span></span>
+				</div>
+				
+
+				<div style="clear:both"></div><hr style="margin-top:10px; margin-bottom: 10px">
+
 				<div class="col-sm-2 no-padding">
 					<div class="col-sm-12 text-center"><img id="feed_img" src="../images/feed-04.png" style="width: 8rem;"><br>
 						<div class="carousel-caption" style="text-shadow: none;"><h3 class="font-weight-bold m-0 pb-3 text-secondary" id="extra_feed_percent">-%</h3></div>
@@ -252,6 +269,8 @@
 					// 급이/급수 데이터가 있으면 [1,2,3 저울 데이터 hide] [급이/급수 show]
 					$.each(data.extra, function(key, val){	$("#" + key).html(val); });
 					if(data.extra.hasOwnProperty("extra_curr_feed")){
+
+						get_feed_per_count();
 						
 						let per = data.extra.extra_feed_percent;
 						per = parseInt(per);
@@ -334,4 +353,37 @@
 			}
 		});
 	};
+
+	function get_feed_per_count(){
+		
+		let data_arr = {};
+		data_arr["oper"] = "get_feed_per_count";
+		data_arr["cmCode"] = top_code;		//등록코드
+		
+		$.ajax({
+			url:'0101_action.php',
+			data:data_arr,
+			cache:false,
+			type:'post',
+			dataType:'json',
+			success: function(data){
+
+				$("#dong_per_feed").html(data.dong_per_feed + "g");
+				$("#dong_per_water").html(data.dong_per_water + "L");
+
+				$("#total_fcr_weight").html(data.total_fcr_weight + "g");
+				$("#total_fcr").html(data.total_fcr);
+
+				// $("#fcr_slider").data("ionRangeSlider").update({
+				// 	from: data.total_fcr,
+				// });
+				// set_select_fcr(data.total_fcr);
+
+			},
+			error: function(request,status,error){
+				//alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
+			}
+		});
+	};
+
 </script>
