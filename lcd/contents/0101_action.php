@@ -214,6 +214,7 @@
 			$response["avg_weight_chart"] = $avg_history["chart"];
 					
 			echo json_encode($response);
+			break;
 
 		case "get_feed_per_count":
 

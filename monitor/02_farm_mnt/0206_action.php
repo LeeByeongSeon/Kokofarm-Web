@@ -82,6 +82,7 @@ switch($oper){
 			$insert_map["dmActor"]     = check_str($_REQUEST["dmActor"]);
 			$insert_map["dmStartDate"] = check_str($_REQUEST["dmStartDate"]);
 			$insert_map["dmEndDate"]   = check_str($_REQUEST["dmEndDate"]);
+			$insert_map["dmCost"]     = check_str($_REQUEST["dmCost"]);
 
 			run_sql_insert("defect_manage", $insert_map);
 		}
@@ -108,6 +109,7 @@ switch($oper){
         $update_map["dmAction"]    = check_str($_REQUEST["dmAction"]);
         $update_map["dmOthers"]    = check_str($_REQUEST["dmOthers"]);
         $update_map["dmActor"]     = check_str($_REQUEST["dmActor"]);
+		$update_map["dmCost"]     = check_str($_REQUEST["dmCost"]);
 
 		$where_query = "dmFarmid = \"" .$farmID. "\" AND dmDongid = \"" .$dongID. "\" AND dmDate = \"" .$dateID . "\"";
 

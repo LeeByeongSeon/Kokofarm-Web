@@ -90,7 +90,7 @@ include_once("../inc/bottom.php");
 			autowidth:true,
 			shrinkToFit:true,
 			mtype:'post',
-			sortorder:"asc",
+			sortorder:"desc",
 			datatype:"json",
 			rowNum:16,
 			pager:"#jqgrid_pager",
@@ -127,7 +127,7 @@ include_once("../inc/bottom.php");
 				{label: "발생 장치",	name: "dmDevice",		align:'center',		editable:true, editrules:{ required: false},
 					formoptions:{label:"발생 장치", rowpos:5, colpos:1}
 				},
-				{label: "버전(제품)",					name: "dmDeviceVer",	align:'center',		editable:true, editrules:{ required: false},
+				{label: "버전(제품)",					name: "dmDeviceVer",	align:'center',		hidden:true, editable:true, editrules:{ required: false},
 					formoptions:{label:"버전(제품)", rowpos:5, colpos:2}
 				},
 				{label: "문제점(현상)",					name: "dmProblem",		hidden:true,		editable:true, editrules:{ required: false, edithidden: true},
@@ -139,8 +139,11 @@ include_once("../inc/bottom.php");
 				{label: "조치내용",						name: "dmAction",		hidden:true,		editable:true, editrules:{ required: false, edithidden: true},
 					edittype:'textarea', editoptions : { maxlength:1000, rows :2}, formoptions:{label:"조치내용", rowpos:8}
 				},
+				{label: "청구금액(원)",					name: "dmCost",		align:'center',		editable:true, editrules:{ required: false},
+					formoptions:{label:"청구금액(원)", rowpos:9}
+				},
 				{label: "기타",							name: "dmOthers",		hidden:true,		editable:true, editrules:{ required: false, edithidden: true},
-					formoptions:{label:"기타", rowpos:9}
+					formoptions:{label:"기타", rowpos:10}
 				},
 				{label: "pk", 							name: "pk",				hidden:true },
 			],

@@ -66,15 +66,14 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 									<input type="radio" class="form-check-input" name="change_intype" value="토종닭"><span>&nbsp;토종닭</span>
 								</label> -->
 						</div>
-						<div class="input-group input-group-lg mb-3">
+						<!-- <div class="input-group input-group-lg mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">입추 수</span>
-											<!-- pattern="\d*"을 추가해 IOS에서도 숫자키패드 사용할 수 있게함 -->
 							<input type="number" pattern="\d*" class="form-control" aria-label="입추 수" name="change_insu" min="0" max="99999">
-						</div>
+						</div> -->
 					</div>
 
 					<div class="col-sm-12 text-center">
-						<h3 class="font-weight-bold text-primary" style="margin:0.5rem">평균중량 재산출</h3>
+						<!-- <h3 class="font-weight-bold text-primary" style="margin:0.5rem">평균중량 재산출</h3>
 
 						<div class="input-group input-group-lg mb-3">
 							<span class="input-group-text font-weight-bold">실측일자 </span>
@@ -102,11 +101,11 @@ $type_combo = make_combo_by_query($type_query, "change_intype", "", "cName1", "�
 						<div class="input-group input-group-lg mb-3">
 							<span class="input-group-text font-weight-bold" style="width: 73.5px">실측값</span>
 							<input type="number" pattern="\d*" class="form-control" name="measure_val" placeholder="실측중량" min="400" max="2500">
-						</div>
+						</div> -->
 
 						<div class="col-sm-12 text-center no-padding" id="request_opt_alarm"></div>
 
-						<div class="col-sm-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding font-lg">※ 평균중량 재산출은 20일령 이후에 입력가능합니다.</label></div>
+						<!-- <div class="col-sm-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding font-lg">※ 평균중량 재산출은 20일령 이후에 입력가능합니다.</label></div> -->
 						<div class="col-sm-12 text-left no-padding"><label class="text-danger font-weight-bold no-padding font-lg">※ 모든 변경사항은 관리자 승인 후에 적용됩니다.</label></div>
 						<div class="col-sm-12 text-right no-padding mb-3">
 							<button type="button" class="btn btn-primary btn-lg" id="request_ok">요청</button>
@@ -181,21 +180,21 @@ include_once("../inc/bottom.php")
 					$("#request_form [name=change_hour]").html(make_time_combo(this.value, in_hour));
 				});
 
-				if(top_interm >= 20){		// 재산출은 20일령부터 입력
-					$("#request_form [name=measure_date]").html(make_date_combo(now, -3));
-					$("#request_form [name=measure_hour]").html(make_time_combo(now, "00"));
-					$("#request_form [name=measure_minute]").val("00").prop("selected", true);
+				// if(top_interm >= 20){		// 재산출은 20일령부터 입력
+				// 	$("#request_form [name=measure_date]").html(make_date_combo(now, -3));
+				// 	$("#request_form [name=measure_hour]").html(make_time_combo(now, "00"));
+				// 	$("#request_form [name=measure_minute]").val("00").prop("selected", true);
 
-					$("#request_form [name=measure_date]").off("change").on("change", function(){
-						$("#request_form [name=measure_hour]").html(make_time_combo(this.value, "00"));
-					});
-				}
-				else{
-					$("#request_form [name=measure_date]").prop("disabled", true);
-					$("#request_form [name=measure_hour]").prop("disabled", true);
-					$("#request_form [name=measure_minute]").prop("disabled", true);
-					$("#request_form [name=measure_val]").prop("disabled", true);
-				}
+				// 	$("#request_form [name=measure_date]").off("change").on("change", function(){
+				// 		$("#request_form [name=measure_hour]").html(make_time_combo(this.value, "00"));
+				// 	});
+				// }
+				// else{
+				// 	$("#request_form [name=measure_date]").prop("disabled", true);
+				// 	$("#request_form [name=measure_hour]").prop("disabled", true);
+				// 	$("#request_form [name=measure_minute]").prop("disabled", true);
+				// 	$("#request_form [name=measure_val]").prop("disabled", true);
+				// }
 			}
 		});
 	}
@@ -300,9 +299,9 @@ include_once("../inc/bottom.php")
 
 		let change_date  = $("#request_form [name=change_indate]").val() + " " + $("#request_form [name=change_hour]").val() + ":" + $("#request_form [name=change_minute]").val() + ":00";
 		let change_type  = $("#request_form [name=change_intype]").val();
-		let change_insu  = $("#request_form [name=change_insu]").val();
-		let measure_date = $("#request_form [name=measure_date]").val() + " " + $("#request_form [name=measure_hour]").val() + ":" + $("#request_form [name=measure_minute]").val()  + ":00";
-		let measure_val  = $("#request_form [name=measure_val]").val();
+		// let change_insu  = $("#request_form [name=change_insu]").val();
+		// let measure_date = $("#request_form [name=measure_date]").val() + " " + $("#request_form [name=measure_hour]").val() + ":" + $("#request_form [name=measure_minute]").val()  + ":00";
+		// let measure_val  = $("#request_form [name=measure_val]").val();
 
 		// alert("origin : " + origin + "\ntr_date : " + tr_date + "\ntr_type : " + tr_type  + "\nmeasure_date : " + measure_date + "\nmeasure_val : " + measure_val);
 
@@ -318,9 +317,9 @@ include_once("../inc/bottom.php")
 		}
 
 		// 입추수 변경
-		if(comein_insu != change_insu){
-			msg += "- 입추수를 <span style='font-weight:bold;'>\"" + comein_insu + "\"</span>에서 <span style='font-weight:bold;'>\"" + change_insu + "\"</span>으로 변경<br><br>";
-		}
+		// if(comein_insu != change_insu){
+		// 	msg += "- 입추수를 <span style='font-weight:bold;'>\"" + comein_insu + "\"</span>에서 <span style='font-weight:bold;'>\"" + change_insu + "\"</span>으로 변경<br><br>";
+		// }
 
 		// 입추일자 오류처리
 		if(comein_indate != change_date){
@@ -334,16 +333,16 @@ include_once("../inc/bottom.php")
 		}
 
 		// 최적화 오류처리
-		if(measure_val.length != 0){
+		// if(measure_val.length != 0){
 
-			if(parseInt(measure_val) < 400 || parseInt(measure_val) > 2500){
-				view_alarm("request_opt_alarm", "실측값은 400 ~ 2500 사이의 값을 입력해주세요</label>");
-				return;
-			}
+		// 	if(parseInt(measure_val) < 400 || parseInt(measure_val) > 2500){
+		// 		view_alarm("request_opt_alarm", "실측값은 400 ~ 2500 사이의 값을 입력해주세요</label>");
+		// 		return;
+		// 	}
 
-			msg += "- 평균중량 재산출을 <span style='font-weight:bold;'>\"" + get_korea_date(measure_date) + "\"</span>에 측정한 <span style='font-weight:bold;'>" + measure_val + "g</span>으로 진행<br><br>";
-			rc_comm += "Opt|";
-		}
+		// 	msg += "- 평균중량 재산출을 <span style='font-weight:bold;'>\"" + get_korea_date(measure_date) + "\"</span>에 측정한 <span style='font-weight:bold;'>" + measure_val + "g</span>으로 진행<br><br>";
+		// 	rc_comm += "Opt|";
+		// }
 
 		// 에러 확인 완료 후 적용될 값이 있으면 confirm창 출력
 
@@ -371,10 +370,10 @@ include_once("../inc/bottom.php")
 						data_arr["rcPrevDate"]   = comein_indate;	//변경 전 입추시간
 						data_arr["rcChangeDate"] = change_date;		//변경 후 입추시간
 
-						data_arr["rcMeasureDate"] = measure_date.length > 3 ? measure_date : "";		// 실측 시간
-						data_arr["rcMeasureVal"]  = measure_date.length > 3 ? measure_val : "";	// 실측 중량
+						// data_arr["rcMeasureDate"] = measure_date.length > 3 ? measure_date : "";		// 실측 시간
+						// data_arr["rcMeasureVal"]  = measure_date.length > 3 ? measure_val : "";	// 실측 중량
 
-						data_arr["change_insu"] = change_insu;
+						// data_arr["change_insu"] = change_insu;
 
 						set_cookie("is_opt_com", "yes", 1);
 

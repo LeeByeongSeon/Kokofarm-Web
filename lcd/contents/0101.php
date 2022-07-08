@@ -347,9 +347,11 @@
 			dataType:'json',
 			success: function(data) {
 				data.avg_weight_chart = convert_amchart_time(data.avg_weight_chart, "일령");
-				console.log(data.avg_weight_chart);
 				draw_select_chart("avg_weight_chart", data.avg_weight_chart, "영역차트", "Y", "N", 12, "hh");
 				//$("#avg_weight_chart").css({ 'height':'300px', 'width':'100%' }); // amChart 'call' 오류 임시제어(?)
+			},
+			error: function(request,status,error){
+				alert("STATUS : "+request.status+"\n"+"ERROR : "+error);
 			}
 		});
 	};

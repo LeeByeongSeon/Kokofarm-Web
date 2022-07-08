@@ -36,16 +36,19 @@
 
 		case "buffer":
 
+			$farmID = isset($_REQUEST["farmID"]) ? $_REQUEST["farmID"] : "";
+
 			$time_1 = date("Y-m-d H:i:s", strtotime("-1 hours"));
 
-			$select_query = "SELECT f.fName, fd.fdFarmid, fd.fdDongid, be.*, cm.*, sf.*, sh.*, 
+			$select_query = "SELECT f.fName, fd.fdFarmid, fd.fdDongid, be.*, cm.*, sf.*, sh.*, sl.slLight01, 
 							IFNULL(DATEDIFF(IF(cm.cmOutdate is null, current_date(), cm.cmOutdate), cm.cmIndate) + 1, 0) AS interm FROM farm AS f 
 							JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
 							JOIN buffer_sensor_status AS be ON be.beFarmid = fd.fdFarmid AND be.beDongid = fd.fdDongid 
 							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 							LEFT JOIN set_feeder AS sf ON sf.sfFarmid = fd.fdFarmid AND sf.sfDongid = fd.fdDongid 
+							LEFT JOIN set_light AS sl ON sl.slFarmid = fd.fdFarmid AND sl.slDongid = fd.fdDongid 
 							LEFT JOIN sensor_history AS sh ON sh.shFarmid = fd.fdFarmid AND sh.shDongid = fd.fdDongid AND shDate = \"" . substr($time_1, 0, 13) . ":00:00\" 
-							WHERE f.fID = \"" .$userID. "\"";
+							WHERE f.fFarmid = \"" .$farmID. "\" ORDER BY fd.fdDongid ASC";
 
 			$select_data = get_select_data($select_query);
 
@@ -62,10 +65,12 @@
 
 		case "cell":
 
+			$farmID = isset($_REQUEST["farmID"]) ? $_REQUEST["farmID"] : "";
+
 			$select_query = "SELECT f.fName, fd.fdFarmid, fd.fdDongid, si.* FROM farm AS f 
 							JOIN farm_detail AS fd ON fd.fdFarmid = f.fFarmid 
 							LEFT JOIN set_iot_cell AS si ON si.siFarmid = fd.fdFarmid AND si.siDongid = fd.fdDongid 
-							WHERE f.fID = \"" .$userID. "\"";
+							WHERE f.fFarmid = \"" .$farmID. "\" ORDER BY fd.fdDongid, si.siCellid";
 
 			$select_data = get_select_data($select_query);
 

@@ -46,19 +46,19 @@ switch($oper){
 			$insert_map["rcPrevDate"]    = check_str($_REQUEST["rcPrevDate"]); 		//변경 전 입추시간
 			$insert_map["rcChangeDate"]  = check_str($_REQUEST["rcChangeDate"]); 	//변경 후 입추시간
 
-			if(strpos($comm, "Opt") !== false){		//실측이 있는 경우에만 입력
-				$insert_map["rcMeasureDate"] = check_str($_REQUEST["rcMeasureDate"]);	//실측 시간
-				$insert_map["rcMeasureVal"]  = check_str($_REQUEST["rcMeasureVal"]); 	//실측 중량
-			}
+			// if(strpos($comm, "Opt") !== false){		//실측이 있는 경우에만 입력
+			// 	$insert_map["rcMeasureDate"] = check_str($_REQUEST["rcMeasureDate"]);	//실측 시간
+			// 	$insert_map["rcMeasureVal"]  = check_str($_REQUEST["rcMeasureVal"]); 	//실측 중량
+			// }
 
 			run_sql_insert("request_calculate", $insert_map);
 		}
 
-		// 입추수 변경
-		$update_map = array();
-		$update_map["cmInsu"] = check_str($_REQUEST["change_insu"]);
-		$where_query = "cmCode = \"".$code."\"";
-		run_sql_update("comein_master", $update_map, $where_query);
+		// // 입추수 변경
+		// $update_map = array();
+		// $update_map["cmInsu"] = check_str($_REQUEST["change_insu"]);
+		// $where_query = "cmCode = \"".$code."\"";
+		// run_sql_update("comein_master", $update_map, $where_query);
 
 		$response["ok"] = true;
 
