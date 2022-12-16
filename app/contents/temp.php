@@ -8,6 +8,14 @@
 	$key = check_str($_REQUEST["key"]);
 	$id = "kk0000";
 
+	// $t = (int)substr($key, 2);
+	// $tkey = (int) pow($t, 1/3);
+
+	// $id = "kk" . sprintf('%04d', $tkey);
+
+	// var_dump($tkey);
+	// var_dump($id);
+
 	switch($key){	//p - 3 (id ^ 3)
 		case "p34913":
 			$id = "kk0017";
@@ -20,6 +28,12 @@
 			break;
 		case "p379507":
 			$id = "kk0043";
+			break;
+		case "p3357911":
+			$id = "kk0071";
+			break;
+		case "p3753571":
+			$id = "kk0091";
 			break;
 	}
 

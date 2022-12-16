@@ -47,7 +47,7 @@ if(isset($_REQUEST["request_dong"])){
 				<div class="col-xs-12 d-flex flex-row justify-content-around no-padding">
 					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최소평체</span><br><span style="font-size: 23px" id="summary_min_avg_weight">-</span></div>
 					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">현재평체</span><br><span style="font-size: 23px" id="summary_curr_avg_weight">-</span></div>
-					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대평체</span><br><span style="font-size: 23px" id="summary_max_abg_weight">-</span></div>
+					<div class="col-xs-4 p-2 text-center"><span class="text-secondary" style="font-size: 18px;">최대평체</span><br><span style="font-size: 23px" id="summary_max_avg_weight">-</span></div>
 				</div>
 			</div>	
 		</div>
@@ -363,6 +363,10 @@ include_once("../inc/bottom.php")
 					$("#row_summary").show();
 					$("#row_avg_esti").show();
 					$("#row_cell_avg").show();
+					$("#row_fcr_weight").show();
+					$("#row_feed_water").show();
+					$("#row_outsensor").show();
+					
 					$("#row_fcr_weight").find(".widget-body").hide();
 
 					//일령

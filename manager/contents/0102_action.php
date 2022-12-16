@@ -177,7 +177,8 @@
 		case "get_feed_per_count":
 			$select_sql = "SELECT fe.*, cd.* FROM (
 							SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
-							SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, cm.cmCode, cm.cmInsu 
+								SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, 
+								cm.cmCode, cm.cmInsu, cm.cmExtraSu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
 							FROM buffer_sensor_status AS be 
 							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 							LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND sh.shDate 
@@ -241,7 +242,7 @@
 			$total_per_water = 0;
 			$total_in = 0;
 			$total_out = 0;
-			foreach($daily_feed_data as $date_data){
+			foreach($daily_feed_data as $date => $date_data){
 
 				if($total_in == 0){
 					foreach($date_data as $row){

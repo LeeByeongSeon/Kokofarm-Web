@@ -277,6 +277,7 @@ include_once("../inc/bottom.php")
 			type:"post",
 			dataType:"json",
 			success: function(data){
+
 				let insu = data.ndis_data[0].cmInsu;	// cmInsu 입추 수
 				let ndis = data.ndis_data[0].awNdis;	// awNdis 정규분포
 				let arr  = ndis.split("|");

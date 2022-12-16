@@ -116,7 +116,7 @@
 
 				"summary_min_avg_weight"	=>  $curr_min_weight,						/*실시간 min 평체*/
 				"summary_curr_avg_weight"	=>  sprintf('%0.1f', $curr_weight),			/*실시간 평균중량*/
-				"summary_max_abg_weight"	=>  $curr_max_weight,						/*실시간 max 평체*/
+				"summary_max_avg_weight"	=>  $curr_max_weight,						/*실시간 max 평체*/
 
 				"summary_date_term1"		=>  substr($yester_day, 5),					/*어제 날짜*/
 				"summary_date_term2"		=>  substr($day_plus_1, 5),					/*내일 날짜*/
@@ -144,6 +144,15 @@
 				"summary_avg_dust"  	=> check_sensor_val('%0.1f', $buffer_data[0]["beAvgDust"]),				/*현재 미세먼지 센서 평균*/
 				"summary_avg_light"  	=> check_sensor_val('%0.1f', $buffer_data[0]["slLight01"]),				/*현재 조도 센서 평균*/
 			);
+
+			// 2022-11-10 임시조치
+			if($farmID == "KF0091"){
+				$summary["summary_avg_weight"] = "---";
+				$summary["summary_min_avg_weight"] = "---"; 
+				$summary["summary_curr_avg_weight"] = "---"; 
+				$summary["summary_max_avg_weight"] = "---"; 
+			}
+
 			$response["summary"] = $summary;
 
 			$extra = array();
@@ -241,10 +250,12 @@
 
 				$live = $dong_in - $dong_out;
 
-				$per_feed = $feed / $live;
-				$per_water = $water / $live;
-				$dong_per_feed += $per_feed;
-				$dong_per_water += $per_water;
+				if($live > 0){
+					$per_feed = $feed / $live;
+					$per_water = $water / $live;
+					$dong_per_feed += $per_feed;
+					$dong_per_water += $per_water;
+				}
 
 				$dong_out += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
 			}

@@ -2,21 +2,20 @@
     include_once("../common/php_module/common_func.php");
 
     //Return Array======================================
-	$response = array();						
-	$response["errCode"] = "01";
-	$response["errMsg"] = "Access denied";
-	$response["retData"] = "";
+	$ret = array();						
+	$ret["errCode"] = "01";
+	$ret["errMsg"] = "Access denied";
+	$ret["retData"] = "";
 
 	$apiKey = check_str($_REQUEST["apiKey"]);	//API KEY
-	$userType = check_str($_REQUEST["userType"]);	// 유저 형식
 	$userID = check_str($_REQUEST["userID"]);		// 유저 ID
 	$setComm = check_str($_REQUEST["setComm"]);		// 요청 명령
 
     //기본 Error처리======================================
-	if(	empty($userID) || empty($userType) || empty($setComm) ){
-		$response["errCode"] = "02";
-		$response["errMsg"] = "Invalid request";
-		echo json_encode($response);
+	if(	empty($userID) || empty($setComm) ){
+		$ret["errCode"] = "02";
+		$ret["errMsg"] = "Invalid request";
+		echo json_encode($ret);
 		exit(0);	//exit(0) 하단은 실행중지
 	}
 
@@ -24,13 +23,11 @@
 	$query = "SELECT akKey FROM api_key WHERE akKey = \"" .$apiKey. "\"";
 	$get_data = get_select_data($query);
 	if(empty($get_data)){
-		$response["errCode"] = "03";
-		$response["errMsg"] = "Incorrect API Key";
-		echo json_encode($response);
+		$ret["errCode"] = "03";
+		$ret["errMsg"] = "Incorrect API Key";
+		echo json_encode($ret);
 		exit(0);	//exit(0) 하단은 실행중지
 	}
-
-	$ret = array();
 
 	switch($setComm){
 
@@ -184,6 +181,26 @@
 
 			$ret["errCode"] = "00";
 			$ret["errMsg"] = "";
+			$ret["retData"] = $ret_data;
+			break;
+
+		case "outSensor":
+
+			$farmID = isset($_REQUEST["farmID"]) ? $_REQUEST["farmID"] : "";
+
+			$select_query = "SELECT * FROM set_outsensor WHERE soFarmid = \"" .$farmID. "\" ORDER BY soDongid ASC LIMIT 1";
+
+			$select_data = get_select_data($select_query);
+
+			$ret_data = array();
+
+			foreach($select_data as $row){
+				$id = $row["soFarmid"];
+				$ret_data[$id] = $row;
+			}
+
+			$ret["errCode"] = "00";
+			$ret["errMsg"] = ""; 
 			$ret["retData"] = $ret_data;
 			break;
 

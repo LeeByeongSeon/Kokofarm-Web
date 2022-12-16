@@ -175,6 +175,13 @@
 			$summary["farm_name"] = $buffer_data[0]["fName"];
 			$summary["dong_count"] = $interm_info;
 
+			// 2022-11-10 임시조치
+			if($farmID == "KF0091"){
+				$summary["summary_farm_weight"] = "---";	// 전체 평균중량
+				$summary["summary_min_weight"] = "---"; 	// 최소 평균중량
+				$summary["summary_max_weight"] = "---"; 	// 최대 평균중량
+			}
+
 			$response["summary"] = $summary;
 			$response["weight_chart"] = $weight_chart;
 			$response["feed_chart"] = $feed_chart;
@@ -247,10 +254,12 @@
 
 				$live = $dong_in[$key] - $dong_out[$key];
 
-				$per_feed = $feed / $live;
-				$per_water = $water / $live;
-				$dong_per_feed[$key] += $per_feed;
-				$dong_per_water[$key] += $per_water;
+				if($live > 0){
+					$per_feed = $feed / $live;
+					$per_water = $water / $live;
+					$dong_per_feed[$key] += $per_feed;
+					$dong_per_water[$key] += $per_water;
+				}
 
 				//echo($key . " live : " . $live . " out : " . $dong_out[$key] . " per_feed : " . $per_feed . "\n");
 
@@ -291,11 +300,14 @@
 				}
 
 				$live = $total_in - $total_out;
-				$per_feed = $feed / $live;
-				$per_water = $water / $live;
 
-				$total_per_feed += $per_feed;
-				$total_per_water += $per_water;
+				if($live > 0){
+					$per_feed = $feed / $live;
+					$per_water = $water / $live;
+
+					$total_per_feed += $per_feed;
+					$total_per_water += $per_water;
+				}
 
 				//echo(" live : " . $live . " out : " . $total_out . " per_feed : " . $per_feed . " per_water : " . $per_water ."\n");
 

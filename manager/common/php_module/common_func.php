@@ -144,28 +144,42 @@ function get_avg_history($comein_code, $term, $type){
 	$ret = array();
 
 	$now = date("Y-m-d H:i:s");
+	$date = substr($now, 0, 10);
 
-	$term_query = $term == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
-	$type_query = "";
+	// $term_query = $term == "time" ? "RIGHT(aw.awDate, 5) = '00:00' " : "RIGHT(aw.awDate, 8) = '" . substr(get_term_date($now, "-30"), 11, 4) . "0:00'";
+	// $type_query = "";
 
-	switch($type){
-		case "all":
-			$type_query = " AND (aw.awDate BETWEEN cm.cmIndate AND 
-							(CASE WHEN (cm.cmOutdate is null) THEN NOW() 
-								WHEN (cm.cmOutdate = '2000-01-01 00:00:00') THEN NOW() 
-							ELSE cm.cmOutdate END))";
-			break;
+	// switch($type){
+	// 	case "all":
+	// 		$type_query = " AND (aw.awDate BETWEEN cm.cmIndate AND 
+	// 						(CASE WHEN (cm.cmOutdate is null) THEN NOW() 
+	// 							WHEN (cm.cmOutdate = '2000-01-01 00:00:00') THEN NOW() 
+	// 						ELSE cm.cmOutdate END))";
+	// 		break;
 		
-		case "day":
-			$type_query = " AND (aw.awDate BETWEEN \"" . substr($now, 0, 10) . " 00:00:00\" AND \"" . substr($now, 0, 10) . " 23:59:59\")";
-			break;
-	}
+	// 	case "day":
+	// 		$type_query = " AND (aw.awDate BETWEEN \"" . substr($now, 0, 10) . " 00:00:00\" AND \"" . substr($now, 0, 10) . " 23:59:59\")";
+	// 		break;
+	// }
+
+	// $select_query = "SELECT cm.cmCode, DATEDIFF(aw.awDate, cm.cmIndate) + 1 AS days, aw.*, c.cName3 AS refWeight, fd.fdName FROM comein_master AS cm 
+	// 					JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
+    //                     JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " . $term_query . $type_query ." 
+    //                     LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
+    //                     WHERE cm.cmCode = \"" .$comein_code. "\" ORDER BY aw.awDate ASC";
+
+	$type_query = $type == "day" ? " AND (aw.awDate BETWEEN \"" .$date. " 00:00:00" . "\" AND \"" .$date. " 23:59:59". "\") " : "" ;
 
 	$select_query = "SELECT cm.cmCode, DATEDIFF(aw.awDate, cm.cmIndate) + 1 AS days, aw.*, c.cName3 AS refWeight, fd.fdName FROM comein_master AS cm 
-						JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
-                        JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND " . $term_query . $type_query ." 
-                        LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = aw.awDays
-                        WHERE cm.cmCode = \"" .$comein_code. "\" ORDER BY aw.awDate ASC";
+					JOIN farm_detail AS fd ON fd.fdFarmid = cm.cmFarmid AND fd.fdDongid = cm.cmDongid 
+					JOIN (
+						SELECT aw.awFarmid, aw.awDongid, Max(aw.awDate) AS awDate, Max(aw.awWeight) AS awWeight, MAX(aw.awDays) AS awDays FROM comein_master AS cm 
+						LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid AND aw.awDate BETWEEN cm.cmIndate AND IFNULL(cm.cmOutdate, NOW())
+						WHERE cm.cmCode = \"" .$comein_code. "\" " .$type_query. "
+						GROUP BY aw.awFarmid, aw.awDongid, LEFT(aw.awDate, \"" .($term == "time" ? "13" : "10"). "\")
+					) AS aw 
+					LEFT JOIN codeinfo AS c ON c.cGroup = '권고중량' AND c.cName1 = cm.cmIntype AND c.cName2 = (DATEDIFF(aw.awDate, cm.cmIndate) + 1) 
+					WHERE cm.cmCode = \"" .$comein_code. "\" ORDER BY aw.awDate ASC;";
 	
 	$select_data = get_select_data($select_query);
 

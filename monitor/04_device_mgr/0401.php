@@ -3,7 +3,7 @@ include_once("../inc/top.php");
 
 // 동 선택 콤보박스
 $dong_combo_json = make_jqgrid_combo_num(32);
-$cell_combo_json = make_jqgrid_combo_num(10);
+$cell_combo_json = make_jqgrid_combo_num(24);
 
 $init_farm = isset($_REQUEST["farmID"]) ? $_REQUEST["farmID"] : "";
 $init_dong = isset($_REQUEST["dongID"]) ? $_REQUEST["dongID"] : "";
@@ -85,21 +85,9 @@ include_once("../inc/bottom.php");
 				{label: "저울ID",			name: "siCellid",	align:'center',		editable:true, editrules:{ required: true}, 
 					edittype:'select', editoptions:{value:<?=$cell_combo_json?>}
 				},
-				{label: "저울 버전",		name: "siVersion",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "펌웨어 버전", 		name: "siFirmware",	align:'center',		editable:true, editrules:{ required: true} },
-				{label: "설치 일자", 		name: "siDate",		align:'center',		editable:true, editrules:{ required: true}, width:"200%" },
-				{label: "온도 센서 유무", 	name: "siHaveTemp",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'Y':'설치', 'N':'없음'}, defaultValue:'Y'}, 
-				},
-				{label: "습도 센서 유무", 	name: "siHaveHumi",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'Y':'설치', 'N':'없음'}, defaultValue:'Y'}, 
-				},
-				{label: "CO2 센서 유무", 	name: "siHaveCo2",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'Y':'설치', 'N':'없음'}, defaultValue:'Y'}, 
-				},
-				{label: "NH3 센서 유무", 	name: "siHaveNh3",	align:'center',		editable:true, editrules:{ required: true}, 
-					edittype:'select', editoptions:{value:{'Y':'설치', 'N':'없음'}, defaultValue:'N'}, 
-				},
+				{label: "저울 버전",		name: "siVersion",	align:'center',		editable:true, },
+				{label: "펌웨어 버전", 		name: "siFirmware",	align:'center',		editable:true, },
+				{label: "설치 일자", 		name: "siDate",		align:'center',		editable:true, width:"200%" },
 				{label: "pk", 	name: "pk",	hidden:true },
 			],
 			onSelectRow: function(id){		  },

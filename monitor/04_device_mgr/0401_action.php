@@ -55,17 +55,19 @@ switch($oper){
 
 		$insert_map = array();
 
+		$siDate = check_str($_REQUEST["siDate"]) != "" ? check_str($_REQUEST["siDate"]) : date("Y-m-d H:i:s");
+
 		if(get_select_count($check_query) > 0){
 			$insert_map["siFarmid"] = $farmID;
 			$insert_map["siDongid"] = $dongID;
 			$insert_map["siCellid"] = $cellID;
 			$insert_map["siVersion"] = check_str($_REQUEST["siVersion"]);
 			$insert_map["siFirmware"] = check_str($_REQUEST["siFirmware"]);
-			$insert_map["siDate"] = check_str($_REQUEST["siDate"]);
-			$insert_map["siHaveTemp"] = check_str($_REQUEST["siHaveTemp"]);
-			$insert_map["siHaveHumi"] = check_str($_REQUEST["siHaveHumi"]);
-			$insert_map["siHaveCo2"] = check_str($_REQUEST["siHaveCo2"]);
-			$insert_map["siHaveNh3"] = check_str($_REQUEST["siHaveNh3"]);
+			$insert_map["siDate"] = $siDate;
+			$insert_map["siTempSetDate"] = $siDate;
+			$insert_map["siHumiSetDate"] = $siDate;
+			$insert_map["siCo2SetDate"] = $siDate;
+			$insert_map["siNh3SetDate"] = $siDate;
 
 			run_sql_insert("set_iot_cell", $insert_map);
 		}
@@ -85,10 +87,6 @@ switch($oper){
 		$update_map["siVersion"] = check_str($_REQUEST["siVersion"]);
 		$update_map["siFirmware"] = check_str($_REQUEST["siFirmware"]);
 		$update_map["siDate"] = check_str($_REQUEST["siDate"]);
-		$update_map["siHaveTemp"] = check_str($_REQUEST["siHaveTemp"]);
-		$update_map["siHaveHumi"] = check_str($_REQUEST["siHaveHumi"]);
-		$update_map["siHaveCo2"] = check_str($_REQUEST["siHaveCo2"]);
-		$update_map["siHaveNh3"] = check_str($_REQUEST["siHaveNh3"]);
 
 		$where_query = "siFarmid = \"" .$farmID. "\" AND siDongid = \"" .$dongID. "\" AND siCellid = \"" .$cellID . "\"";
 

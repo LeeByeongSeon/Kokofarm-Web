@@ -83,7 +83,7 @@ include_once("../common/php_module/common_func.php");
 		case "get_ndis_chart":
 
 			// $select_query = "SELECT awNdis FROM avg_weight WHERE awFarmid = '". $farmID ."' AND awDongid = '". $dongID ."' ORDER BY awDate DESC LIMIT 1";
-			$select_query = "SELECT cm.cmInsu, aw.awNdis FROM comein_master AS cm
+			$select_query = "SELECT cm.cmInsu, aw.awWeight, aw.awNdis FROM comein_master AS cm
 						LEFT JOIN avg_weight AS aw ON aw.awFarmid = cm.cmFarmid AND aw.awDongid = cm.cmDongid
 						AND (aw.awDate BETWEEN cm.cmIndate AND 
 							(CASE WHEN (cm.cmOutdate is null) THEN NOW() 
@@ -92,6 +92,10 @@ include_once("../common/php_module/common_func.php");
 						WHERE cmCode = '".$cmCode."' ORDER BY aw.awDate DESC LIMIT 1";
 
 			$select_data = get_select_data($select_query);
+
+			if($select_data[0]["awWeight"] < 500){
+				$select_data[0]["awNdis"] = "0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0";
+			}
 
 			$response["ndis_data"] = $select_data;
 
