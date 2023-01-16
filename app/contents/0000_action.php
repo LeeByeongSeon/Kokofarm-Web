@@ -176,11 +176,11 @@
 			$summary["dong_count"] = $interm_info;
 
 			// 2022-11-10 임시조치
-			if($farmID == "KF0091"){
-				$summary["summary_farm_weight"] = "---";	// 전체 평균중량
-				$summary["summary_min_weight"] = "---"; 	// 최소 평균중량
-				$summary["summary_max_weight"] = "---"; 	// 최대 평균중량
-			}
+			// if($farmID == "KF0091"){
+			// 	$summary["summary_farm_weight"] = "---";	// 전체 평균중량
+			// 	$summary["summary_min_weight"] = "---"; 	// 최소 평균중량
+			// 	$summary["summary_max_weight"] = "---"; 	// 최대 평균중량
+			// }
 
 			$response["summary"] = $summary;
 			$response["weight_chart"] = $weight_chart;
@@ -197,7 +197,7 @@
 			$select_sql = "SELECT fe.*, cd.* FROM (
 							SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
 								SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, 
-								cm.cmCode, cm.cmInsu, cm.cmExtraSu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
+								cm.cmCode, cm.cmIntype, cm.cmInsu, cm.cmExtraSu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
 							FROM buffer_sensor_status AS be 
 							LEFT JOIN comein_master AS cm ON cm.cmCode = be.beComeinCode 
 							LEFT JOIN sensor_history AS sh ON sh.shFarmid = be.beFarmid AND sh.shDongid = be.beDongid AND sh.shDate 
@@ -208,7 +208,17 @@
 
 			$feed_data = get_select_data($select_sql);
 
-			$select_sql = "SELECT * FROM fcr_info WHERE fiType = \"cobb500\"";
+			$intype = "cobb500";
+			switch ($feed_data[0]["cmIntype"]) {
+				case '산란계':
+				case '산란계종계':
+				case '육계종계':
+					// $intype = "growth";
+					$intype = "isa_brown";
+					break;
+			}
+
+			$select_sql = "SELECT * FROM fcr_info WHERE fiType = \"".$intype."\"";
 			$f_data = get_select_data($select_sql);
 			$fcr_table = array();
 
@@ -315,7 +325,7 @@
 
 			}
 
-			$interm = $interm <= 60 ? $interm : 60;
+			$interm = $interm <= 120 ? $interm : 120;
 
 			if($interm > 15){
 				$response["total_fcr_weight"] = sprintf('%0.1f', $total_per_feed / $fcr_table[$interm]);

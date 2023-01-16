@@ -110,6 +110,16 @@ function run_sql_insert($table, $data_map){
     sql_conn::get_inst()->insert($table, $data_map);
 }
 
+/* upsert 쿼리 수행
+param
+- table : insert를 수행할 테이블
+- data_map : insert될 필드명-값 쌍 (연관배열)
+- key_arr : primary key 배열 
+*/
+function run_sql_upsert($table, $data_map, $key_arr){
+    sql_conn::get_inst()->upsert($table, $data_map, $key_arr);
+}
+
 /* update 쿼리 수행
 param
 - table : update를 수행할 테이블

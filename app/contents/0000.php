@@ -515,9 +515,17 @@ include_once("../inc/bottom.php")
 				$("#total_fcr_weight").html(data.total_fcr_weight + "g");
 				$("#total_fcr").html(data.total_fcr);
 
-				$("#fcr_slider").data("ionRangeSlider").update({
-					from: data.total_fcr,
-				});
+				if(parseFloat(data.total_fcr) > 0){
+
+					let tt = parseFloat(data.total_fcr);
+
+					$("#fcr_slider").data("ionRangeSlider").update({
+						from: data.total_fcr,
+						min: Math.round((tt - 1) * 100) / 100,
+						max: Math.round((tt + 1) * 100) / 100,
+					});
+				}
+				
 				set_select_fcr(data.total_fcr);
 			},
 			error: function(request,status,error){

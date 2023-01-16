@@ -146,12 +146,12 @@
 			);
 
 			// 2022-11-10 임시조치
-			if($farmID == "KF0091"){
-				$summary["summary_avg_weight"] = "---";
-				$summary["summary_min_avg_weight"] = "---"; 
-				$summary["summary_curr_avg_weight"] = "---"; 
-				$summary["summary_max_avg_weight"] = "---"; 
-			}
+			// if($farmID == "KF0091"){
+			// 	$summary["summary_avg_weight"] = "---";
+			// 	$summary["summary_min_avg_weight"] = "---"; 
+			// 	$summary["summary_curr_avg_weight"] = "---"; 
+			// 	$summary["summary_max_avg_weight"] = "---"; 
+			// }
 
 			$response["summary"] = $summary;
 
@@ -211,7 +211,7 @@
 			$select_sql = "SELECT fe.*, cd.* FROM (
 								SELECT sh.shFarmid, sh.shDongid, LEFT(shDate, 10) AS shDate, 
 								SUM(JSON_EXTRACT(shFeedData, \"$.feed_feed\")) AS feed, SUM(JSON_EXTRACT(shFeedData, \"$.feed_water\")) AS water, 
-								cm.cmCode , cmInsu, cm.cmExtraSu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
+								cm.cmCode, cm.cmIntype, cmInsu, cm.cmExtraSu, cm.cmAlreadyFeed, LEFT(cm.cmIndate, 10) AS cmIndate 
 								FROM comein_master AS cm 
 								LEFT JOIN sensor_history AS sh ON sh.shFarmid = cm.cmFarmid AND sh.shDongid = cm.cmDongid AND sh.shDate 
 									BETWEEN cm.cmIndate AND IF(cm.cmOutdate is null, now(), cm.cmOutdate)
@@ -221,7 +221,17 @@
 
 			$feed_data = get_select_data($select_sql);
 
-			$select_sql = "SELECT * FROM fcr_info WHERE fiType = \"cobb500\"";
+			$intype = "cobb500";
+			switch ($feed_data[0]["cmIntype"]) {
+				case '산란계':
+				case '산란계종계':
+				case '육계종계':
+					// $intype = "growth";
+					$intype = "isa_brown";
+					break;
+			}
+
+			$select_sql = "SELECT * FROM fcr_info WHERE fiType = \"".$intype."\"";
 			$f_data = get_select_data($select_sql);
 			$fcr_table = array();
 
@@ -260,7 +270,7 @@
 				$dong_out += $row["cdDeath"] + $row["cdCull"] + $row["cdThinout"];
 			}
 
-			$interm = $interm <= 60 ? $interm : 60;
+			$interm = $interm <= 120 ? $interm : 120;
 
 			if($interm > 15){
 				$response["total_fcr_weight"] = sprintf('%0.1f', $dong_per_feed / $fcr_table[$interm]);
