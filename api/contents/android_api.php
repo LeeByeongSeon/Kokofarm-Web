@@ -264,13 +264,30 @@
 			}
 
 			// 전체 출하 횟수 저장
-			$select_query = "SELECT COUNT(*) AS cnt, COUNT(DISTINCT(cmDongid)) AS dongCnt FROM comein_master ";
+			$select_query = "SELECT COUNT(*) AS cnt, COUNT(DISTINCT(cmDongid)) AS dongCnt FROM comein_master WHERE ";
 			if($farmID != "") {
-				$select_query .= "WHERE cmFarmid = \"" . $farmID . "\" ";
+				$select_query .= " cmFarmid = \"" . $farmID . "\" AND ";
 			}
+			$select_query .= "cmOutdate is not null";
 			$select_data = get_select_data($select_query);
 			$ret_data["cnt"] = $select_data[0]["cnt"];
 			$ret_data["dongCnt"] = $select_data[0]["dongCnt"];
+
+			if($farmID != ""){
+				// 5회차 평균중량, 평균일령 기록
+				$select_query = "SELECT ROUND(AVG(awWeight), 1) AS weight5R, ROUND(AVG(interm), 1) AS interm5R FROM (
+					SELECT fd.fdFarmid, aw.awWeight, IFNULL(DATEDIFF(cm.cmOutdate, cm.cmIndate) + 1, 0) AS interm 
+					FROM farm_detail AS fd 
+					LEFT JOIN comein_master AS cm ON cm.cmFarmid = fd.fdFarmid AND cm.cmDongid = fd.fdDongid AND cm.cmOutdate is not null 
+					LEFT JOIN avg_weight AS aw ON aw.awFarmid = fd.fdFarmid AND aw.awDongid = fd.fdDongid 
+						AND awDate = CONCAT(LEFT(DATE_SUB(cm.cmOutdate, INTERVAL 1 HOUR), 15), '0:00')
+					WHERE cm.cmFarmid = \"" . $farmID . "\" ORDER BY cmOutdate DESC LIMIT 0, " . $ret_data["dongCnt"] * 5 . "
+				) AS t GROUP BY fdFarmid";
+
+				$select_data = get_select_data($select_query);
+				$ret_data["weight5R"] = $select_data[0]["weight5R"];
+				$ret_data["interm5R"] = $select_data[0]["interm5R"];
+			}
 
 			$ret["errCode"] = "00";
 			$ret["errMsg"] = "";
